@@ -1071,18 +1071,33 @@ export default function App() {
               { label: 'Royography', id: 'gallery' },
               { label: 'Videos', id: 'videos' },
               { label: 'Editing', id: 'editing' },
+              { label: 'Our Works', url: '/' },
               { label: 'About', id: 'vision' },
               { label: 'Hire', id: 'hire' }
-            ].map(link => (
-              <button
-                key={link.id}
-                onClick={() => link.id === 'hire' ? setIsHireModalOpen(true) : scrollToSection(link.id)}
-                className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
-              </button>
-            ))}
+            ].map(link => {
+              if (link.url) {
+                return (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
+                  >
+                    {link.label}
+                    <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
+                  </a>
+                );
+              }
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => link.id === 'hire' ? setIsHireModalOpen(true) : scrollToSection(link.id)}
+                  className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
+                </button>
+              );
+            })}
           </nav>
 
           {/* Actions: Theme Toggle & Hamburger */}
@@ -1161,24 +1176,39 @@ export default function App() {
               { label: 'Royography', id: 'gallery' },
               { label: 'Videos', id: 'videos' },
               { label: 'Editing', id: 'editing' },
+              { label: 'Our Works', url: '/' },
               { label: 'About', id: 'vision' },
               { label: 'Hire', id: 'hire' }
-            ].map((link, index) => (
-              <button
-                key={link.id}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  if (link.id === 'hire') {
-                    setIsHireModalOpen(true);
-                  } else {
-                    scrollToSection(link.id);
-                  }
-                }}
-                className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
-              >
-                {link.label}
-              </button>
-            ))}
+            ].map((link, index) => {
+              if (link.url) {
+                return (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+                  >
+                    {link.label}
+                  </a>
+                );
+              }
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (link.id === 'hire') {
+                      setIsHireModalOpen(true);
+                    } else {
+                      scrollToSection(link.id);
+                    }
+                  }}
+                  className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </nav>
 
           {/* Small brand footer in drawer */}
@@ -1900,17 +1930,31 @@ export default function App() {
               { label: 'Royography', id: 'gallery' },
               { label: 'Videos', id: 'videos' },
               { label: 'Editing', id: 'editing' },
+              { label: 'Our Works', url: '/' },
               { label: 'About', id: 'vision' },
               { label: 'Hire', id: 'hire' }
-            ].map(link => (
-              <button
-                key={link.id}
-                onClick={() => link.id === 'hire' ? setIsHireModalOpen(true) : scrollToSection(link.id)}
-                className="hover:text-zinc-950 dark:hover:text-white transition-colors"
-              >
-                {link.label}
-              </button>
-            ))}
+            ].map(link => {
+              if (link.url) {
+                return (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    className="hover:text-zinc-950 dark:hover:text-white transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                );
+              }
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => link.id === 'hire' ? setIsHireModalOpen(true) : scrollToSection(link.id)}
+                  className="hover:text-zinc-950 dark:hover:text-white transition-colors"
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </div>
 
           {/* Copyright Metadata */}
