@@ -1226,219 +1226,219 @@ export default function App() {
       {/* ==========================================
           MAIN LAYOUT CONTAINER (Content above z-10)
           ========================================== */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="relative z-10 w-full">
 
         {/* 2.5. HERO SECTION */}
-        <section
-          id="home"
-          className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 mt-6 shadow-sm bg-[#f5f5dd] dark:bg-zinc-900/10"
-        >
-          {/* Looping Muted Local Video Background */}
-          <video
-            ref={heroBgVideoRef}
-            className="hero-bg-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster={heroBgUrl || undefined}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+          <section
+            id="home"
+            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 shadow-sm bg-[#f5f5dd] dark:bg-zinc-900/10"
           >
-            <source src="hero_video.MOV" type="video/quicktime" />
-          </video>
+            {/* Looping Muted Local Video Background */}
+            <video
+              ref={heroBgVideoRef}
+              className="hero-bg-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster={heroBgUrl || undefined}
+            >
+              <source src="hero_video.MOV" type="video/quicktime" />
+            </video>
 
-          {/* Overlay Wash Tint */}
-          <div className="hero-overlay" />
+            {/* Overlay Wash Tint */}
+            <div className="hero-overlay" />
 
-          {/* Hero Content Container */}
-          <div className="relative z-10 flex flex-col items-center justify-center w-full">
-            {/* Eyebrow */}
-            <div className="reveal flex items-center justify-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm tracking-[0.12em] sm:tracking-[0.25em] text-zinc-950 dark:text-white uppercase px-4 select-none">
-              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse flex-shrink-0" />
-              <span className="whitespace-nowrap">Digital Creator · Storyteller · Avgeek</span>
-            </div>
-
-            {/* H1 Heading with looping shimmer */}
-            <h1 className="reveal font-heading font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] max-w-4xl select-none">
-              <span className="text-gradient inline-block animate-shimmer bg-[length:200%_auto]">
-                Frames that tell a story.
-              </span>
-            </h1>
-
-            {/* Short Bio Paragraph */}
-            <p className="reveal font-body text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-300 max-w-2xl mt-8 leading-relaxed px-4 transition-colors">
-              Welcome to <strong className="brand-text-gradient select-none">Vignette</strong>,
-              the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
-              and high-altitude aviation storytelling into cinematic digital capsules.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="reveal flex flex-col sm:flex-row gap-4 mt-10 w-full justify-center px-6">
-              <button
-                onClick={() => scrollToSection('gallery')}
-                className="px-8 py-4 rounded-full font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black shadow-lg hover:shadow-brand-lightOrange/30 dark:hover:shadow-brand-darkGold/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
-              >
-                View My Work →
-              </button>
-              <button
-                onClick={() => setIsHireModalOpen(true)}
-                className="px-8 py-4 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
-              >
-                Hire Me
-              </button>
-            </div>
-
-            {/* Statistics Count-Up Row */}
-            <div className="reveal grid grid-cols-3 gap-6 sm:gap-12 mt-20 max-w-xl w-full border-t border-black/10 dark:border-white/10 pt-10 px-4">
-              <div className="flex flex-col">
-                <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
-                  <CountUp end={227} suffix="+" />
-                </span>
-                <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Posts</span>
+            {/* Hero Content Container */}
+            <div className="relative z-10 flex flex-col items-center justify-center w-full">
+              {/* Eyebrow */}
+              <div className="reveal flex items-center justify-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm tracking-[0.12em] sm:tracking-[0.25em] text-zinc-950 dark:text-white uppercase px-4 select-none">
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse flex-shrink-0" />
+                <span className="whitespace-nowrap">Digital Creator · Storyteller · Avgeek</span>
               </div>
-              <div className="flex flex-col">
-                <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
-                  <CountUp end={2.1} suffix="K+" />
+
+              {/* H1 Heading with looping shimmer */}
+              <h1 className="reveal font-heading font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] max-w-4xl select-none">
+                <span className="text-gradient inline-block animate-shimmer bg-[length:200%_auto]">
+                  Frames that tell a story.
                 </span>
-                <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Followers</span>
+              </h1>
+
+              {/* Short Bio Paragraph */}
+              <p className="reveal font-body text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-300 max-w-2xl mt-8 leading-relaxed px-4 transition-colors">
+                Welcome to <strong className="brand-text-gradient select-none">Vignette</strong>,
+                the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
+                and high-altitude aviation storytelling into cinematic digital capsules.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="reveal flex flex-col sm:flex-row gap-4 mt-10 w-full justify-center px-6">
+                <button
+                  onClick={() => scrollToSection('gallery')}
+                  className="px-8 py-4 rounded-full font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black shadow-lg hover:shadow-brand-lightOrange/30 dark:hover:shadow-brand-darkGold/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
+                >
+                  View My Work →
+                </button>
+                <button
+                  onClick={() => setIsHireModalOpen(true)}
+                  className="px-8 py-4 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
+                >
+                  Hire Me
+                </button>
               </div>
-              <div className="flex flex-col">
-                <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
-                  <CountUp end={100} suffix="+" />
-                </span>
-                <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Reels Crafted</span>
+
+              {/* Statistics Count-Up Row */}
+              <div className="reveal grid grid-cols-3 gap-6 sm:gap-12 mt-20 max-w-xl w-full border-t border-black/10 dark:border-white/10 pt-10 px-4">
+                <div className="flex flex-col">
+                  <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
+                    <CountUp end={227} suffix="+" />
+                  </span>
+                  <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Posts</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
+                    <CountUp end={2.1} suffix="K+" />
+                  </span>
+                  <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Followers</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
+                    <CountUp end={100} suffix="+" />
+                  </span>
+                  <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Reels Crafted</span>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
         {/* 2.6. GALLERY SECTION */}
-        <section id="gallery" className="bg-white dark:bg-zinc-900/10 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
-              At a Glance
-            </h2>
-            <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
-              Freezing time across terminals, peaks, and street corners. Discover visual stories filtered by category.
-            </p>
-          </div>
-
-          {/* Filter Pill List Row */}
-          <div className="reveal flex flex-wrap justify-center gap-2.5 mb-12 px-4 select-none">
-            {['All', 'Travel', 'Lifestyle', 'Avgeek', 'Storytelling'].map((category) => {
-              const isActive = galleryFilter.toLowerCase() === category.toLowerCase();
-              return (
-                <button
-                  key={category}
-                  onClick={() => setGalleryFilter(category)}
-                  className={`px-6 py-2.5 rounded-full font-brand font-extrabold text-xs transition-all duration-300 ${isActive
-                    ? 'bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow text-white dark:text-black shadow-md'
-                    : 'border border-zinc-300 dark:border-zinc-700 hover:border-zinc-800 dark:hover:border-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/20'
-                    }`}
-                >
-                  {category}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Responsive CSS Column Masonry Grid */}
-          {galleryLoading ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 animate-pulse px-4">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="bg-zinc-300 dark:bg-zinc-800 aspect-[3/4] rounded-2xl" />
-              ))}
+        <section id="gallery" className="bg-white dark:bg-zinc-950/20 py-24 sm:py-32 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
+                At a Glance
+              </h2>
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
+                Freezing time across terminals, peaks, and street corners. Discover visual stories filtered by category.
+              </p>
             </div>
-          ) : (
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 px-4">
+
+            {/* Filter Pill List Row */}
+            <div className="reveal flex flex-wrap justify-center gap-2.5 mb-12 px-4 select-none">
+              {['All', 'Travel', 'Lifestyle', 'Avgeek', 'Storytelling'].map((category) => {
+                const isActive = galleryFilter.toLowerCase() === category.toLowerCase();
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setGalleryFilter(category)}
+                    className={`px-6 py-2.5 rounded-full font-brand font-extrabold text-xs transition-all duration-300 ${isActive
+                      ? 'bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow text-white dark:text-black shadow-md'
+                      : 'border border-zinc-300 dark:border-zinc-700 hover:border-zinc-800 dark:hover:border-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/20'
+                      }`}
+                  >
+                    {category}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Gallery Cards Masonry/Grid */}
+            <div className="reveal grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 px-4">
               {filteredGallery.map((item, idx) => (
                 <div
                   key={item.id}
-                  onClick={() => setLightboxIndex(idx)}
-                  className="reveal break-inside-avoid relative overflow-hidden rounded-2xl cursor-pointer group shadow-md hover:shadow-xl transition-all duration-500 bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/5"
+                  onClick={() => handleImageClick(idx)}
+                  className="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 select-none"
                 >
-                  {/* Photo Thumbnail */}
                   <img
                     src={item.media_url}
                     alt={item.title}
-                    loading="lazy"
-                    className="w-full h-auto object-cover select-none transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover select-none pointer-events-none group-hover:scale-105 transition-transform duration-500"
                     draggable="false"
+                    loading="lazy"
                   />
-                  {/* Hover Cap overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                    <span className="font-heading font-extrabold text-[10px] tracking-wider text-brand-darkGold uppercase">
-                      {item.category}
-                    </span>
-                    <h3 className="font-heading font-black text-xl text-white mt-1 leading-tight">
-                      {item.title}
-                    </h3>
+                  {/* Frosted Metadata Strip bottom */}
+                  <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/60 dark:bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between text-white transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
+                    <div className="flex flex-col">
+                      <span className="font-brand font-extrabold text-xs uppercase tracking-wider text-brand-darkGold select-none">
+                        {item.category}
+                      </span>
+                      <h3 className="font-heading font-black text-sm mt-1 leading-tight select-none">
+                        {item.title}
+                      </h3>
+                    </div>
+                    <Maximize2 className="w-4 h-4 text-zinc-300 group-hover:text-white" />
                   </div>
                 </div>
               ))}
             </div>
-          )}
 
-          {/* Lightbox Screen overlay */}
-          {lightboxIndex !== null && (
-            <div
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md"
-              onClick={() => setLightboxIndex(null)}
-            >
-              {/* Close Button */}
-              <button
-                className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"
-                onClick={() => setLightboxIndex(null)}
-              >
-                <X className="w-6 h-6" />
-              </button>
-
-              {/* Prev Button */}
-              <button
-                className="absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
-                onClick={handlePrevLightbox}
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-
-              {/* Central Picture Container */}
+            {/* Custom Lightbox Modal */}
+            {lightboxIndex !== null && (
               <div
-                className="relative max-w-4xl max-h-[80vh] w-full p-4 flex flex-col items-center select-none"
-                onClick={(e) => e.stopPropagation()}
+                className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md select-none"
+                onClick={handleCloseLightbox}
               >
-                <img
-                  src={filteredGallery[lightboxIndex].media_url}
-                  alt={filteredGallery[lightboxIndex].title}
-                  className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl border border-white/10 select-none"
-                  draggable="false"
-                />
-                <div className="text-center mt-4">
-                  <span className="font-heading font-extrabold text-xs tracking-widest text-[#FFD700] uppercase">
-                    {filteredGallery[lightboxIndex].category}
-                  </span>
-                  <h3 className="font-heading font-black text-2xl text-white mt-1">
-                    {filteredGallery[lightboxIndex].title}
-                  </h3>
-                </div>
-              </div>
+                {/* Close Button */}
+                <button
+                  className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+                  onClick={handleCloseLightbox}
+                >
+                  <X className="w-6 h-6" />
+                </button>
 
-              {/* Next Button */}
-              <button
-                className="absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
-                onClick={handleNextLightbox}
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-            </div>
-          )}
+                {/* Prev Button */}
+                <button
+                  className="absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
+                  onClick={handlePrevLightbox}
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+
+                {/* Active Image container */}
+                <div
+                  className="max-w-[90vw] max-h-[80vh] flex flex-col items-center justify-center relative"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <img
+                    src={filteredGallery[lightboxIndex].media_url}
+                    alt={filteredGallery[lightboxIndex].title}
+                    className="max-w-full max-h-[72vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
+                    draggable="false"
+                  />
+                  {/* Floating caption below image */}
+                  <div className="mt-5 text-center px-4">
+                    <span className="font-brand font-extrabold text-xs uppercase tracking-widest text-[#FFD700]">
+                      {filteredGallery[lightboxIndex].category}
+                    </span>
+                    <h3 className="font-heading font-black text-lg sm:text-xl text-white mt-1.5 leading-tight">
+                      {filteredGallery[lightboxIndex].title}
+                    </h3>
+                  </div>
+                </div>
+
+                {/* Next Button */}
+                <button
+                  className="absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
+                  onClick={handleNextLightbox}
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </div>
+            )}
+          </div>
         </section>
 
         {/* 2.7. VIDEOS / REELS SECTION */}
-        <section id="videos" className="bg-[#f5f5dd] dark:bg-zinc-900/40 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
-              Our Highlights
-            </h2>
+        <section id="videos" className="bg-[#f5f5dd] dark:bg-zinc-900/40 py-24 sm:py-32 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
+                Our Highlights
+              </h2>
             <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
               Short, snappy snippets with premium edit pacing. Hover on desktops to preview, click to open full cinematic player.
             </p>
@@ -1519,94 +1519,93 @@ export default function App() {
               }}
             />
           )}
+          </div>
         </section>
 
         {/* 2.8. EDITING SHOWCASE SECTION */}
-        <section id="editing" className="bg-white dark:bg-zinc-900/10 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
-              Before / After Showcase
-            </h2>
-            <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
-              Highlighting the impact of custom Lightroom presets and Premiere color correction. Grab and drag the split dividers.
-            </p>
-          </div>
+        <section id="editing" className="bg-white dark:bg-zinc-950/20 py-24 sm:py-32 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
+                Before / After Showcase
+              </h2>
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
+                Highlighting the impact of custom Lightroom presets and Premiere color correction. Grab and drag the split dividers.
+              </p>
+            </div>
 
-          {/* Slider Grid */}
-          <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-12 px-4">
-            {edits.map(edit => (
-              <BeforeAfterSlider
-                key={edit.id}
-                before={edit.before_url}
-                after={edit.after_url}
-                title={edit.title}
-                description={edit.description}
-              />
-            ))}
+            {/* Slider Grid */}
+            <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-12 px-4">
+              {edits.map(edit => (
+                <BeforeAfterSlider
+                  key={edit.id}
+                  before={edit.before_url}
+                  after={edit.after_url}
+                  title={edit.title}
+                  description={edit.description}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="bg-[#f5f5dd] dark:bg-zinc-900/40 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
+        <section id="vision" className="bg-[#f5f5dd] dark:bg-zinc-900/40 py-24 sm:py-32 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
 
-            {/* Left Narrative Column */}
-            <div className="lg:col-span-7 flex flex-col">
-              <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
-                Creative Manifesto
-              </span>
-              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
-                Where This Is Headed
-              </h2>
-
-              <div className="reveal font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-6 leading-relaxed transition-colors text-justify">
-                <p>
-                  As a digital storyteller, avgeek, and travel editor, I believe that every frame should make the audience feel like they're boarding the flight alongside me. The brand <strong className="brand-text-gradient">Vignette</strong> isn't just about cropping edges—it's about adding depth and lighting the subject exactly where it matters.
-                </p>
-                <p>
-                  My goal is simple: transition from high-end travel editing into a full-time content influencer collaborating with boutique airlines, global tourism boards, and lifestyle brands. I bring a highly meticulous editing tone, deep aviation insights, and raw travel pacing to campaigns.
-                </p>
-                <p>
-                  Let's break the mould of standard content loops. I am currently open to creative collaborations, sponsored travel vlogs, color-grading projects, and commercial business opportunities.
-                </p>
-              </div>
-            </div>
-
-            {/* Right Pull-quote Graphic Column */}
-            <div className="reveal lg:col-span-5 flex flex-col justify-center">
-              <div className="relative p-8 md:p-12 rounded-2xl bg-zinc-50 dark:bg-zinc-900/40 backdrop-blur-sm border border-brand-lightRed/20 dark:border-brand-darkGold/20 shadow-xl">
-                {/* Thick styling border accent */}
-                <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-l-2xl" />
-
-                {/* Quote details */}
-                <span className="font-brand text-6xl text-brand-lightRed/20 dark:text-brand-darkGold/25 absolute top-4 left-6 select-none pointer-events-none">
-                  “
+              {/* Left Narrative Column */}
+              <div className="lg:col-span-7 flex flex-col">
+                <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
+                  Creative Manifesto
                 </span>
-                <blockquote className="font-brand font-extrabold italic text-xl md:text-2xl text-zinc-800 dark:text-zinc-200 mt-2 leading-relaxed transition-colors select-none">
-                  Content isn't just about what you see. It is about how long the feeling lingers after you've scrolled past the frame.
-                </blockquote>
+                <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
+                  Where This Is Headed
+                </h2>
 
-                <div className="flex items-center gap-3 mt-6">
-                  <div className="w-10 h-10 rounded-full overflow-hidden border border-black/10 dark:border-white/10 bg-zinc-200">
-                    <img
-                      src="logo-icon.png"
-                      alt="P"
-                      className="w-full h-full object-contain p-1 select-none"
-                      draggable="false"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <cite className="font-brand font-black text-sm text-zinc-950 dark:text-white not-italic transition-colors">
-                      Padmanabha Roy
-                    </cite>
-                    <span className="font-body text-[10px] text-zinc-500 uppercase tracking-wider">
-                      Vignette Founder
-                    </span>
+                <div className="reveal font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-6 leading-relaxed transition-colors text-justify">
+                  <p>
+                    As a digital storyteller, avgeek, and travel editor, I believe that every frame should make the audience feel like they're boarding the flight alongside me. The brand <strong className="brand-text-gradient">Vignette</strong> isn't just about cropping edges—it's about adding depth and lighting the subject exactly where it matters.
+                  </p>
+                  <p>
+                    From dynamic Instagram edits to dedicated aviation deep-dives and cinematic project consultancies, this portfolio serves as the flight deck for all my creative runs. We are heading towards richer visuals, deeper storytelling, and a strictly premium visual standard.
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Signature Column Card */}
+              <div className="reveal lg:col-span-5 flex flex-col justify-center">
+                <div className="p-8 sm:p-10 rounded-[32px] bg-white dark:bg-zinc-900/50 border border-black/5 dark:border-white/5 shadow-xl flex flex-col justify-between">
+                  <span className="font-heading font-bold text-4xl sm:text-5xl text-zinc-900 dark:text-white mb-6">
+                    “
+                  </span>
+                  <blockquote className="font-body italic text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed text-justify">
+                    Visual storytelling is the art of highlighting what is already beautiful, using light and timing to reveal the unseen lines.
+                  </blockquote>
+                  
+                  {/* Author Meta Info */}
+                  <div className="flex items-center gap-4 mt-8 pt-6 border-t border-black/5 dark:border-white/5">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-200 dark:border-zinc-800">
+                      <img
+                        src="avatar.jpg"
+                        alt="Padmanabha Roy"
+                        className="w-full h-full object-cover select-none pointer-events-none"
+                        draggable="false"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <cite className="font-brand font-black text-sm text-zinc-950 dark:text-white not-italic transition-colors">
+                        Padmanabha Roy
+                      </cite>
+                      <span className="font-body text-[10px] text-zinc-500 uppercase tracking-wider">
+                        Vignette Founder
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
+            </div>
           </div>
         </section>
 
@@ -1643,8 +1642,9 @@ export default function App() {
         </section>
 
         {/* 2.10. HIRE ME SECTION */}
-        <section id="hire" className="bg-white dark:bg-zinc-900/10 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
+        <section id="hire" className="bg-white dark:bg-zinc-950/20 py-24 sm:py-32 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
 
             {/* Context Left Column */}
             <div className="lg:col-span-5 flex flex-col justify-center">
@@ -1881,6 +1881,7 @@ export default function App() {
               </div>
             </div>
 
+          </div>
           </div>
         </section>
 
