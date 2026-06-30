@@ -22,7 +22,8 @@ import {
   Pause,
   Phone,
   Mail,
-  MapPin
+  MapPin,
+  Maximize2
 } from 'lucide-react';
 import { supabase } from './supabase';
 
