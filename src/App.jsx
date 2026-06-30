@@ -1068,37 +1068,23 @@ export default function App() {
           {/* Desktop Navigation Link Menu */}
           <nav className="hidden md:flex items-center gap-8 font-brand font-bold text-sm">
             {[
-              { label: 'Home', id: 'home' },
-              { label: 'Royography', id: 'gallery' },
-              { label: 'Videos', id: 'videos' },
-              { label: 'Editing', id: 'editing' },
+              { label: 'At Glance', url: '/' },
+              { label: 'Services', url: '/' },
+              { label: 'Highlights', url: '/' },
               { label: 'Our Works', url: '/' },
-              { label: 'About', id: 'vision' },
-              { label: 'Hire', id: 'hire' }
-            ].map(link => {
-              if (link.url) {
-                return (
-                  <a
-                    key={link.label}
-                    href={link.url}
-                    className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
-                  >
-                    {link.label}
-                    <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
-                  </a>
-                );
-              }
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => link.id === 'hire' ? setIsHireModalOpen(true) : scrollToSection(link.id)}
-                  className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
-                >
-                  {link.label}
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
-                </button>
-              );
-            })}
+              { label: 'Royography', url: '/' },
+              { label: 'About', url: '/' },
+              { label: 'Contact', url: '/' }
+            ].map(link => (
+              <a
+                key={link.label}
+                href={link.url}
+                className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
+              >
+                {link.label}
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
+              </a>
+            ))}
           </nav>
 
           {/* Actions: Theme Toggle & Hamburger */}
@@ -1173,43 +1159,23 @@ export default function App() {
         <div className="flex flex-col h-full pt-20 px-6 justify-between pb-8">
           <nav className="flex flex-col gap-6">
             {[
-              { label: 'Home', id: 'home' },
-              { label: 'Royography', id: 'gallery' },
-              { label: 'Videos', id: 'videos' },
-              { label: 'Editing', id: 'editing' },
+              { label: 'At Glance', url: '/' },
+              { label: 'Services', url: '/' },
+              { label: 'Highlights', url: '/' },
               { label: 'Our Works', url: '/' },
-              { label: 'About', id: 'vision' },
-              { label: 'Hire', id: 'hire' }
-            ].map((link, index) => {
-              if (link.url) {
-                return (
-                  <a
-                    key={link.label}
-                    href={link.url}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
-                  >
-                    {link.label}
-                  </a>
-                );
-              }
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    if (link.id === 'hire') {
-                      setIsHireModalOpen(true);
-                    } else {
-                      scrollToSection(link.id);
-                    }
-                  }}
-                  className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
-                >
-                  {link.label}
-                </button>
-              );
-            })}
+              { label: 'Royography', url: '/' },
+              { label: 'About', url: '/' },
+              { label: 'Contact', url: '/' }
+            ].map((link) => (
+              <a
+                key={link.label}
+                href={link.url}
+                onClick={() => setMobileMenuOpen(false)}
+                className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+              >
+                {link.label}
+              </a>
+            ))}
           </nav>
 
           {/* Small brand footer in drawer */}
@@ -1927,35 +1893,22 @@ export default function App() {
           {/* Quick Repeat Links */}
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 font-brand font-bold text-xs text-zinc-500 dark:text-zinc-400">
             {[
-              { label: 'Home', id: 'home' },
-              { label: 'Royography', id: 'gallery' },
-              { label: 'Videos', id: 'videos' },
-              { label: 'Editing', id: 'editing' },
+              { label: 'At Glance', url: '/' },
+              { label: 'Services', url: '/' },
+              { label: 'Highlights', url: '/' },
               { label: 'Our Works', url: '/' },
-              { label: 'About', id: 'vision' },
-              { label: 'Hire', id: 'hire' }
-            ].map(link => {
-              if (link.url) {
-                return (
-                  <a
-                    key={link.label}
-                    href={link.url}
-                    className="hover:text-zinc-950 dark:hover:text-white transition-colors"
-                  >
-                    {link.label}
-                  </a>
-                );
-              }
-              return (
-                <button
-                  key={link.id}
-                  onClick={() => link.id === 'hire' ? setIsHireModalOpen(true) : scrollToSection(link.id)}
-                  className="hover:text-zinc-950 dark:hover:text-white transition-colors"
-                >
-                  {link.label}
-                </button>
-              );
-            })}
+              { label: 'Royography', url: '/' },
+              { label: 'About', url: '/' },
+              { label: 'Contact', url: '/' }
+            ].map(link => (
+              <a
+                key={link.label}
+                href={link.url}
+                className="hover:text-zinc-950 dark:hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
 
           {/* Copyright Metadata */}
