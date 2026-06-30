@@ -19,7 +19,10 @@ import {
   AlertCircle,
   TriangleAlert,
   Play,
-  Pause
+  Pause,
+  Phone,
+  Mail,
+  MapPin
 } from 'lucide-react';
 import { supabase } from './supabase';
 
@@ -40,18 +43,23 @@ const Instagram = (props) => (
   </svg>
 );
 
-const Youtube = (props) => (
+const Facebook = (props) => (
   <svg
     viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
+    fill="currentColor"
     {...props}
   >
-    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" />
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
+
+const ThreadsIcon = (props) => (
+  <svg
+    viewBox="0 0 192 192"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M141.5 99.5c-.3 11-3.6 20.2-10 27.5-6.3 7.3-15 10.9-26 10.9-10.3 0-18.7-3.7-25-11-6.4-7.3-9.5-17-9.5-29.3v-10.4c0-12.4 3.1-22 9.5-29.3 6.3-7.3 14.7-11 25-11 11 0 19.7 3.6 26 10.9 6.4 7.3 9.7 16.5 10 27.5h-15.6c-.3-7.3-2.1-13-5.6-17.1-3.5-4-8.3-6-14.8-6-6.6 0-11.7 2.2-15.3 6.6-3.6 4.4-5.4 11-5.4 19.9v10.4c0 8.9 1.8 15.5 5.4 19.9 3.6 4.4 8.7 6.6 15.3 6.6 6.5 0 11.3-2 14.8-6 3.5-4.1 5.3-9.8 5.6-17.1H141.5zm27.4-1.2c-.3 17.1-4.8 31.4-13.6 43-8.8 11.6-21 17.4-36.8 17.4-17.7 0-31.5-6-41.5-18-10-12-15-28.7-15-50.1V80.2c0-21.4 5-38 15-50.1 10-12 23.8-18 41.5-18 15.8 0 28 5.8 36.8 17.4 8.8 11.6 13.3 25.9 13.6 43H189c-.3-21.7-6.5-39.7-18.7-54-12.2-14.3-29.5-21.5-52-21.5-23.7 0-42.6 8.3-56.7 24.8C47.4 48.3 40.4 71.3 40.4 100.8v10.4c0 29.5 7 52.5 21.2 69 14.1 16.5 33 24.8 56.7 24.8 22.5 0 39.8-7.2 52-21.5 12.2-14.3 18.4-32.3 18.7-54H168.9z" />
   </svg>
 );
 
@@ -1068,23 +1076,37 @@ export default function App() {
           {/* Desktop Navigation Link Menu */}
           <nav className="hidden md:flex items-center gap-8 font-brand font-bold text-sm">
             {[
-              { label: 'At Glance', url: '/' },
+              { label: 'At Glance', id: 'gallery' },
               { label: 'Services', url: '/' },
-              { label: 'Highlights', url: '/' },
-              { label: 'Our Works', url: '/' },
+              { label: 'Highlights', id: 'videos' },
+              { label: 'Our Works', id: 'editing' },
               { label: 'Royography', url: '/' },
-              { label: 'About', url: '/' },
-              { label: 'Contact', url: '/' }
-            ].map(link => (
-              <a
-                key={link.label}
-                href={link.url}
-                className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
-              >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
-              </a>
-            ))}
+              { label: 'About', id: 'vision' },
+              { label: 'Contact', id: 'hire' }
+            ].map(link => {
+              if (link.url) {
+                return (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
+                  >
+                    {link.label}
+                    <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
+                  </a>
+                );
+              }
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => scrollToSection(link.id)}
+                  className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
+                </button>
+              );
+            })}
           </nav>
 
           {/* Actions: Theme Toggle & Hamburger */}
@@ -1159,23 +1181,39 @@ export default function App() {
         <div className="flex flex-col h-full pt-20 px-6 justify-between pb-8">
           <nav className="flex flex-col gap-6">
             {[
-              { label: 'At Glance', url: '/' },
+              { label: 'At Glance', id: 'gallery' },
               { label: 'Services', url: '/' },
-              { label: 'Highlights', url: '/' },
-              { label: 'Our Works', url: '/' },
+              { label: 'Highlights', id: 'videos' },
+              { label: 'Our Works', id: 'editing' },
               { label: 'Royography', url: '/' },
-              { label: 'About', url: '/' },
-              { label: 'Contact', url: '/' }
-            ].map((link) => (
-              <a
-                key={link.label}
-                href={link.url}
-                onClick={() => setMobileMenuOpen(false)}
-                className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
-              >
-                {link.label}
-              </a>
-            ))}
+              { label: 'About', id: 'vision' },
+              { label: 'Contact', id: 'hire' }
+            ].map((link) => {
+              if (link.url) {
+                return (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+                  >
+                    {link.label}
+                  </a>
+                );
+              }
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    scrollToSection(link.id);
+                  }}
+                  className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+                >
+                  {link.label}
+                </button>
+              );
+            })}
           </nav>
 
           {/* Small brand footer in drawer */}
@@ -1278,7 +1316,7 @@ export default function App() {
         <section id="gallery" className="py-24 sm:py-32 scroll-mt-20">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
-              Captured Moments
+              At a Glance
             </h2>
             <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
               Freezing time across terminals, peaks, and street corners. Discover visual stories filtered by category.
@@ -1396,10 +1434,10 @@ export default function App() {
         </section>
 
         {/* 2.7. VIDEOS / REELS SECTION */}
-        <section id="videos" className="py-24 sm:py-32 border-t border-black/5 dark:border-white/5 scroll-mt-20">
+        <section id="videos" className="py-24 sm:py-32 scroll-mt-20">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
-              Reels in Motion
+              Our Highlights
             </h2>
             <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
               Short, snappy snippets with premium edit pacing. Hover on desktops to preview, click to open full cinematic player.
@@ -1484,7 +1522,7 @@ export default function App() {
         </section>
 
         {/* 2.8. EDITING SHOWCASE SECTION */}
-        <section id="editing" className="py-24 sm:py-32 border-t border-black/5 dark:border-white/5 scroll-mt-20">
+        <section id="editing" className="py-24 sm:py-32 scroll-mt-20">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
               Before / After Showcase
@@ -1509,7 +1547,7 @@ export default function App() {
         </section>
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="pt-24 pb-12 sm:pt-32 sm:pb-16 border-t border-black/5 dark:border-white/5 scroll-mt-20">
+        <section id="vision" className="pt-24 pb-12 sm:pt-32 sm:pb-16 scroll-mt-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
 
             {/* Left Narrative Column */}
@@ -1573,7 +1611,7 @@ export default function App() {
         </section>
 
         {/* 2.9.5. HERO VIDEO SHOWCASE */}
-        <section className="py-10 sm:py-14 border-t border-black/5 dark:border-white/5 flex flex-col items-center justify-center select-none">
+        <section className="py-10 sm:py-14 flex flex-col items-center justify-center select-none">
           <div className="max-w-4xl w-full px-4">
             <div
               className="relative rounded-[20px] overflow-hidden shadow-xl bg-black cursor-pointer"
@@ -1605,7 +1643,7 @@ export default function App() {
         </section>
 
         {/* 2.10. HIRE ME SECTION */}
-        <section id="hire" className="pt-12 pb-24 sm:pt-16 sm:pb-32 border-t border-black/5 dark:border-white/5 scroll-mt-20">
+        <section id="hire" className="pt-12 pb-24 sm:pt-16 sm:pb-32 scroll-mt-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
 
             {/* Context Left Column */}
@@ -1614,7 +1652,7 @@ export default function App() {
                 Let's Collaborate
               </span>
               <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
-                Let's Create Together
+                Hire for your work
               </h2>
               <p className="reveal font-body text-zinc-600 dark:text-zinc-300 mt-6 leading-relaxed transition-colors text-justify">
                 Ready to take your brand narrative to the sky? Get in touch for content consulting, sponsored edits, photography campaigns, or direct avgeek story writeups.
@@ -1849,76 +1887,153 @@ export default function App() {
       </main>
 
       {/* 2.11. FOOTER SECTION */}
-      <footer className="border-t border-black/5 dark:border-white/5 py-12 md:py-16 mt-16 select-none bg-black/[0.01] dark:bg-black/[0.15]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-8">
-
-          {/* Logo Name */}
-          <div
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => scrollToSection('home')}
-          >
-            <img
-              src="logo-icon.png"
-              alt="V"
-              className="w-5 h-5 object-contain select-none pointer-events-none"
-              draggable="false"
-            />
-            <span className="brand-text-gradient text-lg tracking-tight select-none">
-              Vignette
-            </span>
-          </div>
-
-          {/* Icon Row Handles */}
-          <div className="flex gap-6 items-center">
-            <a
-              href="https://www.instagram.com/proy____"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-full border border-black/10 dark:border-white/10 hover:border-brand-lightRed hover:text-brand-lightRed dark:hover:border-brand-darkGold dark:hover:text-brand-darkGold transition-all hover:-translate-y-1"
-              aria-label="Visit proy___ on Instagram"
-            >
-              <Instagram className="w-5 h-5" />
-            </a>
-            <a
-              href="https://www.youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-full border border-black/10 dark:border-white/10 hover:border-brand-lightRed hover:text-brand-lightRed dark:hover:border-brand-darkGold dark:hover:text-brand-darkGold transition-all hover:-translate-y-1"
-              aria-label="Visit Youtube channel"
-            >
-              <Youtube className="w-5 h-5" />
-            </a>
-          </div>
-
-          {/* Quick Repeat Links */}
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 font-brand font-bold text-xs text-zinc-500 dark:text-zinc-400">
-            {[
-              { label: 'At Glance', url: '/' },
-              { label: 'Services', url: '/' },
-              { label: 'Highlights', url: '/' },
-              { label: 'Our Works', url: '/' },
-              { label: 'Royography', url: '/' },
-              { label: 'About', url: '/' },
-              { label: 'Contact', url: '/' }
-            ].map(link => (
-              <a
-                key={link.label}
-                href={link.url}
-                className="hover:text-zinc-950 dark:hover:text-white transition-colors"
+      {/* 2.11. FOOTER SECTION */}
+      <footer className="border-t border-black py-16 mt-16 select-none bg-[#faf9f6] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
+          
+          {/* Main Footer columns row */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+            
+            {/* Logo Name & Brand Info (Col span 3) */}
+            <div className="md:col-span-3 flex flex-col gap-4">
+              <div
+                className="flex items-center gap-3 cursor-pointer"
+                onClick={() => scrollToSection('home')}
               >
-                {link.label}
-              </a>
-            ))}
+                <img
+                  src="logo-icon.png"
+                  alt="Vignette"
+                  className="w-10 h-10 object-contain select-none pointer-events-none"
+                  draggable="false"
+                />
+                <span className="brand-text-gradient font-heading font-black text-2xl tracking-tight select-none">
+                  Vignette
+                </span>
+              </div>
+              <p className="font-body text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-justify">
+                Cinematic visual storytelling. Capturing terminals, summits, and streetscapes with bespoke pacing and premium color grading.
+              </p>
+            </div>
+
+            {/* Legal Links (Col span 3) */}
+            <div className="md:col-span-3 flex flex-col gap-4 md:border-l border-zinc-200 dark:border-zinc-850 md:pl-8">
+              <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
+                Legal
+              </h4>
+              <ul className="flex flex-col gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400">
+                <li>
+                  <a href="/terms" className="hover:text-[#c0392b] dark:hover:text-[#FFD700] transition-colors">
+                    Terms and Conditions
+                  </a>
+                </li>
+                <li>
+                  <a href="/privacy" className="hover:text-[#c0392b] dark:hover:text-[#FFD700] transition-colors">
+                    Privacy Policy
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact Details (Col span 3) */}
+            <div className="md:col-span-3 flex flex-col gap-4 md:border-l border-zinc-200 dark:border-zinc-850 md:pl-8">
+              <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
+                Contact Details
+              </h4>
+              <ul className="flex flex-col gap-3.5 font-body text-xs text-zinc-600 dark:text-zinc-400">
+                <li className="flex items-center gap-3">
+                  <Phone className="w-4 h-4 text-[#c0392b] dark:text-[#FFD700] flex-shrink-0" />
+                  <a href="tel:+918258814126" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                    +91 8258814126
+                  </a>
+                </li>
+                <li className="flex items-center gap-3">
+                  <Mail className="w-4 h-4 text-[#c0392b] dark:text-[#FFD700] flex-shrink-0" />
+                  <a href="mailto:vignetteworks.official@gmail.com" className="hover:text-zinc-950 dark:hover:text-white transition-colors break-all">
+                    vignetteworks.official@gmail.com
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Address (Col span 3) */}
+            <div className="md:col-span-3 flex flex-col gap-4 md:border-l border-zinc-200 dark:border-zinc-850 md:pl-8">
+              <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
+                Address
+              </h4>
+              <p className="flex items-start gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed text-justify">
+                <MapPin className="w-4 h-4 text-[#c0392b] dark:text-[#FFD700] mt-0.5 flex-shrink-0" />
+                <span>Ramnagar, Agartala, West Tripura District, Tripura - 799002</span>
+              </p>
+            </div>
+
           </div>
 
-          {/* Copyright Metadata */}
-          <div className="text-center font-body text-xs text-zinc-400 dark:text-zinc-500">
-            <p>© {new Date().getFullYear()} Vignette. All rights reserved.</p>
-            <p className="mt-1 text-[10px]">Built by Padmanabha Roy / Vignette</p>
+          {/* Social Media & Divider Line */}
+          <div className="flex flex-col items-center gap-6 mt-4">
+            
+            {/* Social Icons Row */}
+            <div className="flex gap-5 items-center justify-center">
+              
+              {/* Instagram: Real Pink-to-Purple brand gradient */}
+              <a
+                href="https://www.instagram.com/proy____"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md"
+                aria-label="Visit proy___ on Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+
+              {/* Threads: Real brand logo black/white */}
+              <a
+                href="https://www.threads.net"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-md border border-zinc-200 dark:border-zinc-800"
+                aria-label="Visit Threads"
+              >
+                <ThreadsIcon className="w-5 h-5" />
+              </a>
+
+              {/* Facebook: Real brand blue */}
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md"
+                aria-label="Visit Facebook page"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+
+            </div>
+
+            {/* Bottom mini divider */}
+            <div className="w-full border-t border-zinc-200 dark:border-zinc-800 my-2" />
+
+            {/* Copyright Metadata */}
+            <div className="text-center font-body text-xs text-zinc-500 dark:text-zinc-500">
+              <p>© {new Date().getFullYear()} Vignette. All rights reserved | Made by Vignette</p>
+            </div>
+
           </div>
 
         </div>
       </footer>
+
+      {/* Floating WhatsApp Chat Button */}
+      <a
+        href="https://wa.me/918258814126"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-emerald-500 text-white shadow-xl hover:bg-emerald-600 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center"
+        aria-label="Chat on WhatsApp"
+      >
+        <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.731-1.456L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 2.028 14.11 1.011 11.996 1.011c-5.44 0-9.866 4.371-9.87 9.8-.002 1.838.485 3.633 1.41 5.2l-.337 1.232-.345 1.263 1.294-.338 1.157-.302zm11.232-6.52c-.29-.145-1.713-.845-1.978-.94-.266-.097-.459-.145-.653.145-.193.29-.747.94-.916 1.127-.168.193-.338.217-.627.072-2.316-1.164-3.51-1.76-4.912-4.178-.368-.636.368-.59 1.05-1.95.115-.23.057-.43-.028-.574-.086-.145-.653-1.57-.894-2.152-.235-.568-.475-.49-.652-.499-.17-.008-.363-.008-.557-.008-.194 0-.508.073-.774.364-.266.29-1.016.992-1.016 2.42 0 1.428 1.04 2.807 1.185 3.001.145.194 2.046 3.125 4.957 4.38.692.298 1.233.477 1.654.61.696.22 1.33.193 1.83.118.558-.084 1.713-.699 1.954-1.375.24-.676.24-1.258.17-1.376-.073-.118-.266-.194-.557-.34z"/>
+        </svg>
+      </a>
 
       {/* 2.12. HIRE ME RESPONSIVE MODAL FORM */}
       {isHireModalOpen && (
