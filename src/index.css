@@ -199,3 +199,39 @@ form .flex > span {
     padding-right: 16px !important;
   }
 }
+
+/* Hero Background Video styles */
+.hero-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(245, 245, 221, 0.55);
+  pointer-events: none;
+  transition: background-color 0.3s;
+}
+
+.dark .hero-overlay {
+  background: rgba(5, 5, 8, 0.55);
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 100svh !important;
+  }
+}

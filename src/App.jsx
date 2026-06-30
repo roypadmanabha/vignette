@@ -666,6 +666,20 @@ export default function App() {
   // Hero Showcase Video states
   const [isHeroPlaying, setIsHeroPlaying] = useState(false);
   const heroVideoRef = useRef(null);
+  const heroBgVideoRef = useRef(null);
+
+  useEffect(() => {
+    const bgVideo = heroBgVideoRef.current;
+    if (bgVideo) {
+      bgVideo.muted = true;
+      const playPromise = bgVideo.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.log("Hero background video autoplay blocked:", err);
+        });
+      }
+    }
+  }, []);
 
   const toggleHeroPlay = () => {
     if (heroVideoRef.current) {
@@ -1182,19 +1196,24 @@ export default function App() {
         {/* 2.5. HERO SECTION */}
         <section
           id="home"
-          className="min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 mt-6 shadow-sm"
+          className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 mt-6 shadow-sm"
         >
-          {/* Responsive random Lorem Picsum background with contrast overlays */}
-          {heroBgUrl && (
-            <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
-              <img
-                src={heroBgUrl}
-                alt=""
-                className="w-full h-full object-cover opacity-50 transition-opacity duration-1000"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#f5f5dd]/80 to-[#f5f5dd] dark:via-[#050508]/85 dark:to-[#050508]" />
-            </div>
-          )}
+          {/* Looping Muted Local Video Background */}
+          <video
+            ref={heroBgVideoRef}
+            className="hero-bg-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster={heroBgUrl || undefined}
+          >
+            <source src="hero_video.MOV" type="video/quicktime" />
+          </video>
+
+          {/* Overlay Wash Tint */}
+          <div className="hero-overlay" />
 
           {/* Hero Content Container */}
           <div className="relative z-10 flex flex-col items-center justify-center w-full">
