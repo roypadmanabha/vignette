@@ -1233,7 +1233,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
           <section
             id="home"
-            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 shadow-sm bg-[#f5f5dd] dark:bg-zinc-900/10"
+            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 shadow-sm bg-[#f5f5dd] dark:bg-transparent"
           >
             {/* Looping Muted Local Video Background */}
             <video
@@ -1316,7 +1316,7 @@ export default function App() {
         </div>
 
         {/* 2.6. GALLERY SECTION */}
-        <section id="gallery" className="bg-white dark:bg-zinc-950/20 py-24 sm:py-32 scroll-mt-20">
+        <section id="gallery" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1434,7 +1434,7 @@ export default function App() {
         </section>
 
         {/* 2.7. VIDEOS / REELS SECTION */}
-        <section id="videos" className="bg-[#f5f5dd] dark:bg-zinc-900/40 py-24 sm:py-32 scroll-mt-20">
+        <section id="videos" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1524,7 +1524,7 @@ export default function App() {
         </section>
 
         {/* 2.8. EDITING SHOWCASE SECTION */}
-        <section id="editing" className="bg-white dark:bg-zinc-950/20 py-24 sm:py-32 scroll-mt-20">
+        <section id="editing" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1551,7 +1551,7 @@ export default function App() {
         </section>
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="bg-[#f5f5dd] dark:bg-zinc-900/40 py-24 sm:py-32 scroll-mt-20">
+        <section id="vision" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
 
@@ -1643,7 +1643,7 @@ export default function App() {
         </section>
 
         {/* 2.10. HIRE ME SECTION */}
-        <section id="hire" className="bg-white dark:bg-zinc-950/20 py-24 sm:py-32 scroll-mt-20">
+        <section id="hire" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
 
@@ -1889,7 +1889,7 @@ export default function App() {
       </main>
 
       {/* 2.11. FOOTER SECTION */}
-      <footer className="border-t-[0.5px] border-black/50 py-16 mt-16 select-none bg-[#f5f5dd] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors">
+      <footer className="border-t-[0.5px] border-black/50 py-16 mt-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
           
           {/* Main Footer columns row */}
