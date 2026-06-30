@@ -16,6 +16,7 @@ import {
   Eye,
   CheckCircle,
   AlertCircle,
+  TriangleAlert,
   Play,
   Pause
 } from 'lucide-react';
@@ -741,7 +742,7 @@ export default function App() {
     }
     window.toastTimeout = setTimeout(() => {
       setToast({ show: false, message: '' });
-    }, 2000);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -1013,11 +1014,18 @@ export default function App() {
       )}
 
       {/* 2.2. PROTECTED TOAST NOTIFICATION BANNER */}
-      {toast.show && (
-        <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[100] bg-brand-lightRed text-white font-brand font-extrabold px-6 py-3 rounded-full shadow-2xl flex items-center gap-2 transition-all">
-          <span>⚠ Not allowed! Content Protection enabled</span>
-        </div>
-      )}
+      <div 
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#e31c25] text-white font-brand font-extrabold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${
+          toast.show 
+            ? 'top-20 opacity-100 translate-y-0 scale-100' 
+            : 'top-20 opacity-0 -translate-y-4 scale-95'
+        }`}
+      >
+        <TriangleAlert className="w-4.5 h-4.5 text-white flex-shrink-0 animate-bounce" />
+        <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap uppercase tracking-wider">
+          Not allowed! Content Protection enabled
+        </span>
+      </div>
 
       {/* 2.3. STICKY NAVBAR HEADER */}
       <header className={`sticky top-0 z-40 transition-all duration-300 ${isScrolled
