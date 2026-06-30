@@ -1032,7 +1032,7 @@ export default function App() {
             onClick={() => scrollToSection('home')}
           >
             <img
-              src={`${import.meta.env.BASE_URL}logo-icon.png`}
+              src="logo-icon.png"
               alt="V"
               className="w-7 h-7 object-contain select-none pointer-events-none"
               draggable="false"
@@ -1527,7 +1527,7 @@ export default function App() {
                 <div className="flex items-center gap-3 mt-6">
                   <div className="w-10 h-10 rounded-full overflow-hidden border border-black/10 dark:border-white/10 bg-zinc-200">
                     <img
-                      src={`${import.meta.env.BASE_URL}logo-icon.png`}
+                      src="logo-icon.png"
                       alt="P"
                       className="w-full h-full object-contain p-1 select-none"
                       draggable="false"
@@ -1557,7 +1557,7 @@ export default function App() {
             >
               <video
                 ref={heroVideoRef}
-                src={`${import.meta.env.BASE_URL}hero_video.MOV`}
+                src="hero_video.MOV"
                 playsInline
                 controlsList="nodownload nofullscreen noremoteplayback"
                 disablePictureInPicture
@@ -1834,7 +1834,7 @@ export default function App() {
             onClick={() => scrollToSection('home')}
           >
             <img
-              src={`${import.meta.env.BASE_URL}logo-icon.png`}
+              src="logo-icon.png"
               alt="V"
               className="w-5 h-5 object-contain select-none pointer-events-none"
               draggable="false"

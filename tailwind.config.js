@@ -13,8 +13,8 @@ export default {
       },
       colors: {
         brand: {
-          lightRed: '#c0392b',
-          lightOrange: '#e67e22',
+          lightRed: '#000000',
+          lightOrange: '#e31c25',
           darkGold: '#FFD700',
           darkYellow: '#FFF1A8',
         }
