@@ -1015,7 +1015,7 @@ export default function App() {
 
       {/* 2.2. PROTECTED TOAST NOTIFICATION BANNER */}
       <div 
-        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#e31c25] text-white font-brand font-extrabold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${
           toast.show 
             ? 'top-20 opacity-100 translate-y-0 scale-100' 
             : 'top-20 opacity-0 -translate-y-4 scale-95'
