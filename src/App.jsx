@@ -1672,7 +1672,7 @@ export default function App() {
 
             {/* Inquiries Form Column */}
             <div className="reveal lg:col-span-7">
-              <div className="p-5 sm:p-8 md:p-10 rounded-3xl bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-2xl">
+              <div className="p-5 sm:p-8 md:p-10 rounded-3xl bg-[#f5f5dd] dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-2xl">
 
                 {formSuccess ? (
                   /* Success State checkmark container animation */
@@ -2028,7 +2028,7 @@ export default function App() {
           onClick={() => setIsHireModalOpen(false)}
         >
           <div
-            className="relative w-full max-w-2xl bg-zinc-50 dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 p-5 sm:p-8 md:p-10 flex flex-col my-8 select-none"
+            className="relative w-full max-w-2xl bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 p-5 sm:p-8 md:p-10 flex flex-col my-8 select-none"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Close Button */}
