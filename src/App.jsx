@@ -1231,7 +1231,7 @@ export default function App() {
         {/* 2.5. HERO SECTION */}
         <section
           id="home"
-          className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 mt-6 shadow-sm"
+          className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 mt-6 shadow-sm bg-[#f5f5dd] dark:bg-zinc-900/10"
         >
           {/* Looping Muted Local Video Background */}
           <video
@@ -1313,7 +1313,7 @@ export default function App() {
         </section>
 
         {/* 2.6. GALLERY SECTION */}
-        <section id="gallery" className="py-24 sm:py-32 scroll-mt-20">
+        <section id="gallery" className="bg-white dark:bg-zinc-900/10 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
               At a Glance
@@ -1434,7 +1434,7 @@ export default function App() {
         </section>
 
         {/* 2.7. VIDEOS / REELS SECTION */}
-        <section id="videos" className="py-24 sm:py-32 scroll-mt-20">
+        <section id="videos" className="bg-[#f5f5dd] dark:bg-zinc-900/40 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
               Our Highlights
@@ -1522,7 +1522,7 @@ export default function App() {
         </section>
 
         {/* 2.8. EDITING SHOWCASE SECTION */}
-        <section id="editing" className="py-24 sm:py-32 scroll-mt-20">
+        <section id="editing" className="bg-white dark:bg-zinc-900/10 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
               Before / After Showcase
@@ -1547,7 +1547,7 @@ export default function App() {
         </section>
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="pt-24 pb-12 sm:pt-32 sm:pb-16 scroll-mt-20">
+        <section id="vision" className="bg-[#f5f5dd] dark:bg-zinc-900/40 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
 
             {/* Left Narrative Column */}
@@ -1643,7 +1643,7 @@ export default function App() {
         </section>
 
         {/* 2.10. HIRE ME SECTION */}
-        <section id="hire" className="pt-12 pb-24 sm:pt-16 sm:pb-32 scroll-mt-20">
+        <section id="hire" className="bg-white dark:bg-zinc-900/10 rounded-[32px] py-16 px-6 sm:py-24 sm:px-12 my-6 shadow-sm border border-black/5 dark:border-white/5 scroll-mt-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
 
             {/* Context Left Column */}
@@ -1887,8 +1887,7 @@ export default function App() {
       </main>
 
       {/* 2.11. FOOTER SECTION */}
-      {/* 2.11. FOOTER SECTION */}
-      <footer className="border-t border-black py-16 mt-16 select-none bg-[#faf9f6] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors">
+      <footer className="border-t border-black py-16 mt-16 select-none bg-[#f5f5dd] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
           
           {/* Main Footer columns row */}
@@ -1979,7 +1978,7 @@ export default function App() {
                 href="https://www.instagram.com/proy____"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md"
+                className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md"
                 aria-label="Visit proy___ on Instagram"
               >
                 <Instagram className="w-5 h-5" />
@@ -2021,19 +2020,6 @@ export default function App() {
 
         </div>
       </footer>
-
-      {/* Floating WhatsApp Chat Button */}
-      <a
-        href="https://wa.me/918258814126"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-40 p-3.5 rounded-full bg-emerald-500 text-white shadow-xl hover:bg-emerald-600 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center"
-        aria-label="Chat on WhatsApp"
-      >
-        <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.731-1.456L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.97C16.59 2.028 14.11 1.011 11.996 1.011c-5.44 0-9.866 4.371-9.87 9.8-.002 1.838.485 3.633 1.41 5.2l-.337 1.232-.345 1.263 1.294-.338 1.157-.302zm11.232-6.52c-.29-.145-1.713-.845-1.978-.94-.266-.097-.459-.145-.653.145-.193.29-.747.94-.916 1.127-.168.193-.338.217-.627.072-2.316-1.164-3.51-1.76-4.912-4.178-.368-.636.368-.59 1.05-1.95.115-.23.057-.43-.028-.574-.086-.145-.653-1.57-.894-2.152-.235-.568-.475-.49-.652-.499-.17-.008-.363-.008-.557-.008-.194 0-.508.073-.774.364-.266.29-1.016.992-1.016 2.42 0 1.428 1.04 2.807 1.185 3.001.145.194 2.046 3.125 4.957 4.38.692.298 1.233.477 1.654.61.696.22 1.33.193 1.83.118.558-.084 1.713-.699 1.954-1.375.24-.676.24-1.258.17-1.376-.073-.118-.266-.194-.557-.34z"/>
-        </svg>
-      </a>
 
       {/* 2.12. HIRE ME RESPONSIVE MODAL FORM */}
       {isHireModalOpen && (
