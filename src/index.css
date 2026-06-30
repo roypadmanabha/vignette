@@ -1,0 +1,202 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Mulish:wght@400;500;600;700;800;900&display=swap');
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-heading: 'Mulish', sans-serif;
+  --font-body: 'Mulish', sans-serif;
+  --font-brand: 'Nunito', sans-serif;
+
+  --color-brand-lightRed: #c0392b;
+  --color-brand-lightOrange: #e67e22;
+  --color-brand-darkGold: #FFD700;
+  --color-brand-darkYellow: #FFF1A8;
+
+  --animate-shimmer: shimmer 12s linear infinite;
+
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
+
+@layer base {
+  body {
+    @apply antialiased transition-colors duration-300 overflow-x-hidden;
+    font-family: 'Mulish', sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Mulish', sans-serif;
+    font-weight: 800;
+  }
+
+  /* Make sure inputs and textareas are selectable */
+  input, textarea, [contenteditable="true"] {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+  }
+
+  /* Prevent image and video dragging */
+  img, video {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-select: none;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(90deg, #c0392b, #e67e22);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+  }
+
+  .dark .text-gradient {
+    background: linear-gradient(90deg, #FFD700, #FFF1A8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% auto;
+  }
+
+  .brand-text-gradient {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    background: linear-gradient(90deg, #000000, #e31c25);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  .dark .brand-text-gradient {
+    background: linear-gradient(90deg, #e31c25, #FFBF00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  /* Custom frosted glass */
+  .glassmorphism {
+    @apply border-b border-black/5 bg-white/70 backdrop-blur-md;
+  }
+
+  .dark .glassmorphism {
+    @apply border-b border-white/5 bg-black/70 backdrop-blur-md;
+  }
+
+  /* Scroll Reveal classes */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px) scale(0.96);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-black/20 hover:bg-black/30 transition-colors;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-white/20 hover:bg-white/30;
+  }
+}
+
+/* Base colors */
+.bg-light-theme {
+  background-color: #f5f5dd;
+}
+.bg-dark-theme {
+  background-color: #050508;
+}
+
+/* Reduced Motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Tighter, premium form styling overrides for mobile and desktop */
+form label {
+  font-size: 10px !important;
+}
+@media (min-width: 640px) {
+  form label {
+    font-size: 12px !important;
+  }
+}
+
+form input, form select, form textarea {
+  font-size: 13px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+}
+@media (min-width: 640px) {
+  form input, form select, form textarea {
+    font-size: 14px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
+
+form button[type="submit"] {
+  font-size: 13px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+@media (min-width: 640px) {
+  form button[type="submit"] {
+    font-size: 14px !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+  }
+}
+
+form .flex > span {
+  font-size: 13px !important;
+  padding-left: 14px !important;
+  padding-right: 14px !important;
+}
+@media (min-width: 640px) {
+  form .flex > span {
+    font-size: 14px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+}
