@@ -1209,7 +1209,7 @@ export default function App() {
             preload="auto"
             poster={heroBgUrl || undefined}
           >
-            <source src="videos/hero-bg.mp4" type="video/mp4" />
+            <source src="hero_video.MOV" type="video/quicktime" />
           </video>
 
           {/* Overlay Wash Tint */}
@@ -1218,9 +1218,9 @@ export default function App() {
           {/* Hero Content Container */}
           <div className="relative z-10 flex flex-col items-center justify-center w-full">
             {/* Eyebrow */}
-            <div className="reveal flex items-center gap-2 mb-6 font-brand font-extrabold text-xs md:text-sm tracking-[0.25em] text-zinc-950 dark:text-white uppercase">
-              <Sparkles className="w-4 h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse" />
-              <span>Digital Creator · Storyteller · Avgeek</span>
+            <div className="reveal flex items-center justify-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm tracking-[0.12em] sm:tracking-[0.25em] text-zinc-950 dark:text-white uppercase px-4 select-none">
+              <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse flex-shrink-0" />
+              <span className="whitespace-nowrap">Digital Creator · Storyteller · Avgeek</span>
             </div>
 
             {/* H1 Heading with looping shimmer */}
