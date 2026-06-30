@@ -1209,7 +1209,7 @@ export default function App() {
             preload="auto"
             poster={heroBgUrl || undefined}
           >
-            <source src="hero_video.MOV" type="video/quicktime" />
+            <source src="videos/hero-bg.mp4" type="video/mp4" />
           </video>
 
           {/* Overlay Wash Tint */}
