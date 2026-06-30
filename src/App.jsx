@@ -1574,23 +1574,26 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Right Signature Column Card */}
+              {/* Right Pull-quote Graphic Column */}
               <div className="reveal lg:col-span-5 flex flex-col justify-center">
-                <div className="p-8 sm:p-10 rounded-[32px] bg-white dark:bg-zinc-900/50 border border-black/5 dark:border-white/5 shadow-xl flex flex-col justify-between">
-                  <span className="font-heading font-bold text-4xl sm:text-5xl text-zinc-900 dark:text-white mb-6">
+                <div className="relative p-8 md:p-12 rounded-2xl bg-white dark:bg-zinc-900/40 backdrop-blur-sm border border-brand-lightRed/20 dark:border-brand-darkGold/20 shadow-xl">
+                  {/* Thick styling border accent */}
+                  <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-l-2xl" />
+
+                  {/* Quote details */}
+                  <span className="font-brand text-6xl text-brand-lightRed/20 dark:text-brand-darkGold/25 absolute top-4 left-6 select-none pointer-events-none">
                     “
                   </span>
-                  <blockquote className="font-body italic text-base sm:text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed text-justify">
-                    Visual storytelling is the art of highlighting what is already beautiful, using light and timing to reveal the unseen lines.
+                  <blockquote className="font-brand font-extrabold italic text-xl md:text-2xl text-zinc-800 dark:text-zinc-200 mt-2 leading-relaxed transition-colors select-none">
+                    Content isn't just about what you see. It is about how long the feeling lingers after you've scrolled past the frame.
                   </blockquote>
-                  
-                  {/* Author Meta Info */}
-                  <div className="flex items-center gap-4 mt-8 pt-6 border-t border-black/5 dark:border-white/5">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-zinc-200 dark:border-zinc-800">
+
+                  <div className="flex items-center gap-3 mt-6">
+                    <div className="w-10 h-10 rounded-full overflow-hidden border border-black/10 dark:border-white/10 bg-zinc-200">
                       <img
-                        src="avatar.jpg"
-                        alt="Padmanabha Roy"
-                        className="w-full h-full object-cover select-none pointer-events-none"
+                        src="logo-icon.png"
+                        alt="P"
+                        className="w-full h-full object-contain p-1 select-none pointer-events-none"
                         draggable="false"
                       />
                     </div>
