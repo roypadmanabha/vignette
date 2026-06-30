@@ -1068,11 +1068,11 @@ export default function App() {
           <nav className="hidden md:flex items-center gap-8 font-brand font-bold text-sm">
             {[
               { label: 'Home', id: 'home' },
-              { label: 'Gallery', id: 'gallery' },
+              { label: 'Royography', id: 'gallery' },
               { label: 'Videos', id: 'videos' },
               { label: 'Editing', id: 'editing' },
-              { label: 'Vision', id: 'vision' },
-              { label: 'Hire Me', id: 'hire' }
+              { label: 'About', id: 'vision' },
+              { label: 'Hire', id: 'hire' }
             ].map(link => (
               <button
                 key={link.id}
@@ -1158,11 +1158,11 @@ export default function App() {
           <nav className="flex flex-col gap-6">
             {[
               { label: 'Home', id: 'home' },
-              { label: 'Gallery', id: 'gallery' },
+              { label: 'Royography', id: 'gallery' },
               { label: 'Videos', id: 'videos' },
               { label: 'Editing', id: 'editing' },
-              { label: 'Vision', id: 'vision' },
-              { label: 'Hire Me', id: 'hire' }
+              { label: 'About', id: 'vision' },
+              { label: 'Hire', id: 'hire' }
             ].map((link, index) => (
               <button
                 key={link.id}
@@ -1897,11 +1897,11 @@ export default function App() {
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 font-brand font-bold text-xs text-zinc-500 dark:text-zinc-400">
             {[
               { label: 'Home', id: 'home' },
-              { label: 'Gallery', id: 'gallery' },
+              { label: 'Royography', id: 'gallery' },
               { label: 'Videos', id: 'videos' },
               { label: 'Editing', id: 'editing' },
-              { label: 'Vision', id: 'vision' },
-              { label: 'Hire Me', id: 'hire' }
+              { label: 'About', id: 'vision' },
+              { label: 'Hire', id: 'hire' }
             ].map(link => (
               <button
                 key={link.id}
