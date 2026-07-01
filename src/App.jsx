@@ -1086,7 +1086,9 @@ export default function App() {
 
           {/* Logo Brand Name (Two-tone wordmark + icon) */}
           <div
-            className="flex items-center gap-2 md:gap-2.5 cursor-pointer z-50 select-none"
+            className={`flex items-center gap-2 md:gap-2.5 cursor-pointer z-50 select-none transition-all duration-300 ${
+              mobileMenuOpen ? 'opacity-0 blur-sm pointer-events-none' : 'opacity-100'
+            }`}
             onClick={() => scrollToSection('home')}
           >
             <img
