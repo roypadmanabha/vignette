@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/vignette/',
   plugins: [react()],
   server: {
-    port: 6060,
+    port: 6000,
     host: true,
   },
 })
