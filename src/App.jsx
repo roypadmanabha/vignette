@@ -355,8 +355,7 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
 
   const handlePointerDown = (e) => {
     setIsDragging(true);
-    handleMove(e.clientX);
-    containerRef.current.setPointerCapture(e.pointerId);
+    e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e) => {
@@ -366,19 +365,14 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
 
   const handlePointerUp = (e) => {
     setIsDragging(false);
-    if (containerRef.current) {
-      containerRef.current.releasePointerCapture(e.pointerId);
-    }
+    e.currentTarget.releasePointerCapture(e.pointerId);
   };
 
   return (
     <div className="flex flex-col gap-3">
       <div
         ref={containerRef}
-        className="relative overflow-hidden aspect-[4/3] rounded-2xl shadow-xl select-none cursor-ew-resize border border-black/10 dark:border-white/10 group bg-zinc-200 dark:bg-zinc-800"
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerUp}
+        className="relative overflow-hidden aspect-[4/3] rounded-2xl shadow-xl select-none border border-black/10 dark:border-white/10 group bg-zinc-200 dark:bg-zinc-800"
       >
         {/* Before Image (underneath) */}
         <img
@@ -408,8 +402,14 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
           className="absolute inset-y-0 w-[2px] bg-white z-20 pointer-events-none"
           style={{ left: `${sliderPos}%` }}
         >
-          <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 bg-white dark:bg-zinc-900 border-2 border-brand-lightRed dark:border-brand-darkGold rounded-full shadow-2xl flex items-center justify-center pointer-events-none transition-transform group-hover:scale-110">
-            <svg className="w-5 h-5 text-brand-lightRed dark:text-brand-darkGold" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+          <div
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            style={{ touchAction: 'none' }}
+            className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 bg-white dark:bg-zinc-900 border-2 border-brand-lightRed dark:border-brand-darkGold rounded-full shadow-2xl flex items-center justify-center cursor-ew-resize transition-transform hover:scale-110 pointer-events-auto active:scale-95"
+          >
+            <svg className="w-5 h-5 text-brand-lightRed dark:text-brand-darkGold select-none pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
               <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" className="rotate-90 origin-center" />
             </svg>
           </div>
