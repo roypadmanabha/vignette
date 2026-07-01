@@ -971,6 +971,11 @@ export default function App() {
       setFormSubmitting(false);
       return;
     }
+    if (message.trim().length < 30) {
+      setFormError('Message must be at least 30 characters long.');
+      setFormSubmitting(false);
+      return;
+    }
     if (message.length > 5000) {
       setFormError('Message cannot exceed 5000 characters.');
       setFormSubmitting(false);
@@ -1856,6 +1861,7 @@ export default function App() {
                         placeholder="Write details about your project or collaboration opportunity..."
                         disabled={formSubmitting}
                         required
+                        minLength={30}
                         maxLength={5000}
                         className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-y"
                       />
@@ -2257,6 +2263,7 @@ export default function App() {
                     placeholder="Write details about your project or collaboration opportunity..."
                     disabled={formSubmitting}
                     required
+                    minLength={30}
                     maxLength={5000}
                     className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-y"
                   />
