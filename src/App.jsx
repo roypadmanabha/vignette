@@ -317,7 +317,7 @@ const Starfield = ({ isDark }) => {
   return (
     <canvas
       ref={canvasRef}
-      className={`fixed inset-0 z-0 pointer-events-none transition-opacity duration-1000 ${isDark ? 'opacity-100' : 'opacity-0'
+      className={`fixed inset-0 w-full h-full z-0 pointer-events-none transition-opacity duration-1000 ${isDark ? 'opacity-100' : 'opacity-0'
         }`}
     />
   );
@@ -1227,7 +1227,7 @@ export default function App() {
       {/* ==========================================
           MAIN LAYOUT CONTAINER (Content above z-10)
           ========================================== */}
-      <main className="relative z-10 w-full">
+      <main className="relative z-10 w-full overflow-x-hidden">
 
         {/* 2.5. HERO SECTION */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
@@ -1892,7 +1892,7 @@ export default function App() {
       </main>
 
       {/* 2.11. FOOTER SECTION */}
-      <footer className="border-t-[0.5px] border-black/50 py-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors">
+      <footer className="border-t-[0.5px] border-black/50 py-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
           
           {/* Main Footer columns row */}
