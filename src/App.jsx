@@ -64,8 +64,8 @@ const Menu2 = (props) => (
     strokeLinejoin="round"
     {...props}
   >
-    <line x1="5" y1="8" x2="19" y2="8" />
-    <line x1="5" y1="16" x2="19" y2="16" />
+    <line x1="6" y1="8" x2="18" y2="8" />
+    <line x1="11" y1="16" x2="18" y2="16" />
   </svg>
 );
 
