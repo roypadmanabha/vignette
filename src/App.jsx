@@ -1082,20 +1082,20 @@ export default function App() {
         ? 'glassmorphism shadow-sm'
         : 'bg-transparent border-b border-transparent shadow-none'
         }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[53.2px] md:h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 md:h-16 flex items-center justify-between">
 
           {/* Logo Brand Name (Two-tone wordmark + icon) */}
           <div
-            className="flex items-center gap-2.5 cursor-pointer z-50 select-none"
+            className="flex items-center gap-2 md:gap-2.5 cursor-pointer z-50 select-none"
             onClick={() => scrollToSection('home')}
           >
             <img
               src="logo-icon.png"
               alt="V"
-              className="w-7 h-7 object-contain select-none pointer-events-none"
+              className="w-6 h-6 md:w-7 md:h-7 object-contain select-none pointer-events-none"
               draggable="false"
             />
-            <span className="brand-text-gradient text-2xl tracking-tight select-none">
+            <span className="brand-text-gradient text-xl md:text-2xl tracking-tight select-none">
               Vignette
             </span>
           </div>
