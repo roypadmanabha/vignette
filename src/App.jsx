@@ -1368,11 +1368,11 @@ export default function App() {
                 <div className="absolute w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] rounded-full bg-gradient-to-tr from-brand-lightRed/5 to-brand-lightOrange/10 dark:from-brand-darkGold/5 dark:to-brand-darkYellow/10 blur-xl" />
 
                 {/* Main Portrait Frame */}
-                <div className="relative w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl z-10 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
+                <div className="relative w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl z-10 bg-white dark:bg-zinc-950 flex items-center justify-center">
                   <img
-                    src="avatar-proy.jpg"
-                    alt="Padmanabha Roy"
-                    className="w-full h-full object-cover scale-[1.05] pointer-events-none select-none"
+                    src="logo-icon.png"
+                    alt="Vignette Brand Logo"
+                    className="w-full h-full object-contain p-4 sm:p-6 select-none pointer-events-none"
                     draggable="false"
                   />
                 </div>
