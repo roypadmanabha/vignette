@@ -54,6 +54,22 @@ const Facebook = (props) => (
   </svg>
 );
 
+const Menu2 = (props) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <line x1="5" y1="8" x2="19" y2="8" />
+    <line x1="5" y1="16" x2="19" y2="16" />
+  </svg>
+);
+
+
 const ThreadsIcon = (props) => (
   <svg
     viewBox="0 0 192 192"
@@ -1160,7 +1176,7 @@ export default function App() {
               className="md:hidden p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors focus:outline-none"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu2 className="w-5 h-5" />}
             </button>
           </div>
         </div>
