@@ -1892,7 +1892,7 @@ export default function App() {
       </main>
 
       {/* 2.11. FOOTER SECTION */}
-      <footer className="border-t-[0.5px] border-black/50 py-16 mt-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors">
+      <footer className="border-t-[0.5px] border-black/50 py-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
           
           {/* Main Footer columns row */}
