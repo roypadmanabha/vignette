@@ -1082,11 +1082,11 @@ export default function App() {
         ? 'glassmorphism shadow-sm'
         : 'bg-transparent border-b border-transparent shadow-none'
         }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 md:h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 lg:h-16 flex items-center justify-between">
 
           {/* Logo Brand Name (Two-tone wordmark + icon) */}
           <div
-            className={`flex items-center gap-2 md:gap-2.5 cursor-pointer z-50 select-none transition-all duration-300 ${
+            className={`flex items-center gap-2 lg:gap-2.5 cursor-pointer z-50 select-none transition-all duration-300 ${
               mobileMenuOpen ? 'opacity-0 blur-sm pointer-events-none' : 'opacity-100'
             }`}
             onClick={() => scrollToSection('home')}
@@ -1094,16 +1094,16 @@ export default function App() {
             <img
               src="logo-icon.png"
               alt="V"
-              className="w-6 h-6 md:w-7 md:h-7 object-contain select-none pointer-events-none"
+              className="w-6 h-6 lg:w-7 lg:h-7 object-contain select-none pointer-events-none"
               draggable="false"
             />
-            <span className="brand-text-gradient text-xl md:text-2xl tracking-tight select-none">
+            <span className="brand-text-gradient text-xl lg:text-2xl tracking-tight select-none">
               Vignette
             </span>
           </div>
 
           {/* Desktop Navigation Link Menu */}
-          <nav className="hidden md:flex items-center gap-8 font-brand font-bold text-sm">
+          <nav className="hidden lg:flex items-center gap-8 font-brand font-bold text-sm">
             {[
               { label: 'At Glance', id: 'gallery' },
               { label: 'Services', url: '/' },
@@ -1145,7 +1145,7 @@ export default function App() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle visual theme"
-              className="hidden md:flex relative w-14 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center px-1 transition-colors border border-black/10 dark:border-white/10"
+              className="hidden lg:flex relative w-14 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center px-1 transition-colors border border-black/10 dark:border-white/10"
             >
               <div
                 className={`absolute w-6 h-6 rounded-full bg-white dark:bg-zinc-950 flex items-center justify-center shadow-md transition-all duration-300 ${isDark ? 'translate-x-6' : 'translate-x-0'
@@ -1163,7 +1163,7 @@ export default function App() {
             <button
               onClick={toggleTheme}
               aria-label="Toggle visual theme"
-              className="flex md:hidden p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-zinc-700 dark:text-zinc-300 transition-colors"
+              className="flex lg:hidden p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-zinc-700 dark:text-zinc-300 transition-colors"
             >
               {isDark ? (
                 <Moon className="w-4 h-4 text-brand-darkGold" fill="currentColor" />
@@ -1175,7 +1175,7 @@ export default function App() {
             {/* Mobile Hamburger toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors focus:outline-none"
+              className="lg:hidden p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu2 className="w-5 h-5" />}
@@ -1188,13 +1188,13 @@ export default function App() {
       {/* Backdrop shadow overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-35 bg-black/40 backdrop-blur-xs md:hidden transition-opacity duration-300"
+          className="fixed inset-0 z-35 bg-black/40 backdrop-blur-xs lg:hidden transition-opacity duration-300"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
       <div
-        className={`fixed inset-y-0 right-0 z-40 w-[65vw] sm:w-[45vw] bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl border-l border-black/5 dark:border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.08)] transition-transform duration-500 ease-out md:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-y-0 right-0 z-40 w-[65vw] sm:w-[45vw] bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl border-l border-black/5 dark:border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.08)] transition-transform duration-500 ease-out lg:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
         {/* Brand Logo & Name Header in Drawer */}
