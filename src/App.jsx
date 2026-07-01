@@ -1977,6 +1977,143 @@ export default function App() {
           </div>
         </section>
 
+        {/* 2.10. INSTAGRAM FOLLOW & EMBED SECTION */}
+        <section id="instagram-follow" className="bg-white dark:bg-transparent py-20 sm:py-28 border-t border-black/5 dark:border-white/5 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
+              
+              {/* Left Column: Heading and Subtext */}
+              <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left">
+                <span className="reveal font-heading font-extrabold text-xs tracking-widest text-brand-lightRed dark:text-brand-darkGold uppercase mb-3">
+                  Stay Connected
+                </span>
+                <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
+                  Follow the Story on Instagram
+                </h2>
+                <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-6 leading-relaxed transition-colors text-justify">
+                  Get daily doses of high-paced editing workflows, travel highlights, behind-the-scenes creation processes, and Lightroom preset secrets. Explore the cinematic runs from a brand new perspective.
+                </p>
+                <a
+                  href="https://www.instagram.com/proy____"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="reveal mt-8 inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black hover:-translate-y-[2px] active:scale-98 shadow-md hover:shadow-lg transition-all duration-300 select-none cursor-pointer"
+                >
+                  <Instagram className="w-4 h-4" />
+                  Follow @proy____
+                </a>
+              </div>
+
+              {/* Right Column: Premium Instagram Profile Embed Card */}
+              <div className="lg:col-span-7 flex justify-center">
+                <div className="reveal w-full max-w-[420px] rounded-3xl bg-zinc-50 dark:bg-zinc-900/40 border border-black/5 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden select-none hover:border-brand-lightOrange/30 dark:hover:border-brand-darkGold/30 transition-all duration-500">
+                  {/* Card Header Profile Block */}
+                  <div className="p-5 sm:p-6 flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        {/* Avatar container with Story ring */}
+                        <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]">
+                          <div className="w-full h-full rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden p-[2px]">
+                            <img
+                              src="logo-icon.png"
+                              alt="Padmanabha Roy"
+                              className="w-full h-full object-contain p-0.5"
+                            />
+                          </div>
+                        </div>
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-1">
+                            <span className="font-heading font-black text-sm text-zinc-900 dark:text-white">
+                              proy____
+                            </span>
+                            {/* Blue Verified Badge */}
+                            <svg className="w-3.5 h-3.5 fill-[#0095f6]" viewBox="0 0 24 24">
+                              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                            </svg>
+                          </div>
+                          <span className="font-body text-[10px] text-zinc-500 dark:text-zinc-400">
+                            Padmanabha Roy
+                          </span>
+                        </div>
+                      </div>
+                      <a
+                        href="https://www.instagram.com/proy____"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-1.5 rounded-lg bg-[#0095f6] hover:bg-[#1877f2] font-brand font-extrabold text-xs text-white transition-all cursor-pointer"
+                      >
+                        Follow
+                      </a>
+                    </div>
+
+                    {/* Stats Row */}
+                    <div className="flex items-center gap-6 sm:gap-8 font-body text-xs text-zinc-700 dark:text-zinc-300">
+                      <div>
+                        <strong className="font-brand font-black text-zinc-950 dark:text-white">248</strong> posts
+                      </div>
+                      <div>
+                        <strong className="font-brand font-black text-zinc-950 dark:text-white">12.4K</strong> followers
+                      </div>
+                      <div>
+                        <strong className="font-brand font-black text-zinc-950 dark:text-white">412</strong> following
+                      </div>
+                    </div>
+
+                    {/* Bio Block */}
+                    <div className="font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                      <p className="font-bold text-zinc-800 dark:text-zinc-200">Vignette Founder | Storyteller</p>
+                      <p>🎬 Premium editing pacing & Colorist</p>
+                      <p>✈️ Aviation enthusiast & Travel Editor</p>
+                      <a
+                        href="https://linktr.ee/proy____"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[#00376b] dark:text-[#e0f1ff] font-semibold mt-1 inline-block"
+                      >
+                        linktr.ee/proy____
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Grid of Posts (6 images/mockups representing the feed) */}
+                  <div className="grid grid-cols-3 gap-[2px] bg-zinc-200 dark:bg-zinc-800">
+                    {[
+                      { media: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
+                      { media: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
+                      { media: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
+                      { media: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
+                      { media: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
+                      { media: 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' }
+                    ].map((item, idx) => (
+                      <a
+                        key={idx}
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative aspect-square group overflow-hidden cursor-pointer"
+                      >
+                        <img
+                          src={item.media}
+                          alt="Feed Post"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity duration-300 gap-1.5 text-xs font-heading font-extrabold">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                          </svg>
+                          <span>View</span>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
       </main>
 
       {/* 2.11. FOOTER SECTION */}
