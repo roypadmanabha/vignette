@@ -23,8 +23,12 @@
 }
 
 @layer base {
-  body {
+  html, body {
     @apply antialiased transition-colors duration-300 overflow-x-hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+  body {
     font-family: 'Mulish', sans-serif;
     user-select: none;
     -webkit-user-select: none;

@@ -1023,7 +1023,7 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen text-zinc-900 dark:text-zinc-100 transition-colors duration-300 relative ${isDark ? 'bg-dark-theme' : 'bg-light-theme'}`}>
+    <div className={`min-h-screen overflow-x-hidden w-full max-w-full text-zinc-900 dark:text-zinc-100 transition-colors duration-300 relative ${isDark ? 'bg-dark-theme' : 'bg-light-theme'}`}>
 
       {/* 2.0. LIVE ANIMATED STARFIELD BACKDROP */}
       <Starfield isDark={isDark} />
