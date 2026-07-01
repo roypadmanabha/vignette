@@ -1222,7 +1222,7 @@ export default function App() {
                     key={link.label}
                     href={link.url}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+                    className="font-heading font-extrabold text-xs sm:text-sm tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
                   >
                     {link.label}
                   </a>
@@ -1235,7 +1235,7 @@ export default function App() {
                     setMobileMenuOpen(false);
                     scrollToSection(link.id);
                   }}
-                  className="font-heading font-extrabold text-xs sm:text-sm uppercase tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+                  className="font-heading font-extrabold text-xs sm:text-sm tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
                 >
                   {link.label}
                 </button>
