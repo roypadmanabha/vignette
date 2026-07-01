@@ -1879,6 +1879,25 @@ export default function App() {
                         </>
                       )}
                     </button>
+
+                    {/* Reset Button */}
+                    <div className="flex justify-center mt-3">
+                      <button
+                        type="button"
+                        onClick={() => setFormState({
+                          salutation: '',
+                          firstName: '',
+                          lastName: '',
+                          purpose: '',
+                          mobile: '',
+                          email: '',
+                          message: ''
+                        })}
+                        className="font-brand font-extrabold text-[10px] tracking-widest text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors uppercase cursor-pointer"
+                      >
+                        Reset
+                      </button>
+                    </div>
                   </form>
                 )}
 
@@ -2261,6 +2280,25 @@ export default function App() {
                     </>
                   )}
                 </button>
+
+                {/* Reset Button */}
+                <div className="flex justify-center mt-3">
+                  <button
+                    type="button"
+                    onClick={() => setFormState({
+                      salutation: '',
+                      firstName: '',
+                      lastName: '',
+                      purpose: '',
+                      mobile: '',
+                      email: '',
+                      message: ''
+                    })}
+                    className="font-brand font-extrabold text-[10px] tracking-widest text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors uppercase cursor-pointer"
+                  >
+                    Reset
+                  </button>
+                </div>
               </form>
             )}
           </div>
