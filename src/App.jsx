@@ -1192,39 +1192,56 @@ export default function App() {
       )}
 
       <div
-        className={`fixed inset-y-0 right-0 z-40 w-[55vw] sm:w-[45vw] bg-[#f5f5dd]/95 dark:bg-[#050508]/95 backdrop-blur-md border-l border-black/5 dark:border-white/5 shadow-2xl transition-transform duration-300 md:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        className={`fixed inset-y-0 right-0 z-40 w-[65vw] sm:w-[45vw] bg-white/80 dark:bg-zinc-950/80 backdrop-blur-2xl border-l border-black/5 dark:border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.08)] transition-transform duration-500 ease-out md:hidden ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
+        {/* Brand Logo & Name Header in Drawer */}
+        <div className="absolute top-5 left-6 flex items-center gap-2">
+          <img
+            src="logo-icon.png"
+            alt="V"
+            className="w-5 h-5 object-contain select-none pointer-events-none"
+            draggable="false"
+          />
+          <span className="brand-text-gradient font-heading font-black text-sm tracking-tight select-none">
+            Vignette
+          </span>
+        </div>
+
         {/* Close Button Inside Drawer */}
         <button
           onClick={() => setMobileMenuOpen(false)}
-          className="absolute top-4 right-4 p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors"
+          className="absolute top-4 right-4 p-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-white transition-colors"
           aria-label="Close menu"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Inner links container */}
-        <div className="flex flex-col h-full pt-20 px-6 justify-between pb-8">
-          <nav className="flex flex-col gap-6">
+        <div className="flex flex-col h-full pt-20 px-4 justify-between pb-8">
+          <nav className="flex flex-col gap-2">
             {[
-              { label: 'At Glance', id: 'gallery' },
-              { label: 'Services', url: '/' },
-              { label: 'Highlights', id: 'videos' },
-              { label: 'Our Works', id: 'editing' },
-              { label: 'Royography', url: '/' },
-              { label: 'About', id: 'vision' },
-              { label: 'Contact', id: 'hire' }
+              { label: 'At Glance', id: 'gallery', icon: Compass },
+              { label: 'Services', url: '/', icon: Sliders },
+              { label: 'Highlights', id: 'videos', icon: Play },
+              { label: 'Our Works', id: 'editing', icon: Video },
+              { label: 'Royography', url: '/', icon: Camera },
+              { label: 'About', id: 'vision', icon: Sparkles },
+              { label: 'Contact', id: 'hire', icon: Send }
             ].map((link) => {
+              const Icon = link.icon;
+              const linkClasses = "flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs sm:text-sm font-brand font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group";
+              
               if (link.url) {
                 return (
                   <a
                     key={link.label}
                     href={link.url}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-heading font-extrabold text-xs sm:text-sm tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+                    className={linkClasses}
                   >
-                    {link.label}
+                    <Icon className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-brand-lightOrange dark:group-hover:text-brand-darkGold transition-colors" />
+                    <span>{link.label}</span>
                   </a>
                 );
               }
@@ -1235,17 +1252,38 @@ export default function App() {
                     setMobileMenuOpen(false);
                     scrollToSection(link.id);
                   }}
-                  className="font-heading font-extrabold text-xs sm:text-sm tracking-wider text-left text-zinc-600 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors py-1.5"
+                  className={linkClasses}
                 >
-                  {link.label}
+                  <Icon className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-brand-lightOrange dark:group-hover:text-brand-darkGold transition-colors" />
+                  <span>{link.label}</span>
                 </button>
               );
             })}
           </nav>
 
-          {/* Small brand footer in drawer */}
-          <div className="text-[9px] text-zinc-400 dark:text-zinc-500 font-body uppercase tracking-wider select-none">
-            Vignette © {new Date().getFullYear()}
+          {/* Social icons + copyright in drawer */}
+          <div className="flex flex-col gap-4 border-t border-black/5 dark:border-white/5 pt-4 px-4">
+            <div className="flex items-center gap-3">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-zinc-500 hover:text-brand-lightOrange dark:text-zinc-400 dark:hover:text-brand-darkGold hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-8 h-8 rounded-full bg-black/5 dark:bg-white/5 flex items-center justify-center text-zinc-500 hover:text-brand-lightOrange dark:text-zinc-400 dark:hover:text-brand-darkGold hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+            </div>
+            <div className="text-[9px] text-zinc-400 dark:text-zinc-500 font-body uppercase tracking-wider select-none">
+              Vignette © {new Date().getFullYear()}
+            </div>
           </div>
         </div>
       </div>
