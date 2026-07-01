@@ -1082,20 +1082,20 @@ export default function App() {
         ? 'glassmorphism shadow-sm'
         : 'bg-transparent border-b border-transparent shadow-none'
         }`}>
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-11 sm:h-14 md:h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[53.2px] md:h-16 flex items-center justify-between">
 
           {/* Logo Brand Name (Two-tone wordmark + icon) */}
           <div
-            className="flex items-center gap-2 sm:gap-2.5 cursor-pointer z-50 select-none"
+            className="flex items-center gap-2.5 cursor-pointer z-50 select-none"
             onClick={() => scrollToSection('home')}
           >
             <img
               src="logo-icon.png"
               alt="V"
-              className="w-5.5 h-5.5 sm:w-7 sm:h-7 object-contain select-none pointer-events-none"
+              className="w-7 h-7 object-contain select-none pointer-events-none"
               draggable="false"
             />
-            <span className="brand-text-gradient text-lg sm:text-2xl tracking-tight select-none">
+            <span className="brand-text-gradient text-2xl tracking-tight select-none">
               Vignette
             </span>
           </div>
@@ -1137,7 +1137,7 @@ export default function App() {
           </nav>
 
           {/* Actions: Theme Toggle & Hamburger */}
-          <div className="flex items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-4">
 
             {/* Theme Toggle Pill Switch (Desktop) */}
             <button
@@ -1146,7 +1146,7 @@ export default function App() {
               className="hidden md:flex relative w-14 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center px-1 transition-colors border border-black/10 dark:border-white/10"
             >
               <div
-                className={`absolute w-6 h-6 rounded-full bg-white dark:bg-zinc-955 flex items-center justify-center shadow-md transition-all duration-300 ${isDark ? 'translate-x-6' : 'translate-x-0'
+                className={`absolute w-6 h-6 rounded-full bg-white dark:bg-zinc-950 flex items-center justify-center shadow-md transition-all duration-300 ${isDark ? 'translate-x-6' : 'translate-x-0'
                   }`}
               >
                 {isDark ? (
@@ -1173,7 +1173,7 @@ export default function App() {
             {/* Mobile Hamburger toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-1.5 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors focus:outline-none"
+              className="md:hidden p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white transition-colors focus:outline-none"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu2 className="w-5 h-5" />}
