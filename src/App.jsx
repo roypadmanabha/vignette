@@ -1370,7 +1370,7 @@ export default function App() {
                 {/* Main Portrait Frame */}
                 <div className="relative w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl z-10 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
                   <img
-                    src="avatar-proy.png"
+                    src="avatar-proy.jpg"
                     alt="Padmanabha Roy"
                     className="w-full h-full object-cover scale-[1.05] pointer-events-none select-none"
                     draggable="false"
