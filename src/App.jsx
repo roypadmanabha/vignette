@@ -1357,12 +1357,12 @@ export default function App() {
             </div>
 
             {/* Gallery Cards Masonry/Grid */}
-            <div className="reveal grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 px-4">
+            <div className="reveal grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 px-2 sm:px-4">
               {filteredGallery.map((item, idx) => (
                 <div
                   key={item.id}
                   onClick={() => handleImageClick(idx)}
-                  className="group relative rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 select-none"
+                  className="group relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 select-none"
                 >
                   <img
                     src={item.media_url}
@@ -1372,16 +1372,16 @@ export default function App() {
                     loading="lazy"
                   />
                   {/* Frosted Metadata Strip bottom */}
-                  <div className="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/60 dark:bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between text-white transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
+                  <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4 p-2 sm:p-4 rounded-lg sm:rounded-xl bg-black/60 dark:bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between text-white transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
                     <div className="flex flex-col">
-                      <span className="font-brand font-extrabold text-xs uppercase tracking-wider text-brand-darkGold select-none">
+                      <span className="font-brand font-extrabold text-[8px] sm:text-xs uppercase tracking-wider text-brand-darkGold select-none">
                         {item.category}
                       </span>
-                      <h3 className="font-heading font-black text-sm mt-1 leading-tight select-none">
+                      <h3 className="font-heading font-black text-[10px] sm:text-sm mt-0.5 sm:mt-1 leading-tight select-none">
                         {item.title}
                       </h3>
                     </div>
-                    <Maximize2 className="w-4 h-4 text-zinc-300 group-hover:text-white" />
+                    <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-300 group-hover:text-white flex-shrink-0 ml-1.5" />
                   </div>
                 </div>
               ))}
@@ -1456,7 +1456,7 @@ export default function App() {
           </div>
 
           {/* Cards Grid */}
-          <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+          <div className="reveal grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 px-2 sm:px-4">
             {videos.map((vid, idx) => (
               <div
                 key={vid.id}
@@ -1466,7 +1466,7 @@ export default function App() {
                 }}
                 onMouseEnter={() => handleVideoHoverStart(idx, vid.media_url)}
                 onMouseLeave={() => handleVideoHoverEnd(idx)}
-                className="relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 select-none"
+                className="relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 select-none"
               >
                 {/* Visual Preview Container */}
                 <div className="relative aspect-[9/16] w-full bg-zinc-950 overflow-hidden">
@@ -1493,26 +1493,26 @@ export default function App() {
 
                   {/* Center Play Button Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-colors">
-                    <div className="w-16 h-16 rounded-full bg-white/20 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl scale-95 group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-8 h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
+                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-white/20 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl scale-95 group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-5 h-5 sm:w-8 sm:h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
                   </div>
 
                   {/* Category label top-left */}
-                  <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-heading font-extrabold tracking-wider text-brand-darkGold uppercase z-10 pointer-events-none">
+                  <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-black/60 backdrop-blur-sm px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-heading font-extrabold tracking-wider text-brand-darkGold uppercase z-10 pointer-events-none">
                     {vid.category}
                   </div>
                 </div>
 
                 {/* Footer Metadata */}
-                <div className="p-5 flex flex-col justify-between border-t border-black/5 dark:border-white/5">
-                  <h3 className="font-heading font-black text-lg text-zinc-950 dark:text-white transition-colors leading-tight">
+                <div className="p-3 sm:p-5 flex flex-col justify-between border-t border-black/5 dark:border-white/5">
+                  <h3 className="font-heading font-black text-xs sm:text-lg text-zinc-950 dark:text-white transition-colors leading-tight">
                     {vid.title}
                   </h3>
-                  <span className="font-body text-xs text-zinc-500 dark:text-zinc-400 mt-1 flex items-center gap-1.5">
-                    <Video className="w-3.5 h-3.5" /> Open Reels Preview
+                  <span className="font-body text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 mt-1 flex items-center gap-1 sm:gap-1.5">
+                    <Video className="w-3 sm:w-3.5 h-3 sm:h-3.5" /> Open Reels Preview
                   </span>
                 </div>
               </div>
