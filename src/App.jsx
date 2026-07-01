@@ -1296,10 +1296,9 @@ export default function App() {
       <main className="relative z-10 w-full overflow-x-hidden">
 
         {/* 2.5. HERO SECTION */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-          <section
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">          <section
             id="home"
-            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-20 text-center relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 shadow-sm bg-[#f5f5dd] dark:bg-transparent"
+            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 shadow-sm bg-[#f5f5dd] dark:bg-transparent"
           >
             {/* Looping Muted Local Video Background */}
             <video
@@ -1318,64 +1317,98 @@ export default function App() {
             {/* Overlay Wash Tint */}
             <div className="hero-overlay" />
 
-            {/* Hero Content Container */}
-            <div className="relative z-10 flex flex-col items-center justify-center w-full">
-              {/* Eyebrow */}
-              <div className="reveal flex items-center justify-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs md:text-sm tracking-[0.12em] sm:tracking-[0.25em] text-zinc-950 dark:text-white uppercase px-4 select-none">
-                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse flex-shrink-0" />
-                <span className="whitespace-nowrap">Digital Creator · Storyteller · Avgeek</span>
-              </div>
-
-              {/* H1 Heading with looping shimmer */}
-              <h1 className="reveal font-heading font-black text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] max-w-4xl select-none">
-                <span className="text-gradient inline-block animate-shimmer bg-[length:200%_auto]">
-                  Frames that tell a story.
-                </span>
-              </h1>
-
-              {/* Short Bio Paragraph */}
-              <p className="reveal font-body text-base sm:text-lg md:text-xl text-zinc-600 dark:text-zinc-300 max-w-2xl mt-8 leading-relaxed px-4 transition-colors">
-                Welcome to <strong className="brand-text-gradient select-none">Vignette</strong>,
-                the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
-                and high-altitude aviation storytelling into cinematic digital capsules.
-              </p>
-
-              {/* CTA Buttons */}
-              <div className="reveal flex flex-col sm:flex-row gap-4 mt-10 w-full justify-center px-6">
-                <button
-                  onClick={() => scrollToSection('gallery')}
-                  className="px-8 py-4 rounded-full font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black shadow-lg hover:shadow-brand-lightOrange/30 dark:hover:shadow-brand-darkGold/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
-                >
-                  View My Work →
-                </button>
-                <button
-                  onClick={() => setIsHireModalOpen(true)}
-                  className="px-8 py-4 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
-                >
-                  Hire Me
-                </button>
-              </div>
-
-              {/* Statistics Count-Up Row */}
-              <div className="reveal grid grid-cols-3 gap-6 sm:gap-12 mt-20 max-w-xl w-full border-t border-black/10 dark:border-white/10 pt-10 px-4">
-                <div className="flex flex-col">
-                  <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
-                    <CountUp end={227} suffix="+" />
-                  </span>
-                  <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Posts</span>
+            {/* Hero Content Grid */}
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full max-w-6xl px-4 sm:px-8 py-4">
+              
+              {/* Left Column: Text Content */}
+              <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+                {/* Eyebrow */}
+                <div className="reveal flex items-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.25em] text-zinc-955 dark:text-white uppercase select-none">
+                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse flex-shrink-0" />
+                  <span className="whitespace-nowrap">Digital Creator · Storyteller · Avgeek</span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
+
+                {/* H1 Heading with looping shimmer */}
+                <h1 className="reveal font-heading font-black text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl tracking-tight leading-[1.1] select-none">
+                  <span className="text-gradient inline-block animate-shimmer bg-[length:200%_auto]">
+                    Frames that tell a story.
+                  </span>
+                </h1>
+
+                {/* Short Bio Paragraph */}
+                <p className="reveal font-body text-sm sm:text-base md:text-lg text-zinc-700 dark:text-zinc-300 max-w-xl mt-6 leading-relaxed transition-colors">
+                  Welcome to <strong className="brand-text-gradient select-none">Vignette</strong>,
+                  the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
+                  and high-altitude aviation storytelling into cinematic digital capsules.
+                </p>
+
+                {/* CTA Buttons */}
+                <div className="reveal flex flex-col sm:flex-row gap-4 mt-8 w-full justify-center lg:justify-start">
+                  <button
+                    onClick={() => scrollToSection('gallery')}
+                    className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black shadow-lg hover:shadow-brand-lightOrange/30 dark:hover:shadow-brand-darkGold/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
+                  >
+                    View My Work →
+                  </button>
+                  <button
+                    onClick={() => setIsHireModalOpen(true)}
+                    className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300 dark:text-white"
+                  >
+                    Hire Me
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Column: Visual Portrait with Floating Badge Stats */}
+              <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0">
+                
+                {/* Visual Graphic Backdrop (Aesthetic concentric circles representing lenses/apertures) */}
+                <div className="absolute w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] rounded-full border border-brand-lightOrange/20 dark:border-brand-darkGold/15 animate-[spin_40s_linear_infinite]" />
+                <div className="absolute w-[200px] h-[200px] sm:w-[270px] sm:h-[270px] rounded-full border border-dashed border-zinc-300/40 dark:border-zinc-800/30 animate-[spin_30s_linear_infinite_reverse]" />
+                <div className="absolute w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] rounded-full bg-gradient-to-tr from-brand-lightRed/5 to-brand-lightOrange/10 dark:from-brand-darkGold/5 dark:to-brand-darkYellow/10 blur-xl" />
+
+                {/* Main Portrait Frame */}
+                <div className="relative w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl z-10 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center">
+                  <img
+                    src="avatar-proy.png"
+                    alt="Padmanabha Roy"
+                    className="w-full h-full object-cover scale-[1.05] pointer-events-none select-none"
+                    draggable="false"
+                  />
+                </div>
+
+                {/* Floating Badge 1: 5+ Years Experience */}
+                <div className="absolute -left-2 sm:-left-6 top-[15%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                  <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
+                    <CountUp end={5} suffix="+" />
+                  </span>
+                  <div className="flex flex-col leading-none">
+                    <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider">Years</span>
+                    <span className="font-body text-[7px] sm:text-[8px] text-zinc-500 uppercase tracking-widest mt-0.5">Experience</span>
+                  </div>
+                </div>
+
+                {/* Floating Badge 2: 200+ Videos */}
+                <div className="absolute -right-2 sm:-right-6 top-[35%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                  <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
+                    <CountUp end={200} suffix="+" />
+                  </span>
+                  <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Videos</span>
+                </div>
+
+                {/* Floating Badge 3: 2.1K Followers */}
+                <div className="absolute left-[10%] bottom-[5%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                  <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
                     <CountUp end={2.1} suffix="K+" />
                   </span>
-                  <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Followers</span>
+                  <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Followers</span>
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-brand font-black text-3xl sm:text-4xl text-zinc-950 dark:text-white transition-colors">
-                    <CountUp end={100} suffix="+" />
-                  </span>
-                  <span className="font-body text-[10px] sm:text-xs uppercase tracking-wider text-zinc-500 mt-1.5">Reels Crafted</span>
+
+                {/* Curved Ribbon Tag Line at Bottom */}
+                <div className="absolute bottom-[-14px] sm:bottom-[-16px] left-1/2 -translate-x-1/2 px-5 py-2 bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-full shadow-xl text-[9px] sm:text-[10px] font-brand font-extrabold uppercase tracking-widest text-white dark:text-black whitespace-nowrap z-20 select-none">
+                  Telling Stories One Frame At A Time
                 </div>
+
               </div>
             </div>
           </section>
@@ -1974,143 +2007,6 @@ export default function App() {
             </div>
 
           </div>
-          </div>
-        </section>
-
-        {/* 2.10. INSTAGRAM FOLLOW & EMBED SECTION */}
-        <section id="instagram-follow" className="bg-white dark:bg-transparent py-20 sm:py-28 border-t border-black/5 dark:border-white/5 scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
-              
-              {/* Left Column: Heading and Subtext */}
-              <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left">
-                <span className="reveal font-heading font-extrabold text-xs tracking-widest text-brand-lightRed dark:text-brand-darkGold uppercase mb-3">
-                  Stay Connected
-                </span>
-                <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
-                  Follow the Story on Instagram
-                </h2>
-                <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-6 leading-relaxed transition-colors text-justify">
-                  Get daily doses of high-paced editing workflows, travel highlights, behind-the-scenes creation processes, and Lightroom preset secrets. Explore the cinematic runs from a brand new perspective.
-                </p>
-                <a
-                  href="https://www.instagram.com/proy____"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="reveal mt-8 inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black hover:-translate-y-[2px] active:scale-98 shadow-md hover:shadow-lg transition-all duration-300 select-none cursor-pointer"
-                >
-                  <Instagram className="w-4 h-4" />
-                  Follow @proy____
-                </a>
-              </div>
-
-              {/* Right Column: Premium Instagram Profile Embed Card */}
-              <div className="lg:col-span-7 flex justify-center">
-                <div className="reveal w-full max-w-[420px] rounded-3xl bg-zinc-50 dark:bg-zinc-900/40 border border-black/5 dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.15)] overflow-hidden select-none hover:border-brand-lightOrange/30 dark:hover:border-brand-darkGold/30 transition-all duration-500">
-                  {/* Card Header Profile Block */}
-                  <div className="p-5 sm:p-6 flex flex-col gap-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        {/* Avatar container with Story ring */}
-                        <div className="w-12 h-12 rounded-full p-[2px] bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]">
-                          <div className="w-full h-full rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden p-[2px]">
-                            <img
-                              src="logo-icon.png"
-                              alt="Padmanabha Roy"
-                              className="w-full h-full object-contain p-0.5"
-                            />
-                          </div>
-                        </div>
-                        <div className="flex flex-col">
-                          <div className="flex items-center gap-1">
-                            <span className="font-heading font-black text-sm text-zinc-900 dark:text-white">
-                              proy____
-                            </span>
-                            {/* Blue Verified Badge */}
-                            <svg className="w-3.5 h-3.5 fill-[#0095f6]" viewBox="0 0 24 24">
-                              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-                            </svg>
-                          </div>
-                          <span className="font-body text-[10px] text-zinc-500 dark:text-zinc-400">
-                            Padmanabha Roy
-                          </span>
-                        </div>
-                      </div>
-                      <a
-                        href="https://www.instagram.com/proy____"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-4 py-1.5 rounded-lg bg-[#0095f6] hover:bg-[#1877f2] font-brand font-extrabold text-xs text-white transition-all cursor-pointer"
-                      >
-                        Follow
-                      </a>
-                    </div>
-
-                    {/* Stats Row */}
-                    <div className="flex items-center gap-6 sm:gap-8 font-body text-xs text-zinc-700 dark:text-zinc-300">
-                      <div>
-                        <strong className="font-brand font-black text-zinc-950 dark:text-white">248</strong> posts
-                      </div>
-                      <div>
-                        <strong className="font-brand font-black text-zinc-950 dark:text-white">12.4K</strong> followers
-                      </div>
-                      <div>
-                        <strong className="font-brand font-black text-zinc-950 dark:text-white">412</strong> following
-                      </div>
-                    </div>
-
-                    {/* Bio Block */}
-                    <div className="font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                      <p className="font-bold text-zinc-800 dark:text-zinc-200">Vignette Founder | Storyteller</p>
-                      <p>🎬 Premium editing pacing & Colorist</p>
-                      <p>✈️ Aviation enthusiast & Travel Editor</p>
-                      <a
-                        href="https://linktr.ee/proy____"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#00376b] dark:text-[#e0f1ff] font-semibold mt-1 inline-block"
-                      >
-                        linktr.ee/proy____
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Grid of Posts (6 images/mockups representing the feed) */}
-                  <div className="grid grid-cols-3 gap-[2px] bg-zinc-200 dark:bg-zinc-800">
-                    {[
-                      { media: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
-                      { media: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
-                      { media: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
-                      { media: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
-                      { media: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' },
-                      { media: 'https://images.unsplash.com/photo-1473968512647-3e447244af8f?q=80&w=300&auto=format&fit=crop', link: 'https://www.instagram.com/proy____' }
-                    ].map((item, idx) => (
-                      <a
-                        key={idx}
-                        href={item.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="relative aspect-square group overflow-hidden cursor-pointer"
-                      >
-                        <img
-                          src={item.media}
-                          alt="Feed Post"
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white transition-opacity duration-300 gap-1.5 text-xs font-heading font-extrabold">
-                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                          </svg>
-                          <span>View</span>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-            </div>
           </div>
         </section>
 
