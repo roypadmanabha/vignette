@@ -2532,68 +2532,72 @@ export default function App() {
         </div>
       )}
       {/* Floating Stepper Navigation (Desktop only) */}
-      <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-4 z-40 bg-white/20 dark:bg-black/25 backdrop-blur-md p-3.5 rounded-full border border-black/5 dark:border-white/10 shadow-lg select-none">
-        {[
-          { id: 'home', label: 'Home' },
-          { id: 'gallery', label: 'At Glance' },
-          { id: 'videos', label: 'Highlights' },
-          { id: 'editing', label: 'Our Works' },
-          { id: 'vision', label: 'About' },
-          { id: 'hire', label: 'Contact' }
-        ].map(sec => (
-          <button
-            key={sec.id}
-            onClick={() => scrollToSection(sec.id)}
-            className="group relative flex items-center justify-center cursor-pointer"
-            aria-label={`Scroll to ${sec.label}`}
-          >
-            {/* Active/Inactive Dot */}
-            <div 
-              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                activeSection === sec.id 
-                  ? 'bg-brand-lightOrange dark:bg-brand-darkGold scale-125 ring-4 ring-brand-lightOrange/20 dark:ring-brand-darkGold/20' 
-                  : 'bg-zinc-400 hover:bg-zinc-600 dark:bg-zinc-600 dark:hover:bg-zinc-400 hover:scale-110'
-              }`}
-            />
-            {/* Tooltip Label */}
-            <span className="absolute right-8 px-2.5 py-1 rounded bg-zinc-950 dark:bg-zinc-900 text-white dark:text-zinc-100 text-[10px] font-brand font-extrabold uppercase tracking-wider opacity-0 pointer-events-none translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap shadow-md border border-white/5">
-              {sec.label}
-            </span>
-          </button>
-        ))}
-      </div>
+      {videoModalUrl === null && lightboxIndex === null && (
+        <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-4 z-40 bg-white/20 dark:bg-black/25 backdrop-blur-md p-3.5 rounded-full border border-black/5 dark:border-white/10 shadow-lg select-none">
+          {[
+            { id: 'home', label: 'Home' },
+            { id: 'gallery', label: 'At Glance' },
+            { id: 'videos', label: 'Highlights' },
+            { id: 'editing', label: 'Our Works' },
+            { id: 'vision', label: 'About' },
+            { id: 'hire', label: 'Contact' }
+          ].map(sec => (
+            <button
+              key={sec.id}
+              onClick={() => scrollToSection(sec.id)}
+              className="group relative flex items-center justify-center cursor-pointer"
+              aria-label={`Scroll to ${sec.label}`}
+            >
+              {/* Active/Inactive Dot */}
+              <div 
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  activeSection === sec.id 
+                    ? 'bg-brand-lightOrange dark:bg-brand-darkGold scale-125 ring-4 ring-brand-lightOrange/20 dark:ring-brand-darkGold/20' 
+                    : 'bg-zinc-400 hover:bg-zinc-600 dark:bg-zinc-600 dark:hover:bg-zinc-400 hover:scale-110'
+                }`}
+              />
+              {/* Tooltip Label */}
+              <span className="absolute right-8 px-2.5 py-1 rounded bg-zinc-950 dark:bg-zinc-900 text-white dark:text-zinc-100 text-[10px] font-brand font-extrabold uppercase tracking-wider opacity-0 pointer-events-none translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap shadow-md border border-white/5">
+                {sec.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Floating Back to Top Button with SVG radial scroll progress */}
-      <button
-        onClick={() => scrollToSection('home')}
-        className={`fixed bottom-6 right-6 lg:right-8 z-40 w-11 h-11 rounded-full bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xl flex items-center justify-center text-zinc-700 dark:text-zinc-300 hover:text-brand-lightOrange dark:hover:text-brand-darkGold hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer ${
-          scrollProgress > 5 ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
-        }`}
-        aria-label="Scroll back to top"
-      >
-        <svg className="absolute inset-0 w-full h-full transform -rotate-90 pointer-events-none select-none">
-          <circle
-            cx="22"
-            cy="22"
-            r="18"
-            className="stroke-zinc-200 dark:stroke-zinc-800 fill-none"
-            strokeWidth="2.5"
-          />
-          <circle
-            cx="22"
-            cy="22"
-            r="18"
-            className="stroke-brand-lightOrange dark:stroke-brand-darkGold fill-none"
-            strokeWidth="2.5"
-            strokeDasharray={2 * Math.PI * 18}
-            strokeDashoffset={2 * Math.PI * 18 * (1 - scrollProgress / 100)}
-            strokeLinecap="round"
-          />
-        </svg>
-        <svg className="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-        </svg>
-      </button>
+      {videoModalUrl === null && lightboxIndex === null && (
+        <button
+          onClick={() => scrollToSection('home')}
+          className={`fixed bottom-6 right-6 lg:right-8 z-40 w-11 h-11 rounded-full bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xl flex items-center justify-center text-zinc-700 dark:text-zinc-300 hover:text-brand-lightOrange dark:hover:text-brand-darkGold hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer ${
+            scrollProgress > 5 ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
+          }`}
+          aria-label="Scroll back to top"
+        >
+          <svg className="absolute inset-0 w-full h-full transform -rotate-90 pointer-events-none select-none">
+            <circle
+              cx="22"
+              cy="22"
+              r="18"
+              className="stroke-zinc-200 dark:stroke-zinc-800 fill-none"
+              strokeWidth="2.5"
+            />
+            <circle
+              cx="22"
+              cy="22"
+              r="18"
+              className="stroke-brand-lightOrange dark:stroke-brand-darkGold fill-none"
+              strokeWidth="2.5"
+              strokeDasharray={2 * Math.PI * 18}
+              strokeDashoffset={2 * Math.PI * 18 * (1 - scrollProgress / 100)}
+              strokeLinecap="round"
+            />
+          </svg>
+          <svg className="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+          </svg>
+        </button>
+      )}
 
     </div>
   );
