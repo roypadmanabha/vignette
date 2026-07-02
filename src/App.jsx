@@ -1393,7 +1393,12 @@ export default function App() {
         {/* 2.5. HERO SECTION */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">          <section
             id="home"
-            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 shadow-sm bg-[#f5f5dd] dark:bg-transparent"
+            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 shadow-sm"
+            style={{ 
+              backgroundImage: "url('virat.png')", 
+              backgroundSize: 'cover', 
+              backgroundPosition: 'center center' 
+            }}
           >
             {/* Looping Muted Local Video Background */}
             <video
