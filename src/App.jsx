@@ -379,7 +379,7 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
           src={before}
           alt="Before Edit"
           className="absolute inset-0 w-full h-full object-cover select-none"
-          style={before === after ? { filter: 'saturate(0.2)' } : {}}
+          style={before === after ? { filter: 'saturate(0.4)' } : {}}
           draggable="false"
         />
         <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white text-xs font-heading font-extrabold px-2.5 py-1 rounded-md z-10 pointer-events-none uppercase tracking-wider">
@@ -391,7 +391,7 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
           src={after}
           alt="After Edit"
           className="absolute inset-0 w-full h-full object-cover select-none"
-          style={{ clipPath: `polygon(0 0, ${sliderPos}% 0, ${sliderPos}% 100%, 0 100%)` }}
+          style={{ clipPath: `polygon(${sliderPos}% 0, 100% 0, 100% 100%, ${sliderPos}% 100%)` }}
           draggable="false"
         />
         <div className="absolute top-4 right-4 bg-brand-lightRed dark:bg-brand-darkGold text-white dark:text-black text-xs font-heading font-extrabold px-2.5 py-1 rounded-md z-10 pointer-events-none uppercase tracking-wider">
