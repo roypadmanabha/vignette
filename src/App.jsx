@@ -1581,18 +1581,18 @@ export default function App() {
                 <div
                   key={item.id}
                   onClick={() => handleImageClick(idx)}
-                  className="reveal reveal-scale group relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 select-none"
+                  className="reveal reveal-scale group relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2 transition-premium select-none"
                   style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
                 >
                   <img
                     src={item.media_url}
                     alt={item.title}
-                    className="w-full h-full object-cover select-none pointer-events-none group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover select-none pointer-events-none group-hover:scale-105 transition-premium"
                     draggable="false"
                     loading="lazy"
                   />
                   {/* Frosted Metadata Strip bottom */}
-                  <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4 p-2 sm:p-4 rounded-lg sm:rounded-xl bg-black/60 dark:bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between text-white transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
+                  <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4 p-2 sm:p-4 rounded-lg sm:rounded-xl bg-black/60 dark:bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between text-white transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-premium z-10">
                     <div className="flex flex-col">
                       <span className="font-brand font-extrabold text-[8px] sm:text-xs uppercase tracking-wider text-brand-darkGold select-none">
                         {item.category}
