@@ -379,7 +379,7 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
           src={before}
           alt="Before Edit"
           className="absolute inset-0 w-full h-full object-cover select-none"
-          style={before === after ? { filter: 'saturate(0.3) brightness(1.08) contrast(0.75)' } : {}}
+          style={before === after ? { filter: 'saturate(0.2)' } : {}}
           draggable="false"
         />
         <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white text-xs font-heading font-extrabold px-2.5 py-1 rounded-md z-10 pointer-events-none uppercase tracking-wider">
