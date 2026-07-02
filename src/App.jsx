@@ -749,7 +749,7 @@ export default function App() {
 
 
 
-  // --- Theme Initializer ---
+  // --- Theme Initializer & Gesture Zoom Prevention ---
   useEffect(() => {
     const savedTheme = localStorage.getItem('vignette-theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -760,6 +760,25 @@ export default function App() {
     } else {
       document.documentElement.classList.remove('dark');
     }
+
+    // Disable pinch-to-zoom for iOS Safari and mobile devices
+    const preventPinchZoom = (e) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    };
+    
+    const preventGestureZoom = (e) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener('touchstart', preventPinchZoom, { passive: false });
+    document.addEventListener('gesturestart', preventGestureZoom, { passive: false });
+
+    return () => {
+      document.removeEventListener('touchstart', preventPinchZoom);
+      document.removeEventListener('gesturestart', preventGestureZoom);
+    };
   }, []);
 
   const toggleTheme = () => {
