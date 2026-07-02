@@ -108,7 +108,7 @@ const MOCK_VIDEOS = [
   {
     id: 10,
     type: 'video',
-    title: 'Chasing Alpine Bridges',
+    title: 'The Durga Puja Times',
     category: 'Festival',
     media_url: 'https://assets.mixkit.co/videos/preview/mixkit-person-walking-on-a-wooden-bridge-in-nature-41584-large.mp4',
     thumbnail_url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&auto=format&fit=crop&q=80'
@@ -958,6 +958,7 @@ export default function App() {
             if (video.title.includes('Alpine') || video.id === 10) {
               updated = {
                 ...updated,
+                title: 'The Durga Puja Times',
                 category: 'Festival'
               };
             }
