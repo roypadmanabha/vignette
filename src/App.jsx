@@ -129,32 +129,22 @@ const MOCK_EDITS = [
     type: 'edit',
     title: 'Cinematic Teal & Orange',
     description: 'Raw Flat Log Profile color-graded to a warm, high-contrast golden hour style, drawing focus to the mountain range.',
-    before_url: 'nature-img.png',
-    after_url: 'nature-img.png',
-    before_filter: 'saturate(0.55) contrast(0.75) brightness(1.05) sepia(0.1)'
+    before_url: 'nature.jpg',
+    after_url: 'nature.jpg'
   },
   {
     id: 13,
     type: 'edit',
     title: 'Moody Window Overcast',
     description: 'Sky brightness recovery, wing highlights adjustment, and modern cool-shadow toning applied to a flat cabin view.',
-    before_url: 'flight-img.png',
-    after_url: 'flight-img.png',
-    before_filter: 'saturate(0.4) contrast(0.7) brightness(1.1)'
+    before_url: 'flight.jpg',
+    after_url: 'flight.jpg'
   }
 ];
 
-// Helper to resolve asset URLs correctly across base paths (e.g. GitHub Pages) and trailing slashes
-const getAssetUrl = (url) => {
-  if (!url) return '';
-  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:') || url.startsWith('data:')) {
-    return url;
-  }
-  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
-  const base = import.meta.env.BASE_URL || '/';
-  return base.endsWith('/') ? `${base}${cleanUrl}` : `${base}/${cleanUrl}`;
-};
-
+// ==========================================
+// 1. HELPERS & CHILD COMPONENTS
+// ==========================================
 
 // Custom CountUp Component triggered on Scroll viewport entry
 const CountUp = ({ end, suffix = "", duration = 1800 }) => {
@@ -350,7 +340,7 @@ const Starfield = ({ isDark }) => {
 };
 
 // Draggable Before/After Image Comparison Slider
-const BeforeAfterSlider = ({ before, after, description, title, beforeFilter }) => {
+const BeforeAfterSlider = ({ before, after, description, title }) => {
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
@@ -386,10 +376,10 @@ const BeforeAfterSlider = ({ before, after, description, title, beforeFilter }) 
       >
         {/* Before Image (underneath) */}
         <img
-          src={getAssetUrl(before)}
+          src={before}
           alt="Before Edit"
           className="absolute inset-0 w-full h-full object-cover select-none"
-          style={beforeFilter ? { filter: beforeFilter } : undefined}
+          style={before === after ? { filter: 'saturate(0.3) brightness(1.08) contrast(0.75)' } : {}}
           draggable="false"
         />
         <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white text-xs font-heading font-extrabold px-2.5 py-1 rounded-md z-10 pointer-events-none uppercase tracking-wider">
@@ -398,7 +388,7 @@ const BeforeAfterSlider = ({ before, after, description, title, beforeFilter }) 
 
         {/* After Image (clipped overlay) */}
         <img
-          src={getAssetUrl(after)}
+          src={after}
           alt="After Edit"
           className="absolute inset-0 w-full h-full object-cover select-none"
           style={{ clipPath: `polygon(0 0, ${sliderPos}% 0, ${sliderPos}% 100%, 0 100%)` }}
@@ -936,20 +926,18 @@ export default function App() {
             return video;
           });
           const loadedEdits = data.filter(item => item.type === 'edit').map(edit => {
-            if (edit.title.includes('Teal') || edit.title.includes('Orange')) {
+            if (edit.title.includes('Teal') || edit.title.includes('Orange') || edit.id === 12) {
               return {
                 ...edit,
-                before_url: 'nature-img.png',
-                after_url: 'nature-img.png',
-                before_filter: 'saturate(0.55) contrast(0.75) brightness(1.05) sepia(0.1)'
+                before_url: 'nature.jpg',
+                after_url: 'nature.jpg'
               };
             }
-            if (edit.title.includes('Moody') || edit.title.includes('Window') || edit.title.includes('Overcast')) {
+            if (edit.title.includes('Window') || edit.title.includes('Overcast') || edit.id === 13) {
               return {
                 ...edit,
-                before_url: 'flight-img.png',
-                after_url: 'flight-img.png',
-                before_filter: 'saturate(0.4) contrast(0.7) brightness(1.1)'
+                before_url: 'flight.jpg',
+                after_url: 'flight.jpg'
               };
             }
             return edit;
@@ -1725,7 +1713,6 @@ export default function App() {
                   after={edit.after_url}
                   title={edit.title}
                   description={edit.description}
-                  beforeFilter={edit.before_filter}
                 />
               ))}
             </div>
