@@ -116,10 +116,10 @@ const MOCK_VIDEOS = [
   {
     id: 11,
     type: 'video',
-    title: 'Vintage Camera Focus',
+    title: 'The Delulu',
     category: 'Lifestyle',
-    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-vintage-camera-42289-large.mp4',
-    thumbnail_url: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&auto=format&fit=crop&q=80'
+    media_url: 'lifestyle.mp4',
+    thumbnail_url: 'lifestyle.mp4#t=1'
   }
 ];
 
@@ -978,6 +978,14 @@ export default function App() {
                 category: 'Festival',
                 media_url: 'durgapuja.mp4',
                 thumbnail_url: 'durgapuja.mp4#t=1'
+              };
+            }
+            if (video.title.includes('Camera') || video.id === 11) {
+              updated = {
+                ...updated,
+                title: 'The Delulu',
+                media_url: 'lifestyle.mp4',
+                thumbnail_url: 'lifestyle.mp4#t=1'
               };
             }
             return updated;
