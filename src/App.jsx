@@ -697,13 +697,8 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isHireModalOpen]);
 
-  // Hero section random background image url state
-  const [heroBgUrl, setHeroBgUrl] = useState('');
-
-  useEffect(() => {
-    const randomSeed = Math.floor(Math.random() * 10000);
-    setHeroBgUrl(`https://picsum.photos/1920/1080?random=${randomSeed}`);
-  }, []);
+  // Hero section background image url state
+  const [heroBgUrl, setHeroBgUrl] = useState('virat.png');
 
   // Scroll state for sticky header glassmorphism behavior
   const [isScrolled, setIsScrolled] = useState(false);
