@@ -378,8 +378,6 @@ const BeforeAfterSlider = ({ before, after, description, title, beforeFilter }) 
     e.currentTarget.releasePointerCapture(e.pointerId);
   };
 
-  console.log("Slider paths:", { before, after, resolvedBefore: getAssetUrl(before), resolvedAfter: getAssetUrl(after), base: import.meta.env.BASE_URL });
-
   return (
     <div className="flex flex-col gap-3">
       <div
