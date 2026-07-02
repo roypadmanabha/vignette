@@ -108,7 +108,7 @@ const MOCK_VIDEOS = [
   {
     id: 10,
     type: 'video',
-    title: 'The Durga Puja Times',
+    title: 'The Homecoming',
     category: 'Festival',
     media_url: 'durgapuja.mp4',
     thumbnail_url: 'durgapuja.mp4#t=1'
@@ -553,15 +553,13 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 transition-premium ${
-        mounted ? 'opacity-100' : 'opacity-0'
-      }`}
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 transition-premium ${mounted ? 'opacity-100' : 'opacity-0'
+        }`}
       onClick={handleClose}
     >
       <div
-        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-premium ${
-          mounted ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
-        }`}
+        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-premium ${mounted ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+          }`}
         style={{
           aspectRatio: aspectRatio,
           maxHeight: '82vh',
@@ -790,7 +788,7 @@ export default function App() {
         e.preventDefault();
       }
     };
-    
+
     const preventGestureZoom = (e) => {
       e.preventDefault();
     };
@@ -906,7 +904,7 @@ export default function App() {
   // --- Scrollytelling Progress & Active Section Stepper ---
   useEffect(() => {
     const sections = ['home', 'gallery', 'videos', 'editing', 'vision', 'hire'];
-    
+
     const handleScroll = () => {
       // 1. Calculate general scroll progress
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -1193,12 +1191,11 @@ export default function App() {
       )}
 
       {/* 2.2. PROTECTED TOAST NOTIFICATION BANNER */}
-      <div 
-        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${
-          toast.show 
-            ? 'top-20 opacity-100 translate-y-0 scale-100' 
+      <div
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
+            ? 'top-20 opacity-100 translate-y-0 scale-100'
             : 'top-20 opacity-0 -translate-y-4 scale-95'
-        }`}
+          }`}
       >
         <TriangleAlert className="w-4.5 h-4.5 text-white flex-shrink-0 animate-bounce" />
         <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap uppercase tracking-wider">
@@ -1208,7 +1205,7 @@ export default function App() {
 
       {/* 2.3. STICKY NAVBAR HEADER */}
       {/* Glowing Scroll Progress Bar */}
-      <div 
+      <div
         className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-lightRed via-brand-lightOrange to-brand-darkGold dark:from-brand-darkGold dark:via-brand-darkYellow dark:to-brand-lightOrange z-[9999] transition-all duration-75 origin-left"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
       />
@@ -1220,9 +1217,8 @@ export default function App() {
 
           {/* Logo Brand Name (Two-tone wordmark + icon) */}
           <div
-            className={`flex items-center gap-2 lg:gap-2.5 cursor-pointer z-50 select-none transition-all duration-300 ${
-              mobileMenuOpen ? 'opacity-0 blur-sm pointer-events-none' : 'opacity-100'
-            }`}
+            className={`flex items-center gap-2 lg:gap-2.5 cursor-pointer z-50 select-none transition-all duration-300 ${mobileMenuOpen ? 'opacity-0 blur-sm pointer-events-none' : 'opacity-100'
+              }`}
             onClick={() => scrollToSection('home')}
           >
             <img
@@ -1367,7 +1363,7 @@ export default function App() {
             ].map((link) => {
               const Icon = link.icon;
               const linkClasses = "flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs sm:text-sm font-brand font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group";
-              
+
               if (link.url) {
                 return (
                   <a
@@ -1431,130 +1427,130 @@ export default function App() {
 
         {/* 2.5. HERO SECTION */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">          <section
-            id="home"
-            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px]"
-          >
-            {/* Background elements grouped for smooth edge masking */}
-            <div className="hero-bg-container">
-              {/* Static Background Image */}
-              <div 
-                className="hero-bg-image"
-                style={{ backgroundImage: "url('virat.png')" }}
-              />
-              
-              {/* Looping Muted Local Video Background */}
-              <video
-                ref={heroBgVideoRef}
-                className="hero-bg-video"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                poster={heroBgUrl || undefined}
-              >
-                <source src="hero_video.MOV" type="video/quicktime" />
-              </video>
+          id="home"
+          className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px]"
+        >
+          {/* Background elements grouped for smooth edge masking */}
+          <div className="hero-bg-container">
+            {/* Static Background Image */}
+            <div
+              className="hero-bg-image"
+              style={{ backgroundImage: "url('virat.png')" }}
+            />
+
+            {/* Looping Muted Local Video Background */}
+            <video
+              ref={heroBgVideoRef}
+              className="hero-bg-video"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              poster={heroBgUrl || undefined}
+            >
+              <source src="hero_video.MOV" type="video/quicktime" />
+            </video>
+          </div>
+
+          {/* Overlay Wash Tint */}
+          <div className="hero-overlay" />
+
+          {/* Hero Content Grid */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full max-w-6xl px-4 sm:px-8 py-4">
+
+            {/* Left Column: Text Content */}
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+              {/* Eyebrow */}
+              <div className="reveal flex items-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.25em] text-zinc-950 dark:text-white uppercase select-none">
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse flex-shrink-0" />
+                <span className="whitespace-nowrap">Digital Creator · Storyteller · Avgeek</span>
+              </div>
+
+              {/* H1 Heading with looping shimmer */}
+              <h1 className="reveal font-heading font-black text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl tracking-tight leading-[1.1] select-none">
+                <span className="text-gradient inline-block animate-shimmer bg-[length:200%_auto]">
+                  Frames that tell a story.
+                </span>
+              </h1>
+
+              {/* Short Bio Paragraph */}
+              <p className="reveal font-body text-sm sm:text-base md:text-lg text-zinc-900 dark:text-zinc-200 max-w-xl mt-6 leading-relaxed transition-colors">
+                Welcome to <strong className="brand-text-gradient select-none">Vignette</strong>,
+                the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
+                and high-altitude aviation storytelling into cinematic digital capsules.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="reveal flex flex-col sm:flex-row gap-4 mt-8 w-full justify-center lg:justify-start">
+                <button
+                  onClick={() => scrollToSection('gallery')}
+                  className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black shadow-lg hover:shadow-brand-lightOrange/30 dark:hover:shadow-brand-darkGold/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
+                >
+                  View My Work →
+                </button>
+                <button
+                  onClick={() => setIsHireModalOpen(true)}
+                  className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300 dark:text-white"
+                >
+                  Hire Me
+                </button>
+              </div>
             </div>
 
-            {/* Overlay Wash Tint */}
-            <div className="hero-overlay" />
+            {/* Right Column: Visual Portrait with Floating Badge Stats */}
+            <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0">
 
-            {/* Hero Content Grid */}
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full max-w-6xl px-4 sm:px-8 py-4">
-              
-              {/* Left Column: Text Content */}
-              <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
-                {/* Eyebrow */}
-                <div className="reveal flex items-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.25em] text-zinc-950 dark:text-white uppercase select-none">
-                  <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse flex-shrink-0" />
-                  <span className="whitespace-nowrap">Digital Creator · Storyteller · Avgeek</span>
-                </div>
+              {/* Visual Graphic Backdrop (Aesthetic concentric circles representing lenses/apertures) */}
+              <div className="absolute w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] rounded-full border border-brand-lightOrange/20 dark:border-brand-darkGold/15 animate-[spin_40s_linear_infinite]" />
+              <div className="absolute w-[200px] h-[200px] sm:w-[270px] sm:h-[270px] rounded-full border border-dashed border-zinc-300/40 dark:border-zinc-800/30 animate-[spin_30s_linear_infinite_reverse]" />
+              <div className="absolute w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] rounded-full bg-gradient-to-tr from-brand-lightRed/5 to-brand-lightOrange/10 dark:from-brand-darkGold/5 dark:to-brand-darkYellow/10 blur-xl" />
 
-                {/* H1 Heading with looping shimmer */}
-                <h1 className="reveal font-heading font-black text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl tracking-tight leading-[1.1] select-none">
-                  <span className="text-gradient inline-block animate-shimmer bg-[length:200%_auto]">
-                    Frames that tell a story.
-                  </span>
-                </h1>
+              {/* Main Portrait Frame */}
+              <div className="relative w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl z-10 bg-white dark:bg-zinc-950 flex items-center justify-center">
+                <img
+                  src="logo-icon.png"
+                  alt="Vignette Brand Logo"
+                  className="w-full h-full object-contain p-4 sm:p-6 select-none pointer-events-none"
+                  draggable="false"
+                />
+              </div>
 
-                {/* Short Bio Paragraph */}
-                <p className="reveal font-body text-sm sm:text-base md:text-lg text-zinc-900 dark:text-zinc-200 max-w-xl mt-6 leading-relaxed transition-colors">
-                  Welcome to <strong className="brand-text-gradient select-none">Vignette</strong>,
-                  the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
-                  and high-altitude aviation storytelling into cinematic digital capsules.
-                </p>
-
-                {/* CTA Buttons */}
-                <div className="reveal flex flex-col sm:flex-row gap-4 mt-8 w-full justify-center lg:justify-start">
-                  <button
-                    onClick={() => scrollToSection('gallery')}
-                    className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black shadow-lg hover:shadow-brand-lightOrange/30 dark:hover:shadow-brand-darkGold/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
-                  >
-                    View My Work →
-                  </button>
-                  <button
-                    onClick={() => setIsHireModalOpen(true)}
-                    className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300 dark:text-white"
-                  >
-                    Hire Me
-                  </button>
+              {/* Floating Badge 1: 5+ Years Experience */}
+              <div className="absolute -left-2 sm:-left-6 top-[15%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
+                  <CountUp end={5} suffix="+" />
+                </span>
+                <div className="flex flex-col leading-none">
+                  <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider">Years</span>
+                  <span className="font-body text-[7px] sm:text-[8px] text-zinc-500 uppercase tracking-widest mt-0.5">Experience</span>
                 </div>
               </div>
 
-              {/* Right Column: Visual Portrait with Floating Badge Stats */}
-              <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0">
-                
-                {/* Visual Graphic Backdrop (Aesthetic concentric circles representing lenses/apertures) */}
-                <div className="absolute w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] rounded-full border border-brand-lightOrange/20 dark:border-brand-darkGold/15 animate-[spin_40s_linear_infinite]" />
-                <div className="absolute w-[200px] h-[200px] sm:w-[270px] sm:h-[270px] rounded-full border border-dashed border-zinc-300/40 dark:border-zinc-800/30 animate-[spin_30s_linear_infinite_reverse]" />
-                <div className="absolute w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] rounded-full bg-gradient-to-tr from-brand-lightRed/5 to-brand-lightOrange/10 dark:from-brand-darkGold/5 dark:to-brand-darkYellow/10 blur-xl" />
-
-                {/* Main Portrait Frame */}
-                <div className="relative w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl z-10 bg-white dark:bg-zinc-950 flex items-center justify-center">
-                  <img
-                    src="logo-icon.png"
-                    alt="Vignette Brand Logo"
-                    className="w-full h-full object-contain p-4 sm:p-6 select-none pointer-events-none"
-                    draggable="false"
-                  />
-                </div>
-
-                {/* Floating Badge 1: 5+ Years Experience */}
-                <div className="absolute -left-2 sm:-left-6 top-[15%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
-                    <CountUp end={5} suffix="+" />
-                  </span>
-                  <div className="flex flex-col leading-none">
-                    <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider">Years</span>
-                    <span className="font-body text-[7px] sm:text-[8px] text-zinc-500 uppercase tracking-widest mt-0.5">Experience</span>
-                  </div>
-                </div>
-
-                {/* Floating Badge 2: 200+ Videos */}
-                <div className="absolute -right-2 sm:-right-6 top-[35%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
-                    <CountUp end={200} suffix="+" />
-                  </span>
-                  <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Videos</span>
-                </div>
-
-                {/* Floating Badge 3: 2.1K Followers */}
-                <div className="absolute left-[10%] bottom-[5%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
-                    <CountUp end={2.1} suffix="K+" />
-                  </span>
-                  <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Followers</span>
-                </div>
-
-                {/* Curved Ribbon Tag Line at Bottom */}
-                <div className="absolute bottom-[-14px] sm:bottom-[-16px] left-1/2 -translate-x-1/2 px-5 py-2 bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-full shadow-xl text-[9px] sm:text-[10px] font-brand font-extrabold uppercase tracking-widest text-white dark:text-black whitespace-nowrap z-20 select-none">
-                  Telling Stories One Frame At A Time
-                </div>
-
+              {/* Floating Badge 2: 200+ Videos */}
+              <div className="absolute -right-2 sm:-right-6 top-[35%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
+                  <CountUp end={200} suffix="+" />
+                </span>
+                <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Videos</span>
               </div>
+
+              {/* Floating Badge 3: 2.1K Followers */}
+              <div className="absolute left-[10%] bottom-[5%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
+                  <CountUp end={2.1} suffix="K+" />
+                </span>
+                <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Followers</span>
+              </div>
+
+              {/* Curved Ribbon Tag Line at Bottom */}
+              <div className="absolute bottom-[-14px] sm:bottom-[-16px] left-1/2 -translate-x-1/2 px-5 py-2 bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-full shadow-xl text-[9px] sm:text-[10px] font-brand font-extrabold uppercase tracking-widest text-white dark:text-black whitespace-nowrap z-20 select-none">
+                Telling Stories One Frame At A Time
+              </div>
+
             </div>
-          </section>
+          </div>
+        </section>
         </div>
 
         {/* 2.6. GALLERY SECTION */}
@@ -1702,79 +1698,79 @@ export default function App() {
                   className="reveal reveal-scale relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-premium select-none"
                   style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
                 >
-                {/* Visual Preview Container */}
-                <div className="relative aspect-[9/16] w-full bg-zinc-950 overflow-hidden">
+                  {/* Visual Preview Container */}
+                  <div className="relative aspect-[9/16] w-full bg-zinc-950 overflow-hidden">
 
-                  {/* Poster Image or Video Frame */}
-                  {vid.thumbnail_url && (vid.thumbnail_url.endsWith('.mp4') || vid.thumbnail_url.includes('.mp4')) ? (
+                    {/* Poster Image or Video Frame */}
+                    {vid.thumbnail_url && (vid.thumbnail_url.endsWith('.mp4') || vid.thumbnail_url.includes('.mp4')) ? (
+                      <video
+                        src={vid.thumbnail_url}
+                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none pointer-events-none"
+                        muted
+                        playsInline
+                        preload="metadata"
+                        draggable="false"
+                      />
+                    ) : (
+                      <img
+                        src={vid.thumbnail_url}
+                        alt={vid.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none"
+                        draggable="false"
+                      />
+                    )}
+
+                    {/* Looping Muted Hover Video */}
                     <video
-                      src={vid.thumbnail_url}
-                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none pointer-events-none"
+                      id={`preview-video-${idx}`}
+                      src={vid.media_url}
+                      className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-premium"
                       muted
+                      loop
                       playsInline
-                      preload="metadata"
                       draggable="false"
                     />
-                  ) : (
-                    <img
-                      src={vid.thumbnail_url}
-                      alt={vid.title}
-                      loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none"
-                      draggable="false"
-                    />
-                  )}
 
-                  {/* Looping Muted Hover Video */}
-                  <video
-                    id={`preview-video-${idx}`}
-                    src={vid.media_url}
-                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-premium"
-                    muted
-                    loop
-                    playsInline
-                    draggable="false"
-                  />
+                    {/* Center Play Button Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-premium">
+                      <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-white/20 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl scale-95 group-hover:scale-110 transition-premium">
+                        <svg className="w-5 h-5 sm:w-8 sm:h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </div>
+                    </div>
 
-                  {/* Center Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-premium">
-                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-white/20 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl scale-95 group-hover:scale-110 transition-premium">
-                      <svg className="w-5 h-5 sm:w-8 sm:h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
+                    {/* Category label top-left */}
+                    <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-black/60 backdrop-blur-sm px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-heading font-extrabold tracking-wider text-brand-darkGold uppercase z-10 pointer-events-none">
+                      {vid.category}
                     </div>
                   </div>
 
-                  {/* Category label top-left */}
-                  <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-black/60 backdrop-blur-sm px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-heading font-extrabold tracking-wider text-brand-darkGold uppercase z-10 pointer-events-none">
-                    {vid.category}
+                  {/* Footer Metadata */}
+                  <div className="p-3 sm:p-5 flex flex-col justify-between border-t border-black/5 dark:border-white/5">
+                    <h3 className="font-heading font-black text-xs sm:text-lg text-zinc-950 dark:text-white transition-colors leading-tight">
+                      {vid.title}
+                    </h3>
+                    <span className="font-body text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 mt-1 flex items-center gap-1 sm:gap-1.5">
+                      <Video className="w-3 sm:w-3.5 h-3 sm:h-3.5" /> Open Reels Preview
+                    </span>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                {/* Footer Metadata */}
-                <div className="p-3 sm:p-5 flex flex-col justify-between border-t border-black/5 dark:border-white/5">
-                  <h3 className="font-heading font-black text-xs sm:text-lg text-zinc-950 dark:text-white transition-colors leading-tight">
-                    {vid.title}
-                  </h3>
-                  <span className="font-body text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 mt-1 flex items-center gap-1 sm:gap-1.5">
-                    <Video className="w-3 sm:w-3.5 h-3 sm:h-3.5" /> Open Reels Preview
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Fullscreen Video Player */}
-          {videoModalUrl && (
-            <CustomVideoPlayer
-              src={videoModalUrl}
-              poster={videoModalPoster}
-              onClose={() => {
-                setVideoModalUrl(null);
-                setVideoModalPoster(null);
-              }}
-            />
-          )}
+            {/* Fullscreen Video Player */}
+            {videoModalUrl && (
+              <CustomVideoPlayer
+                src={videoModalUrl}
+                poster={videoModalPoster}
+                onClose={() => {
+                  setVideoModalUrl(null);
+                  setVideoModalPoster(null);
+                }}
+              />
+            )}
           </div>
         </section>
 
@@ -1877,7 +1873,7 @@ export default function App() {
         <section className="py-10 sm:py-14 flex flex-col items-center justify-center select-none">
           <div className="max-w-4xl w-full px-4">
             <div
-              className="relative rounded-[20px] overflow-hidden shadow-xl bg-black cursor-pointer"
+              className="relative rounded-[20px] overflow-hidden shadow-xl bg-black cursor-pointer border border-[#e31c25] dark:border-[#FFD700]"
               onClick={toggleHeroPlay}
             >
               <video
@@ -1910,111 +1906,84 @@ export default function App() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
 
-            {/* Context Left Column */}
-            <div className="lg:col-span-5 flex flex-col justify-center">
-              <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
-                Let's Collaborate
-              </span>
-              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
-                Hire for your work
-              </h2>
-              <p className="reveal font-body text-zinc-600 dark:text-zinc-300 mt-6 leading-relaxed transition-colors text-justify">
-                Ready to take your brand narrative to the sky? Get in touch for content consulting, sponsored edits, photography campaigns, or direct avgeek story writeups.
-              </p>
+              {/* Context Left Column */}
+              <div className="lg:col-span-5 flex flex-col justify-center">
+                <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
+                  Let's Collaborate
+                </span>
+                <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
+                  Hire for your work
+                </h2>
+                <p className="reveal font-body text-zinc-600 dark:text-zinc-300 mt-6 leading-relaxed transition-colors text-justify">
+                  Ready to take your brand narrative to the sky? Get in touch for content consulting, sponsored edits, photography campaigns, or direct avgeek story writeups.
+                </p>
 
-              <div className="reveal mt-8 space-y-4 font-body text-sm text-zinc-500 dark:text-zinc-400">
-                <p className="flex items-center gap-3">
-                  <Instagram className="w-5 h-5 text-brand-lightRed dark:text-brand-darkGold" />
-                  <span>@proy___ (Instagram DM preferred)</span>
-                </p>
-                <p className="flex items-center gap-3">
-                  <Compass className="w-5 h-5 text-brand-lightOrange dark:text-brand-darkGold" />
-                  <span>Based in India · Traveling Worldwide</span>
-                </p>
+                <div className="reveal mt-8 space-y-4 font-body text-sm text-zinc-500 dark:text-zinc-400">
+                  <p className="flex items-center gap-3">
+                    <Instagram className="w-5 h-5 text-brand-lightRed dark:text-brand-darkGold" />
+                    <span>@proy___ (Instagram DM preferred)</span>
+                  </p>
+                  <p className="flex items-center gap-3">
+                    <Compass className="w-5 h-5 text-brand-lightOrange dark:text-brand-darkGold" />
+                    <span>Based in India · Traveling Worldwide</span>
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* Inquiries Form Column */}
-            <div className="reveal lg:col-span-7">
-              <div className="p-5 sm:p-8 md:p-10 rounded-3xl bg-[#f5f5dd] dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-2xl">
+              {/* Inquiries Form Column */}
+              <div className="reveal lg:col-span-7">
+                <div className="p-5 sm:p-8 md:p-10 rounded-3xl bg-[#f5f5dd] dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-2xl">
 
-                {formSuccess ? (
-                  /* Success State checkmark container animation */
-                  <div className="flex flex-col items-center justify-center py-10 text-center">
-                    <CheckCircle className="w-16 h-16 text-emerald-500" />
-                    <h3 className="font-brand font-black text-2xl text-zinc-950 dark:text-white mt-6 transition-colors">
-                      Message Sent!
-                    </h3>
-                    <p className="font-body text-zinc-600 dark:text-zinc-400 mt-2 max-w-xs leading-relaxed transition-colors">
-                      Thank you for reaching out. I'll review your details and get back to you soon!
-                    </p>
-                    <button
-                      onClick={() => setFormSuccess(false)}
-                      className="mt-8 px-6 py-2.5 rounded-full font-brand font-extrabold text-xs border border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 transition-colors"
-                    >
-                      Send Another Message
-                    </button>
-                  </div>
-                ) : (
-                  /* Form Elements */
-                  <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
-                    {formError && (
-                      <div className="flex items-center gap-2 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm font-body">
-                        <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                        <span>{formError}</span>
-                      </div>
-                    )}
-
-                    {/* Purpose Dropdown */}
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="form-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                        Purpose
-                      </label>
-                      <div className="relative">
-                        <select
-                          id="form-purpose"
-                          value={formState.purpose}
-                          disabled={formSubmitting}
-                          onChange={(e) => setFormState(prev => ({ ...prev, purpose: e.target.value }))}
-                          required
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
-                        >
-                          <option value="" disabled>Select</option>
-                          <option value="Hire for Video Editing (PAID)">Hire for Video Editing (PAID)</option>
-                          <option value="Hire for Podcast/YT Video Editing (PAID)">Hire for Podcast/YT Video Editing (PAID)</option>
-                          <option value="Hire for Photoshoot (PAID)">Hire for Photoshoot (PAID)</option>
-                          <option value="Ask for Collaboration">Ask for Collaboration</option>
-                          <option value="Let's Work Together">Let's Work Together</option>
-                          <option value="Avgeek - Let's Connect">Avgeek - Let's Connect</option>
-                          <option value="Planespotting">Planespotting</option>
-                          <option value="Want to join the 'Vignette' team">Want to join the 'Vignette' team</option>
-                        </select>
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
-                          <Compass className="w-4 h-4 transform rotate-180" />
-                        </div>
-                      </div>
+                  {formSuccess ? (
+                    /* Success State checkmark container animation */
+                    <div className="flex flex-col items-center justify-center py-10 text-center">
+                      <CheckCircle className="w-16 h-16 text-emerald-500" />
+                      <h3 className="font-brand font-black text-2xl text-zinc-950 dark:text-white mt-6 transition-colors">
+                        Message Sent!
+                      </h3>
+                      <p className="font-body text-zinc-600 dark:text-zinc-400 mt-2 max-w-xs leading-relaxed transition-colors">
+                        Thank you for reaching out. I'll review your details and get back to you soon!
+                      </p>
+                      <button
+                        onClick={() => setFormSuccess(false)}
+                        className="mt-8 px-6 py-2.5 rounded-full font-brand font-extrabold text-xs border border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 transition-colors"
+                      >
+                        Send Another Message
+                      </button>
                     </div>
+                  ) : (
+                    /* Form Elements */
+                    <form onSubmit={handleFormSubmit} className="flex flex-col gap-6">
+                      {formError && (
+                        <div className="flex items-center gap-2 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm font-body">
+                          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                          <span>{formError}</span>
+                        </div>
+                      )}
 
-                    {/* Salutation + Names Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
-                      {/* Salutation Dropdown */}
-                      <div className="flex flex-col gap-2 sm:col-span-3">
-                        <label htmlFor="form-salutation" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                          Title
+                      {/* Purpose Dropdown */}
+                      <div className="flex flex-col gap-2">
+                        <label htmlFor="form-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                          Purpose
                         </label>
                         <div className="relative">
                           <select
-                            id="form-salutation"
-                            value={formState.salutation}
+                            id="form-purpose"
+                            value={formState.purpose}
                             disabled={formSubmitting}
-                            onChange={(e) => setFormState(prev => ({ ...prev, salutation: e.target.value }))}
+                            onChange={(e) => setFormState(prev => ({ ...prev, purpose: e.target.value }))}
                             required
                             className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
                           >
                             <option value="" disabled>Select</option>
-                            <option value="Mr">Mr</option>
-                            <option value="Mrs">Mrs</option>
-                            <option value="Ms">Ms</option>
+                            <option value="Hire for Video Editing (PAID)">Hire for Video Editing (PAID)</option>
+                            <option value="Hire for Podcast/YT Video Editing (PAID)">Hire for Podcast/YT Video Editing (PAID)</option>
+                            <option value="Hire for Photoshoot (PAID)">Hire for Photoshoot (PAID)</option>
+                            <option value="Ask for Collaboration">Ask for Collaboration</option>
+                            <option value="Let's Work Together">Let's Work Together</option>
+                            <option value="Avgeek - Let's Connect">Avgeek - Let's Connect</option>
+                            <option value="Planespotting">Planespotting</option>
+                            <option value="Want to join the 'Vignette' team">Want to join the 'Vignette' team</option>
                           </select>
                           <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
                             <Compass className="w-4 h-4 transform rotate-180" />
@@ -2022,152 +1991,179 @@ export default function App() {
                         </div>
                       </div>
 
-                      {/* First Name Input */}
-                      <div className="flex flex-col gap-2 sm:col-span-4">
-                        <label htmlFor="form-first-name" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                          First Name
-                        </label>
-                        <input
-                          type="text"
-                          id="form-first-name"
-                          value={formState.firstName}
-                          onChange={(e) => handleNameChange('firstName', e.target.value)}
-                          disabled={formSubmitting}
-                          required
-                          minLength={2}
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
-                        />
-                      </div>
+                      {/* Salutation + Names Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                        {/* Salutation Dropdown */}
+                        <div className="flex flex-col gap-2 sm:col-span-3">
+                          <label htmlFor="form-salutation" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                            Title
+                          </label>
+                          <div className="relative">
+                            <select
+                              id="form-salutation"
+                              value={formState.salutation}
+                              disabled={formSubmitting}
+                              onChange={(e) => setFormState(prev => ({ ...prev, salutation: e.target.value }))}
+                              required
+                              className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
+                            >
+                              <option value="" disabled>Select</option>
+                              <option value="Mr">Mr</option>
+                              <option value="Mrs">Mrs</option>
+                              <option value="Ms">Ms</option>
+                            </select>
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
+                              <Compass className="w-4 h-4 transform rotate-180" />
+                            </div>
+                          </div>
+                        </div>
 
-                      {/* Last Name Input */}
-                      <div className="flex flex-col gap-2 sm:col-span-5">
-                        <label htmlFor="form-last-name" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                          Last Name
-                        </label>
-                        <input
-                          type="text"
-                          id="form-last-name"
-                          value={formState.lastName}
-                          onChange={(e) => handleNameChange('lastName', e.target.value)}
-                          disabled={formSubmitting}
-                          required
-                          minLength={2}
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Mobile + Email Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {/* Mobile Number */}
-                      <div className="flex flex-col gap-2">
-                        <label htmlFor="form-mobile" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                          Mobile Number (WhatsApp Number)
-                        </label>
-                        <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
-                          <span className="flex items-center px-3.5 bg-zinc-100 dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
-                            +91
-                          </span>
+                        {/* First Name Input */}
+                        <div className="flex flex-col gap-2 sm:col-span-4">
+                          <label htmlFor="form-first-name" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                            First Name
+                          </label>
                           <input
-                            type="tel"
-                            id="form-mobile"
-                            value={formState.mobile}
-                            onChange={(e) => handleMobileChange(e.target.value)}
-                            placeholder="10-digit number"
+                            type="text"
+                            id="form-first-name"
+                            value={formState.firstName}
+                            onChange={(e) => handleNameChange('firstName', e.target.value)}
                             disabled={formSubmitting}
                             required
-                            className="w-full px-4 py-3 bg-transparent text-zinc-900 dark:text-white focus:outline-none font-body"
+                            minLength={2}
+                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                          />
+                        </div>
+
+                        {/* Last Name Input */}
+                        <div className="flex flex-col gap-2 sm:col-span-5">
+                          <label htmlFor="form-last-name" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                            Last Name
+                          </label>
+                          <input
+                            type="text"
+                            id="form-last-name"
+                            value={formState.lastName}
+                            onChange={(e) => handleNameChange('lastName', e.target.value)}
+                            disabled={formSubmitting}
+                            required
+                            minLength={2}
+                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
                           />
                         </div>
                       </div>
 
-                      {/* Email ID */}
+                      {/* Mobile + Email Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Mobile Number */}
+                        <div className="flex flex-col gap-2">
+                          <label htmlFor="form-mobile" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                            Mobile Number (WhatsApp Number)
+                          </label>
+                          <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
+                            <span className="flex items-center px-3.5 bg-zinc-100 dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
+                              +91
+                            </span>
+                            <input
+                              type="tel"
+                              id="form-mobile"
+                              value={formState.mobile}
+                              onChange={(e) => handleMobileChange(e.target.value)}
+                              placeholder="10-digit number"
+                              disabled={formSubmitting}
+                              required
+                              className="w-full px-4 py-3 bg-transparent text-zinc-900 dark:text-white focus:outline-none font-body"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Email ID */}
+                        <div className="flex flex-col gap-2">
+                          <label htmlFor="form-email" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                            Email ID
+                          </label>
+                          <input
+                            type="email"
+                            id="form-email"
+                            value={formState.email}
+                            onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
+                            placeholder="john@example.com"
+                            disabled={formSubmitting}
+                            required
+                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Message textarea with counter */}
                       <div className="flex flex-col gap-2">
-                        <label htmlFor="form-email" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                          Email ID
-                        </label>
-                        <input
-                          type="email"
-                          id="form-email"
-                          value={formState.email}
-                          onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
-                          placeholder="john@example.com"
+                        <div className="flex items-center justify-between">
+                          <label htmlFor="form-message" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                            Message
+                          </label>
+                          <span className={`text-[10px] font-mono transition-colors ${formState.message.length > 4900 ? 'text-red-500 font-bold animate-pulse' : 'text-zinc-400 dark:text-zinc-500'
+                            }`}>
+                            {formState.message.length} / 5000 chars
+                          </span>
+                        </div>
+                        <textarea
+                          id="form-message"
+                          rows="5"
+                          value={formState.message}
+                          onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value.slice(0, 5000) }))}
+                          placeholder="Write details about your project or collaboration opportunity..."
                           disabled={formSubmitting}
                           required
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                          minLength={30}
+                          maxLength={5000}
+                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-y"
                         />
                       </div>
-                    </div>
 
-                    {/* Message textarea with counter */}
-                    <div className="flex flex-col gap-2">
-                      <div className="flex items-center justify-between">
-                        <label htmlFor="form-message" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                          Message
-                        </label>
-                        <span className={`text-[10px] font-mono transition-colors ${formState.message.length > 4900 ? 'text-red-500 font-bold animate-pulse' : 'text-zinc-400 dark:text-zinc-500'
-                          }`}>
-                          {formState.message.length} / 5000 chars
-                        </span>
-                      </div>
-                      <textarea
-                        id="form-message"
-                        rows="5"
-                        value={formState.message}
-                        onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value.slice(0, 5000) }))}
-                        placeholder="Write details about your project or collaboration opportunity..."
-                        disabled={formSubmitting}
-                        required
-                        minLength={30}
-                        maxLength={5000}
-                        className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-y"
-                      />
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      disabled={formSubmitting}
-                      className="mt-2 w-full py-4 rounded-xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black flex items-center justify-center gap-2 hover:-translate-y-[2px] active:scale-98 shadow-md transition-all duration-300 disabled:opacity-50"
-                    >
-                      {formSubmitting ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          <span>Sending Inquiries...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          <span>Submit</span>
-                        </>
-                      )}
-                    </button>
-
-                    {/* Reset Button */}
-                    <div className="flex justify-center mt-3">
+                      {/* Submit Button */}
                       <button
-                        type="button"
-                        onClick={() => setFormState({
-                          salutation: '',
-                          firstName: '',
-                          lastName: '',
-                          purpose: '',
-                          mobile: '',
-                          email: '',
-                          message: ''
-                        })}
-                        className="font-brand font-extrabold text-[10px] tracking-widest text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors uppercase cursor-pointer"
+                        type="submit"
+                        disabled={formSubmitting}
+                        className="mt-2 w-full py-4 rounded-xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black flex items-center justify-center gap-2 hover:-translate-y-[2px] active:scale-98 shadow-md transition-all duration-300 disabled:opacity-50"
                       >
-                        Reset
+                        {formSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span>Sending Inquiries...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4" />
+                            <span>Submit</span>
+                          </>
+                        )}
                       </button>
-                    </div>
-                  </form>
-                )}
 
+                      {/* Reset Button */}
+                      <div className="flex justify-center mt-3">
+                        <button
+                          type="button"
+                          onClick={() => setFormState({
+                            salutation: '',
+                            firstName: '',
+                            lastName: '',
+                            purpose: '',
+                            mobile: '',
+                            email: '',
+                            message: ''
+                          })}
+                          className="font-brand font-extrabold text-[10px] tracking-widest text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors uppercase cursor-pointer"
+                        >
+                          Reset
+                        </button>
+                      </div>
+                    </form>
+                  )}
+
+                </div>
               </div>
-            </div>
 
-          </div>
+            </div>
           </div>
         </section>
 
@@ -2176,10 +2172,10 @@ export default function App() {
       {/* 2.11. FOOTER SECTION */}
       <footer className="border-t-[0.5px] border-black/50 py-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
-          
+
           {/* Main Footer columns row */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
-            
+
             {/* Logo Name & Brand Info (Col span 3) */}
             <div className="md:col-span-3 flex flex-col gap-4">
               <div
@@ -2256,10 +2252,10 @@ export default function App() {
 
           {/* Social Media & Divider Line */}
           <div className="flex flex-col items-center gap-6 mt-4">
-            
+
             {/* Social Icons Row */}
             <div className="flex gap-5 items-center justify-center">
-              
+
               {/* Instagram: Real Pink-to-Purple brand gradient */}
               <a
                 href="https://www.instagram.com/proy____"
@@ -2588,12 +2584,11 @@ export default function App() {
               aria-label={`Scroll to ${sec.label}`}
             >
               {/* Active/Inactive Dot */}
-              <div 
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  activeSection === sec.id 
-                    ? 'bg-brand-lightOrange dark:bg-brand-darkGold scale-125 ring-4 ring-brand-lightOrange/20 dark:ring-brand-darkGold/20' 
+              <div
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeSection === sec.id
+                    ? 'bg-brand-lightOrange dark:bg-brand-darkGold scale-125 ring-4 ring-brand-lightOrange/20 dark:ring-brand-darkGold/20'
                     : 'bg-zinc-400 hover:bg-zinc-600 dark:bg-zinc-600 dark:hover:bg-zinc-400 hover:scale-110'
-                }`}
+                  }`}
               />
               {/* Tooltip Label */}
               <span className="absolute right-8 px-2.5 py-1 rounded bg-zinc-950 dark:bg-zinc-900 text-white dark:text-zinc-100 text-[10px] font-brand font-extrabold uppercase tracking-wider opacity-0 pointer-events-none translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap shadow-md border border-white/5">
@@ -2608,9 +2603,8 @@ export default function App() {
       {videoModalUrl === null && lightboxIndex === null && (
         <button
           onClick={() => scrollToSection('home')}
-          className={`fixed bottom-6 right-6 lg:right-8 z-40 w-11 h-11 rounded-full bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xl flex items-center justify-center text-zinc-700 dark:text-zinc-300 hover:text-brand-lightOrange dark:hover:text-brand-darkGold hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer ${
-            scrollProgress > 5 ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
-          }`}
+          className={`fixed bottom-6 right-6 lg:right-8 z-40 w-11 h-11 rounded-full bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xl flex items-center justify-center text-zinc-700 dark:text-zinc-300 hover:text-brand-lightOrange dark:hover:text-brand-darkGold hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer ${scrollProgress > 5 ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
+            }`}
           aria-label="Scroll back to top"
         >
           <svg className="absolute inset-0 w-full h-full transform -rotate-90 pointer-events-none select-none">
