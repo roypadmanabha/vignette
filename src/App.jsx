@@ -110,8 +110,8 @@ const MOCK_VIDEOS = [
     type: 'video',
     title: 'The Durga Puja Times',
     category: 'Festival',
-    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-person-walking-on-a-wooden-bridge-in-nature-41584-large.mp4',
-    thumbnail_url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&auto=format&fit=crop&q=80'
+    media_url: 'durgapuja.mp4',
+    thumbnail_url: 'durgapuja.mp4#t=1'
   },
   {
     id: 11,
@@ -959,7 +959,9 @@ export default function App() {
               updated = {
                 ...updated,
                 title: 'The Durga Puja Times',
-                category: 'Festival'
+                category: 'Festival',
+                media_url: 'durgapuja.mp4',
+                thumbnail_url: 'durgapuja.mp4#t=1'
               };
             }
             return updated;
