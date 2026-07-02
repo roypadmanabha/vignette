@@ -637,6 +637,10 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '' });
 
+  // Scrollytelling
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [activeSection, setActiveSection] = useState('home');
+
   // Gallery items and filters
   const [galleryFilter, setGalleryFilter] = useState('All');
   const [galleryItems, setGalleryItems] = useState(MOCK_GALLERY);
@@ -895,6 +899,38 @@ export default function App() {
     };
   }, [galleryItems, videos, edits]);
 
+  // --- Scrollytelling Progress & Active Section Stepper ---
+  useEffect(() => {
+    const sections = ['home', 'gallery', 'videos', 'editing', 'vision', 'hire'];
+    
+    const handleScroll = () => {
+      // 1. Calculate general scroll progress
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress((window.scrollY / totalHeight) * 100);
+      }
+
+      // 2. Track which section is active
+      const scrollPos = window.scrollY + window.innerHeight / 3;
+      for (const sectionId of sections) {
+        const el = document.getElementById(sectionId);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(sectionId);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Trigger initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // --- Supabase Data Fetching ---
   useEffect(() => {
     async function fetchData() {
@@ -1137,6 +1173,11 @@ export default function App() {
       </div>
 
       {/* 2.3. STICKY NAVBAR HEADER */}
+      {/* Glowing Scroll Progress Bar */}
+      <div 
+        className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-lightRed via-brand-lightOrange to-brand-darkGold dark:from-brand-darkGold dark:via-brand-darkYellow dark:to-brand-lightOrange z-[9999] transition-all duration-75 origin-left"
+        style={{ transform: `scaleX(${scrollProgress / 100})` }}
+      />
       <header className={`sticky top-0 z-40 transition-all duration-300 ${isScrolled
         ? 'glassmorphism shadow-sm'
         : 'bg-transparent border-b border-transparent shadow-none'
@@ -1477,7 +1518,7 @@ export default function App() {
         <section id="gallery" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
+              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
                 At a Glance
               </h2>
               <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
@@ -1486,7 +1527,7 @@ export default function App() {
             </div>
 
             {/* Filter Pill List Row */}
-            <div className="reveal flex flex-wrap justify-center gap-2.5 mb-12 px-4 select-none">
+            <div className="reveal reveal-left flex flex-wrap justify-center gap-2.5 mb-12 px-4 select-none">
               {['All', 'Travel', 'Lifestyle', 'Avgeek', 'Storytelling'].map((category) => {
                 const isActive = galleryFilter.toLowerCase() === category.toLowerCase();
                 return (
@@ -1505,12 +1546,13 @@ export default function App() {
             </div>
 
             {/* Gallery Cards Masonry/Grid */}
-            <div className="reveal grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 px-2 sm:px-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 px-2 sm:px-4">
               {filteredGallery.map((item, idx) => (
                 <div
                   key={item.id}
                   onClick={() => handleImageClick(idx)}
-                  className="group relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 select-none"
+                  className="reveal reveal-scale group relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 select-none"
+                  style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
                 >
                   <img
                     src={item.media_url}
@@ -1595,27 +1637,28 @@ export default function App() {
         <section id="videos" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
+              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
                 Our Highlights
               </h2>
-            <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
-              Short, snappy snippets with premium edit pacing. Hover on desktops to preview, click to open full cinematic player.
-            </p>
-          </div>
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
+                Short, snappy snippets with premium edit pacing. Hover on desktops to preview, click to open full cinematic player.
+              </p>
+            </div>
 
-          {/* Cards Grid */}
-          <div className="reveal grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 px-2 sm:px-4">
-            {videos.map((vid, idx) => (
-              <div
-                key={vid.id}
-                onClick={() => {
-                  setVideoModalUrl(vid.media_url);
-                  setVideoModalPoster(vid.thumbnail_url);
-                }}
-                onMouseEnter={() => handleVideoHoverStart(idx, vid.media_url)}
-                onMouseLeave={() => handleVideoHoverEnd(idx)}
-                className="relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 select-none"
-              >
+            {/* Cards Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 px-2 sm:px-4">
+              {videos.map((vid, idx) => (
+                <div
+                  key={vid.id}
+                  onClick={() => {
+                    setVideoModalUrl(vid.media_url);
+                    setVideoModalPoster(vid.thumbnail_url);
+                  }}
+                  onMouseEnter={() => handleVideoHoverStart(idx, vid.media_url)}
+                  onMouseLeave={() => handleVideoHoverEnd(idx)}
+                  className="reveal reveal-scale relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 select-none"
+                  style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
+                >
                 {/* Visual Preview Container */}
                 <div className="relative aspect-[9/16] w-full bg-zinc-950 overflow-hidden">
 
@@ -1696,7 +1739,7 @@ export default function App() {
         <section id="editing" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
+              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
                 Before / After Showcase
               </h2>
               <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
@@ -1705,15 +1748,20 @@ export default function App() {
             </div>
 
             {/* Slider Grid */}
-            <div className="reveal grid grid-cols-1 md:grid-cols-2 gap-12 px-4">
-              {edits.map(edit => (
-                <BeforeAfterSlider
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 px-4">
+              {edits.map((edit, idx) => (
+                <div
                   key={edit.id}
-                  before={edit.before_url}
-                  after={edit.after_url}
-                  title={edit.title}
-                  description={edit.description}
-                />
+                  className="reveal reveal-scale"
+                  style={{ transitionDelay: `${idx * 150}ms` }}
+                >
+                  <BeforeAfterSlider
+                    before={edit.before_url}
+                    after={edit.after_url}
+                    title={edit.title}
+                    description={edit.description}
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -1725,15 +1773,15 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
 
               {/* Left Narrative Column */}
-              <div className="lg:col-span-7 flex flex-col">
-                <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
+              <div className="reveal reveal-left lg:col-span-7 flex flex-col">
+                <span className="font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
                   Creative Manifesto
                 </span>
-                <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
+                <h2 className="font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
                   Where This Is Headed
                 </h2>
 
-                <div className="reveal font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-6 leading-relaxed transition-colors text-justify">
+                <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-6 leading-relaxed transition-colors text-justify">
                   <p>
                     As a digital storyteller, avgeek, and travel editor, I believe that every frame should make the audience feel like they're boarding the flight alongside me. The brand <strong className="brand-text-gradient">Vignette</strong> isn't just about cropping edges—it's about adding depth and lighting the subject exactly where it matters.
                   </p>
@@ -1744,7 +1792,7 @@ export default function App() {
               </div>
 
               {/* Right Pull-quote Graphic Column */}
-              <div className="reveal lg:col-span-5 flex flex-col justify-center">
+              <div className="reveal reveal-right lg:col-span-5 flex flex-col justify-center">
                 <div className="relative p-8 md:p-12 rounded-2xl bg-white dark:bg-zinc-900/40 backdrop-blur-sm border border-brand-lightRed/20 dark:border-brand-darkGold/20 shadow-xl">
                   {/* Thick styling border accent */}
                   <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-l-2xl" />
@@ -2479,6 +2527,69 @@ export default function App() {
           </div>
         </div>
       )}
+      {/* Floating Stepper Navigation (Desktop only) */}
+      <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-4 z-40 bg-white/20 dark:bg-black/25 backdrop-blur-md p-3.5 rounded-full border border-black/5 dark:border-white/10 shadow-lg select-none">
+        {[
+          { id: 'home', label: 'Home' },
+          { id: 'gallery', label: 'At Glance' },
+          { id: 'videos', label: 'Highlights' },
+          { id: 'editing', label: 'Our Works' },
+          { id: 'vision', label: 'About' },
+          { id: 'hire', label: 'Contact' }
+        ].map(sec => (
+          <button
+            key={sec.id}
+            onClick={() => scrollToSection(sec.id)}
+            className="group relative flex items-center justify-center cursor-pointer"
+            aria-label={`Scroll to ${sec.label}`}
+          >
+            {/* Active/Inactive Dot */}
+            <div 
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                activeSection === sec.id 
+                  ? 'bg-brand-lightOrange dark:bg-brand-darkGold scale-125 ring-4 ring-brand-lightOrange/20 dark:ring-brand-darkGold/20' 
+                  : 'bg-zinc-400 hover:bg-zinc-600 dark:bg-zinc-600 dark:hover:bg-zinc-400 hover:scale-110'
+              }`}
+            />
+            {/* Tooltip Label */}
+            <span className="absolute right-8 px-2.5 py-1 rounded bg-zinc-950 dark:bg-zinc-900 text-white dark:text-zinc-100 text-[10px] font-brand font-extrabold uppercase tracking-wider opacity-0 pointer-events-none translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 whitespace-nowrap shadow-md border border-white/5">
+              {sec.label}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Floating Back to Top Button with SVG radial scroll progress */}
+      <button
+        onClick={() => scrollToSection('home')}
+        className={`fixed bottom-6 right-6 lg:right-8 z-40 w-11 h-11 rounded-full bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-xl flex items-center justify-center text-zinc-700 dark:text-zinc-300 hover:text-brand-lightOrange dark:hover:text-brand-darkGold hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer ${
+          scrollProgress > 5 ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
+        aria-label="Scroll back to top"
+      >
+        <svg className="absolute inset-0 w-full h-full transform -rotate-90 pointer-events-none select-none">
+          <circle
+            cx="22"
+            cy="22"
+            r="18"
+            className="stroke-zinc-200 dark:stroke-zinc-800 fill-none"
+            strokeWidth="2.5"
+          />
+          <circle
+            cx="22"
+            cy="22"
+            r="18"
+            className="stroke-brand-lightOrange dark:stroke-brand-darkGold fill-none"
+            strokeWidth="2.5"
+            strokeDasharray={2 * Math.PI * 18}
+            strokeDashoffset={2 * Math.PI * 18 * (1 - scrollProgress / 100)}
+            strokeLinecap="round"
+          />
+        </svg>
+        <svg className="w-4 h-4 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="3">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+        </svg>
+      </button>
 
     </div>
   );
