@@ -144,9 +144,17 @@ const MOCK_EDITS = [
   }
 ];
 
-// ==========================================
-// 1. HELPERS & CHILD COMPONENTS
-// ==========================================
+// Helper to resolve asset URLs correctly across base paths (e.g. GitHub Pages) and trailing slashes
+const getAssetUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:') || url.startsWith('data:')) {
+    return url;
+  }
+  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+  const base = import.meta.env.BASE_URL || '/';
+  return base.endsWith('/') ? `${base}${cleanUrl}` : `${base}/${cleanUrl}`;
+};
+
 
 // Custom CountUp Component triggered on Scroll viewport entry
 const CountUp = ({ end, suffix = "", duration = 1800 }) => {
@@ -378,7 +386,7 @@ const BeforeAfterSlider = ({ before, after, description, title, beforeFilter }) 
       >
         {/* Before Image (underneath) */}
         <img
-          src={before}
+          src={getAssetUrl(before)}
           alt="Before Edit"
           className="absolute inset-0 w-full h-full object-cover select-none"
           style={beforeFilter ? { filter: beforeFilter } : undefined}
@@ -390,7 +398,7 @@ const BeforeAfterSlider = ({ before, after, description, title, beforeFilter }) 
 
         {/* After Image (clipped overlay) */}
         <img
-          src={after}
+          src={getAssetUrl(after)}
           alt="After Edit"
           className="absolute inset-0 w-full h-full object-cover select-none"
           style={{ clipPath: `polygon(0 0, ${sliderPos}% 0, ${sliderPos}% 100%, 0 100%)` }}
