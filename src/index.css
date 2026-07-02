@@ -271,23 +271,13 @@ form .flex > span {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: linear-gradient(to bottom, rgba(245, 245, 221, 0.93) 0%, rgba(245, 245, 221, 0.86) 55%, rgba(245, 245, 221, 0.5) 100%);
+  background: rgba(245, 245, 221, 0.75);
   pointer-events: none;
   transition: background-color 0.3s;
 }
 
 .dark .hero-overlay {
-  background: linear-gradient(to bottom, rgba(5, 5, 8, 0.93) 0%, rgba(5, 5, 8, 0.86) 55%, rgba(5, 5, 8, 0.4) 100%);
-}
-
-@media (min-width: 1024px) {
-  .hero-overlay {
-    background: linear-gradient(to right, rgba(245, 245, 221, 0.91) 0%, rgba(245, 245, 221, 0.85) 45%, rgba(245, 245, 221, 0.4) 100%);
-  }
-
-  .dark .hero-overlay {
-    background: linear-gradient(to right, rgba(5, 5, 8, 0.91) 0%, rgba(5, 5, 8, 0.85) 45%, rgba(5, 5, 8, 0.3) 100%);
-  }
+  background: rgba(5, 5, 8, 0.72);
 }
 
 @media (max-width: 768px) {

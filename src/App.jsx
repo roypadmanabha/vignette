@@ -1421,8 +1421,9 @@ export default function App() {
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center w-full max-w-6xl px-4 sm:px-8 py-4">
               
               {/* Left Column: Text Content */}
-              <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">                 {/* Eyebrow */}
-                <div className="reveal flex items-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.25em] text-zinc-900 dark:text-white uppercase select-none">
+              <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+                {/* Eyebrow */}
+                <div className="reveal flex items-center gap-1.5 sm:gap-2 mb-6 font-brand font-extrabold text-[9px] min-[375px]:text-[10px] sm:text-xs tracking-[0.12em] sm:tracking-[0.25em] text-zinc-950 dark:text-white uppercase select-none">
                   <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-brand-lightOrange dark:text-brand-darkGold animate-pulse flex-shrink-0" />
                   <span className="whitespace-nowrap">Digital Creator · Storyteller · Avgeek</span>
                 </div>
@@ -1435,7 +1436,7 @@ export default function App() {
                 </h1>
 
                 {/* Short Bio Paragraph */}
-                <p className="reveal font-body text-sm sm:text-base md:text-lg text-zinc-900 dark:text-zinc-300 max-w-xl mt-6 leading-relaxed transition-colors">
+                <p className="reveal font-body text-sm sm:text-base md:text-lg text-zinc-900 dark:text-zinc-200 max-w-xl mt-6 leading-relaxed transition-colors">
                   Welcome to <strong className="brand-text-gradient select-none">Vignette</strong>,
                   the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
                   and high-altitude aviation storytelling into cinematic digital capsules.
@@ -1451,7 +1452,7 @@ export default function App() {
                   </button>
                   <button
                     onClick={() => setIsHireModalOpen(true)}
-                    className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300 text-zinc-900 dark:text-white"
+                    className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300 dark:text-white"
                   >
                     Hire Me
                   </button>
