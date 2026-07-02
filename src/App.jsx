@@ -589,7 +589,7 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
 
         {/* Custom Controls Bar */}
         <div
-          className={`absolute inset-x-0 bottom-0 p-6 bg-black/85 backdrop-blur-md border-t border-white/10 flex flex-col gap-3 transition-opacity duration-300 z-20 ${showControls ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          className={`absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col gap-3 transition-opacity duration-300 z-20 ${showControls ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
         >
           {/* Progress Seek Scrubber */}
