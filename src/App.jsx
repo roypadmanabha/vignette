@@ -109,7 +109,7 @@ const MOCK_VIDEOS = [
     id: 10,
     type: 'video',
     title: 'Chasing Alpine Bridges',
-    category: 'Travel',
+    category: 'Festival',
     media_url: 'https://assets.mixkit.co/videos/preview/mixkit-person-walking-on-a-wooden-bridge-in-nature-41584-large.mp4',
     thumbnail_url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&auto=format&fit=crop&q=80'
   },
@@ -947,14 +947,21 @@ export default function App() {
           // Parse loaded items into categories
           const loadedImages = data.filter(item => item.type === 'image');
           const loadedVideos = data.filter(item => item.type === 'video').map(video => {
+            let updated = { ...video };
             if (video.category === 'Avgeek') {
-              return {
-                ...video,
+              updated = {
+                ...updated,
                 media_url: 'avgeek.mp4',
                 thumbnail_url: 'avgeek.mp4#t=11'
               };
             }
-            return video;
+            if (video.title.includes('Alpine') || video.id === 10) {
+              updated = {
+                ...updated,
+                category: 'Festival'
+              };
+            }
+            return updated;
           });
           const loadedEdits = data.filter(item => item.type === 'edit').map(edit => {
             if (edit.title.includes('Teal') || edit.title.includes('Orange') || edit.id === 12) {
