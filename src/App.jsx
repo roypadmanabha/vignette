@@ -1353,7 +1353,7 @@ export default function App() {
               preload="auto"
               poster={heroBgUrl || undefined}
             >
-              <source src="hero_video.mp4" type="video/mp4" />
+              <source src="hero_video.MOV" type="video/quicktime" />
             </video>
 
             {/* Overlay Wash Tint */}
@@ -1774,7 +1774,7 @@ export default function App() {
             >
               <video
                 ref={heroVideoRef}
-                src="hero_video.mp4"
+                src="hero.mp4"
                 playsInline
                 controlsList="nodownload nofullscreen noremoteplayback"
                 disablePictureInPicture
