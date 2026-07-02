@@ -129,16 +129,18 @@ const MOCK_EDITS = [
     type: 'edit',
     title: 'Cinematic Teal & Orange',
     description: 'Raw Flat Log Profile color-graded to a warm, high-contrast golden hour style, drawing focus to the mountain range.',
-    before_url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&auto=format&fit=crop&q=80&sat=-50&con=-20',
-    after_url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&auto=format&fit=crop&q=80'
+    before_url: 'nature-img.png',
+    after_url: 'nature-img.png',
+    before_filter: 'saturate(0.55) contrast(0.75) brightness(1.05) sepia(0.1)'
   },
   {
     id: 13,
     type: 'edit',
     title: 'Moody Window Overcast',
     description: 'Sky brightness recovery, wing highlights adjustment, and modern cool-shadow toning applied to a flat cabin view.',
-    before_url: 'https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?w=800&auto=format&fit=crop&q=80&sat=-70',
-    after_url: 'https://images.unsplash.com/photo-1506012787146-f92b2d7d6d96?w=800&auto=format&fit=crop&q=80'
+    before_url: 'flight-img.png',
+    after_url: 'flight-img.png',
+    before_filter: 'saturate(0.4) contrast(0.7) brightness(1.1)'
   }
 ];
 
@@ -340,7 +342,7 @@ const Starfield = ({ isDark }) => {
 };
 
 // Draggable Before/After Image Comparison Slider
-const BeforeAfterSlider = ({ before, after, description, title }) => {
+const BeforeAfterSlider = ({ before, after, description, title, beforeFilter }) => {
   const [sliderPos, setSliderPos] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef(null);
@@ -379,6 +381,7 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
           src={before}
           alt="Before Edit"
           className="absolute inset-0 w-full h-full object-cover select-none"
+          style={beforeFilter ? { filter: beforeFilter } : undefined}
           draggable="false"
         />
         <div className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm text-white text-xs font-heading font-extrabold px-2.5 py-1 rounded-md z-10 pointer-events-none uppercase tracking-wider">
@@ -924,7 +927,25 @@ export default function App() {
             }
             return video;
           });
-          const loadedEdits = data.filter(item => item.type === 'edit');
+          const loadedEdits = data.filter(item => item.type === 'edit').map(edit => {
+            if (edit.title.includes('Teal') || edit.title.includes('Orange')) {
+              return {
+                ...edit,
+                before_url: 'nature-img.png',
+                after_url: 'nature-img.png',
+                before_filter: 'saturate(0.55) contrast(0.75) brightness(1.05) sepia(0.1)'
+              };
+            }
+            if (edit.title.includes('Moody') || edit.title.includes('Window') || edit.title.includes('Overcast')) {
+              return {
+                ...edit,
+                before_url: 'flight-img.png',
+                after_url: 'flight-img.png',
+                before_filter: 'saturate(0.4) contrast(0.7) brightness(1.1)'
+              };
+            }
+            return edit;
+          });
 
           if (loadedImages.length > 0) setGalleryItems(loadedImages);
           if (loadedVideos.length > 0) setVideos(loadedVideos);
@@ -1696,6 +1717,7 @@ export default function App() {
                   after={edit.after_url}
                   title={edit.title}
                   description={edit.description}
+                  beforeFilter={edit.before_filter}
                 />
               ))}
             </div>
