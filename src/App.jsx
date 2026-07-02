@@ -436,7 +436,19 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
   const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [aspectRatio, setAspectRatio] = useState(16 / 9);
+  const [mounted, setMounted] = useState(false);
   const controlsTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  const handleClose = (e) => {
+    if (e) e.stopPropagation();
+    setMounted(false);
+    setTimeout(onClose, 500);
+  };
 
   useEffect(() => {
     if (videoRef.current) {
@@ -525,11 +537,15 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8"
-      onClick={onClose}
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 transition-all duration-500 ease-out ${
+        mounted ? 'opacity-100' : 'opacity-0'
+      }`}
+      onClick={handleClose}
     >
       <div
-        className="relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-all duration-300"
+        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-all duration-500 ease-out ${
+          mounted ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+        }`}
         style={{
           aspectRatio: aspectRatio,
           maxHeight: '82vh',
@@ -558,7 +574,7 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
         {/* Close Button */}
         <button
           className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-black/80 rounded-full text-white/80 hover:text-white transition-colors z-30"
-          onClick={onClose}
+          onClick={handleClose}
         >
           <X className="w-6 h-6" />
         </button>
@@ -1708,8 +1724,8 @@ export default function App() {
                   />
 
                   {/* Center Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-colors">
-                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-white/20 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl scale-95 group-hover:scale-110 transition-transform duration-300">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-all duration-500 ease-out">
+                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-white/20 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl scale-95 group-hover:scale-110 transition-all duration-500 ease-out">
                       <svg className="w-5 h-5 sm:w-8 sm:h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                       </svg>
