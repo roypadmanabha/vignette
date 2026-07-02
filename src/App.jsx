@@ -434,10 +434,12 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(true);
+  const [aspectRatio, setAspectRatio] = useState(16 / 9);
   const controlsTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (videoRef.current) {
+      setAspectRatio(16 / 9);
       videoRef.current.play()
         .then(() => setIsPlaying(true))
         .catch(() => { });
@@ -464,6 +466,11 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
   const handleLoadedMetadata = () => {
     if (!videoRef.current) return;
     setDuration(videoRef.current.duration);
+    const width = videoRef.current.videoWidth;
+    const height = videoRef.current.videoHeight;
+    if (width && height) {
+      setAspectRatio(width / height);
+    }
   };
 
   const handleScrub = (e) => {
@@ -521,7 +528,14 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
       onClick={onClose}
     >
       <div
-        className="relative max-w-4xl w-full aspect-video bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+        className="relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-all duration-300"
+        style={{
+          aspectRatio: aspectRatio,
+          maxHeight: '82vh',
+          maxWidth: '90vw',
+          width: aspectRatio > 1 ? 'min(896px, 90vw)' : 'calc(82vh * ' + aspectRatio + ')',
+          height: aspectRatio > 1 ? 'calc(min(896px, 90vw) / ' + aspectRatio + ')' : '82vh'
+        }}
         onClick={(e) => e.stopPropagation()}
         onMouseMove={resetControlsTimeout}
       >
@@ -529,7 +543,7 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
           ref={videoRef}
           src={src}
           poster={poster}
-          className="w-full h-full object-contain cursor-pointer"
+          className="w-full h-full object-cover cursor-pointer"
           onClick={togglePlay}
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
