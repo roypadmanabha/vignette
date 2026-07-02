@@ -102,8 +102,8 @@ const MOCK_VIDEOS = [
     type: 'video',
     title: 'Wings Over Clouds',
     category: 'Avgeek',
-    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-passenger-airplane-flying-across-the-sky-34261-large.mp4',
-    thumbnail_url: 'https://images.unsplash.com/photo-1540962351504-03099e0a754b?w=800&auto=format&fit=crop&q=80'
+    media_url: 'avgeek.mp4',
+    thumbnail_url: 'avgeek.mp4#t=11'
   },
   {
     id: 10,
@@ -900,7 +900,16 @@ export default function App() {
         if (data && data.length > 0) {
           // Parse loaded items into categories
           const loadedImages = data.filter(item => item.type === 'image');
-          const loadedVideos = data.filter(item => item.type === 'video');
+          const loadedVideos = data.filter(item => item.type === 'video').map(video => {
+            if (video.category === 'Avgeek') {
+              return {
+                ...video,
+                media_url: 'avgeek.mp4',
+                thumbnail_url: 'avgeek.mp4#t=11'
+              };
+            }
+            return video;
+          });
           const loadedEdits = data.filter(item => item.type === 'edit');
 
           if (loadedImages.length > 0) setGalleryItems(loadedImages);
@@ -1579,14 +1588,25 @@ export default function App() {
                 {/* Visual Preview Container */}
                 <div className="relative aspect-[9/16] w-full bg-zinc-950 overflow-hidden">
 
-                  {/* Poster Image */}
-                  <img
-                    src={vid.thumbnail_url}
-                    alt={vid.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none"
-                    draggable="false"
-                  />
+                  {/* Poster Image or Video Frame */}
+                  {vid.thumbnail_url && (vid.thumbnail_url.endsWith('.mp4') || vid.thumbnail_url.includes('.mp4')) ? (
+                    <video
+                      src={vid.thumbnail_url}
+                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none pointer-events-none"
+                      muted
+                      playsInline
+                      preload="metadata"
+                      draggable="false"
+                    />
+                  ) : (
+                    <img
+                      src={vid.thumbnail_url}
+                      alt={vid.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none"
+                      draggable="false"
+                    />
+                  )}
 
                   {/* Looping Muted Hover Video */}
                   <video
