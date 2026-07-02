@@ -14,7 +14,7 @@ export default {
       colors: {
         brand: {
           lightRed: '#000000',
-          lightOrange: '#e31c25',
+          lightOrange: '#FF2400',
           darkGold: '#FFD700',
           darkYellow: '#FFF1A8',
         }

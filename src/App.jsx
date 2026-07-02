@@ -23,7 +23,9 @@ import {
   Phone,
   Mail,
   MapPin,
-  Maximize2
+  Maximize2,
+  Mic,
+  Megaphone
 } from 'lucide-react';
 import { supabase } from './supabase';
 
@@ -126,8 +128,8 @@ const MOCK_VIDEOS = [
     type: 'video',
     title: 'Random Moments',
     category: 'Random',
-    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
-    thumbnail_url: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&auto=format&fit=crop&q=80'
+    media_url: 'random.mp4',
+    thumbnail_url: 'random.mp4#t=1'
   }
 ];
 
@@ -903,7 +905,7 @@ export default function App() {
 
   // --- Scrollytelling Progress & Active Section Stepper ---
   useEffect(() => {
-    const sections = ['home', 'gallery', 'videos', 'editing', 'vision', 'hire'];
+    const sections = ['home', 'gallery', 'services', 'videos', 'editing', 'vision', 'hire'];
 
     const handleScroll = () => {
       // 1. Calculate general scroll progress
@@ -979,6 +981,13 @@ export default function App() {
                 thumbnail_url: 'lifestyle.mp4#t=1'
               };
             }
+            if (video.title.includes('Random') || video.id === 115) {
+              updated = {
+                ...updated,
+                media_url: 'random.mp4',
+                thumbnail_url: 'random.mp4#t=1'
+              };
+            }
             return updated;
           });
 
@@ -988,8 +997,8 @@ export default function App() {
               type: 'video',
               title: 'Random Moments',
               category: 'Random',
-              media_url: 'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
-              thumbnail_url: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&auto=format&fit=crop&q=80',
+              media_url: 'random.mp4',
+              thumbnail_url: 'random.mp4#t=1',
               display_order: 4
             });
           }
@@ -1053,23 +1062,6 @@ export default function App() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxIndex, filteredGallery]);
-
-  // --- Video Hover Autoplay Preview (Desktop only) ---
-  const handleVideoHoverStart = (idx, url) => {
-    const video = document.getElementById(`preview-video-${idx}`);
-    if (video) {
-      video.muted = true;
-      video.play().catch(() => { });
-    }
-  };
-
-  const handleVideoHoverEnd = (idx) => {
-    const video = document.getElementById(`preview-video-${idx}`);
-    if (video) {
-      video.pause();
-      video.currentTime = 0;
-    }
-  };
 
   // --- Contact Form Submission ---
   const handleFormSubmit = async (e) => {
@@ -1193,8 +1185,8 @@ export default function App() {
       {/* 2.2. PROTECTED TOAST NOTIFICATION BANNER */}
       <div
         className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
-            ? 'top-20 opacity-100 translate-y-0 scale-100'
-            : 'top-20 opacity-0 -translate-y-4 scale-95'
+          ? 'top-20 opacity-100 translate-y-0 scale-100'
+          : 'top-20 opacity-0 -translate-y-4 scale-95'
           }`}
       >
         <TriangleAlert className="w-4.5 h-4.5 text-white flex-shrink-0 animate-bounce" />
@@ -1209,9 +1201,11 @@ export default function App() {
         className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-lightRed via-brand-lightOrange to-brand-darkGold dark:from-brand-darkGold dark:via-brand-darkYellow dark:to-brand-lightOrange z-[9999] transition-all duration-75 origin-left"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
       />
-      <header className={`sticky top-0 z-40 transition-all duration-300 ${isScrolled
-        ? 'glassmorphism shadow-sm'
-        : 'bg-transparent border-b border-transparent shadow-none'
+      <header className={`sticky top-0 z-40 transition-all duration-300 ${isDark
+        ? isScrolled
+          ? 'glassmorphism shadow-sm'
+          : 'bg-transparent border-b border-transparent shadow-none'
+        : 'bg-[#f5f5dd] border-b border-black/5 shadow-sm'
         }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 lg:h-16 flex items-center justify-between">
 
@@ -1236,7 +1230,7 @@ export default function App() {
           <nav className="hidden lg:flex items-center gap-8 font-brand font-bold text-sm">
             {[
               { label: 'At Glance', id: 'gallery' },
-              { label: 'Services', url: '/' },
+              { label: 'Services', id: 'services' },
               { label: 'Highlights', id: 'videos' },
               { label: 'Our Works', id: 'editing' },
               { label: 'Royography', url: '/' },
@@ -1354,7 +1348,7 @@ export default function App() {
           <nav className="flex flex-col gap-2">
             {[
               { label: 'At Glance', id: 'gallery', icon: Compass },
-              { label: 'Services', url: '/', icon: Sliders },
+              { label: 'Services', id: 'services', icon: Sliders },
               { label: 'Highlights', id: 'videos', icon: Play },
               { label: 'Our Works', id: 'editing', icon: Video },
               { label: 'Royography', url: '/', icon: Camera },
@@ -1449,7 +1443,7 @@ export default function App() {
               preload="auto"
               poster={heroBgUrl || undefined}
             >
-              <source src="hero_video.MOV" type="video/quicktime" />
+              <source src="hero_video.mp4" type="video/mp4" />
             </video>
           </div>
 
@@ -1499,12 +1493,27 @@ export default function App() {
             </div>
 
             {/* Right Column: Visual Portrait with Floating Badge Stats */}
-            <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0">
+            <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0 w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] mx-auto">
 
               {/* Visual Graphic Backdrop (Aesthetic concentric circles representing lenses/apertures) */}
-              <div className="absolute w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] rounded-full border border-brand-lightOrange/20 dark:border-brand-darkGold/15 animate-[spin_40s_linear_infinite]" />
-              <div className="absolute w-[200px] h-[200px] sm:w-[270px] sm:h-[270px] rounded-full border border-dashed border-zinc-300/40 dark:border-zinc-800/30 animate-[spin_30s_linear_infinite_reverse]" />
+              <div className="absolute w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] rounded-full border border-brand-lightOrange/20 dark:border-brand-darkGold/15" />
+              <div className="absolute w-[200px] h-[200px] sm:w-[270px] sm:h-[270px] rounded-full border border-dashed border-zinc-300/40 dark:border-zinc-800/30" />
               <div className="absolute w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] rounded-full bg-gradient-to-tr from-brand-lightRed/5 to-brand-lightOrange/10 dark:from-brand-darkGold/5 dark:to-brand-darkYellow/10 blur-xl" />
+
+              {/* Connector Leader Lines connecting badges to the central logo */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 100 100">
+                {/* Line to Badge 1 (top-left) */}
+                <line x1="12" y1="24" x2="33" y2="33" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2" className="text-brand-lightOrange/50 dark:text-brand-darkGold/45" />
+                <circle cx="33" cy="33" r="1.5" className="fill-brand-lightOrange dark:fill-brand-darkGold" />
+
+                {/* Line to Badge 2 (middle-right) */}
+                <line x1="88" y1="46" x2="67" y2="50" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2" className="text-brand-lightOrange/50 dark:text-brand-darkGold/45" />
+                <circle cx="67" cy="50" r="1.5" className="fill-brand-lightOrange dark:fill-brand-darkGold" />
+
+                {/* Line to Badge 3 (bottom-left) */}
+                <line x1="22" y1="78" x2="38" y2="64" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2" className="text-brand-lightOrange/50 dark:text-brand-darkGold/45" />
+                <circle cx="38" cy="64" r="1.5" className="fill-brand-lightOrange dark:fill-brand-darkGold" />
+              </svg>
 
               {/* Main Portrait Frame */}
               <div className="relative w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl z-10 bg-white dark:bg-zinc-950 flex items-center justify-center">
@@ -1516,45 +1525,44 @@ export default function App() {
                 />
               </div>
 
-              {/* Floating Badge 1: 5+ Years Experience */}
-              <div className="absolute -left-2 sm:-left-6 top-[15%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
+              {/* Floating Badge 1: 5+ Years of Experience */}
+              <div className="absolute left-[2%] sm:left-[0%] top-[18%] px-3.5 py-2 bg-[#f5f5dd] dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-brand-lightOrange/20 dark:border-white/10 shadow-lg shadow-brand-lightOrange/5 flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                <span className="font-brand font-black text-sm sm:text-base text-brand-lightOrange dark:text-brand-darkGold">
                   <CountUp end={5} suffix="+" />
                 </span>
                 <div className="flex flex-col leading-none">
-                  <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider">Years</span>
+                  <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider">Years of</span>
                   <span className="font-body text-[7px] sm:text-[8px] text-zinc-500 uppercase tracking-widest mt-0.5">Experience</span>
                 </div>
               </div>
 
-              {/* Floating Badge 2: 200+ Videos */}
-              <div className="absolute -right-2 sm:-right-6 top-[35%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
+              {/* Floating Badge 2: 200+ Posts */}
+              <div className="absolute right-[2%] sm:right-[0%] top-[38%] px-3.5 py-2 bg-[#f5f5dd] dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-brand-lightOrange/20 dark:border-white/10 shadow-lg shadow-brand-lightOrange/5 flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                <span className="font-brand font-black text-sm sm:text-base text-brand-lightOrange dark:text-brand-darkGold">
                   <CountUp end={200} suffix="+" />
                 </span>
-                <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Videos</span>
+                <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Posts</span>
               </div>
 
               {/* Floating Badge 3: 2.1K Followers */}
-              <div className="absolute left-[10%] bottom-[5%] px-3.5 py-2 bg-white/85 dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-black/5 dark:border-white/10 shadow-lg flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                <span className="font-brand font-black text-sm sm:text-base text-brand-lightRed dark:text-brand-darkGold">
-                  <CountUp end={2.1} suffix="K+" />
+              <div className="absolute left-[10%] bottom-[8%] px-3.5 py-2 bg-[#f5f5dd] dark:bg-zinc-900/85 backdrop-blur-md rounded-2xl border border-brand-lightOrange/20 dark:border-white/10 shadow-lg shadow-brand-lightOrange/5 flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
+                <span className="font-brand font-black text-sm sm:text-base text-brand-lightOrange dark:text-brand-darkGold">
+                  <CountUp end={2.1} suffix="K" />
                 </span>
                 <span className="font-brand font-extrabold text-[9px] sm:text-[10px] text-zinc-950 dark:text-white uppercase tracking-wider leading-none">Followers</span>
               </div>
 
               {/* Curved Ribbon Tag Line at Bottom */}
-              <div className="absolute bottom-[-14px] sm:bottom-[-16px] left-1/2 -translate-x-1/2 px-5 py-2 bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-full shadow-xl text-[9px] sm:text-[10px] font-brand font-extrabold uppercase tracking-widest text-white dark:text-black whitespace-nowrap z-20 select-none">
+              <div className="absolute bottom-[-6px] sm:bottom-[-8px] left-1/2 -translate-x-1/2 px-5 py-2 bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-full shadow-xl text-[9px] sm:text-[10px] font-brand font-extrabold uppercase tracking-widest text-white dark:text-black whitespace-nowrap z-20 select-none">
                 Telling Stories One Frame At A Time
               </div>
-
             </div>
           </div>
         </section>
         </div>
 
         {/* 2.6. GALLERY SECTION */}
-        <section id="gallery" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="gallery" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1672,15 +1680,122 @@ export default function App() {
           </div>
         </section>
 
+        {/* 2.6.5. SERVICES SECTION */}
+        <section id="services" className="bg-transparent py-24 sm:py-32 scroll-mt-20 border-t border-black/5 dark:border-white/5 transition-colors">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <span className="reveal font-brand font-black text-xs uppercase tracking-widest text-brand-lightOrange dark:text-brand-darkGold mb-3 block">
+                What We Do
+              </span>
+              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient mb-6">
+                Services
+              </h2>
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 leading-relaxed px-4 transition-colors text-base sm:text-lg">
+                Our services include video editing, seamless podcast enhancement, engaging promotional content, and tailored shoots - crafted to elevate brand visibility, storytelling, and impact across marketing and social platforms.
+              </p>
+            </div>
+
+            {/* Services Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8 px-2 sm:px-4">
+              {[
+                {
+                  title: 'Video Editing',
+                  description: 'High-end cinematic pacing, precise cuts, color grading, sound design, and motion graphics to turn raw footage into compelling stories.',
+                  icon: Video,
+                  imageUrl: 'service-video-editing.jpg',
+                  badgeStyle: 'bg-yellow-100 text-yellow-950 border-yellow-200/50',
+                  accentBar: 'bg-gradient-to-r from-brand-darkGold to-brand-darkYellow',
+                  badgeText: 'EXCLUSIVE',
+                },
+                {
+                  title: 'Podcast Editing',
+                  description: 'Crystal-clear audio cleanup, seamless pacing, noise reduction, and integration of intro/outro music for a professional listening experience.',
+                  icon: Mic,
+                  imageUrl: 'service-podcast-editing.jpg',
+                  badgeStyle: 'bg-sky-100 text-sky-950 border-sky-200/50',
+                  accentBar: 'bg-gradient-to-r from-sky-400 to-sky-200',
+                  badgeText: 'FEATURED',
+                },
+                {
+                  title: 'Promotions',
+                  description: 'Conversion-focused video campaigns, social ads, and hook-heavy promotional teasers tailored to maximize engagement and engagement metrics.',
+                  icon: Megaphone,
+                  imageUrl: 'service-promotions.jpg',
+                  badgeStyle: 'bg-purple-100 text-purple-950 border-purple-200/50',
+                  accentBar: 'bg-gradient-to-r from-purple-500 to-purple-300',
+                  badgeText: 'SIGNATURE',
+                },
+                {
+                  title: 'Promo Shoot',
+                  description: "Tailored on-location or studio shoots using top-tier gear, lighting setups, and creative direction to capture your brand's unique identity.",
+                  icon: Camera,
+                  imageUrl: 'service-promo-shoot.jpg',
+                  badgeStyle: 'bg-orange-100 text-orange-950 border-orange-200/50',
+                  accentBar: 'bg-gradient-to-r from-brand-lightOrange to-orange-400',
+                  badgeText: 'LOCATION BASED',
+                }
+              ].map((service, idx) => {
+                const Icon = service.icon;
+                return (
+                  <div
+                    key={service.title}
+                    className="reveal reveal-scale group relative overflow-hidden rounded-3xl aspect-[4/5] bg-zinc-950 border border-black/5 dark:border-white/5 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-premium cursor-pointer"
+                    style={{ transitionDelay: `${idx * 80}ms` }}
+                  >
+                    {/* Background Image */}
+                    <img
+                      src={service.imageUrl}
+                      alt={service.title}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-premium duration-700 pointer-events-none select-none"
+                      draggable="false"
+                      loading="lazy"
+                    />
+
+                    {/* Dark/Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/10 group-hover:via-black/50 transition-premium duration-500" />
+
+                    {/* Floating Service Badge (Top-Left) */}
+                    <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 z-20">
+                      <span className={`px-2 py-0.5 sm:px-4 sm:py-1.5 rounded-full font-brand font-extrabold text-[7px] min-[375px]:text-[8px] sm:text-[10px] uppercase tracking-widest border shadow-md ${service.badgeStyle}`}>
+                        {service.badgeText}
+                      </span>
+                    </div>
+
+                    {/* Center Icon Overlay (Revealed on hover) */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-white/10 dark:bg-black/35 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 shadow-xl opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-premium duration-500">
+                        <Icon className="w-4 h-4 sm:w-6 sm:h-6" />
+                      </div>
+                    </div>
+
+                    {/* Content Section at bottom */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-6 flex flex-col justify-end text-white z-10">
+                      <h3 className="font-heading font-black text-[11px] min-[375px]:text-xs sm:text-xl text-white mb-1 sm:mb-1.5 select-none">
+                        {service.title}
+                      </h3>
+                      <p className="font-body text-[8px] min-[375px]:text-[9px] sm:text-xs text-zinc-300 leading-normal sm:leading-relaxed select-none">
+                        {service.description}
+                      </p>
+                    </div>
+
+                    {/* Decorative Bottom accent line */}
+                    <div className={`absolute bottom-0 left-0 right-0 h-[4px] ${service.accentBar} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         {/* 2.7. VIDEOS / REELS SECTION */}
-        <section id="videos" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="videos" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
                 Our Highlights
               </h2>
               <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
-                Short, snappy snippets with premium edit pacing. Hover on desktops to preview, click to open full cinematic player.
+                Short, snappy snippets with premium edit pacing. Click to open full cinematic player.
               </p>
             </div>
 
@@ -1693,8 +1808,6 @@ export default function App() {
                     setVideoModalUrl(vid.media_url);
                     setVideoModalPoster(vid.thumbnail_url);
                   }}
-                  onMouseEnter={() => handleVideoHoverStart(idx, vid.media_url)}
-                  onMouseLeave={() => handleVideoHoverEnd(idx)}
                   className="reveal reveal-scale relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-premium select-none"
                   style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
                 >
@@ -1720,17 +1833,6 @@ export default function App() {
                         draggable="false"
                       />
                     )}
-
-                    {/* Looping Muted Hover Video */}
-                    <video
-                      id={`preview-video-${idx}`}
-                      src={vid.media_url}
-                      className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-premium"
-                      muted
-                      loop
-                      playsInline
-                      draggable="false"
-                    />
 
                     {/* Center Play Button Overlay */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-premium">
@@ -1775,7 +1877,7 @@ export default function App() {
         </section>
 
         {/* 2.8. EDITING SHOWCASE SECTION */}
-        <section id="editing" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="editing" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1807,7 +1909,7 @@ export default function App() {
         </section>
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="vision" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
 
@@ -1873,13 +1975,14 @@ export default function App() {
         <section className="py-10 sm:py-14 flex flex-col items-center justify-center select-none">
           <div className="max-w-4xl w-full px-4">
             <div
-              className="relative rounded-[20px] overflow-hidden shadow-xl bg-black cursor-pointer border border-[#e31c25] dark:border-[#FFD700]"
+              className="relative rounded-[20px] overflow-hidden shadow-xl bg-black cursor-pointer border border-brand-lightOrange dark:border-[#FFD700]"
               onClick={toggleHeroPlay}
             >
               <video
                 ref={heroVideoRef}
                 src="hero.mp4"
                 playsInline
+                preload="metadata"
                 controlsList="nodownload nofullscreen noremoteplayback"
                 disablePictureInPicture
                 onContextMenu={(e) => e.preventDefault()}
@@ -1893,7 +1996,7 @@ export default function App() {
               {!isHeroPlaying && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 dark:bg-black/85 flex items-center justify-center shadow-lg transform active:scale-95 transition-transform duration-200">
-                    <Play className="w-4 h-4 sm:w-5 sm:h-5 text-[#e31c25] fill-[#e31c25] translate-x-0.5" />
+                    <Play className="w-4 h-4 sm:w-5 sm:h-5 text-brand-lightOrange fill-brand-lightOrange dark:text-[#e31c25] dark:fill-[#e31c25] translate-x-0.5" />
                   </div>
                 </div>
               )}
@@ -1902,7 +2005,7 @@ export default function App() {
         </section>
 
         {/* 2.10. HIRE ME SECTION */}
-        <section id="hire" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="hire" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
 
@@ -2572,6 +2675,7 @@ export default function App() {
           {[
             { id: 'home', label: 'Home' },
             { id: 'gallery', label: 'At Glance' },
+            { id: 'services', label: 'Services' },
             { id: 'videos', label: 'Highlights' },
             { id: 'editing', label: 'Our Works' },
             { id: 'vision', label: 'About' },
@@ -2586,8 +2690,8 @@ export default function App() {
               {/* Active/Inactive Dot */}
               <div
                 className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeSection === sec.id
-                    ? 'bg-brand-lightOrange dark:bg-brand-darkGold scale-125 ring-4 ring-brand-lightOrange/20 dark:ring-brand-darkGold/20'
-                    : 'bg-zinc-400 hover:bg-zinc-600 dark:bg-zinc-600 dark:hover:bg-zinc-400 hover:scale-110'
+                  ? 'bg-brand-lightOrange dark:bg-brand-darkGold scale-125 ring-4 ring-brand-lightOrange/20 dark:ring-brand-darkGold/20'
+                  : 'bg-zinc-400 hover:bg-zinc-600 dark:bg-zinc-600 dark:hover:bg-zinc-400 hover:scale-110'
                   }`}
               />
               {/* Tooltip Label */}
