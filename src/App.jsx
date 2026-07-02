@@ -1901,7 +1901,7 @@ export default function App() {
                             disabled={formSubmitting}
                             onChange={(e) => setFormState(prev => ({ ...prev, salutation: e.target.value }))}
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-955 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
+                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
                           >
                             <option value="" disabled>Select</option>
                             <option value="Mr">Mr</option>
@@ -1944,7 +1944,7 @@ export default function App() {
                           disabled={formSubmitting}
                           required
                           minLength={2}
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-955 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
                         />
                       </div>
                     </div>
