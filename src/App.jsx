@@ -1393,26 +1393,30 @@ export default function App() {
         {/* 2.5. HERO SECTION */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">          <section
             id="home"
-            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px] border border-black/5 dark:border-white/5 shadow-sm"
-            style={{ 
-              backgroundImage: "url('virat.png')", 
-              backgroundSize: 'cover', 
-              backgroundPosition: 'center center' 
-            }}
+            className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px]"
           >
-            {/* Looping Muted Local Video Background */}
-            <video
-              ref={heroBgVideoRef}
-              className="hero-bg-video"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster={heroBgUrl || undefined}
-            >
-              <source src="hero_video.MOV" type="video/quicktime" />
-            </video>
+            {/* Background elements grouped for smooth edge masking */}
+            <div className="hero-bg-container">
+              {/* Static Background Image */}
+              <div 
+                className="hero-bg-image"
+                style={{ backgroundImage: "url('virat.png')" }}
+              />
+              
+              {/* Looping Muted Local Video Background */}
+              <video
+                ref={heroBgVideoRef}
+                className="hero-bg-video"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                poster={heroBgUrl || undefined}
+              >
+                <source src="hero_video.MOV" type="video/quicktime" />
+              </video>
+            </div>
 
             {/* Overlay Wash Tint */}
             <div className="hero-overlay" />
