@@ -120,6 +120,14 @@ const MOCK_VIDEOS = [
     category: 'Lifestyle',
     media_url: 'lifestyle.mp4',
     thumbnail_url: 'lifestyle.mp4#t=1'
+  },
+  {
+    id: 115,
+    type: 'video',
+    title: 'Random Moments',
+    category: 'Random',
+    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+    thumbnail_url: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&auto=format&fit=crop&q=80'
   }
 ];
 
@@ -975,6 +983,18 @@ export default function App() {
             }
             return updated;
           });
+
+          if (!loadedVideos.some(v => v.category === 'Random' || v.id === 115)) {
+            loadedVideos.push({
+              id: 115,
+              type: 'video',
+              title: 'Random Moments',
+              category: 'Random',
+              media_url: 'https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4',
+              thumbnail_url: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=800&auto=format&fit=crop&q=80',
+              display_order: 4
+            });
+          }
           const loadedEdits = data.filter(item => item.type === 'edit').map(edit => {
             if (edit.title.includes('Teal') || edit.title.includes('Orange') || edit.id === 12) {
               return {
@@ -1669,7 +1689,7 @@ export default function App() {
             </div>
 
             {/* Cards Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 px-2 sm:px-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 px-2 sm:px-4">
               {videos.map((vid, idx) => (
                 <div
                   key={vid.id}
