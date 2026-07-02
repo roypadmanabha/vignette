@@ -303,3 +303,10 @@ form .flex > span {
     min-height: 100svh !important;
   }
 }
+
+/* Butter smooth premium at-ease transition utility */
+.transition-premium {
+  transition-property: all;
+  transition-duration: 750ms;
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}

@@ -447,7 +447,7 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
   const handleClose = (e) => {
     if (e) e.stopPropagation();
     setMounted(false);
-    setTimeout(onClose, 500);
+    setTimeout(onClose, 750);
   };
 
   useEffect(() => {
@@ -537,13 +537,13 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 transition-all duration-500 ease-out ${
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 transition-premium ${
         mounted ? 'opacity-100' : 'opacity-0'
       }`}
       onClick={handleClose}
     >
       <div
-        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-all duration-500 ease-out ${
+        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-premium ${
           mounted ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
         }`}
         style={{
@@ -1686,7 +1686,7 @@ export default function App() {
                   }}
                   onMouseEnter={() => handleVideoHoverStart(idx, vid.media_url)}
                   onMouseLeave={() => handleVideoHoverEnd(idx)}
-                  className="reveal reveal-scale relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 select-none"
+                  className="reveal reveal-scale relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-premium select-none"
                   style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
                 >
                 {/* Visual Preview Container */}
@@ -1716,7 +1716,7 @@ export default function App() {
                   <video
                     id={`preview-video-${idx}`}
                     src={vid.media_url}
-                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-premium"
                     muted
                     loop
                     playsInline
@@ -1724,8 +1724,8 @@ export default function App() {
                   />
 
                   {/* Center Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-all duration-500 ease-out">
-                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-white/20 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl scale-95 group-hover:scale-110 transition-all duration-500 ease-out">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-premium">
+                    <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-white/20 dark:bg-black/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-xl scale-95 group-hover:scale-110 transition-premium">
                       <svg className="w-5 h-5 sm:w-8 sm:h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                       </svg>
