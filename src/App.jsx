@@ -955,25 +955,6 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // --- Apple-style scroll parallax: write scroll-y as CSS custom property ---
-  useEffect(() => {
-    let rafId = null;
-    const onScroll = () => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
-        rafId = null;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    // Set initial value
-    document.documentElement.style.setProperty('--scroll-y', `${window.scrollY}px`);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, []);
-
   // --- Supabase Data Fetching ---
   useEffect(() => {
     async function fetchData() {
@@ -1589,7 +1570,7 @@ export default function App() {
         </div>
 
         {/* 2.6. GALLERY SECTION */}
-        <section id="gallery" className="scroll-section bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="gallery" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1708,7 +1689,7 @@ export default function App() {
         </section>
 
         {/* 2.6.5. SERVICES SECTION */}
-        <section id="services" className="scroll-section bg-transparent py-24 sm:py-32 scroll-mt-20 border-t border-black/5 dark:border-white/5 transition-colors">
+        <section id="services" className="bg-transparent py-24 sm:py-32 scroll-mt-20 border-t border-black/5 dark:border-white/5 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="reveal font-brand font-black text-xs uppercase tracking-widest text-brand-lightOrange dark:text-brand-darkGold mb-3 block">
@@ -1815,7 +1796,7 @@ export default function App() {
         </section>
 
         {/* 2.7. VIDEOS / REELS SECTION */}
-        <section id="videos" className="scroll-section bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="videos" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1912,7 +1893,7 @@ export default function App() {
         </section>
 
         {/* 2.8. EDITING SHOWCASE SECTION */}
-        <section id="editing" className="scroll-section bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="editing" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1944,7 +1925,7 @@ export default function App() {
         </section>
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="scroll-section bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="vision" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
@@ -2040,7 +2021,7 @@ export default function App() {
         </section>
 
         {/* 2.10. HIRE ME SECTION */}
-        <section id="hire" className="scroll-section bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="hire" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
 

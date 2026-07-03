@@ -315,26 +315,6 @@ form .flex > span {
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ============================================================
-   Apple-style Scroll: sections lift while page bg stays fixed
-   ============================================================ */
-
-/* The page background is painted on <body> / root wrappers,
-   which don't move. Only .scroll-section children translate. */
-.scroll-section {
-  will-change: transform;
-  transform: translateY(calc(var(--scroll-y, 0px) * -0.04));
-  transition: transform 0.1s linear;
-}
-
-/* Disable parallax on reduced-motion preference */
-@media (prefers-reduced-motion: reduce) {
-  .scroll-section {
-    transform: none !important;
-    transition: none !important;
-  }
-}
-
 /* Custom Video Seek Scrubber Slider styling */
 .video-seek-slider {
   -webkit-appearance: none;
