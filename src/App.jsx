@@ -440,6 +440,7 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
 const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isBuffering, setIsBuffering] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
@@ -451,9 +452,15 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen && videoRef.current) {
       setAspectRatio(16 / 9);
+      setIsBuffering(true);
       videoRef.current.play()
-        .then(() => setIsPlaying(true))
+        .then(() => { setIsPlaying(true); })
         .catch(() => { });
+    }
+    if (!isOpen) {
+      setIsBuffering(false);
+      setIsPlaying(false);
+      setCurrentTime(0);
     }
   }, [isOpen, src]);
 
@@ -483,8 +490,13 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
     setCurrentTime(videoRef.current.currentTime);
   };
 
+  const handleWaiting = () => setIsBuffering(true);
+  const handleCanPlay = () => setIsBuffering(false);
+  const handlePlaying = () => setIsBuffering(false);
+
   const handleEnded = () => {
     setIsPlaying(false);
+    setIsBuffering(false);
     setCurrentTime(0);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
@@ -578,6 +590,9 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
           className="custom-video-player-el w-full h-full object-cover cursor-pointer"
           onClick={togglePlay}
           onTimeUpdate={handleTimeUpdate}
+          onWaiting={handleWaiting}
+          onCanPlay={handleCanPlay}
+          onPlaying={handlePlaying}
           onEnded={handleEnded}
           onLoadedMetadata={handleLoadedMetadata}
           playsInline
@@ -585,6 +600,16 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
           controlsList="nodownload nofullscreen"
           draggable="false"
         />
+
+        {/* Buffering / Loading Spinner */}
+        {isBuffering && (
+          <div className="absolute inset-0 flex items-center justify-center z-25 pointer-events-none">
+            <div className="relative flex items-center justify-center">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-4 border-white/20 border-t-white animate-spin" />
+              <div className="absolute w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/10 backdrop-blur-sm" />
+            </div>
+          </div>
+        )}
 
         {/* Close Button */}
         <button
@@ -705,8 +730,8 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isHireModalOpen]);
 
-  // Hero section background image url state
-  const [heroBgUrl, setHeroBgUrl] = useState('virat.png');
+  // Hero section background image url state (static only, no video)
+  const heroBgUrl = 'virat.png';
 
   // Scroll state for sticky header glassmorphism behavior
   const [isScrolled, setIsScrolled] = useState(false);
@@ -714,20 +739,7 @@ export default function App() {
   // Hero Showcase Video states
   const [isHeroPlaying, setIsHeroPlaying] = useState(false);
   const heroVideoRef = useRef(null);
-  const heroBgVideoRef = useRef(null);
-
-  useEffect(() => {
-    const bgVideo = heroBgVideoRef.current;
-    if (bgVideo) {
-      bgVideo.muted = true;
-      const playPromise = bgVideo.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          console.log("Hero background video autoplay blocked:", err);
-        });
-      }
-    }
-  }, []);
+  const heroBgVideoRef = useRef(null); // kept for potential future use
 
   const toggleHeroPlay = () => {
     if (heroVideoRef.current) {
@@ -1431,19 +1443,7 @@ export default function App() {
               style={{ backgroundImage: "url('virat.png')" }}
             />
 
-            {/* Looping Muted Local Video Background */}
-            <video
-              ref={heroBgVideoRef}
-              className="hero-bg-video"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              poster={heroBgUrl || undefined}
-            >
-              <source src="hero_video.mp4" type="video/mp4" />
-            </video>
+            {/* Looping Muted Local Video Background — REMOVED; using static virat.png */}
           </div>
 
           {/* Overlay Wash Tint */}
@@ -1987,7 +1987,7 @@ export default function App() {
             >
               <video
                 ref={heroVideoRef}
-                src="hero.mp4"
+                src="featured.mp4"
                 playsInline
                 preload="metadata"
                 controlsList="nodownload nofullscreen noremoteplayback"
