@@ -564,21 +564,38 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 transition-premium duration-500 ${
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md px-4 py-3 transition-premium duration-500 ${
         isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none invisible'
       }`}
       onClick={handleClose}
     >
+      {/* Close Button — sits ABOVE the video frame, always fully visible */}
       <div
-        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-premium duration-500 ${
+        className="flex justify-end w-full mb-2 flex-shrink-0 z-40"
+        style={{ maxWidth: aspectRatio <= 1 ? `min(92vw, calc((100svh - 100px) * ${aspectRatio}))` : 'min(896px, 92vw)' }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className="p-2 bg-white/15 hover:bg-white/30 rounded-full text-white transition-colors backdrop-blur-sm border border-white/20 shadow-lg"
+          onClick={handleClose}
+          aria-label="Close video"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      </div>
+
+      {/* Video Container — fluid portrait/landscape sizing, never overflows screen */}
+      <div
+        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center flex-shrink-0 transition-premium duration-500 ${
           isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
         }`}
         style={{
-          aspectRatio: aspectRatio,
-          maxHeight: '82vh',
-          maxWidth: '90vw',
-          width: aspectRatio > 1 ? 'min(896px, 90vw)' : 'calc(82vh * ' + aspectRatio + ')',
-          height: aspectRatio > 1 ? 'calc(min(896px, 90vw) / ' + aspectRatio + ')' : '82vh'
+          aspectRatio: `${aspectRatio}`,
+          maxHeight: 'calc(100svh - 100px)',
+          maxWidth: '92vw',
+          width: aspectRatio > 1
+            ? 'min(896px, 92vw)'
+            : `min(92vw, calc((100svh - 100px) * ${aspectRatio}))`,
         }}
         onClick={(e) => e.stopPropagation()}
         onMouseMove={resetControlsTimeout}
@@ -601,27 +618,19 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
           draggable="false"
         />
 
-        {/* Buffering / Loading Spinner */}
+        {/* Buffering / Loading Spinner — responsive size */}
         {isBuffering && (
           <div className="absolute inset-0 flex items-center justify-center z-25 pointer-events-none">
             <div className="relative flex items-center justify-center">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border-4 border-white/20 border-t-white animate-spin" />
-              <div className="absolute w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/10 backdrop-blur-sm" />
+              <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full border-[3px] border-white/20 border-t-white animate-spin" />
+              <div className="absolute w-4 h-4 sm:w-6 sm:h-6 rounded-full bg-white/10 backdrop-blur-sm" />
             </div>
           </div>
         )}
 
-        {/* Close Button */}
-        <button
-          className="absolute top-4 right-4 p-2 bg-black/60 hover:bg-black/80 rounded-full text-white/80 hover:text-white transition-colors z-30"
-          onClick={handleClose}
-        >
-          <X className="w-6 h-6" />
-        </button>
-
         {/* Custom Controls Bar */}
         <div
-          className={`absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col gap-3 transition-opacity duration-300 z-20 ${showControls ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          className={`absolute inset-x-0 bottom-0 p-4 sm:p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col gap-2 sm:gap-3 transition-opacity duration-300 z-20 ${showControls ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
         >
           {/* Progress Seek Scrubber */}
@@ -642,14 +651,14 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
                 className="p-1 hover:text-brand-lightOrange dark:hover:text-brand-darkGold transition-colors focus:outline-none"
               >
                 {isPlaying ? (
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" /></svg>
                 ) : (
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
                 )}
               </button>
 
               {/* Timing info */}
-              <span className="font-body text-xs md:text-sm text-zinc-300">
+              <span className="font-body text-xs text-zinc-300">
                 {formatTime(currentTime)} / {formatTime(duration)}
               </span>
             </div>
@@ -1772,7 +1781,7 @@ export default function App() {
                       <h3 className="font-heading font-black text-[11px] min-[375px]:text-xs sm:text-xl text-white mb-1 sm:mb-1.5 select-none">
                         {service.title}
                       </h3>
-                      <p className="font-body text-[8px] min-[375px]:text-[9px] sm:text-xs text-zinc-300 leading-normal sm:leading-relaxed select-none">
+                      <p className="font-body text-[8px] min-[375px]:text-[9px] sm:text-xs text-zinc-300 leading-normal sm:leading-relaxed select-none text-justify">
                         {service.description}
                       </p>
                     </div>
@@ -1798,8 +1807,8 @@ export default function App() {
               </p>
             </div>
 
-            {/* Cards Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 px-2 sm:px-4">
+            {/* Cards Grid — 2 cols on mobile & iPad mini/air, 4 cols on large screens */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-8 px-2 sm:px-4">
               {videos.map((vid, idx) => (
                 <div
                   key={vid.id}
@@ -1918,59 +1927,59 @@ export default function App() {
         {/* 2.9. VISION & MANIFESTO SECTION */}
         <section id="vision" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
               {/* Left Narrative Column */}
               <div className="reveal reveal-left lg:col-span-7 flex flex-col">
                 <span className="font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
-                  Creative Manifesto
+                  About Vignette
                 </span>
-                <h2 className="font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
-                  Where This Is Headed
+                <h2 className="font-heading font-black text-4xl sm:text-5xl leading-tight">
+                  <span className="text-zinc-950 dark:text-white">The Journey of </span>
+                  <span className="text-gradient">Vignette</span>
                 </h2>
 
-                <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-6 leading-relaxed transition-colors text-justify">
+                <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-4 leading-relaxed transition-colors text-justify">
                   <p>
-                    As a digital storyteller, avgeek, and travel editor, I believe that every frame should make the audience feel like they're boarding the flight alongside me. The brand <strong className="brand-text-gradient">Vignette</strong> isn't just about cropping edges—it's about adding depth and lighting the subject exactly where it matters.
+                    I have been passionately pursuing my journey in capturing, editing and showcasing visual content for many years, gaining substantial professional experience by working extensively on promotions, personal projects, and original content that has reached millions.
                   </p>
                   <p>
-                    From dynamic Instagram edits to dedicated aviation deep-dives and cinematic project consultancies, this portfolio serves as the flight deck for all my creative runs. We are heading towards richer visuals, deeper storytelling, and a strictly premium visual standard.
+                    Feel confident to trust me, and together, let&apos;s create something exceptional.
                   </p>
                 </div>
+
+                {/* Brand accent rule */}
+                <div className="mt-8 w-16 h-1 rounded-full bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow" />
               </div>
 
-              {/* Right Pull-quote Graphic Column */}
-              <div className="reveal reveal-right lg:col-span-5 flex flex-col justify-center">
-                <div className="relative p-8 md:p-12 rounded-2xl bg-white dark:bg-zinc-900/40 backdrop-blur-sm border border-brand-lightRed/20 dark:border-brand-darkGold/20 shadow-xl">
-                  {/* Thick styling border accent */}
-                  <div className="absolute left-0 top-0 bottom-0 w-2.5 bg-gradient-to-b from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow rounded-l-2xl" />
+              {/* Right Photo Column */}
+              <div className="reveal reveal-right lg:col-span-5 flex flex-col justify-center items-center">
+                <div className="relative w-full max-w-xs sm:max-w-sm mx-auto">
 
-                  {/* Quote details */}
-                  <span className="font-brand text-6xl text-brand-lightRed/20 dark:text-brand-darkGold/25 absolute top-4 left-6 select-none pointer-events-none">
-                    “
-                  </span>
-                  <blockquote className="font-brand font-extrabold italic text-xl md:text-2xl text-zinc-800 dark:text-zinc-200 mt-2 leading-relaxed transition-colors select-none">
-                    Content isn't just about what you see. It is about how long the feeling lingers after you've scrolled past the frame.
-                  </blockquote>
+                  {/* Glow aura */}
+                  <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-brand-lightRed/20 via-brand-lightOrange/10 to-transparent dark:from-brand-darkGold/20 dark:via-brand-darkYellow/10 dark:to-transparent blur-3xl pointer-events-none" />
 
-                  <div className="flex items-center gap-3 mt-6">
-                    <div className="w-10 h-10 rounded-full overflow-hidden border border-black/10 dark:border-white/10 bg-zinc-200">
-                      <img
-                        src="logo-icon.png"
-                        alt="P"
-                        className="w-full h-full object-contain p-1 select-none pointer-events-none"
-                        draggable="false"
-                      />
-                    </div>
-                    <div className="flex flex-col">
-                      <cite className="font-brand font-black text-sm text-zinc-950 dark:text-white not-italic transition-colors">
-                        Padmanabha Roy
-                      </cite>
-                      <span className="font-body text-[10px] text-zinc-500 uppercase tracking-wider">
-                        Vignette Founder
-                      </span>
+                  {/* Corner frame accents */}
+                  <div className="absolute -top-3 -left-3 w-12 h-12 sm:w-16 sm:h-16 rounded-tl-2xl border-t-[3px] border-l-[3px] border-brand-lightRed dark:border-brand-darkGold pointer-events-none z-10" />
+                  <div className="absolute -bottom-3 -right-3 w-12 h-12 sm:w-16 sm:h-16 rounded-br-2xl border-b-[3px] border-r-[3px] border-brand-lightOrange dark:border-brand-darkYellow pointer-events-none z-10" />
+
+                  {/* Photo card */}
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10">
+                    <img
+                      src="avatar-proy.jpg"
+                      alt="Padmanabha Roy – Founder of Vignette"
+                      className="w-full h-auto object-cover object-top select-none pointer-events-none"
+                      draggable="false"
+                    />
+                    {/* Bottom gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent pointer-events-none" />
+                    {/* Name badge */}
+                    <div className="absolute bottom-0 left-0 right-0 px-5 py-4">
+                      <p className="font-brand font-black text-white text-sm tracking-wide">Padmanabha Roy</p>
+                      <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">Founder · Vignette</p>
                     </div>
                   </div>
+
                 </div>
               </div>
 
@@ -2283,11 +2292,11 @@ export default function App() {
       <footer className="border-t-[0.5px] border-black/50 py-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
 
-          {/* Main Footer columns row */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+          {/* Main Footer columns row — 1-col mobile, 2-col iPad, 4-col desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 items-start">
 
-            {/* Logo Name & Brand Info (Col span 3) */}
-            <div className="md:col-span-3 flex flex-col gap-4">
+            {/* Logo Name & Brand Info */}
+            <div className="flex flex-col gap-4">
               <div
                 className="flex items-center gap-3 cursor-pointer"
                 onClick={() => scrollToSection('home')}
@@ -2307,8 +2316,8 @@ export default function App() {
               </p>
             </div>
 
-            {/* Legal Links (Col span 3) */}
-            <div className="md:col-span-3 flex flex-col gap-4 md:border-l border-zinc-200 dark:border-zinc-850 md:pl-8">
+            {/* Legal Links */}
+            <div className="flex flex-col gap-4 lg:border-l border-zinc-200 dark:border-zinc-800 lg:pl-8">
               <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
                 Legal
               </h4>
@@ -2326,8 +2335,8 @@ export default function App() {
               </ul>
             </div>
 
-            {/* Contact Details (Col span 3) */}
-            <div className="md:col-span-3 flex flex-col gap-4 md:border-l border-zinc-200 dark:border-zinc-850 md:pl-8">
+            {/* Contact Details */}
+            <div className="flex flex-col gap-4 lg:border-l border-zinc-200 dark:border-zinc-800 lg:pl-8">
               <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
                 Contact Details
               </h4>
@@ -2347,12 +2356,12 @@ export default function App() {
               </ul>
             </div>
 
-            {/* Address (Col span 3) */}
-            <div className="md:col-span-3 flex flex-col gap-4 md:border-l border-zinc-200 dark:border-zinc-850 md:pl-8">
+            {/* Address */}
+            <div className="flex flex-col gap-4 lg:border-l border-zinc-200 dark:border-zinc-800 lg:pl-8">
               <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
                 Address
               </h4>
-              <p className="flex items-start gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed text-justify">
+              <p className="flex items-start gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 <MapPin className="w-4 h-4 text-[#c0392b] dark:text-[#FFD700] mt-0.5 flex-shrink-0" />
                 <span>Ramnagar, Agartala, West Tripura District, Tripura - 799002</span>
               </p>
