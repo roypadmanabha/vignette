@@ -437,7 +437,7 @@ const BeforeAfterSlider = ({ before, after, description, title }) => {
 };
 
 // Protected Custom Video Player Modal
-const CustomVideoPlayer = ({ src, poster, onClose }) => {
+const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -446,28 +446,25 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
   const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [aspectRatio, setAspectRatio] = useState(16 / 9);
-  const [mounted, setMounted] = useState(false);
   const controlsTimeoutRef = useRef(null);
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  const handleClose = (e) => {
-    if (e) e.stopPropagation();
-    setMounted(false);
-    setTimeout(onClose, 750);
-  };
-
-  useEffect(() => {
-    if (videoRef.current) {
+    if (isOpen && videoRef.current) {
       setAspectRatio(16 / 9);
       videoRef.current.play()
         .then(() => setIsPlaying(true))
         .catch(() => { });
     }
-  }, [src]);
+  }, [isOpen, src]);
+
+  const handleClose = (e) => {
+    if (e) e.stopPropagation();
+    if (videoRef.current) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+    onClose();
+  };
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -555,13 +552,15 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 transition-premium ${mounted ? 'opacity-100' : 'opacity-0'
-        }`}
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 md:p-8 transition-premium duration-500 ${
+        isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none invisible'
+      }`}
       onClick={handleClose}
     >
       <div
-        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-premium ${mounted ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
-          }`}
+        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center transition-premium duration-500 ${
+          isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+        }`}
         style={{
           aspectRatio: aspectRatio,
           maxHeight: '82vh',
@@ -574,9 +573,9 @@ const CustomVideoPlayer = ({ src, poster, onClose }) => {
       >
         <video
           ref={videoRef}
-          src={src}
-          poster={poster}
-          className="w-full h-full object-cover cursor-pointer"
+          src={src || undefined}
+          poster={poster || undefined}
+          className="custom-video-player-el w-full h-full object-cover cursor-pointer"
           onClick={togglePlay}
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleEnded}
@@ -1807,6 +1806,15 @@ export default function App() {
                   onClick={() => {
                     setVideoModalUrl(vid.media_url);
                     setVideoModalPoster(vid.thumbnail_url);
+                    // Trigger synchronous video load & play to bypass asynchronous render cycle blocking
+                    const videoEl = document.querySelector('.custom-video-player-el');
+                    if (videoEl) {
+                      videoEl.src = vid.media_url;
+                      videoEl.load();
+                      videoEl.play().catch(err => {
+                        console.warn("Synchronous play call failed/blocked:", err);
+                      });
+                    }
                   }}
                   className="reveal reveal-scale relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-premium select-none"
                   style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
@@ -1863,16 +1871,15 @@ export default function App() {
             </div>
 
             {/* Fullscreen Video Player */}
-            {videoModalUrl && (
-              <CustomVideoPlayer
-                src={videoModalUrl}
-                poster={videoModalPoster}
-                onClose={() => {
-                  setVideoModalUrl(null);
-                  setVideoModalPoster(null);
-                }}
-              />
-            )}
+            <CustomVideoPlayer
+              src={videoModalUrl}
+              poster={videoModalPoster}
+              isOpen={!!videoModalUrl}
+              onClose={() => {
+                setVideoModalUrl(null);
+                setVideoModalPoster(null);
+              }}
+            />
           </div>
         </section>
 
