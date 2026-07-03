@@ -1056,6 +1056,42 @@ export default function App() {
     fetchData();
   }, []);
 
+  // --- Global Video Play Counts (Supabase-persisted, Realtime live) ---
+  useEffect(() => {
+    if (!supabase) return;
+
+    // 1. Fetch initial counts
+    async function fetchCounts() {
+      const { data, error } = await supabase
+        .from('video_plays')
+        .select('video_id');
+      if (error) { console.warn('Could not fetch play counts:', error.message); return; }
+      const counts = {};
+      (data || []).forEach(row => {
+        counts[row.video_id] = (counts[row.video_id] || 0) + 1;
+      });
+      setVideoPlayCounts(counts);
+    }
+    fetchCounts();
+
+    // 2. Subscribe to realtime INSERT events so all browsers update live
+    const channel = supabase
+      .channel('video_plays_live')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'video_plays' },
+        (payload) => {
+          const vid = payload.new?.video_id;
+          if (vid) {
+            setVideoPlayCounts(prev => ({ ...prev, [vid]: (prev[vid] || 0) + 1 }));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, []);
+
   // --- Filtered Gallery logic ---
   const filteredGallery = galleryItems.filter(item =>
     galleryFilter === 'All' || item.category.toLowerCase() === galleryFilter.toLowerCase()
@@ -1816,12 +1852,22 @@ export default function App() {
               {videos.map((vid, idx) => (
                 <div
                   key={vid.id}
-                  onClick={() => {
+                  onClick={async () => {
                     setVideoModalUrl(vid.media_url);
                     setVideoModalPoster(vid.thumbnail_url);
-                    // Increment view count for this video
-                    setVideoPlayCounts(prev => ({ ...prev, [vid.id]: (prev[vid.id] || 0) + 1 }));
-                    // Trigger synchronous video load & play to bypass asynchronous render cycle blocking
+                    // Record play globally in Supabase (no auth needed)
+                    if (supabase) {
+                      // Optimistic local update for instant feedback
+                      setVideoPlayCounts(prev => ({ ...prev, [vid.id]: (prev[vid.id] || 0) + 1 }));
+                      const { error } = await supabase
+                        .from('video_plays')
+                        .insert({ video_id: vid.id });
+                      if (error) console.warn('Play count insert failed:', error.message);
+                    } else {
+                      // Offline fallback: just update local
+                      setVideoPlayCounts(prev => ({ ...prev, [vid.id]: (prev[vid.id] || 0) + 1 }));
+                    }
+                    // Trigger synchronous video load & play
                     const videoEl = document.querySelector('.custom-video-player-el');
                     if (videoEl) {
                       videoEl.src = vid.media_url;
