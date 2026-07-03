@@ -25,7 +25,9 @@ import {
   MapPin,
   Maximize2,
   Mic,
-  Megaphone
+  Megaphone,
+  ShieldCheck,
+  BadgeCheck
 } from 'lucide-react';
 import { supabase } from './supabase';
 
@@ -691,6 +693,7 @@ export default function App() {
 
   // Videos / Reels
   const [videos, setVideos] = useState(MOCK_VIDEOS);
+  const [videoPlayCounts, setVideoPlayCounts] = useState({});
   const [videoModalUrl, setVideoModalUrl] = useState(null);
   const [videoModalPoster, setVideoModalPoster] = useState(null);
 
@@ -1204,10 +1207,11 @@ export default function App() {
 
       {/* 2.2. PROTECTED TOAST NOTIFICATION BANNER */}
       <div
-        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 rounded-[20px] shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
           ? 'top-20 opacity-100 translate-y-0 scale-100'
           : 'top-20 opacity-0 -translate-y-4 scale-95'
           }`}
+        style={{ borderRadius: '20px' }}
       >
         <TriangleAlert className="w-4.5 h-4.5 text-white flex-shrink-0 animate-bounce" />
         <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap uppercase tracking-wider">
@@ -1689,7 +1693,7 @@ export default function App() {
         </section>
 
         {/* 2.6.5. SERVICES SECTION */}
-        <section id="services" className="bg-transparent py-24 sm:py-32 scroll-mt-20 border-t border-black/5 dark:border-white/5 transition-colors">
+        <section id="services" className="bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="reveal font-brand font-black text-xs uppercase tracking-widest text-brand-lightOrange dark:text-brand-darkGold mb-3 block">
@@ -1815,6 +1819,8 @@ export default function App() {
                   onClick={() => {
                     setVideoModalUrl(vid.media_url);
                     setVideoModalPoster(vid.thumbnail_url);
+                    // Increment view count for this video
+                    setVideoPlayCounts(prev => ({ ...prev, [vid.id]: (prev[vid.id] || 0) + 1 }));
                     // Trigger synchronous video load & play to bypass asynchronous render cycle blocking
                     const videoEl = document.querySelector('.custom-video-player-el');
                     if (videoEl) {
@@ -1872,7 +1878,8 @@ export default function App() {
                       {vid.title}
                     </h3>
                     <span className="font-body text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 mt-1 flex items-center gap-1 sm:gap-1.5">
-                      <Video className="w-3 sm:w-3.5 h-3 sm:h-3.5" /> Open Reels Preview
+                      <Eye className="w-3 sm:w-3.5 h-3 sm:h-3.5 flex-shrink-0" />
+                      <span>{videoPlayCounts[vid.id] ? `${videoPlayCounts[vid.id]} ${videoPlayCounts[vid.id] === 1 ? 'person' : 'people'} played` : '0 people played'}</span>
                     </span>
                   </div>
                 </div>
@@ -1936,7 +1943,7 @@ export default function App() {
                 </span>
                 <h2 className="font-heading font-black text-4xl sm:text-5xl leading-tight">
                   <span className="text-zinc-950 dark:text-white">The Journey of </span>
-                  <span className="text-gradient">Vignette</span>
+                  <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, background: isDark ? 'linear-gradient(90deg, #e31c25, #FFBF00)' : 'linear-gradient(90deg, #000000, #FF2400)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>Vignette</span>
                 </h2>
 
                 <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-4 leading-relaxed transition-colors text-justify">
@@ -2037,14 +2044,14 @@ export default function App() {
                   Ready to take your brand narrative to the sky? Get in touch for content consulting, sponsored edits, photography campaigns, or direct avgeek story writeups.
                 </p>
 
-                <div className="reveal mt-8 space-y-4 font-body text-sm text-zinc-500 dark:text-zinc-400">
-                  <p className="flex items-center gap-3">
-                    <Instagram className="w-5 h-5 text-brand-lightRed dark:text-brand-darkGold" />
-                    <span>@proy___ (Instagram DM preferred)</span>
+                <div className="reveal mt-8 space-y-4 font-body text-sm">
+                  <p className="flex items-center gap-3 text-emerald-600 dark:text-emerald-400">
+                    <BadgeCheck className="w-5 h-5 flex-shrink-0" />
+                    <span className="font-bold">100% Professional</span>
                   </p>
-                  <p className="flex items-center gap-3">
-                    <Compass className="w-5 h-5 text-brand-lightOrange dark:text-brand-darkGold" />
-                    <span>Based in India · Traveling Worldwide</span>
+                  <p className="flex items-center gap-3 text-blue-600 dark:text-blue-400">
+                    <ShieldCheck className="w-5 h-5 flex-shrink-0" />
+                    <span className="font-bold">100% Authentic</span>
                   </p>
                 </div>
               </div>
@@ -2235,7 +2242,7 @@ export default function App() {
                           required
                           minLength={30}
                           maxLength={5000}
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-y"
+                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-none"
                         />
                       </div>
 
