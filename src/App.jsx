@@ -1924,66 +1924,112 @@ export default function App() {
           </div>
         </section>
 
-        {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        {/* 2.9. VISION & MANIFESTO SECTION — Cinematic bleed layout */}
+        <section id="vision" className="about-bleed-section scroll-mt-20 py-0 overflow-hidden">
 
-              {/* Left Narrative Column */}
-              <div className="reveal reveal-left lg:col-span-7 flex flex-col">
-                <span className="font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
+          {/* ── Mobile / Tablet: stacked card ── */}
+          <div className="lg:hidden max-w-2xl mx-auto px-4 sm:px-6 py-20">
+            <div className="reveal about-mobile-card rounded-3xl overflow-hidden shadow-2xl relative">
+              {/* Photo */}
+              <div className="relative h-72 sm:h-96 overflow-hidden">
+                <img
+                  src="virat.png"
+                  alt="Padmanabha Roy – Founder of Vignette"
+                  className="w-full h-full object-cover object-top select-none pointer-events-none grayscale"
+                  draggable="false"
+                />
+                {/* Fade to card bg */}
+                <div className="absolute inset-0 about-img-fade-mobile pointer-events-none" />
+              </div>
+
+              {/* Text panel */}
+              <div className="about-text-panel px-6 sm:px-8 pt-6 pb-8 relative z-10">
+                <span className="font-heading font-extrabold text-[10px] tracking-widest text-[#c0392b] dark:text-brand-darkGold uppercase">
                   About Vignette
                 </span>
-                <h2 className="font-heading font-black text-4xl sm:text-5xl leading-tight">
-                  <span className="text-zinc-950 dark:text-white">The Journey of </span>
+                <h2 className="font-heading font-black text-3xl sm:text-4xl leading-tight mt-2">
+                  <span className="text-zinc-900 dark:text-white">The Journey of </span>
+                  <span className="text-gradient">Vignette</span>
+                </h2>
+                <div className="mt-4 w-10 h-0.5 rounded-full bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow" />
+                <p className="font-body text-sm sm:text-base text-zinc-600 dark:text-zinc-300 mt-5 leading-relaxed text-justify">
+                  I have been passionately pursuing my journey in capturing, editing and showcasing visual content for many years, gaining substantial professional experience by working extensively on promotions, personal projects, and original content that has reached millions. Feel confident to trust me, and together, let&apos;s create something exceptional.
+                </p>
+                <div className="mt-6 flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full overflow-hidden border border-black/10 dark:border-white/15 flex-shrink-0">
+                    <img src="logo-icon.png" alt="Vignette" className="w-full h-full object-contain p-1 select-none pointer-events-none" draggable="false" />
+                  </div>
+                  <div>
+                    <p className="font-brand font-black text-xs text-zinc-800 dark:text-white leading-none">Padmanabha Roy</p>
+                    <p className="font-body text-[9px] text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mt-0.5">Founder · Vignette</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── Desktop: full-bleed cinematic strip ── */}
+          <div className="hidden lg:block relative about-bleed-desktop">
+
+            {/* Photo — left half, bleeds to right */}
+            <div className="reveal reveal-left absolute inset-y-0 left-0 w-[52%] overflow-hidden">
+              <img
+                src="virat.png"
+                alt="Padmanabha Roy – Founder of Vignette"
+                className="w-full h-full object-cover object-center select-none pointer-events-none grayscale"
+                draggable="false"
+              />
+              {/* Right-edge fade blending into text panel */}
+              <div className="absolute inset-y-0 right-0 w-2/3 about-img-fade-desktop pointer-events-none" />
+              {/* Top & bottom fade for seamless float */}
+              <div className="absolute inset-x-0 top-0 h-24 about-fade-top pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-24 about-fade-bottom pointer-events-none" />
+            </div>
+
+            {/* Text panel — right half, overlaps photo */}
+            <div className="reveal reveal-right relative ml-auto w-[58%] min-h-[500px] flex items-center py-20 pr-12 xl:pr-20 pl-[10%]">
+              {/* Glass text card */}
+              <div className="about-text-glass w-full max-w-xl px-10 py-12 rounded-3xl relative">
+
+                {/* Top accent bar */}
+                <div className="absolute top-0 left-10 right-10 h-[2px] rounded-full bg-gradient-to-r from-transparent via-brand-lightRed/60 dark:via-brand-darkGold/60 to-transparent" />
+
+                <span className="font-heading font-extrabold text-[10px] sm:text-xs tracking-[0.2em] text-[#c0392b] dark:text-brand-darkGold uppercase">
+                  About Vignette
+                </span>
+
+                <h2 className="font-heading font-black text-4xl xl:text-5xl leading-tight mt-3">
+                  <span className="text-zinc-900 dark:text-white">The Journey of </span>
+                  <br />
                   <span className="text-gradient">Vignette</span>
                 </h2>
 
-                <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-4 leading-relaxed transition-colors text-justify">
-                  <p>
-                    I have been passionately pursuing my journey in capturing, editing and showcasing visual content for many years, gaining substantial professional experience by working extensively on promotions, personal projects, and original content that has reached millions.
-                  </p>
-                  <p>
-                    Feel confident to trust me, and together, let&apos;s create something exceptional.
-                  </p>
-                </div>
+                {/* Accent rule */}
+                <div className="mt-5 w-14 h-[3px] rounded-full bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow" />
 
-                {/* Brand accent rule */}
-                <div className="mt-8 w-16 h-1 rounded-full bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow" />
-              </div>
+                <p className="font-body text-base xl:text-lg text-zinc-600 dark:text-zinc-300 mt-6 leading-relaxed text-justify">
+                  I have been passionately pursuing my journey in capturing, editing and showcasing visual content for many years, gaining substantial professional experience by working extensively on promotions, personal projects, and original content that has reached millions.
+                </p>
+                <p className="font-body text-base xl:text-lg text-zinc-600 dark:text-zinc-300 mt-4 leading-relaxed">
+                  Feel confident to trust me, and together, let&apos;s create something exceptional.
+                </p>
 
-              {/* Right Photo Column */}
-              <div className="reveal reveal-right lg:col-span-5 flex flex-col justify-center items-center">
-                <div className="relative w-full max-w-xs sm:max-w-sm mx-auto">
-
-                  {/* Glow aura */}
-                  <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-brand-lightRed/20 via-brand-lightOrange/10 to-transparent dark:from-brand-darkGold/20 dark:via-brand-darkYellow/10 dark:to-transparent blur-3xl pointer-events-none" />
-
-                  {/* Corner frame accents */}
-                  <div className="absolute -top-3 -left-3 w-12 h-12 sm:w-16 sm:h-16 rounded-tl-2xl border-t-[3px] border-l-[3px] border-brand-lightRed dark:border-brand-darkGold pointer-events-none z-10" />
-                  <div className="absolute -bottom-3 -right-3 w-12 h-12 sm:w-16 sm:h-16 rounded-br-2xl border-b-[3px] border-r-[3px] border-brand-lightOrange dark:border-brand-darkYellow pointer-events-none z-10" />
-
-                  {/* Photo card */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10">
-                    <img
-                      src="avatar-proy.jpg"
-                      alt="Padmanabha Roy – Founder of Vignette"
-                      className="w-full h-auto object-cover object-top select-none pointer-events-none"
-                      draggable="false"
-                    />
-                    {/* Bottom gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent pointer-events-none" />
-                    {/* Name badge */}
-                    <div className="absolute bottom-0 left-0 right-0 px-5 py-4">
-                      <p className="font-brand font-black text-white text-sm tracking-wide">Padmanabha Roy</p>
-                      <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">Founder · Vignette</p>
-                    </div>
+                {/* Author chip */}
+                <div className="mt-8 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full overflow-hidden border border-black/10 dark:border-white/15 flex-shrink-0 bg-zinc-100 dark:bg-zinc-800">
+                    <img src="logo-icon.png" alt="Vignette logo" className="w-full h-full object-contain p-1 select-none pointer-events-none" draggable="false" />
                   </div>
-
+                  <div>
+                    <p className="font-brand font-black text-sm text-zinc-900 dark:text-white leading-none">Padmanabha Roy</p>
+                    <p className="font-body text-[10px] text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mt-0.5">Founder · Vignette</p>
+                  </div>
                 </div>
-              </div>
 
+                {/* Bottom accent bar */}
+                <div className="absolute bottom-0 left-10 right-10 h-[2px] rounded-full bg-gradient-to-r from-transparent via-brand-lightOrange/50 dark:via-brand-darkYellow/50 to-transparent" />
+              </div>
             </div>
+
           </div>
         </section>
 

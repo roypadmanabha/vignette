@@ -367,3 +367,94 @@ form .flex > span {
   transform: scale(1.3);
   background: #ff5e62 !important;
 }
+
+/* =============================================
+   ABOUT VIGNETTE — Cinematic Bleed Section
+   ============================================= */
+
+/* === Section wrapper === */
+.about-bleed-section {
+  background: transparent;
+}
+
+/* === Desktop: full-bleed strip height === */
+.about-bleed-desktop {
+  min-height: 540px;
+}
+@media (min-width: 1280px) {
+  .about-bleed-desktop {
+    min-height: 620px;
+  }
+}
+
+/* === Desktop: image right-edge fade into section bg === */
+/* Light mode — fade into ivory #fffff0 */
+.about-img-fade-desktop {
+  background: linear-gradient(to right, transparent 0%, rgba(255,255,240,0.55) 45%, #fffff0 100%);
+}
+/* Dark mode — fade into dark bg */
+.dark .about-img-fade-desktop {
+  background: linear-gradient(to right, transparent 0%, rgba(9,9,11,0.55) 45%, #09090b 100%);
+}
+
+/* === Desktop: top & bottom fades === */
+.about-fade-top {
+  background: linear-gradient(to bottom, #fffff0 0%, transparent 100%);
+}
+.dark .about-fade-top {
+  background: linear-gradient(to bottom, #09090b 0%, transparent 100%);
+}
+.about-fade-bottom {
+  background: linear-gradient(to top, #fffff0 0%, transparent 100%);
+}
+.dark .about-fade-bottom {
+  background: linear-gradient(to top, #09090b 0%, transparent 100%);
+}
+
+/* === Desktop: glassmorphism text card === */
+.about-text-glass {
+  background: rgba(255, 255, 240, 0.72);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid rgba(192, 57, 43, 0.15);
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.08),
+    0 8px 24px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.dark .about-text-glass {
+  background: rgba(18, 18, 22, 0.80);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  box-shadow:
+    0 32px 80px rgba(0,0,0,0.45),
+    0 8px 24px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* === Mobile stacked card === */
+.about-mobile-card {
+  border: 1px solid rgba(192,57,43,0.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.10);
+}
+.dark .about-mobile-card {
+  border: 1px solid rgba(255,215,0,0.10);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.40);
+}
+
+/* Mobile: image bottom fade into text panel colour */
+.about-img-fade-mobile {
+  background: linear-gradient(to bottom, transparent 30%, rgba(255,255,240,0.85) 80%, #fffff0 100%);
+}
+.dark .about-img-fade-mobile {
+  background: linear-gradient(to bottom, transparent 30%, rgba(18,18,22,0.85) 80%, #121216 100%);
+}
+
+/* Mobile text panel bg */
+.about-text-panel {
+  background: #fffff0;
+}
+.dark .about-text-panel {
+  background: #121216;
+}
