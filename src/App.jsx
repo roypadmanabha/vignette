@@ -1988,7 +1988,7 @@ export default function App() {
                 </span>
                 <h2 className="font-heading font-black text-4xl sm:text-5xl leading-tight">
                   <span className="text-zinc-950 dark:text-white">The Journey of </span>
-                  <span style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 700, background: isDark ? 'linear-gradient(90deg, #e31c25, #FFBF00)' : 'linear-gradient(90deg, #000000, #FF2400)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>Vignette</span>
+                  <span className="brand-text-gradient">Vignette</span>
                 </h2>
 
                 <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-4 leading-relaxed transition-colors text-justify">
