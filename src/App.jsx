@@ -1220,12 +1220,24 @@ export default function App() {
       {/* 2.0. LIVE ANIMATED STARFIELD BACKDROP */}
       <Starfield isDark={isDark} />
 
-      {/* 2.1. FLOATING AMBIENT BLOBS (LIGHT MODE ONLY) */}
+      {/* 2.1. MODERN ARTISTIC LIGHT MODE BACKGROUND */}
       {!isDark && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-[10%] left-[20%] w-[350px] h-[350px] rounded-full bg-brand-lightOrange/10 blur-[90px]" />
-          <div className="absolute top-[40%] right-[10%] w-[450px] h-[450px] rounded-full bg-brand-lightRed/10 blur-[110px]" />
-          <div className="absolute bottom-[20%] left-[15%] w-[380px] h-[380px] rounded-full bg-brand-lightOrange/10 blur-[100px]" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center">
+          {/* Animated Grid lines */}
+          <div className="absolute inset-0 bg-grid-pattern [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]" />
+
+          {/* Flowing Gradient Blobs */}
+          <div className="absolute top-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-brand-lightRed/15 to-brand-lightOrange/10 blur-[100px] animate-blob" style={{ animationDelay: '0s' }} />
+          <div className="absolute top-[50%] right-[10%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-orange-500/10 to-red-400/15 blur-[120px] animate-blob" style={{ animationDelay: '4s' }} />
+          <div className="absolute bottom-[-10%] left-[30%] w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-brand-lightOrange/20 to-yellow-500/10 blur-[130px] animate-blob" style={{ animationDelay: '8s' }} />
+
+          {/* Artistic geometric accents (Rings) */}
+          <div className="absolute top-[25%] right-[25%] w-[300px] h-[300px] border-[1px] border-black/5 rounded-full animate-blob mix-blend-overlay" style={{ animationDelay: '2s' }} />
+          <div className="absolute bottom-[20%] left-[15%] w-[400px] h-[400px] border-[1px] border-black/5 rounded-full animate-blob mix-blend-overlay" style={{ animationDelay: '6s' }} />
+          
+          {/* Subtle moving cinematic lines */}
+          <div className="absolute top-[20%] -left-[50%] w-[200%] h-[1px] bg-gradient-to-r from-transparent via-brand-lightRed/20 to-transparent animate-line" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-[30%] -left-[50%] w-[200%] h-[1px] bg-gradient-to-r from-transparent via-brand-lightOrange/20 to-transparent animate-line" style={{ animationDelay: '5s' }} />
         </div>
       )}
 
