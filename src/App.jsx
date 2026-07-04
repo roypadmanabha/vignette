@@ -82,9 +82,9 @@ const ThreadsIcon = (props) => (
 );
 
 const PURPOSE_OPTIONS = [
-  { value: "Hire for Video Editing (PAID)", label: "Hire for Video Editing (PAID)", isRedText: true },
-  { value: "Hire for Podcast/YT Video Editing (PAID)", label: "Hire for Podcast/YT Video Editing (PAID)", isRedText: true },
-  { value: "Hire for Photoshoot (PAID)", label: "Hire for Photoshoot (PAID)", isRedText: true },
+  { value: "Hire for Video Editing (PAID)", label: "Hire for Video Editing (PAID)" },
+  { value: "Hire for Podcast/YT Video Editing (PAID)", label: "Hire for Podcast/YT Video Editing (PAID)" },
+  { value: "Hire for Photoshoot (PAID)", label: "Hire for Photoshoot (PAID)" },
   { value: "Ask for Collaboration", label: "Ask for Collaboration" },
   { value: "Let's Work Together", label: "Let's Work Together" },
   { value: "Avgeek - Let's Connect", label: "Avgeek - Let's Connect" },
@@ -112,7 +112,8 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const bgClass = inModal ? 'bg-white dark:bg-zinc-900' : 'bg-[#fffff0] dark:bg-zinc-950';
+  const buttonBgClass = inModal ? 'bg-white dark:bg-zinc-900' : 'bg-[#fffff0] dark:bg-zinc-950';
+  const menuBgClass = inModal ? 'bg-[#d3d3d3] dark:bg-zinc-900' : 'bg-[#d3d3d3] dark:bg-zinc-950';
 
   return (
     <div ref={wrapperRef} className="relative w-full">
@@ -123,8 +124,8 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={`w-full px-4 py-3 rounded-xl border flex items-center justify-between transition-all font-body ${
           isOpen
-            ? 'border-brand-lightOrange dark:border-brand-darkGold ring-2 ring-brand-lightOrange/30 dark:ring-brand-darkGold/30 ' + bgClass
-            : 'border-zinc-300 dark:border-zinc-700 hover:border-brand-lightOrange/50 dark:hover:border-brand-darkGold/50 ' + bgClass
+            ? 'border-brand-lightOrange dark:border-brand-darkGold ring-2 ring-brand-lightOrange/30 dark:ring-brand-darkGold/30 ' + buttonBgClass
+            : 'border-zinc-300 dark:border-zinc-700 hover:border-brand-lightOrange/50 dark:hover:border-brand-darkGold/50 ' + buttonBgClass
         } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
       >
         <span className={`truncate text-sm sm:text-base ${!value ? 'text-zinc-500 dark:text-zinc-400' : 'text-zinc-900 dark:text-white'}`}>
@@ -136,28 +137,40 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
       <div
         className={`absolute z-50 w-full mt-2 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-2xl overflow-hidden transition-all duration-300 origin-top ${
           isOpen ? 'scale-y-100 opacity-100 pointer-events-auto' : 'scale-y-95 opacity-0 pointer-events-none'
-        } bg-[#f5f5dd] dark:bg-zinc-900`}
+        } ${menuBgClass}`}
       >
-        <div className="max-h-60 overflow-y-auto custom-scrollbar flex flex-col">
-          {options.map((option, idx) => (
-            <div
-              key={idx}
-              onClick={() => {
-                onChange(option.value);
-                setIsOpen(false);
-              }}
-              className={`px-4 py-3 text-sm sm:text-base font-body cursor-pointer transition-colors flex items-center gap-2 ${idx !== options.length - 1 ? 'border-b-[0.5px] border-black dark:border-zinc-700/50' : ''} ${
-                value === option.value
-                  ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 text-brand-lightOrange dark:text-brand-darkGold font-bold'
-                  : option.isRedText
-                    ? 'text-[#D10000] dark:text-red-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-[#D10000] dark:hover:text-red-300'
-                    : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white'
-              }`}
-            >
-              {value === option.value && <CheckCircle className="w-4 h-4" />}
-              <span className={value === option.value ? '' : 'pl-6'}>{option.label}</span>
-            </div>
-          ))}
+        <div className="max-h-60 overflow-y-auto custom-scrollbar py-2">
+          {options.map((option, idx) => {
+            const isPaid = option.label.includes('(PAID)');
+            return (
+              <div
+                key={idx}
+                onClick={() => {
+                  onChange(option.value);
+                  setIsOpen(false);
+                }}
+                className={`px-4 py-3 text-sm sm:text-base cursor-pointer transition-colors flex items-center gap-2 ${
+                  idx !== options.length - 1 ? 'border-b-[0.3px] border-black/50 dark:border-transparent dark:border-b-0' : ''
+                } ${
+                  value === option.value
+                    ? 'bg-[#fffff0] dark:bg-brand-darkGold/10'
+                    : 'hover:bg-[#fffff0] dark:hover:bg-zinc-800'
+                }`}
+              >
+                {value === option.value && <CheckCircle className="w-4 h-4 text-brand-lightOrange dark:text-brand-darkGold" />}
+                <span className={`
+                  ${value === option.value ? '' : 'pl-6'}
+                  ${isPaid ? 'font-brand bg-clip-text text-transparent bg-gradient-to-r from-black to-red-600 dark:bg-none dark:font-body' : 'font-body'}
+                  ${!isPaid && value === option.value ? 'text-brand-lightOrange dark:text-brand-darkGold font-bold' : ''}
+                  ${!isPaid && value !== option.value ? 'text-zinc-700 dark:text-zinc-300' : ''}
+                  ${isPaid && value === option.value ? 'dark:text-brand-darkGold' : ''}
+                  ${isPaid && value !== option.value ? 'dark:text-zinc-300' : ''}
+                `}>
+                  {option.label}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
