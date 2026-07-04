@@ -2430,18 +2430,18 @@ export default function App() {
             {/* Social Icons Row */}
             <div className="flex gap-5 items-center justify-center">
 
-              {/* Instagram: Real Pink-to-Purple brand gradient */}
+              {/* Instagram */}
               <a
                 href="https://www.instagram.com/proy____"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md"
-                aria-label="Visit proy___ on Instagram"
+                aria-label="Visit proy____ on Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <i className="bx bxl-instagram text-xl"></i>
               </a>
 
-              {/* Threads: Real brand logo black/white */}
+              {/* Threads */}
               <a
                 href="https://www.threads.net"
                 target="_blank"
@@ -2449,10 +2449,10 @@ export default function App() {
                 className="w-10 h-10 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-md border border-zinc-200 dark:border-zinc-800"
                 aria-label="Visit Threads"
               >
-                <ThreadsIcon className="w-5 h-5" />
+                <i className="bx bxl-threads text-xl"></i>
               </a>
 
-              {/* Facebook: Real brand blue */}
+              {/* Facebook */}
               <a
                 href="https://www.facebook.com"
                 target="_blank"
@@ -2460,7 +2460,7 @@ export default function App() {
                 className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md"
                 aria-label="Visit Facebook page"
               >
-                <Facebook className="w-5 h-5" />
+                <i className="bx bxl-facebook text-xl"></i>
               </a>
 
             </div>
