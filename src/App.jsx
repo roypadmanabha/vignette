@@ -1653,7 +1653,7 @@ export default function App() {
         >
           {/* Vanta Animated Background Container */}
           <div className="absolute inset-0 z-0 overflow-hidden rounded-[32px]">
-            <div ref={vantaRef} className="w-full h-full opacity-80" />
+            <div ref={vantaRef} className="w-full h-full opacity-50" />
           </div>
 
           {/* Overlay Wash Tint */}
