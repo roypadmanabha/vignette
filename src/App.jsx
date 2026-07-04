@@ -2349,7 +2349,8 @@ export default function App() {
       <section id="faqs" className="py-24 sm:py-32 scroll-mt-20 select-none">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-heading font-black text-4xl sm:text-5xl text-center mb-12 text-[#e31c25] dark:text-brand-darkGold transition-colors duration-300">
-            Frequently Asked Questions
+            <span className="sm:hidden">FAQs</span>
+            <span className="hidden sm:inline">Frequently Asked Questions</span>
           </h2>
           <div className="flex flex-col gap-4">
             {FAQS_DATA.map((faq, index) => {
