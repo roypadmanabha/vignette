@@ -1703,20 +1703,7 @@ export default function App() {
               <div className="absolute w-[200px] h-[200px] sm:w-[270px] sm:h-[270px] rounded-full border border-dashed border-zinc-300/40 dark:border-zinc-800/30" />
               <div className="absolute w-[160px] h-[160px] sm:w-[220px] sm:h-[220px] rounded-full bg-gradient-to-tr from-brand-lightRed/5 to-brand-lightOrange/10 dark:from-brand-darkGold/5 dark:to-brand-darkYellow/10 blur-xl" />
 
-              {/* Connector Leader Lines connecting badges to the central logo */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 100 100">
-                {/* Line to Badge 1 (top-left) */}
-                <line x1="12" y1="24" x2="33" y2="33" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2" className="text-brand-lightOrange/50 dark:text-brand-darkGold/45" />
-                <circle cx="33" cy="33" r="1.5" className="fill-brand-lightOrange dark:fill-brand-darkGold" />
 
-                {/* Line to Badge 2 (middle-right) */}
-                <line x1="88" y1="46" x2="67" y2="50" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2" className="text-brand-lightOrange/50 dark:text-brand-darkGold/45" />
-                <circle cx="67" cy="50" r="1.5" className="fill-brand-lightOrange dark:fill-brand-darkGold" />
-
-                {/* Line to Badge 3 (bottom-left) */}
-                <line x1="22" y1="78" x2="38" y2="64" stroke="currentColor" strokeWidth="0.75" strokeDasharray="2 2" className="text-brand-lightOrange/50 dark:text-brand-darkGold/45" />
-                <circle cx="38" cy="64" r="1.5" className="fill-brand-lightOrange dark:fill-brand-darkGold" />
-              </svg>
 
               {/* Main Portrait Frame */}
               <div className="relative w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] rounded-full overflow-hidden border-4 border-white dark:border-zinc-900 shadow-2xl z-10 bg-transparent flex items-center justify-center">
