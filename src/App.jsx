@@ -2246,7 +2246,7 @@ export default function App() {
                     {/* Name badge */}
                     <div className="absolute bottom-0 left-0 right-0 px-5 py-4">
                       <div className="flex flex-col">
-                        <h3 className="font-heading font-bold text-base text-zinc-950 dark:text-white leading-tight">Padmanabha Roy</h3>
+                        <h3 className="font-heading font-bold text-base text-white leading-tight">Padmanabha Roy</h3>
                         <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">{formatVignette('Founder · Vignette')}</p>
                       </div>
                     </div>
