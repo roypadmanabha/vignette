@@ -176,6 +176,14 @@ const CLIENT_REVIEWS = [
 // 1. HELPERS & CHILD COMPONENTS
 // ==========================================
 
+const formatVignette = (text) => {
+  if (typeof text !== 'string') return text;
+  const parts = text.split(/(Vignette)/g);
+  return parts.map((part, i) => 
+    part === 'Vignette' ? <span key={i} className="brand-text-gradient font-brand">Vignette</span> : part
+  );
+};
+
 const TestimonialCard = ({ review, idx, isCarousel = false }) => (
   <div
     className={`reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-5 sm:p-8 flex flex-col gap-4 sm:gap-6 shadow-xl group h-full ${!isCarousel ? 'hover:shadow-2xl hover:-translate-y-2 transition-premium' : ''}`}
@@ -202,7 +210,7 @@ const TestimonialCard = ({ review, idx, isCarousel = false }) => (
       </div>
     </div>
     <div className="font-body text-[13px] sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed sm:leading-loose text-justify mt-1 relative z-10 flex-grow">
-      {review.review}
+      {formatVignette(review.review)}
     </div>
   </div>
 );
@@ -1615,7 +1623,7 @@ export default function App() {
               </a>
             </div>
             <div className="text-[9px] text-zinc-400 dark:text-zinc-500 font-body uppercase tracking-wider select-none">
-              Vignette © {new Date().getFullYear()}
+              {formatVignette('Vignette © ' + new Date().getFullYear())}
             </div>
           </div>
         </div>
@@ -2150,7 +2158,7 @@ export default function App() {
               {/* Left Narrative Column */}
               <div className="reveal reveal-left lg:col-span-7 flex flex-col">
                 <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase mb-3">
-                  About Vignette
+                  {formatVignette('About Vignette')}
                 </span>
                 <h2 className="font-heading font-black text-4xl sm:text-5xl leading-tight">
                   <span className="text-zinc-950 dark:text-white">The Journey of </span>
@@ -2193,8 +2201,10 @@ export default function App() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent pointer-events-none" />
                     {/* Name badge */}
                     <div className="absolute bottom-0 left-0 right-0 px-5 py-4">
-                      <p className="font-brand font-black text-white text-sm tracking-wide">Padmanabha Roy</p>
-                      <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">Founder · Vignette</p>
+                      <div className="flex flex-col">
+                        <h3 className="font-heading font-bold text-base text-zinc-950 dark:text-white leading-tight">Padmanabha Roy</h3>
+                        <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">{formatVignette('Founder · Vignette')}</p>
+                      </div>
                     </div>
                   </div>
 
@@ -2532,7 +2542,7 @@ export default function App() {
                     <h3 className={`font-body font-bold text-[15px] sm:text-lg transition-colors duration-300 ${
                       isOpen ? 'text-[#e31c25] dark:text-brand-darkGold' : 'text-zinc-900 dark:text-zinc-200'
                     }`}>
-                      {faq.question}
+                      {formatVignette(faq.question)}
                     </h3>
                     <div className={`flex-shrink-0 transform transition-transform duration-500 ease-in-out ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
                       {isOpen ? (
@@ -2549,7 +2559,7 @@ export default function App() {
                   >
                     <div className="overflow-hidden">
                       <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-zinc-800 dark:text-zinc-400 font-body text-[13px] sm:text-base leading-relaxed text-justify">
-                        {faq.answer}
+                        {formatVignette(faq.answer)}
                       </div>
                     </div>
                   </div>
@@ -2580,7 +2590,7 @@ export default function App() {
                   draggable="false"
                 />
                 <span className="brand-text-gradient font-heading font-black text-2xl tracking-tight select-none">
-                  Vignette
+                  {formatVignette('Vignette')}
                 </span>
               </div>
               <p className="font-body text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-justify">
@@ -2702,8 +2712,8 @@ export default function App() {
             <div className="w-full border-t border-zinc-200 dark:border-zinc-800 my-2" />
 
             {/* Copyright Metadata */}
-            <div className="text-center font-body text-xs text-zinc-500 dark:text-zinc-500">
-              <p>© {new Date().getFullYear()} Vignette. All rights reserved | Made by Vignette</p>
+            <div className="font-body text-xs text-zinc-500 dark:text-zinc-400 flex flex-col md:flex-row items-center gap-2">
+              <p>{formatVignette('© ' + new Date().getFullYear() + ' Vignette. All rights reserved | Made by Vignette')}</p>
             </div>
 
           </div>
@@ -3076,25 +3086,25 @@ export default function App() {
                   <p className="text-zinc-500 dark:text-zinc-400 text-xs">Last updated: July 2026</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">1. Acceptance of Terms</h3>
-                  <p className="text-justify">By accessing and using the Vignette website and services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our services.</p>
+                  <p className="text-justify">{formatVignette('By accessing and using the Vignette website and services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our services.')}</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">2. Services Offered</h3>
-                  <p className="text-justify">Vignette provides professional video editing, promotional content creation, podcast editing, and visual storytelling services. All deliverables, timelines, and project scopes are agreed upon individually with each client prior to commencement of work.</p>
+                  <p className="text-justify">{formatVignette('Vignette provides professional video editing, promotional content creation, podcast editing, and visual storytelling services. All deliverables, timelines, and project scopes are agreed upon individually with each client prior to commencement of work.')}</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">3. Intellectual Property</h3>
-                  <p className="text-justify">All original content, designs, video edits, graphics, and creative assets produced by Vignette remain the intellectual property of Vignette until full payment has been received. Upon completion and full payment, ownership of the final deliverables transfers to the client unless otherwise stated in writing.</p>
+                  <p className="text-justify">{formatVignette('All original content, designs, video edits, graphics, and creative assets produced by Vignette remain the intellectual property of Vignette until full payment has been received. Upon completion and full payment, ownership of the final deliverables transfers to the client unless otherwise stated in writing.')}</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">4. Client Responsibilities</h3>
-                  <p className="text-justify">Clients are responsible for providing accurate project briefs, reference materials, and raw footage or assets in a timely manner. Delays in providing required materials may affect project timelines and delivery dates.</p>
+                  <p className="text-justify">The client agrees to provide all necessary materials, brand assets, and feedback in a timely manner. Delays in client feedback or asset delivery may result in adjusted project timelines and additional fees.</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">5. Payment Terms</h3>
-                  <p className="text-justify">Payment terms are communicated on a project-by-project basis. A non-refundable deposit may be required before work begins. Final payment is due upon delivery of the completed project unless alternative arrangements have been agreed upon in writing.</p>
+                  <p className="text-justify">Payments are to be made according to the schedule outlined in your specific proposal or invoice. A non-refundable deposit is often required to commence work. Late payments may incur additional charges.</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">6. Revisions Policy</h3>
-                  <p className="text-justify">Each project includes a specified number of revision rounds as agreed at the outset. Additional revisions beyond the agreed scope may incur extra charges, which will be communicated to the client before proceeding.</p>
+                  <p className="text-justify">Each project includes a predefined number of revision rounds. Any additional revisions beyond this scope will be billed at our standard hourly or per-project rate.</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">7. Limitation of Liability</h3>
-                  <p className="text-justify">Vignette shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability shall not exceed the amount paid by the client for the specific project in question.</p>
+                  <p className="text-justify">{formatVignette('Vignette shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability shall not exceed the amount paid by the client for the specific project in question.')}</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">8. Termination</h3>
                   <p className="text-justify">Either party may terminate a project agreement with written notice. In the event of termination, the client shall be responsible for payment of all work completed up to the date of termination.</p>

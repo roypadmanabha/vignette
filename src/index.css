@@ -76,7 +76,7 @@
   .brand-text-gradient {
     font-family: 'Nunito', sans-serif;
     font-weight: 700;
-    background: linear-gradient(90deg, #000000, #D10000);
+    background: linear-gradient(90deg, #000000, #FF0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
