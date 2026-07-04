@@ -2529,7 +2529,7 @@ export default function App() {
                   onClick={() => setOpenFaq(isOpen ? null : index)}
                 >
                   <div className="flex items-center justify-between p-5 sm:p-6">
-                    <h3 className={`font-body font-bold text-base sm:text-lg transition-colors duration-300 ${
+                    <h3 className={`font-body font-bold text-[15px] sm:text-lg transition-colors duration-300 ${
                       isOpen ? 'text-[#e31c25] dark:text-brand-darkGold' : 'text-zinc-900 dark:text-zinc-200'
                     }`}>
                       {faq.question}
@@ -2548,7 +2548,7 @@ export default function App() {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-zinc-800 dark:text-zinc-400 font-body text-sm sm:text-base leading-relaxed text-justify">
+                      <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-zinc-800 dark:text-zinc-400 font-body text-[13px] sm:text-base leading-relaxed text-justify">
                         {faq.answer}
                       </div>
                     </div>
