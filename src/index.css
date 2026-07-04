@@ -379,38 +379,3 @@ form textarea {
   transform: scale(1.3);
   background: #ff5e62 !important;
 }
-
-/* Light Mode Animated Background */
-@keyframes blob-float {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(40px, -60px) scale(1.1); }
-  66% { transform: translate(-30px, 30px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
-}
-
-@keyframes grid-slide {
-  0% { background-position: 0 0; }
-  100% { background-position: 50px 50px; }
-}
-
-@keyframes line-slide {
-  0% { transform: translateX(-100%) rotate(-10deg); opacity: 0; }
-  50% { opacity: 1; }
-  100% { transform: translateX(100%) rotate(-10deg); opacity: 0; }
-}
-
-.animate-blob {
-  animation: blob-float 15s infinite alternate ease-in-out;
-}
-
-.bg-grid-pattern {
-  background-image: 
-    linear-gradient(to right, rgba(200, 100, 100, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 150, 50, 0.04) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: grid-slide 15s linear infinite;
-}
-
-.animate-line {
-  animation: line-slide 8s infinite linear;
-}

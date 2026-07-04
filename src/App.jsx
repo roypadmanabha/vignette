@@ -337,6 +337,45 @@ const Starfield = ({ isDark }) => {
   );
 };
 
+const VantaCloudBackground = ({ isDark }) => {
+  const vantaRef = useRef(null);
+  const [vantaEffect, setVantaEffect] = useState(null);
+
+  useEffect(() => {
+    if (!isDark && window.VANTA && !vantaEffect) {
+      setVantaEffect(
+        window.VANTA.CLOUDS({
+          el: vantaRef.current,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          speed: 1.50
+        })
+      );
+    }
+
+    if (isDark && vantaEffect) {
+      vantaEffect.destroy();
+      setVantaEffect(null);
+    }
+
+    return () => {
+      if (vantaEffect) {
+        vantaEffect.destroy();
+      }
+    };
+  }, [isDark, vantaEffect]);
+
+  return (
+    <div
+      ref={vantaRef}
+      className={`fixed inset-0 w-full h-full z-0 pointer-events-none transition-opacity duration-1000 ${isDark ? 'opacity-0' : 'opacity-100'}`}
+    />
+  );
+};
+
 // Draggable Before/After Image Comparison Slider
 const BeforeAfterSlider = ({ before, after, description, title }) => {
   const [sliderPos, setSliderPos] = useState(50);
@@ -1220,26 +1259,8 @@ export default function App() {
       {/* 2.0. LIVE ANIMATED STARFIELD BACKDROP */}
       <Starfield isDark={isDark} />
 
-      {/* 2.1. MODERN ARTISTIC LIGHT MODE BACKGROUND */}
-      {!isDark && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center">
-          {/* Animated Grid lines */}
-          <div className="absolute inset-0 bg-grid-pattern [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_80%)]" />
-
-          {/* Flowing Gradient Blobs */}
-          <div className="absolute top-[10%] left-[10%] w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-brand-lightRed/15 to-brand-lightOrange/10 blur-[100px] animate-blob" style={{ animationDelay: '0s' }} />
-          <div className="absolute top-[50%] right-[10%] w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-orange-500/10 to-red-400/15 blur-[120px] animate-blob" style={{ animationDelay: '4s' }} />
-          <div className="absolute bottom-[-10%] left-[30%] w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-brand-lightOrange/20 to-yellow-500/10 blur-[130px] animate-blob" style={{ animationDelay: '8s' }} />
-
-          {/* Artistic geometric accents (Rings) */}
-          <div className="absolute top-[25%] right-[25%] w-[300px] h-[300px] border-[1px] border-black/5 rounded-full animate-blob mix-blend-overlay" style={{ animationDelay: '2s' }} />
-          <div className="absolute bottom-[20%] left-[15%] w-[400px] h-[400px] border-[1px] border-black/5 rounded-full animate-blob mix-blend-overlay" style={{ animationDelay: '6s' }} />
-          
-          {/* Subtle moving cinematic lines */}
-          <div className="absolute top-[20%] -left-[50%] w-[200%] h-[1px] bg-gradient-to-r from-transparent via-brand-lightRed/20 to-transparent animate-line" style={{ animationDelay: '1s' }} />
-          <div className="absolute bottom-[30%] -left-[50%] w-[200%] h-[1px] bg-gradient-to-r from-transparent via-brand-lightOrange/20 to-transparent animate-line" style={{ animationDelay: '5s' }} />
-        </div>
-      )}
+      {/* 2.1. VANTA CLOUD BACKGROUND (LIGHT MODE ONLY) */}
+      <VantaCloudBackground isDark={isDark} />
 
       {/* 2.2. PROTECTED TOAST NOTIFICATION BANNER */}
       <div
