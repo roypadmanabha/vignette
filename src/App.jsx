@@ -1647,13 +1647,13 @@ export default function App() {
       <main className="relative z-10 w-full overflow-x-hidden">
 
         {/* 2.5. HERO SECTION */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">          <section
+        <section
           id="home"
-          className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px]"
+          className="hero-section min-h-[100dvh] w-full flex flex-col justify-center items-center py-20 lg:py-24 relative select-none overflow-hidden"
         >
           {/* Vanta Animated Background Container */}
-          <div className="absolute inset-0 z-0 overflow-hidden rounded-[32px]">
-            <div ref={vantaRef} className="w-full h-full opacity-50" />
+          <div className="absolute inset-0 z-0 overflow-hidden">
+            <div ref={vantaRef} className="w-full h-full opacity-100" />
           </div>
 
           {/* Overlay Wash Tint */}
@@ -1768,7 +1768,6 @@ export default function App() {
             </div>
           </div>
         </section>
-        </div>
 
         {/* 2.6. GALLERY SECTION */}
         <section id="gallery" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
