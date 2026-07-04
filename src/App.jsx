@@ -209,31 +209,25 @@ const TestimonialCard = ({ review, idx, isCarousel = false }) => (
 
 const TestimonialCarousel = ({ reviews }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const touchStartX = useRef(null);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const minSwipeDistance = 50;
 
-  const handlePrev = () => {
-    if (activeIndex > 0) setActiveIndex(activeIndex - 1);
-  };
-  
-  const handleNext = () => {
-    if (activeIndex < reviews.length - 1) setActiveIndex(activeIndex + 1);
-  };
+  const handlePrev = () => setActiveIndex((prev) => Math.max(0, prev - 1));
+  const handleNext = () => setActiveIndex((prev) => Math.min(reviews.length - 1, prev + 1));
 
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const handleTouchEnd = (e) => {
-    if (touchStartX.current === null) return;
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX.current - touchEndX;
-    
-    if (diff > 50) { // swipe left -> next
-      handleNext();
-    } else if (diff < -50) { // swipe right -> prev
-      handlePrev();
-    }
-    touchStartX.current = null;
+  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX);
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    if (distance > minSwipeDistance) handleNext();
+    if (distance < -minSwipeDistance) handlePrev();
   };
 
   return (
@@ -245,26 +239,31 @@ const TestimonialCarousel = ({ reviews }) => {
       </div>
 
       <div 
-        className="xl:hidden relative w-full h-[560px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4 perspective-[1500px]"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
+        className="xl:hidden relative w-full h-[560px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4 touch-pan-y"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
       >
         {reviews.map((review, idx) => {
           let position = 'hidden';
           if (idx === activeIndex) position = 'active';
           else if (idx === activeIndex - 1) position = 'prev';
           else if (idx === activeIndex + 1) position = 'next';
+          else if (idx < activeIndex - 1) position = 'prev-hidden';
+          else if (idx > activeIndex + 1) position = 'next-hidden';
           
-          let classes = 'absolute transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] w-[85%] sm:w-[70%] cursor-pointer shadow-2xl origin-center ';
+          let classes = 'absolute transition-all duration-500 ease-in-out w-[85%] sm:w-[70%] cursor-pointer shadow-2xl ';
           
           if (position === 'active') {
-            classes += ' z-20 opacity-100 [transform:translateX(0)_scale(1)_rotateY(0deg)]';
+            classes += ' z-20 scale-100 opacity-100 translate-x-0';
           } else if (position === 'prev') {
-            classes += ' z-10 opacity-50 [transform:translateX(-30%)_scale(0.85)_rotateY(25deg)] sm:[transform:translateX(-40%)_scale(0.85)_rotateY(25deg)] blur-[1px] hover:opacity-100 hover:blur-none';
+            classes += ' z-10 scale-90 opacity-60 -translate-x-12 sm:-translate-x-32 blur-[1px] hover:opacity-100';
           } else if (position === 'next') {
-            classes += ' z-10 opacity-50 [transform:translateX(30%)_scale(0.85)_rotateY(-25deg)] sm:[transform:translateX(40%)_scale(0.85)_rotateY(-25deg)] blur-[1px] hover:opacity-100 hover:blur-none';
-          } else {
-            classes += ' z-0 opacity-0 [transform:translateX(0)_scale(0.7)_rotateY(0deg)] pointer-events-none';
+            classes += ' z-10 scale-90 opacity-60 translate-x-12 sm:translate-x-32 blur-[1px] hover:opacity-100';
+          } else if (position === 'prev-hidden') {
+            classes += ' z-0 scale-75 opacity-0 -translate-x-24 sm:-translate-x-48 blur-[2px] pointer-events-none';
+          } else if (position === 'next-hidden') {
+            classes += ' z-0 scale-75 opacity-0 translate-x-24 sm:translate-x-48 blur-[2px] pointer-events-none';
           }
 
           return (
@@ -277,9 +276,9 @@ const TestimonialCarousel = ({ reviews }) => {
       
       <div className="xl:hidden flex justify-center items-center gap-6 mt-2 relative z-30">
         <button 
-          onClick={handlePrev}
+          onClick={handlePrev} 
           disabled={activeIndex === 0}
-          className={`p-2 rounded-full border border-black/5 dark:border-white/10 transition-all duration-300 shadow-lg ${activeIndex === 0 ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-400 dark:text-zinc-600 opacity-50 cursor-not-allowed' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110'}`}
+          className={`p-2 rounded-full border border-black/5 dark:border-white/10 shadow-lg transition-all duration-300 ${activeIndex === 0 ? 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110'}`}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/></svg>
         </button>
@@ -289,9 +288,9 @@ const TestimonialCarousel = ({ reviews }) => {
           ))}
         </div>
         <button 
-          onClick={handleNext}
+          onClick={handleNext} 
           disabled={activeIndex === reviews.length - 1}
-          className={`p-2 rounded-full border border-black/5 dark:border-white/10 transition-all duration-300 shadow-lg ${activeIndex === reviews.length - 1 ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-400 dark:text-zinc-600 opacity-50 cursor-not-allowed' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110'}`}
+          className={`p-2 rounded-full border border-black/5 dark:border-white/10 shadow-lg transition-all duration-300 ${activeIndex === reviews.length - 1 ? 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110'}`}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/></svg>
         </button>
