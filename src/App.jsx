@@ -209,9 +209,32 @@ const TestimonialCard = ({ review, idx, isCarousel = false }) => (
 
 const TestimonialCarousel = ({ reviews }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const touchStartX = useRef(null);
 
-  const handlePrev = () => setActiveIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
-  const handleNext = () => setActiveIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+  const handlePrev = () => {
+    if (activeIndex > 0) setActiveIndex(activeIndex - 1);
+  };
+  
+  const handleNext = () => {
+    if (activeIndex < reviews.length - 1) setActiveIndex(activeIndex + 1);
+  };
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    if (touchStartX.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+    
+    if (diff > 50) { // swipe left -> next
+      handleNext();
+    } else if (diff < -50) { // swipe right -> prev
+      handlePrev();
+    }
+    touchStartX.current = null;
+  };
 
   return (
     <>
@@ -221,21 +244,27 @@ const TestimonialCarousel = ({ reviews }) => {
         ))}
       </div>
 
-      <div className="xl:hidden relative w-full h-[560px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4">
+      <div 
+        className="xl:hidden relative w-full h-[560px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         {reviews.map((review, idx) => {
-          let position = 'next';
+          let position = 'hidden';
           if (idx === activeIndex) position = 'active';
-          else if (idx === (activeIndex - 1 + reviews.length) % reviews.length) position = 'prev';
-          else if (idx === (activeIndex + 1) % reviews.length) position = 'next';
+          else if (idx === activeIndex - 1) position = 'prev';
+          else if (idx === activeIndex + 1) position = 'next';
           
-          let classes = 'absolute transition-all duration-500 ease-in-out w-[85%] sm:w-[70%] cursor-pointer shadow-2xl ';
+          let classes = 'absolute transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] w-[85%] sm:w-[70%] cursor-pointer shadow-2xl ';
           
           if (position === 'active') {
-            classes += ' z-20 scale-100 opacity-100 translate-x-0';
+            classes += ' z-20 scale-100 opacity-100 [transform:perspective(1200px)_rotateY(0deg)] origin-center';
           } else if (position === 'prev') {
-            classes += ' z-10 scale-90 opacity-60 -translate-x-12 sm:-translate-x-32 blur-[1px] hover:opacity-100';
+            classes += ' z-10 scale-95 opacity-50 -translate-x-12 sm:-translate-x-24 [transform:perspective(1200px)_rotateY(15deg)] origin-right blur-[1px] hover:opacity-100 hover:blur-none';
           } else if (position === 'next') {
-            classes += ' z-10 scale-90 opacity-60 translate-x-12 sm:translate-x-32 blur-[1px] hover:opacity-100';
+            classes += ' z-10 scale-95 opacity-50 translate-x-12 sm:translate-x-24 [transform:perspective(1200px)_rotateY(-15deg)] origin-left blur-[1px] hover:opacity-100 hover:blur-none';
+          } else {
+            classes += ' z-0 scale-90 opacity-0 pointer-events-none';
           }
 
           return (
@@ -247,7 +276,11 @@ const TestimonialCarousel = ({ reviews }) => {
       </div>
       
       <div className="xl:hidden flex justify-center items-center gap-6 mt-2 relative z-30">
-        <button onClick={handlePrev} className="p-2 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110 transition-all duration-300 shadow-lg">
+        <button 
+          onClick={handlePrev}
+          disabled={activeIndex === 0}
+          className={`p-2 rounded-full border border-black/5 dark:border-white/10 transition-all duration-300 shadow-lg ${activeIndex === 0 ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-400 dark:text-zinc-600 opacity-50 cursor-not-allowed' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110'}`}
+        >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/></svg>
         </button>
         <div className="flex gap-3">
@@ -255,7 +288,11 @@ const TestimonialCarousel = ({ reviews }) => {
             <div key={idx} onClick={() => setActiveIndex(idx)} className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#e31c25] dark:bg-[#FFD700] w-6 h-2' : 'bg-zinc-300 dark:bg-zinc-700 w-2 h-2 hover:bg-zinc-400 dark:hover:bg-zinc-500'}`} />
           ))}
         </div>
-        <button onClick={handleNext} className="p-2 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110 transition-all duration-300 shadow-lg">
+        <button 
+          onClick={handleNext}
+          disabled={activeIndex === reviews.length - 1}
+          className={`p-2 rounded-full border border-black/5 dark:border-white/10 transition-all duration-300 shadow-lg ${activeIndex === reviews.length - 1 ? 'bg-zinc-100 dark:bg-zinc-900 text-zinc-400 dark:text-zinc-600 opacity-50 cursor-not-allowed' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110'}`}
+        >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>
