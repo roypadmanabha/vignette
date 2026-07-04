@@ -379,3 +379,14 @@ form textarea {
   transform: scale(1.3);
   background: #ff5e62 !important;
 }
+
+/* Print CSS to make webpage completely blank when printed */
+@media print {
+  html, body {
+    background: white !important;
+    color: white !important;
+  }
+  body * {
+    display: none !important;
+  }
+}
