@@ -213,7 +213,7 @@ const CustomDropdown = ({ id, value, onChange, options, placeholder, disabled })
               onChange(option.value);
               setIsOpen(false);
             }}
-            className={`px-4 py-3 cursor-pointer flex items-center justify-between font-body text-sm transition-colors ${value === option.value ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 text-[#D10000] dark:text-[#FFD700] font-bold' : `text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 ${option.isBold ? 'font-bold' : ''}`}`}
+            className={`px-4 py-3 cursor-pointer flex items-center justify-between font-body text-sm transition-colors ${value === option.value ? 'bg-[#f5f5dd] dark:bg-brand-darkGold/10 text-[#D10000] dark:text-[#FFD700] font-bold' : `text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 ${option.isBold ? 'font-bold' : ''}`}`}
           >
             {option.label}
             {value === option.value && <CheckCircle className="w-4 h-4" />}
