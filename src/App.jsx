@@ -889,28 +889,8 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isHireModalOpen, legalModal]);
 
-  // Vanta.js Background State
-  const vantaRef = useRef(null);
-  const [vantaEffect, setVantaEffect] = useState(null);
-
-  useEffect(() => {
-    if (!vantaEffect && window.VANTA) {
-      setVantaEffect(
-        window.VANTA.CLOUDS({
-          el: vantaRef.current,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          speed: 1.50
-        })
-      );
-    }
-    return () => {
-      if (vantaEffect) vantaEffect.destroy();
-    };
-  }, [vantaEffect]);
+  // Hero section background image url state (static only, no video)
+  const heroBgUrl = 'virat.png';
 
   // Scroll state for sticky header glassmorphism behavior
   const [isScrolled, setIsScrolled] = useState(false);
@@ -1647,13 +1627,19 @@ export default function App() {
       <main className="relative z-10 w-full overflow-x-hidden">
 
         {/* 2.5. HERO SECTION */}
-        <section
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">          <section
           id="home"
-          className="hero-section min-h-[100dvh] w-full flex flex-col justify-center items-center py-20 lg:py-24 relative select-none overflow-hidden"
+          className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px]"
         >
-          {/* Vanta Animated Background Container */}
-          <div className="absolute inset-0 z-0 overflow-hidden">
-            <div ref={vantaRef} className="w-full h-full opacity-100" />
+          {/* Background elements grouped for smooth edge masking */}
+          <div className="hero-bg-container">
+            {/* Static Background Image */}
+            <div
+              className="hero-bg-image"
+              style={{ backgroundImage: "url('virat.png')" }}
+            />
+
+            {/* Looping Muted Local Video Background — REMOVED; using static virat.png */}
           </div>
 
           {/* Overlay Wash Tint */}
@@ -1768,6 +1754,7 @@ export default function App() {
             </div>
           </div>
         </section>
+        </div>
 
         {/* 2.6. GALLERY SECTION */}
         <section id="gallery" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
@@ -2524,7 +2511,7 @@ export default function App() {
       {/* 2.10.5. FAQS SECTION */}
       <section id="faqs" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 select-none">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading font-black text-4xl sm:text-5xl text-center mb-12 text-[#e31c25] dark:text-brand-darkGold transition-colors duration-300">
+          <h2 className="font-heading font-black text-4xl sm:text-5xl text-center mb-12 text-[#D10000] dark:text-brand-darkGold transition-colors duration-300">
             <span className="sm:hidden">FAQs</span>
             <span className="hidden sm:inline">Frequently Asked Questions</span>
           </h2>
