@@ -2018,7 +2018,7 @@ export default function App() {
               {CLIENT_REVIEWS.map((review, idx) => (
                 <div
                   key={idx}
-                  className="reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-8 sm:p-10 flex flex-col gap-6 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-1000 ease-in-out group"
+                  className="reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-8 sm:p-10 flex flex-col gap-6 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-premium group"
                   style={{ transitionDelay: `${idx * 150}ms`, borderWidth: '0.5px', borderStyle: 'solid' }}
                 >
                   <div className="flex items-center gap-5">
