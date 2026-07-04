@@ -1763,13 +1763,13 @@ export default function App() {
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
                 At a Glance
               </h2>
-              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors">
                 Freezing time across terminals, peaks, and street corners. Discover visual stories filtered by category.
               </p>
             </div>
 
             {/* Filter Pill List Row */}
-            <div className="reveal reveal-left flex flex-wrap justify-center gap-2.5 mb-12 px-4 select-none">
+            <div className="reveal reveal-left flex flex-wrap justify-center gap-2.5 mb-12 select-none">
               {['All', 'Travel', 'Lifestyle', 'Avgeek', 'Storytelling'].map((category) => {
                 const isActive = galleryFilter.toLowerCase() === category.toLowerCase();
                 return (
@@ -1788,7 +1788,7 @@ export default function App() {
             </div>
 
             {/* Gallery Cards Masonry/Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8 px-2 sm:px-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8">
               {filteredGallery.map((item, idx) => (
                 <div
                   key={item.id}
@@ -1853,7 +1853,7 @@ export default function App() {
                     draggable="false"
                   />
                   {/* Floating caption below image */}
-                  <div className="mt-5 text-center px-4">
+                  <div className="mt-5 text-center">
                     <span className="font-brand font-extrabold text-xs uppercase tracking-widest text-[#FFD700]">
                       {filteredGallery[lightboxIndex].category}
                     </span>
@@ -1885,13 +1885,13 @@ export default function App() {
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient mb-6">
                 Services
               </h2>
-              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 leading-relaxed px-4 transition-colors text-base sm:text-lg text-justify">
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 leading-relaxed transition-colors text-base sm:text-lg text-justify">
                 Our services include video editing, seamless podcast enhancement, engaging promotional content, and tailored shoots - crafted to elevate brand visibility, storytelling, and impact across marketing and social platforms.
               </p>
             </div>
 
             {/* Services Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8 px-2 sm:px-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
               {[
                 {
                   title: 'Video Editing',
@@ -1989,13 +1989,13 @@ export default function App() {
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
                 Our Highlights
               </h2>
-              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors">
                 Short, snappy snippets with premium edit pacing. Click to open full cinematic player.
               </p>
             </div>
 
             {/* Cards Grid — 2 cols on mobile & iPad mini/air, 4 cols on large screens */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-8 px-2 sm:px-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-8">
               {videos.map((vid, idx) => (
                 <div
                   key={vid.id}
@@ -2099,13 +2099,13 @@ export default function App() {
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
                 The Art of Editing
               </h2>
-              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed px-4 transition-colors">
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors">
                 Highlighting the impact of custom Lightroom presets and Premiere color correction. Grab and drag the split dividers.
               </p>
             </div>
 
             {/* Slider Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {edits.map((edit, idx) => (
                 <div
                   key={edit.id}
@@ -2210,7 +2210,7 @@ export default function App() {
         {/* 2.10. HIRE ME SECTION */}
         <section id="hire" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
               {/* Context Left Column */}
               <div className="lg:col-span-5 flex flex-col justify-center">
