@@ -2014,12 +2014,12 @@ export default function App() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-3 gap-6 md:gap-8 pb-8 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] -mx-4 px-4 md:mx-0 md:px-0">
               {CLIENT_REVIEWS.map((review, idx) => (
                 <div
                   key={idx}
-                  className="reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-8 sm:p-10 flex flex-col gap-6 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-in-out group"
-                  style={{ transitionDelay: `${idx * 150}ms`, borderWidth: '0.5px', borderStyle: 'solid' }}
+                  className="reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-8 sm:p-10 flex flex-col gap-6 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 ease-out group min-w-[85vw] sm:min-w-[60vw] md:min-w-0 snap-center"
+                  style={{ borderWidth: '0.5px', borderStyle: 'solid' }}
                 >
                   <div className="flex items-center gap-5">
                     <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-brand-lightOrange/30 dark:border-brand-darkGold/30 shrink-0">
