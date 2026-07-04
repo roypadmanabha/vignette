@@ -215,13 +215,13 @@ const TestimonialCarousel = ({ reviews }) => {
 
   return (
     <>
-      <div className="hidden lg:grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="hidden xl:grid grid-cols-1 md:grid-cols-3 gap-8">
         {reviews.map((review, idx) => (
           <TestimonialCard key={idx} review={review} idx={idx} />
         ))}
       </div>
 
-      <div className="lg:hidden relative w-full h-[540px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4">
+      <div className="xl:hidden relative w-full h-[540px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4">
         {reviews.map((review, idx) => {
           let position = 'next';
           if (idx === activeIndex) position = 'active';
@@ -246,17 +246,17 @@ const TestimonialCarousel = ({ reviews }) => {
         })}
       </div>
       
-      <div className="lg:hidden flex justify-center items-center gap-6 mt-8 relative z-30">
-        <button onClick={handlePrev} className="p-3 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110 transition-all duration-300 shadow-lg">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
+      <div className="xl:hidden flex justify-center items-center gap-6 mt-2 relative z-30">
+        <button onClick={handlePrev} className="p-2 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110 transition-all duration-300 shadow-lg">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/></svg>
         </button>
         <div className="flex gap-3">
           {reviews.map((_, idx) => (
-            <div key={idx} onClick={() => setActiveIndex(idx)} className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#e31c25] dark:bg-[#FFD700] w-6 h-2.5' : 'bg-zinc-300 dark:bg-zinc-700 w-2.5 h-2.5 hover:bg-zinc-400 dark:hover:bg-zinc-500'}`} />
+            <div key={idx} onClick={() => setActiveIndex(idx)} className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#e31c25] dark:bg-[#FFD700] w-6 h-2' : 'bg-zinc-300 dark:bg-zinc-700 w-2 h-2 hover:bg-zinc-400 dark:hover:bg-zinc-500'}`} />
           ))}
         </div>
-        <button onClick={handleNext} className="p-3 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110 transition-all duration-300 shadow-lg">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/></svg>
+        <button onClick={handleNext} className="p-2 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110 transition-all duration-300 shadow-lg">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/></svg>
         </button>
       </div>
     </>
