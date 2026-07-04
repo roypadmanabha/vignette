@@ -23,6 +23,8 @@ import {
   Phone,
   Mail,
   MapPin,
+  Plus,
+  Minus,
   Maximize2,
   Mic,
   Megaphone,
@@ -138,6 +140,15 @@ const MOCK_EDITS = [
     before_url: 'flight.jpg',
     after_url: 'flight.jpg'
   }
+];
+
+const FAQS_DATA = [
+  { question: "Why Vignette?", answer: "Vignette is a creative studio that transforms ordinary moments into cinematic visual stories. We focus on bespoke pacing and premium color grading." },
+  { question: "Who can 'contact' Vignette?", answer: "Anyone seeking professional video editing, photography, or content creation, from brands to individual creators." },
+  { question: "How Vignette works?", answer: "We collaborate closely with you to understand your vision, then apply our specialized production and post-production techniques to bring it to life." },
+  { question: "What are the services provided?", answer: "Our services include professional video editing, podcast enhancement, promotional content creation, and tailored photoshoots." },
+  { question: "How are the services accomplished?", answer: "Through meticulous pre-production planning, high-quality execution, and industry-standard post-production editing and grading." },
+  { question: "Who can 'connect' with Vignette?", answer: "Brands, creators, and individuals looking to elevate their visual presence across all digital platforms." }
 ];
 
 // ==========================================
@@ -333,45 +344,6 @@ const Starfield = ({ isDark }) => {
       ref={canvasRef}
       className={`fixed inset-0 w-full h-full z-0 pointer-events-none transition-opacity duration-1000 ${isDark ? 'opacity-100' : 'opacity-0'
         }`}
-    />
-  );
-};
-
-const VantaCloudBackground = ({ isDark }) => {
-  const vantaRef = useRef(null);
-  const [vantaEffect, setVantaEffect] = useState(null);
-
-  useEffect(() => {
-    if (!isDark && window.VANTA && !vantaEffect) {
-      setVantaEffect(
-        window.VANTA.CLOUDS({
-          el: vantaRef.current,
-          mouseControls: true,
-          touchControls: true,
-          gyroControls: false,
-          minHeight: 200.00,
-          minWidth: 200.00,
-          speed: 1.50
-        })
-      );
-    }
-
-    if (isDark && vantaEffect) {
-      vantaEffect.destroy();
-      setVantaEffect(null);
-    }
-
-    return () => {
-      if (vantaEffect) {
-        vantaEffect.destroy();
-      }
-    };
-  }, [isDark, vantaEffect]);
-
-  return (
-    <div
-      ref={vantaRef}
-      className={`fixed inset-0 w-full h-full z-0 pointer-events-none transition-opacity duration-1000 ${isDark ? 'opacity-0' : 'opacity-100'}`}
     />
   );
 };
@@ -739,6 +711,9 @@ export default function App() {
 
   // Hire Modal Open State
   const [isHireModalOpen, setIsHireModalOpen] = useState(false);
+
+  // FAQ Open State
+  const [openFaq, setOpenFaq] = useState(null);
 
   // Legal Modal State — 'terms' | 'privacy' | null
   const [legalModal, setLegalModal] = useState(null);
@@ -1259,8 +1234,14 @@ export default function App() {
       {/* 2.0. LIVE ANIMATED STARFIELD BACKDROP */}
       <Starfield isDark={isDark} />
 
-      {/* 2.1. VANTA CLOUD BACKGROUND (LIGHT MODE ONLY) */}
-      <VantaCloudBackground isDark={isDark} />
+      {/* 2.1. FLOATING AMBIENT BLOBS (LIGHT MODE ONLY) */}
+      {!isDark && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute top-[10%] left-[20%] w-[350px] h-[350px] rounded-full bg-brand-lightOrange/10 blur-[90px]" />
+          <div className="absolute top-[40%] right-[10%] w-[450px] h-[450px] rounded-full bg-brand-lightRed/10 blur-[110px]" />
+          <div className="absolute bottom-[20%] left-[15%] w-[380px] h-[380px] rounded-full bg-brand-lightOrange/10 blur-[100px]" />
+        </div>
+      )}
 
       {/* 2.2. PROTECTED TOAST NOTIFICATION BANNER */}
       <div
@@ -2364,6 +2345,49 @@ export default function App() {
 
       </main>
 
+      {/* 2.10.5. FAQS SECTION */}
+      <section id="faqs" className="py-24 sm:py-32 scroll-mt-20 select-none">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-heading font-black text-4xl sm:text-5xl text-center mb-12 text-[#990000] dark:text-brand-darkGold">
+            Frequently Asked Questions
+          </h2>
+          <div className="flex flex-col gap-4">
+            {FAQS_DATA.map((faq, index) => {
+              const isOpen = openFaq === index;
+              return (
+                <div
+                  key={index}
+                  className={`rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer ${
+                    isOpen
+                      ? 'border-[#990000] bg-[#f5f5dd] dark:bg-zinc-900/50 dark:border-brand-darkGold'
+                      : 'border-brand-lightRed/20 dark:border-zinc-800 bg-white dark:bg-zinc-950 hover:border-[#990000]/50 dark:hover:border-brand-darkGold/50'
+                  }`}
+                  onClick={() => setOpenFaq(isOpen ? null : index)}
+                >
+                  <div className="flex items-center justify-between p-5 sm:p-6">
+                    <h3 className={`font-body font-bold text-base sm:text-lg transition-colors ${
+                      isOpen ? 'text-[#990000] dark:text-brand-darkGold' : 'text-zinc-900 dark:text-zinc-200'
+                    }`}>
+                      {faq.question}
+                    </h3>
+                    {isOpen ? (
+                      <Minus className="w-5 h-5 text-[#990000] dark:text-brand-darkGold flex-shrink-0" />
+                    ) : (
+                      <Plus className="w-5 h-5 text-zinc-900 dark:text-zinc-200 flex-shrink-0" />
+                    )}
+                  </div>
+                  {isOpen && (
+                    <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-zinc-800 dark:text-zinc-400 font-body text-sm sm:text-base leading-relaxed text-justify">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* 2.11. FOOTER SECTION */}
       <footer className="border-t-[0.5px] border-black/50 py-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors overflow-x-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
@@ -2702,7 +2726,7 @@ export default function App() {
                       id="modal-email"
                       value={formState.email}
                       onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="john@example.com"
+                      placeholder="abc@xyz.com"
                       disabled={formSubmitting}
                       required
                       className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
