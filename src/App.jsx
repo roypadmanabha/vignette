@@ -154,17 +154,17 @@ const FAQS_DATA = [
 const CLIENT_REVIEWS = [
   {
     name: 'Astrofied',
-    image: 'astrofied.png',
+    image: 'client-astrofied.png',
     review: 'Working with Vignette has been one of the best decisions for Astrofied. From developing our website to managing our social media presence, every detail has been handled with remarkable creativity, professionalism, and precision. Their understanding of aesthetics, branding, and user experience helped us create a modern and trustworthy identity that truly represents our vision. Every design, post, and website element feels thoughtfully crafted rather than generic. They are highly responsive, committed to quality, and always open to feedback while delivering beyond expectations. We genuinely appreciate their dedication and would confidently recommend Vignette to anyone looking for premium digital branding and creative solutions.',
   },
   {
     name: 'Hinest Interiors',
-    image: 'hinest.jpg',
+    image: 'client-hinest.jpg',
     review: 'Vignette has completely transformed the way our brand is presented online. They designed a clean, elegant website and continue to manage our social media with exceptional attention to detail and consistency. Every post reflects our brand identity beautifully, helping us build credibility and attract more engagement from potential clients. Their creative approach, aesthetic sense, and professionalism are evident in every project they deliver. What impressed us most was their ability to understand our requirements and convert them into visually appealing, high-quality content. Vignette is reliable, innovative, and passionate about their work, making them an excellent creative partner for any business.',
   },
   {
     name: 'Beauty of Agartala',
-    image: 'boa.jpg',
+    image: 'client-boa.png',
     review: 'Vignette has been behind the journey of Beauty of Agartala right from the very beginning, and their contribution has been invaluable. From building our social media presence from day one to consistently creating engaging and visually stunning content, they have always maintained exceptional quality and originality. Their creativity, eye for detail, and understanding of audience engagement have helped our page grow while maintaining a unique identity. Every post is thoughtfully designed and professionally executed, making our content stand out naturally. We truly appreciate their dedication, timely delivery, and passion for visual storytelling, and we highly recommend Vignette for creative digital content and social media management.',
   }
 ];
