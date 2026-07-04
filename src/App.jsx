@@ -552,9 +552,8 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md px-4 py-3 transition-premium duration-500 ${
-        isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none invisible'
-      }`}
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md px-4 py-3 transition-premium duration-500 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none invisible'
+        }`}
       onClick={handleClose}
     >
       {/* Close Button — sits ABOVE the video frame, always fully visible */}
@@ -574,9 +573,8 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
 
       {/* Video Container — fluid portrait/landscape sizing, never overflows screen */}
       <div
-        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center flex-shrink-0 transition-premium duration-500 ${
-          isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
-        }`}
+        className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center flex-shrink-0 transition-premium duration-500 ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+          }`}
         style={{
           aspectRatio: `${aspectRatio}`,
           maxHeight: 'calc(100svh - 100px)',
@@ -2030,38 +2028,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* 2.9.5. HERO VIDEO SHOWCASE */}
-        <section className="py-10 sm:py-14 flex flex-col items-center justify-center select-none">
-          <div className="max-w-4xl w-full px-4">
-            <div
-              className="relative rounded-[20px] overflow-hidden shadow-xl bg-black cursor-pointer border border-brand-lightOrange dark:border-[#FFD700]"
-              onClick={toggleHeroPlay}
-            >
-              <video
-                ref={heroVideoRef}
-                src="featured.mp4"
-                playsInline
-                preload="metadata"
-                controlsList="nodownload nofullscreen noremoteplayback"
-                disablePictureInPicture
-                onContextMenu={(e) => e.preventDefault()}
-                className="w-full h-auto rounded-[20px] object-contain opacity-100 block"
-                onEnded={() => setIsHeroPlaying(false)}
-                onPlay={() => setIsHeroPlaying(true)}
-                onPause={() => setIsHeroPlaying(false)}
-              />
 
-              {/* Custom Play Button Overlay (shown when paused) */}
-              {!isHeroPlaying && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 dark:bg-black/85 flex items-center justify-center shadow-lg transform active:scale-95 transition-transform duration-200">
-                    <Play className="w-4 h-4 sm:w-5 sm:h-5 text-brand-lightOrange fill-brand-lightOrange dark:text-[#e31c25] dark:fill-[#e31c25] translate-x-0.5" />
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
 
         {/* 2.10. HIRE ME SECTION */}
         <section id="hire" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
@@ -2249,7 +2216,7 @@ export default function App() {
                             id="form-email"
                             value={formState.email}
                             onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
-                            placeholder="john@example.com"
+                            placeholder="abc@xyz.com"
                             disabled={formSubmitting}
                             required
                             className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
@@ -2325,6 +2292,39 @@ export default function App() {
                 </div>
               </div>
 
+            </div>
+          </div>
+        </section>
+
+        {/* 2.9.5. HERO VIDEO SHOWCASE */}
+        <section className="py-10 sm:py-14 flex flex-col items-center justify-center select-none">
+          <div className="max-w-4xl w-full px-4">
+            <div
+              className="relative rounded-[20px] overflow-hidden shadow-xl bg-black cursor-pointer border border-brand-lightOrange dark:border-[#FFD700]"
+              onClick={toggleHeroPlay}
+            >
+              <video
+                ref={heroVideoRef}
+                src="featured.mp4"
+                playsInline
+                preload="metadata"
+                controlsList="nodownload nofullscreen noremoteplayback"
+                disablePictureInPicture
+                onContextMenu={(e) => e.preventDefault()}
+                className="w-full h-auto rounded-[20px] object-contain opacity-100 block"
+                onEnded={() => setIsHeroPlaying(false)}
+                onPlay={() => setIsHeroPlaying(true)}
+                onPause={() => setIsHeroPlaying(false)}
+              />
+
+              {/* Custom Play Button Overlay (shown when paused) */}
+              {!isHeroPlaying && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 transition-opacity duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/90 dark:bg-black/85 flex items-center justify-center shadow-lg transform active:scale-95 transition-transform duration-200">
+                    <Play className="w-4 h-4 sm:w-5 sm:h-5 text-brand-lightOrange fill-brand-lightOrange dark:text-[#e31c25] dark:fill-[#e31c25] translate-x-0.5" />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </section>
