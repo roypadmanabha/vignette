@@ -164,7 +164,7 @@ const CLIENT_REVIEWS = [
   },
   {
     name: 'Beauty of Agartala',
-    image: 'client-boa.png',
+    image: 'client-boa.jpg',
     review: 'Vignette has been behind the journey of Beauty of Agartala right from the very beginning, and their contribution has been invaluable. From building our social media presence from day one to consistently creating engaging and visually stunning content, they have always maintained exceptional quality and originality. Their creativity, eye for detail, and understanding of audience engagement have helped our page grow while maintaining a unique identity. Every post is thoughtfully designed and professionally executed, making our content stand out naturally. We truly appreciate their dedication, timely delivery, and passion for visual storytelling, and we highly recommend Vignette for creative digital content and social media management.',
   }
 ];
@@ -2006,9 +2006,6 @@ export default function App() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#e31c25] dark:text-[#FFD700] uppercase mb-3">
-                Testimonials
-              </span>
               <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
                 What Our Clients Say
               </h2>
