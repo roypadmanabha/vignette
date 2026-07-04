@@ -11,21 +11,69 @@
     <noscript>
       <style>
         #root { display: none !important; }
-        body { 
-          background-color: #050508; 
-          color: white; 
-          display: flex; 
-          justify-content: center; 
-          align-items: center; 
-          height: 100vh; 
-          font-family: sans-serif; 
+        .vignette-noscript {
+          position: fixed;
+          inset: 0;
+          background-color: #050508;
+          color: white;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-family: 'Mulish', sans-serif;
           text-align: center;
-          margin: 0;
+          z-index: 999999;
+          padding: 2rem;
+        }
+        .vignette-noscript-logo {
+          width: 80px;
+          height: 80px;
+          margin-bottom: 2rem;
+          animation: pulse 2s infinite ease-in-out;
+        }
+        .vignette-noscript-title {
+          font-family: 'Nunito', sans-serif;
+          font-size: 2.5rem;
+          font-weight: 800;
+          margin: 0 0 1rem 0;
+          background: linear-gradient(90deg, #e31c25, #FFBF00);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .vignette-noscript-text {
+          font-size: 1.1rem;
+          color: #a1a1aa;
+          max-width: 500px;
+          line-height: 1.6;
+        }
+        .vignette-noscript-btn {
+          margin-top: 2.5rem;
+          padding: 0.75rem 2rem;
+          background: linear-gradient(90deg, #e31c25, #FFBF00);
+          color: #050508;
+          font-family: 'Nunito', sans-serif;
+          font-weight: 800;
+          border-radius: 9999px;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        @keyframes pulse {
+          0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 10px rgba(255, 191, 0, 0.2)); }
+          50% { transform: scale(1.05); opacity: 0.8; filter: drop-shadow(0 0 20px rgba(227, 28, 37, 0.4)); }
+          100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 10px rgba(255, 191, 0, 0.2)); }
         }
       </style>
-      <div>
-        <h2>JavaScript is disabled</h2>
-        <p>Please enable JavaScript in your browser to view this website.</p>
+      <div class="vignette-noscript">
+        <img src="logo-icon.png" alt="Vignette" class="vignette-noscript-logo" />
+        <h1 class="vignette-noscript-title">Vignette Requires JavaScript</h1>
+        <p class="vignette-noscript-text">
+          To experience the full aesthetic, interactive animations, and dynamic content of Vignette, 
+          please enable JavaScript in your browser settings and reload the page.
+        </p>
+        <a href="." class="vignette-noscript-btn">Reload Page</a>
       </div>
     </noscript>
     <div id="root"></div>
