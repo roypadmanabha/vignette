@@ -263,9 +263,11 @@ form .flex > span {
 .hero-bg-container {
   position: absolute;
   inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  /* Soft elliptical vignette mask — feathers all four edges smoothly */
+  width: 100%;
+  height: 100%;
+}
+
+.dark .hero-bg-container {
   mask-image: radial-gradient(ellipse 85% 90% at 60% 45%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0) 100%);
   -webkit-mask-image: radial-gradient(ellipse 85% 90% at 60% 45%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.6) 65%, rgba(0,0,0,0) 100%);
 }
@@ -277,7 +279,7 @@ form .flex > span {
   height: 100%;
   background-size: cover;
   background-position: center 30%;
-  opacity: 0.55;
+  opacity: 1;
   filter: contrast(1.05) brightness(1.0) saturate(0.9);
   transition: opacity 0.4s, filter 0.4s;
 }
@@ -291,9 +293,7 @@ form .flex > span {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(circle at 75% 50%, rgba(255, 255, 240, 0.15) 0%, rgba(255, 255, 240, 0.65) 45%, rgba(255, 255, 240, 0.95) 75%, #fffff0 100%),
-              linear-gradient(to right, #fffff0 0%, rgba(255, 255, 240, 0.8) 30%, rgba(255, 255, 240, 0.1) 70%, #fffff0 100%),
-              linear-gradient(to bottom, #fffff0 0%, rgba(255, 255, 240, 0) 15%, rgba(255, 255, 240, 0) 85%, #fffff0 100%);
+  background: transparent;
   pointer-events: none;
   transition: background-color 0.3s, background 0.3s;
 }
