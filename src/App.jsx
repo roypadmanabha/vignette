@@ -2348,7 +2348,7 @@ export default function App() {
       {/* 2.10.5. FAQS SECTION */}
       <section id="faqs" className="py-24 sm:py-32 scroll-mt-20 select-none">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading font-black text-4xl sm:text-5xl text-center mb-12 text-[#990000] dark:text-brand-darkGold">
+          <h2 className="font-heading font-black text-4xl sm:text-5xl text-center mb-12 text-[#e31c25] dark:text-brand-darkGold transition-colors duration-300">
             Frequently Asked Questions
           </h2>
           <div className="flex flex-col gap-4">
@@ -2357,30 +2357,38 @@ export default function App() {
               return (
                 <div
                   key={index}
-                  className={`rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer ${
+                  className={`rounded-2xl border-2 transition-colors duration-300 cursor-pointer ${
                     isOpen
-                      ? 'border-[#990000] bg-[#f5f5dd] dark:bg-zinc-900/50 dark:border-brand-darkGold'
-                      : 'border-brand-lightRed/20 dark:border-zinc-800 bg-white dark:bg-zinc-950 hover:border-[#990000]/50 dark:hover:border-brand-darkGold/50'
+                      ? 'border-[#e31c25] bg-[#fffff0] dark:bg-transparent dark:border-brand-darkGold'
+                      : 'border-brand-lightRed/20 dark:border-zinc-800 bg-white dark:bg-transparent hover:border-[#e31c25]/50 dark:hover:border-brand-darkGold/50'
                   }`}
                   onClick={() => setOpenFaq(isOpen ? null : index)}
                 >
                   <div className="flex items-center justify-between p-5 sm:p-6">
-                    <h3 className={`font-body font-bold text-base sm:text-lg transition-colors ${
-                      isOpen ? 'text-[#990000] dark:text-brand-darkGold' : 'text-zinc-900 dark:text-zinc-200'
+                    <h3 className={`font-body font-bold text-base sm:text-lg transition-colors duration-300 ${
+                      isOpen ? 'text-[#e31c25] dark:text-brand-darkGold' : 'text-zinc-900 dark:text-zinc-200'
                     }`}>
                       {faq.question}
                     </h3>
-                    {isOpen ? (
-                      <Minus className="w-5 h-5 text-[#990000] dark:text-brand-darkGold flex-shrink-0" />
-                    ) : (
-                      <Plus className="w-5 h-5 text-zinc-900 dark:text-zinc-200 flex-shrink-0" />
-                    )}
-                  </div>
-                  {isOpen && (
-                    <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-zinc-800 dark:text-zinc-400 font-body text-sm sm:text-base leading-relaxed text-justify">
-                      {faq.answer}
+                    <div className={`flex-shrink-0 transform transition-transform duration-500 ease-in-out ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+                      {isOpen ? (
+                        <Minus className="w-5 h-5 text-[#e31c25] dark:text-brand-darkGold" />
+                      ) : (
+                        <Plus className="w-5 h-5 text-zinc-900 dark:text-zinc-200" />
+                      )}
                     </div>
-                  )}
+                  </div>
+                  <div
+                    className={`grid transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-zinc-800 dark:text-zinc-400 font-body text-sm sm:text-base leading-relaxed text-justify">
+                        {faq.answer}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               );
             })}
