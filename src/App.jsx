@@ -2149,7 +2149,7 @@ export default function App() {
 
               {/* Left Narrative Column */}
               <div className="reveal reveal-left lg:col-span-7 flex flex-col">
-                <span className="font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
+                <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase mb-3">
                   About Vignette
                 </span>
                 <h2 className="font-heading font-black text-4xl sm:text-5xl leading-tight">
@@ -2214,7 +2214,7 @@ export default function App() {
 
               {/* Context Left Column */}
               <div className="lg:col-span-5 flex flex-col justify-center">
-                <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3">
+                <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase mb-3">
                   Let's Collaborate
                 </span>
                 <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
@@ -2590,14 +2590,14 @@ export default function App() {
 
             {/* Legal Links */}
             <div className="flex flex-col gap-4 lg:border-l border-zinc-200 dark:border-zinc-800 lg:pl-8">
-              <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
+              <h4 className="font-heading font-black text-sm text-[#D10000] dark:text-[#FFD700] uppercase tracking-wider">
                 Legal
               </h4>
               <ul className="flex flex-col gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400">
                 <li>
                   <button
                     onClick={() => setLegalModal('terms')}
-                    className="hover:text-[#c0392b] dark:hover:text-[#FFD700] transition-colors cursor-pointer text-left"
+                    className="hover:text-[#D10000] dark:hover:text-[#FFD700] transition-colors cursor-pointer text-left"
                   >
                     Terms and Conditions
                   </button>
@@ -2605,7 +2605,7 @@ export default function App() {
                 <li>
                   <button
                     onClick={() => setLegalModal('privacy')}
-                    className="hover:text-[#c0392b] dark:hover:text-[#FFD700] transition-colors cursor-pointer text-left"
+                    className="hover:text-[#D10000] dark:hover:text-[#FFD700] transition-colors cursor-pointer text-left"
                   >
                     Privacy Policy
                   </button>
@@ -2615,18 +2615,18 @@ export default function App() {
 
             {/* Contact Details */}
             <div className="flex flex-col gap-4 lg:border-l border-zinc-200 dark:border-zinc-800 lg:pl-8">
-              <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
+              <h4 className="font-heading font-black text-sm text-[#D10000] dark:text-[#FFD700] uppercase tracking-wider">
                 Contact Details
               </h4>
               <ul className="flex flex-col gap-3.5 font-body text-xs text-zinc-600 dark:text-zinc-400">
                 <li className="flex items-center gap-3">
-                  <Phone className="w-4 h-4 text-[#c0392b] dark:text-[#FFD700] flex-shrink-0" />
+                  <Phone className="w-4 h-4 text-[#D10000] dark:text-[#FFD700] flex-shrink-0" />
                   <a href="tel:+918258814126" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
                     +91 8258814126
                   </a>
                 </li>
                 <li className="flex items-center gap-3">
-                  <Mail className="w-4 h-4 text-[#c0392b] dark:text-[#FFD700] flex-shrink-0" />
+                  <Mail className="w-4 h-4 text-[#D10000] dark:text-[#FFD700] flex-shrink-0" />
                   <a href="mailto:vignetteworks.official@gmail.com" className="hover:text-zinc-950 dark:hover:text-white transition-colors break-all">
                     vignetteworks.official@gmail.com
                   </a>
@@ -2636,11 +2636,11 @@ export default function App() {
 
             {/* Address */}
             <div className="flex flex-col gap-4 lg:border-l border-zinc-200 dark:border-zinc-800 lg:pl-8">
-              <h4 className="font-heading font-black text-sm text-[#c0392b] dark:text-[#FFD700] uppercase tracking-wider">
+              <h4 className="font-heading font-black text-sm text-[#D10000] dark:text-[#FFD700] uppercase tracking-wider">
                 Address
               </h4>
               <p className="flex items-start gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                <MapPin className="w-4 h-4 text-[#c0392b] dark:text-[#FFD700] mt-0.5 flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-[#D10000] dark:text-[#FFD700] mt-0.5 flex-shrink-0" />
                 <span>Ramnagar, Agartala, West Tripura District, Tripura - 799002</span>
               </p>
             </div>
@@ -2657,8 +2657,8 @@ export default function App() {
               <svg width="0" height="0" className="absolute">
                 <defs>
                   <linearGradient id="social-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor={isDark ? '#c0392b' : '#000000'} />
-                    <stop offset="100%" stopColor={isDark ? '#e67e22' : '#c0392b'} />
+                    <stop offset="0%" stopColor={isDark ? '#D10000' : '#000000'} />
+                    <stop offset="100%" stopColor={isDark ? '#e67e22' : '#D10000'} />
                   </linearGradient>
                 </defs>
               </svg>
@@ -2732,7 +2732,7 @@ export default function App() {
 
             {/* Modal Heading */}
             <div className="mb-6">
-              <span className="font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase block mb-1">
+              <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase block mb-1">
                 Let's Collaborate
               </span>
               <h3 className="font-heading font-black text-2xl sm:text-3xl text-gradient">
@@ -3053,7 +3053,7 @@ export default function App() {
             {/* Header */}
             <div className="sticky top-0 z-10 bg-[#f5f5dd] dark:bg-zinc-950 px-6 sm:px-8 pt-6 pb-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
               <div>
-                <span className="font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase block mb-1">
+                <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase block mb-1">
                   Legal
                 </span>
                 <h2 className="font-heading font-black text-lg sm:text-xl text-zinc-900 dark:text-white">
@@ -3100,7 +3100,7 @@ export default function App() {
                   <p className="text-justify">Either party may terminate a project agreement with written notice. In the event of termination, the client shall be responsible for payment of all work completed up to the date of termination.</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">9. Contact</h3>
-                  <p className="text-justify">For questions regarding these Terms and Conditions, please contact us at <a href="mailto:vignetteworks.official@gmail.com" className="text-[#c0392b] dark:text-[#FFD700] underline">vignetteworks.official@gmail.com</a>.</p>
+                  <p className="text-justify">For questions regarding these Terms and Conditions, please contact us at <a href="mailto:vignetteworks.official@gmail.com" className="text-[#D10000] dark:text-[#FFD700] underline">vignetteworks.official@gmail.com</a>.</p>
                 </>
               ) : (
                 <>
@@ -3131,7 +3131,7 @@ export default function App() {
                   <p className="text-justify">We reserve the right to update this Privacy Policy at any time. Changes will be reflected on this page with an updated revision date. Continued use of our website after changes constitutes acceptance of the revised policy.</p>
 
                   <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">9. Contact</h3>
-                  <p className="text-justify">If you have any questions or concerns about this Privacy Policy, please reach out to us at <a href="mailto:vignetteworks.official@gmail.com" className="text-[#c0392b] dark:text-[#FFD700] underline">vignetteworks.official@gmail.com</a>.</p>
+                  <p className="text-justify">If you have any questions or concerns about this Privacy Policy, please reach out to us at <a href="mailto:vignetteworks.official@gmail.com" className="text-[#D10000] dark:text-[#FFD700] underline">vignetteworks.official@gmail.com</a>.</p>
                 </>
               )}
             </div>
@@ -3140,7 +3140,7 @@ export default function App() {
             <div className="sticky bottom-0 bg-[#f5f5dd] dark:bg-zinc-950 px-6 sm:px-8 py-4 border-t border-zinc-200 dark:border-zinc-800 flex justify-end">
               <button
                 onClick={() => setLegalModal(null)}
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#c0392b] to-[#e67e22] dark:from-[#FFD700] dark:to-[#e67e22] text-white dark:text-black font-heading font-bold text-xs tracking-wider uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D10000] to-[#e67e22] dark:from-[#FFD700] dark:to-[#e67e22] text-white dark:text-black font-heading font-bold text-xs tracking-wider uppercase hover:scale-105 active:scale-95 transition-all duration-300"
               >
                 Close
               </button>
