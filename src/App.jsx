@@ -1757,7 +1757,7 @@ export default function App() {
         </div>
 
         {/* 2.6. GALLERY SECTION */}
-        <section id="gallery" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="gallery" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -1876,7 +1876,7 @@ export default function App() {
         </section>
 
         {/* 2.6.5. SERVICES SECTION */}
-        <section id="services" className="bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
+        <section id="services" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="reveal font-brand font-black text-xs uppercase tracking-widest text-brand-lightOrange dark:text-brand-darkGold mb-3 block">
@@ -2125,7 +2125,7 @@ export default function App() {
         </section>
 
         {/* 2.8.5. TESTIMONIALS SECTION */}
-        <section id="testimonials" className="bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative">
+        <section id="testimonials" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-1/4 -right-1/4 w-[500px] h-[500px] bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 rounded-full blur-[100px]" />
             <div className="absolute bottom-1/4 -left-1/4 w-[500px] h-[500px] bg-[#e31c25]/10 dark:bg-[#e31c25]/10 rounded-full blur-[100px]" />
@@ -2143,7 +2143,7 @@ export default function App() {
         </section>
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="vision" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
@@ -2509,7 +2509,7 @@ export default function App() {
       </main>
 
       {/* 2.10.5. FAQS SECTION */}
-      <section id="faqs" className="py-24 sm:py-32 scroll-mt-20 select-none">
+      <section id="faqs" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 select-none">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-heading font-black text-4xl sm:text-5xl text-center mb-12 text-[#e31c25] dark:text-brand-darkGold transition-colors duration-300">
             <span className="sm:hidden">FAQs</span>
