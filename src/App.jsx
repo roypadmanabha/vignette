@@ -176,11 +176,16 @@ const CLIENT_REVIEWS = [
 // 1. HELPERS & CHILD COMPONENTS
 // ==========================================
 
-const TestimonialCard = ({ review, idx, isCarousel = false }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const TestimonialCard = ({ review, idx, isCarousel = false, isExpanded: propIsExpanded, onToggleExpand }) => {
+  const [internalExpanded, setInternalExpanded] = useState(false);
+  const isExpanded = propIsExpanded !== undefined ? propIsExpanded : internalExpanded;
+  const handleToggle = () => {
+    if (onToggleExpand) onToggleExpand();
+    else setInternalExpanded(!internalExpanded);
+  };
+
   const words = review.review.split(' ');
   const isLong = words.length > 50;
-  const truncatedText = isLong ? words.slice(0, 50).join(' ') + '...' : review.review;
 
   return (
     <div
@@ -213,16 +218,34 @@ const TestimonialCard = ({ review, idx, isCarousel = false }) => {
           {review.review}
         </div>
         
-        {/* Mobile version (Truncated with Read More/Less) */}
-        <div className="block sm:hidden">
-          {isExpanded || !isLong ? review.review : truncatedText}
+        {/* Mobile version (Truncated with smooth calendar reveal) */}
+        <div className="block sm:hidden flex flex-col">
+          <div className="inline">
+            {isLong ? words.slice(0, 50).join(' ') : review.review}
+            {!isExpanded && isLong && <span>...</span>}
+          </div>
+          
+          {isLong && (
+            <div 
+              className={`grid transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+                isExpanded ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+              }`}
+            >
+              <div className="overflow-hidden">
+                <div className="pt-2 inline">
+                  {words.slice(50).join(' ')}
+                </div>
+              </div>
+            </div>
+          )}
+
           {isLong && (
             <button 
               onClick={(e) => {
                 e.stopPropagation();
-                setIsExpanded(!isExpanded);
+                handleToggle();
               }}
-              className="text-[#e31c25] dark:text-[#FFD700] font-bold ml-1 hover:underline focus:outline-none inline"
+              className="text-[#e31c25] dark:text-[#FFD700] font-bold mt-2 hover:underline focus:outline-none self-start"
             >
               {isExpanded ? 'Read Less' : 'Read More'}
             </button>
@@ -235,12 +258,23 @@ const TestimonialCard = ({ review, idx, isCarousel = false }) => {
 
 const TestimonialCarousel = ({ reviews }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [expandedCardIdx, setExpandedCardIdx] = useState(null);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const minSwipeDistance = 50;
 
-  const handlePrev = () => setActiveIndex((prev) => Math.max(0, prev - 1));
-  const handleNext = () => setActiveIndex((prev) => Math.min(reviews.length - 1, prev + 1));
+  const changeSlide = (newIdx) => {
+    if (newIdx === activeIndex) return;
+    if (expandedCardIdx !== null) {
+      setExpandedCardIdx(null);
+      setTimeout(() => setActiveIndex(newIdx), 300); // Wait for collapse animation
+    } else {
+      setActiveIndex(newIdx);
+    }
+  };
+
+  const handlePrev = () => changeSlide(Math.max(0, activeIndex - 1));
+  const handleNext = () => changeSlide(Math.min(reviews.length - 1, activeIndex + 1));
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
@@ -293,8 +327,14 @@ const TestimonialCarousel = ({ reviews }) => {
           }
 
           return (
-            <div key={idx} className={classes} onClick={() => setActiveIndex(idx)}>
-              <TestimonialCard review={review} idx={idx} isCarousel />
+            <div key={idx} className={classes} onClick={() => changeSlide(idx)}>
+              <TestimonialCard 
+                review={review} 
+                idx={idx} 
+                isCarousel 
+                isExpanded={expandedCardIdx === idx}
+                onToggleExpand={() => setExpandedCardIdx(expandedCardIdx === idx ? null : idx)}
+              />
             </div>
           );
         })}
@@ -310,7 +350,7 @@ const TestimonialCarousel = ({ reviews }) => {
         </button>
         <div className="flex gap-3">
           {reviews.map((_, idx) => (
-            <div key={idx} onClick={() => setActiveIndex(idx)} className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#e31c25] dark:bg-[#FFD700] w-6 h-2' : 'bg-zinc-300 dark:bg-zinc-700 w-2 h-2 hover:bg-zinc-400 dark:hover:bg-zinc-500'}`} />
+            <div key={idx} onClick={() => changeSlide(idx)} className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#e31c25] dark:bg-[#FFD700] w-6 h-2' : 'bg-zinc-300 dark:bg-zinc-700 w-2 h-2 hover:bg-zinc-400 dark:hover:bg-zinc-500'}`} />
           ))}
         </div>
         <button 
