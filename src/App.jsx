@@ -112,8 +112,8 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const buttonBgClass = inModal ? 'bg-white dark:bg-zinc-900' : 'bg-[#fffff0] dark:bg-zinc-950';
-  const menuBgClass = inModal ? 'bg-[#d3d3d3] dark:bg-zinc-900' : 'bg-[#d3d3d3] dark:bg-zinc-950';
+  const bgClass = inModal ? 'bg-[#fffff0] dark:bg-zinc-900' : 'bg-[#fffff0] dark:bg-zinc-950';
+  const menuBgClass = inModal ? 'bg-[#f5f5f5] dark:bg-zinc-900' : 'bg-[#f5f5f5] dark:bg-zinc-950';
 
   return (
     <div ref={wrapperRef} className="relative w-full">
@@ -124,8 +124,8 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={`w-full px-4 py-3 rounded-xl border flex items-center justify-between transition-all font-body ${
           isOpen
-            ? 'border-brand-lightOrange dark:border-brand-darkGold ring-2 ring-brand-lightOrange/30 dark:ring-brand-darkGold/30 ' + buttonBgClass
-            : 'border-zinc-300 dark:border-zinc-700 hover:border-brand-lightOrange/50 dark:hover:border-brand-darkGold/50 ' + buttonBgClass
+            ? 'border-brand-lightOrange dark:border-brand-darkGold ring-2 ring-brand-lightOrange/30 dark:ring-brand-darkGold/30 ' + bgClass
+            : 'border-zinc-300 dark:border-zinc-700 hover:border-brand-lightOrange/50 dark:hover:border-brand-darkGold/50 ' + bgClass
         } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
       >
         <span className={`truncate text-sm sm:text-base ${!value ? 'text-zinc-500 dark:text-zinc-400' : 'text-zinc-900 dark:text-white'}`}>
@@ -150,21 +150,20 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
                   setIsOpen(false);
                 }}
                 className={`px-4 py-3 text-sm sm:text-base cursor-pointer transition-colors flex items-center gap-2 ${
-                  idx !== options.length - 1 ? 'border-b-[0.3px] border-black/50 dark:border-transparent dark:border-b-0' : ''
+                  idx !== options.length - 1 ? 'border-b-[0.3px] border-black/50 dark:border-b-0 dark:border-transparent' : ''
                 } ${
                   value === option.value
-                    ? 'bg-[#fffff0] dark:bg-brand-darkGold/10'
+                    ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10'
                     : 'hover:bg-[#fffff0] dark:hover:bg-zinc-800'
                 }`}
               >
-                {value === option.value && <CheckCircle className="w-4 h-4 text-brand-lightOrange dark:text-brand-darkGold" />}
+                {value === option.value && <CheckCircle className={`w-4 h-4 ${isPaid ? 'text-black dark:text-brand-darkGold' : 'text-brand-lightOrange dark:text-brand-darkGold'}`} />}
                 <span className={`
-                  ${value === option.value ? '' : 'pl-6'}
-                  ${isPaid ? 'font-brand bg-clip-text text-transparent bg-gradient-to-r from-black to-red-600 dark:bg-none dark:font-body' : 'font-body'}
-                  ${!isPaid && value === option.value ? 'text-brand-lightOrange dark:text-brand-darkGold font-bold' : ''}
-                  ${!isPaid && value !== option.value ? 'text-zinc-700 dark:text-zinc-300' : ''}
-                  ${isPaid && value === option.value ? 'dark:text-brand-darkGold' : ''}
-                  ${isPaid && value !== option.value ? 'dark:text-zinc-300' : ''}
+                  ${value === option.value ? '' : 'pl-6'} 
+                  ${isPaid 
+                    ? 'bg-gradient-to-r from-black to-[#FF0000] bg-clip-text text-transparent font-heading dark:font-body dark:bg-none ' + (value === option.value ? 'dark:text-brand-darkGold font-bold' : 'dark:text-zinc-300 dark:hover:text-white')
+                    : 'font-body ' + (value === option.value ? 'text-brand-lightOrange dark:text-brand-darkGold font-bold' : 'text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white')
+                  }
                 `}>
                   {option.label}
                 </span>
