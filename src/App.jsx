@@ -2373,7 +2373,7 @@ export default function App() {
                             Mobile Number (WhatsApp Number)
                           </label>
                           <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
-                            <span className="flex items-center px-3.5 bg-[#f5f5dd] dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
+                            <span className="flex items-center px-3.5 bg-white dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
                               +91
                             </span>
                             <input
@@ -2878,7 +2878,7 @@ export default function App() {
                       Mobile Number (WhatsApp Number)
                     </label>
                     <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
-                      <span className="flex items-center px-3.5 bg-zinc-100 dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
+                      <span className="flex items-center px-3.5 bg-white dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
                         +91
                       </span>
                       <input
