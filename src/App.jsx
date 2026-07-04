@@ -889,8 +889,28 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isHireModalOpen, legalModal]);
 
-  // Hero section background image url state (static only, no video)
-  const heroBgUrl = 'virat.png';
+  // Vanta.js Background State
+  const vantaRef = useRef(null);
+  const [vantaEffect, setVantaEffect] = useState(null);
+
+  useEffect(() => {
+    if (!vantaEffect && window.VANTA) {
+      setVantaEffect(
+        window.VANTA.CLOUDS({
+          el: vantaRef.current,
+          mouseControls: true,
+          touchControls: true,
+          gyroControls: false,
+          minHeight: 200.00,
+          minWidth: 200.00,
+          speed: 1.50
+        })
+      );
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy();
+    };
+  }, [vantaEffect]);
 
   // Scroll state for sticky header glassmorphism behavior
   const [isScrolled, setIsScrolled] = useState(false);
@@ -1631,15 +1651,9 @@ export default function App() {
           id="home"
           className="hero-section min-h-[85vh] flex flex-col justify-center items-center py-16 lg:py-20 relative select-none overflow-hidden rounded-[32px]"
         >
-          {/* Background elements grouped for smooth edge masking */}
-          <div className="hero-bg-container">
-            {/* Static Background Image */}
-            <div
-              className="hero-bg-image"
-              style={{ backgroundImage: "url('virat.png')" }}
-            />
-
-            {/* Looping Muted Local Video Background — REMOVED; using static virat.png */}
+          {/* Vanta Animated Background Container */}
+          <div className="absolute inset-0 z-0 overflow-hidden rounded-[32px]">
+            <div ref={vantaRef} className="w-full h-full opacity-80" />
           </div>
 
           {/* Overlay Wash Tint */}
