@@ -176,6 +176,94 @@ const CLIENT_REVIEWS = [
 // 1. HELPERS & CHILD COMPONENTS
 // ==========================================
 
+const TestimonialCard = ({ review, idx, isCarousel = false }) => (
+  <div
+    className={`reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-6 sm:p-10 flex flex-col gap-6 shadow-xl group h-full ${!isCarousel ? 'hover:shadow-2xl hover:-translate-y-2 transition-premium' : ''}`}
+    style={{ transitionDelay: isCarousel ? '0ms' : `${idx * 150}ms`, borderWidth: '0.5px', borderStyle: 'solid' }}
+  >
+    <div className="flex items-center gap-5">
+      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-brand-lightOrange/30 dark:border-brand-darkGold/30 shrink-0">
+        <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
+      </div>
+      <div>
+        <div className="flex items-center gap-2">
+          <h3 className="font-heading font-bold text-lg sm:text-xl text-zinc-900 dark:text-white">
+            {review.name}
+          </h3>
+          <a href={review.url} target="_blank" rel="noopener noreferrer" className="text-[#e31c25] dark:text-[#FFD700] hover:scale-110 hover:-translate-y-0.5 transition-all duration-300" onClick={(e) => e.stopPropagation()}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        </div>
+        <div className="flex text-[#e31c25] dark:text-[#FFD700] text-xs sm:text-sm mt-1">
+          ★★★★★
+        </div>
+      </div>
+    </div>
+    <div className="font-body text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed text-justify mt-2 relative z-10 flex-grow">
+      {review.review}
+    </div>
+  </div>
+);
+
+const TestimonialCarousel = ({ reviews }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handlePrev = () => setActiveIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+  const handleNext = () => setActiveIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+
+  return (
+    <>
+      <div className="hidden lg:grid grid-cols-1 md:grid-cols-3 gap-8">
+        {reviews.map((review, idx) => (
+          <TestimonialCard key={idx} review={review} idx={idx} />
+        ))}
+      </div>
+
+      <div className="lg:hidden relative w-full h-[540px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4">
+        {reviews.map((review, idx) => {
+          let position = 'next';
+          if (idx === activeIndex) position = 'active';
+          else if (idx === (activeIndex - 1 + reviews.length) % reviews.length) position = 'prev';
+          else if (idx === (activeIndex + 1) % reviews.length) position = 'next';
+          
+          let classes = 'absolute transition-all duration-500 ease-in-out w-[85%] sm:w-[70%] cursor-pointer shadow-2xl ';
+          
+          if (position === 'active') {
+            classes += ' z-20 scale-100 opacity-100 translate-x-0';
+          } else if (position === 'prev') {
+            classes += ' z-10 scale-90 opacity-60 -translate-x-12 sm:-translate-x-32 blur-[1px] hover:opacity-100';
+          } else if (position === 'next') {
+            classes += ' z-10 scale-90 opacity-60 translate-x-12 sm:translate-x-32 blur-[1px] hover:opacity-100';
+          }
+
+          return (
+            <div key={idx} className={classes} onClick={() => setActiveIndex(idx)}>
+              <TestimonialCard review={review} idx={idx} isCarousel />
+            </div>
+          );
+        })}
+      </div>
+      
+      <div className="lg:hidden flex justify-center items-center gap-6 mt-8 relative z-30">
+        <button onClick={handlePrev} className="p-3 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110 transition-all duration-300 shadow-lg">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div className="flex gap-3">
+          {reviews.map((_, idx) => (
+            <div key={idx} onClick={() => setActiveIndex(idx)} className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#e31c25] dark:bg-[#FFD700] w-6 h-2.5' : 'bg-zinc-300 dark:bg-zinc-700 w-2.5 h-2.5 hover:bg-zinc-400 dark:hover:bg-zinc-500'}`} />
+          ))}
+        </div>
+        <button onClick={handleNext} className="p-3 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-black/5 dark:border-white/10 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110 transition-all duration-300 shadow-lg">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </>
+  );
+};
+// ==========================================
+
 // Custom CountUp Component triggered on Scroll viewport entry
 const CountUp = ({ end, suffix = "", duration = 1800 }) => {
   const [count, setCount] = useState(0);
@@ -2014,39 +2102,7 @@ export default function App() {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {CLIENT_REVIEWS.map((review, idx) => (
-                <div
-                  key={idx}
-                  className="reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-8 sm:p-10 flex flex-col gap-6 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-premium group"
-                  style={{ transitionDelay: `${idx * 150}ms`, borderWidth: '0.5px', borderStyle: 'solid' }}
-                >
-                  <div className="flex items-center gap-5">
-                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-brand-lightOrange/30 dark:border-brand-darkGold/30 shrink-0">
-                      <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-heading font-bold text-xl text-zinc-900 dark:text-white">
-                          {review.name}
-                        </h3>
-                        <a href={review.url} target="_blank" rel="noopener noreferrer" className="text-[#e31c25] dark:text-[#FFD700] hover:scale-110 hover:-translate-y-0.5 transition-all duration-300">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      </div>
-                      <div className="flex text-[#e31c25] dark:text-[#FFD700] text-sm mt-1">
-                        ★★★★★
-                      </div>
-                    </div>
-                  </div>
-                  <div className="font-body text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed text-justify mt-2 relative z-10 flex-grow">
-                    {review.review}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <TestimonialCarousel reviews={CLIENT_REVIEWS} />
           </div>
         </section>
 
