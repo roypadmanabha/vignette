@@ -81,6 +81,87 @@ const ThreadsIcon = (props) => (
   </svg>
 );
 
+const PURPOSE_OPTIONS = [
+  { value: "Hire for Video Editing (PAID)", label: "Hire for Video Editing (PAID)" },
+  { value: "Hire for Podcast/YT Video Editing (PAID)", label: "Hire for Podcast/YT Video Editing (PAID)" },
+  { value: "Hire for Photoshoot (PAID)", label: "Hire for Photoshoot (PAID)" },
+  { value: "Ask for Collaboration", label: "Ask for Collaboration" },
+  { value: "Let's Work Together", label: "Let's Work Together" },
+  { value: "Avgeek - Let's Connect", label: "Avgeek - Let's Connect" },
+  { value: "Planespotting", label: "Planespotting" },
+  { value: "Want to join the 'Vignette' team", label: "Want to join the 'Vignette' team" }
+];
+
+const TITLE_OPTIONS = [
+  { value: "Mr", label: "Mr" },
+  { value: "Mrs", label: "Mrs" },
+  { value: "Ms", label: "Ms" }
+];
+
+const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "Select", inModal = false }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const bgClass = inModal ? 'bg-white dark:bg-zinc-900' : 'bg-[#fffff0] dark:bg-zinc-950';
+
+  return (
+    <div ref={wrapperRef} className="relative w-full">
+      <button
+        type="button"
+        id={id}
+        disabled={disabled}
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        className={`w-full px-4 py-3 rounded-xl border flex items-center justify-between transition-all font-body ${
+          isOpen
+            ? 'border-brand-lightOrange dark:border-brand-darkGold ring-2 ring-brand-lightOrange/30 dark:ring-brand-darkGold/30 ' + bgClass
+            : 'border-zinc-300 dark:border-zinc-700 hover:border-brand-lightOrange/50 dark:hover:border-brand-darkGold/50 ' + bgClass
+        } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+      >
+        <span className={`truncate text-sm sm:text-base ${!value ? 'text-zinc-500 dark:text-zinc-400' : 'text-zinc-900 dark:text-white'}`}>
+          {value ? options.find(opt => opt.value === value)?.label || value : placeholder}
+        </span>
+        <Compass className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-0 text-brand-lightOrange dark:text-brand-darkGold' : 'rotate-180 text-zinc-400'}`} />
+      </button>
+
+      <div
+        className={`absolute z-50 w-full mt-2 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-2xl overflow-hidden transition-all duration-300 origin-top ${
+          isOpen ? 'scale-y-100 opacity-100 pointer-events-auto' : 'scale-y-95 opacity-0 pointer-events-none'
+        } ${bgClass}`}
+      >
+        <div className="max-h-60 overflow-y-auto custom-scrollbar py-2">
+          {options.map((option, idx) => (
+            <div
+              key={idx}
+              onClick={() => {
+                onChange(option.value);
+                setIsOpen(false);
+              }}
+              className={`px-4 py-3 text-sm sm:text-base font-body cursor-pointer transition-colors flex items-center gap-2 ${
+                value === option.value
+                  ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 text-brand-lightOrange dark:text-brand-darkGold font-bold'
+                  : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white'
+              }`}
+            >
+              {value === option.value && <CheckCircle className="w-4 h-4" />}
+              <span className={value === option.value ? '' : 'pl-6'}>{option.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 // ==========================================
 // 0. MOCK DATA FALLBACKS
@@ -179,7 +260,7 @@ const CLIENT_REVIEWS = [
 const formatVignette = (text) => {
   if (typeof text !== 'string') return text;
   const parts = text.split(/(Vignette)/g);
-  return parts.map((part, i) => 
+  return parts.map((part, i) =>
     part === 'Vignette' ? <span key={i} className="brand-text-gradient font-brand">Vignette</span> : part
   );
 };
@@ -246,7 +327,7 @@ const TestimonialCarousel = ({ reviews }) => {
         ))}
       </div>
 
-      <div 
+      <div
         className="xl:hidden relative w-full h-[560px] sm:h-[540px] flex items-center justify-center overflow-visible mt-4 touch-pan-y"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -259,9 +340,9 @@ const TestimonialCarousel = ({ reviews }) => {
           else if (idx === activeIndex + 1) position = 'next';
           else if (idx < activeIndex - 1) position = 'prev-hidden';
           else if (idx > activeIndex + 1) position = 'next-hidden';
-          
+
           let classes = 'absolute transition-all duration-500 ease-in-out w-[85%] sm:w-[70%] cursor-pointer ';
-          
+
           if (position === 'active') {
             classes += ' z-20 scale-100 opacity-100 translate-x-0';
           } else if (position === 'prev') {
@@ -281,26 +362,26 @@ const TestimonialCarousel = ({ reviews }) => {
           );
         })}
       </div>
-      
+
       <div className="xl:hidden flex justify-center items-center gap-6 mt-6 sm:mt-8 relative z-30">
-        <button 
-          onClick={handlePrev} 
+        <button
+          onClick={handlePrev}
           disabled={activeIndex === 0}
           className={`p-2 rounded-full border border-black/5 dark:border-white/10 shadow-lg transition-all duration-300 ${activeIndex === 0 ? 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110'}`}
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/></svg>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
         </button>
         <div className="flex gap-3">
           {reviews.map((_, idx) => (
             <div key={idx} onClick={() => changeSlide(idx)} className={`cursor-pointer rounded-full transition-all duration-300 ${activeIndex === idx ? 'bg-[#e31c25] dark:bg-[#FFD700] w-6 h-2' : 'bg-zinc-300 dark:bg-zinc-700 w-2 h-2 hover:bg-zinc-400 dark:hover:bg-zinc-500'}`} />
           ))}
         </div>
-        <button 
-          onClick={handleNext} 
+        <button
+          onClick={handleNext}
           disabled={activeIndex === reviews.length - 1}
           className={`p-2 rounded-full border border-black/5 dark:border-white/10 shadow-lg transition-all duration-300 ${activeIndex === reviews.length - 1 ? 'bg-zinc-100 dark:bg-zinc-800/50 text-zinc-400 dark:text-zinc-600 cursor-not-allowed opacity-50' : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-300 dark:hover:bg-zinc-700 hover:-translate-y-1 hover:scale-110'}`}
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7"/></svg>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
         </button>
       </div>
     </>
@@ -2278,29 +2359,13 @@ export default function App() {
                         <label htmlFor="form-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                           Purpose
                         </label>
-                        <div className="relative">
-                          <select
-                            id="form-purpose"
-                            value={formState.purpose}
-                            disabled={formSubmitting}
-                            onChange={(e) => setFormState(prev => ({ ...prev, purpose: e.target.value }))}
-                            required
-                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
-                          >
-                            <option value="" disabled>Select</option>
-                            <option value="Hire for Video Editing (PAID)">Hire for Video Editing (PAID)</option>
-                            <option value="Hire for Podcast/YT Video Editing (PAID)">Hire for Podcast/YT Video Editing (PAID)</option>
-                            <option value="Hire for Photoshoot (PAID)">Hire for Photoshoot (PAID)</option>
-                            <option value="Ask for Collaboration">Ask for Collaboration</option>
-                            <option value="Let's Work Together">Let's Work Together</option>
-                            <option value="Avgeek - Let's Connect">Avgeek - Let's Connect</option>
-                            <option value="Planespotting">Planespotting</option>
-                            <option value="Want to join the 'Vignette' team">Want to join the 'Vignette' team</option>
-                          </select>
-                          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
-                            <Compass className="w-4 h-4 transform rotate-180" />
-                          </div>
-                        </div>
+                        <CustomSelect
+                          id="form-purpose"
+                          value={formState.purpose}
+                          onChange={(val) => setFormState(prev => ({ ...prev, purpose: val }))}
+                          options={PURPOSE_OPTIONS}
+                          disabled={formSubmitting}
+                        />
                       </div>
 
                       {/* Salutation + Names Grid */}
@@ -2310,24 +2375,13 @@ export default function App() {
                           <label htmlFor="form-salutation" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                             Title
                           </label>
-                          <div className="relative">
-                            <select
-                              id="form-salutation"
-                              value={formState.salutation}
-                              disabled={formSubmitting}
-                              onChange={(e) => setFormState(prev => ({ ...prev, salutation: e.target.value }))}
-                              required
-                              className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
-                            >
-                              <option value="" disabled>Select</option>
-                              <option value="Mr">Mr</option>
-                              <option value="Mrs">Mrs</option>
-                              <option value="Ms">Ms</option>
-                            </select>
-                            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
-                              <Compass className="w-4 h-4 transform rotate-180" />
-                            </div>
-                          </div>
+                          <CustomSelect
+                            id="form-salutation"
+                            value={formState.salutation}
+                            onChange={(val) => setFormState(prev => ({ ...prev, salutation: val }))}
+                            options={TITLE_OPTIONS}
+                            disabled={formSubmitting}
+                          />
                         </div>
 
                         {/* First Name Input */}
@@ -2399,7 +2453,7 @@ export default function App() {
                             id="form-email"
                             value={formState.email}
                             onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
-                            placeholder="abc@xyz.com"
+                            placeholder="abcdef@xyz.com"
                             disabled={formSubmitting}
                             required
                             className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
@@ -2527,17 +2581,15 @@ export default function App() {
               return (
                 <div
                   key={index}
-                  className={`rounded-2xl border-2 transition-colors duration-300 cursor-pointer ${
-                    isOpen
+                  className={`rounded-2xl border-2 transition-colors duration-300 cursor-pointer ${isOpen
                       ? 'border-[#e31c25] bg-[#fffff0] dark:bg-transparent dark:border-brand-darkGold'
                       : 'border-brand-lightRed/20 dark:border-zinc-800 bg-white dark:bg-transparent hover:border-[#e31c25]/50 dark:hover:border-brand-darkGold/50'
-                  }`}
+                    }`}
                   onClick={() => setOpenFaq(isOpen ? null : index)}
                 >
                   <div className="flex items-center justify-between p-5 sm:p-6">
-                    <h3 className={`font-body font-bold text-[15px] sm:text-lg transition-colors duration-300 ${
-                      isOpen ? 'text-[#e31c25] dark:text-brand-darkGold' : 'text-zinc-900 dark:text-zinc-200'
-                    }`}>
+                    <h3 className={`font-body font-bold text-[15px] sm:text-lg transition-colors duration-300 ${isOpen ? 'text-[#e31c25] dark:text-brand-darkGold' : 'text-zinc-900 dark:text-zinc-200'
+                      }`}>
                       {formatVignette(faq.question)}
                     </h3>
                     <div className={`flex-shrink-0 transform transition-transform duration-500 ease-in-out ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
@@ -2549,9 +2601,8 @@ export default function App() {
                     </div>
                   </div>
                   <div
-                    className={`grid transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
-                      isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                    }`}
+                    className={`grid transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                      }`}
                   >
                     <div className="overflow-hidden">
                       <div className="px-5 pb-5 sm:px-6 sm:pb-6 text-zinc-800 dark:text-zinc-400 font-body text-[13px] sm:text-base leading-relaxed text-justify">
@@ -2783,29 +2834,14 @@ export default function App() {
                   <label htmlFor="modal-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                     Purpose
                   </label>
-                  <div className="relative">
-                    <select
-                      id="modal-purpose"
-                      value={formState.purpose}
-                      disabled={formSubmitting}
-                      onChange={(e) => setFormState(prev => ({ ...prev, purpose: e.target.value }))}
-                      required
-                      className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
-                    >
-                      <option value="" disabled>Select</option>
-                      <option value="Hire for Video Editing (PAID)">Hire for Video Editing (PAID)</option>
-                      <option value="Hire for Podcast/YT Video Editing (PAID)">Hire for Podcast/YT Video Editing (PAID)</option>
-                      <option value="Hire for Photoshoot (PAID)">Hire for Photoshoot (PAID)</option>
-                      <option value="Ask for Collaboration">Ask for Collaboration</option>
-                      <option value="Let's Work Together">Let's Work Together</option>
-                      <option value="Avgeek - Let's Connect">Avgeek - Let's Connect</option>
-                      <option value="Planespotting">Planespotting</option>
-                      <option value="Want to join the 'Vignette' team">Want to join the 'Vignette' Team</option>
-                    </select>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
-                      <Compass className="w-4 h-4 transform rotate-180" />
-                    </div>
-                  </div>
+                  <CustomSelect
+                    id="modal-purpose"
+                    value={formState.purpose}
+                    onChange={(val) => setFormState(prev => ({ ...prev, purpose: val }))}
+                    options={PURPOSE_OPTIONS}
+                    disabled={formSubmitting}
+                    inModal={true}
+                  />
                 </div>
 
                 {/* Title + Names Grid */}
@@ -2815,24 +2851,14 @@ export default function App() {
                     <label htmlFor="modal-salutation" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                       Title
                     </label>
-                    <div className="relative">
-                      <select
-                        id="modal-salutation"
-                        value={formState.salutation}
-                        disabled={formSubmitting}
-                        onChange={(e) => setFormState(prev => ({ ...prev, salutation: e.target.value }))}
-                        required
-                        className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
-                      >
-                        <option value="" disabled>Select</option>
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Ms">Ms</option>
-                      </select>
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
-                        <Compass className="w-4 h-4 transform rotate-180" />
-                      </div>
-                    </div>
+                    <CustomSelect
+                      id="modal-salutation"
+                      value={formState.salutation}
+                      onChange={(val) => setFormState(prev => ({ ...prev, salutation: val }))}
+                      options={TITLE_OPTIONS}
+                      disabled={formSubmitting}
+                      inModal={true}
+                    />
                   </div>
 
                   {/* First Name Input */}
@@ -2904,7 +2930,7 @@ export default function App() {
                       id="modal-email"
                       value={formState.email}
                       onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="abc@xyz.com"
+                      placeholder="abcdef@xyz.com"
                       disabled={formSubmitting}
                       required
                       className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
