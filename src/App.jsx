@@ -176,36 +176,62 @@ const CLIENT_REVIEWS = [
 // 1. HELPERS & CHILD COMPONENTS
 // ==========================================
 
-const TestimonialCard = ({ review, idx, isCarousel = false }) => (
-  <div
-    className={`reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-5 sm:p-8 flex flex-col gap-4 sm:gap-6 shadow-xl group h-full ${!isCarousel ? 'hover:shadow-2xl hover:-translate-y-2 transition-premium' : ''}`}
-    style={{ transitionDelay: isCarousel ? '0ms' : `${idx * 150}ms`, borderWidth: '0.5px', borderStyle: 'solid' }}
-  >
-    <div className="flex items-center gap-4 sm:gap-5">
-      <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-brand-lightOrange/30 dark:border-brand-darkGold/30 shrink-0">
-        <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
-      </div>
-      <div>
-        <div className="flex items-center gap-2">
-          <h3 className="font-heading font-bold text-lg sm:text-xl text-zinc-900 dark:text-white">
-            {review.name}
-          </h3>
-          <a href={review.url} target="_blank" rel="noopener noreferrer" className="text-[#e31c25] dark:text-[#FFD700] hover:scale-110 hover:-translate-y-0.5 transition-all duration-300" onClick={(e) => e.stopPropagation()}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
+const TestimonialCard = ({ review, idx, isCarousel = false }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const words = review.review.split(' ');
+  const isLong = words.length > 50;
+  const truncatedText = isLong ? words.slice(0, 50).join(' ') + '...' : review.review;
+
+  return (
+    <div
+      className={`reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-5 sm:p-8 flex flex-col gap-4 sm:gap-6 shadow-xl group h-full ${!isCarousel ? 'hover:shadow-2xl hover:-translate-y-2 transition-premium' : ''}`}
+      style={{ transitionDelay: isCarousel ? '0ms' : `${idx * 150}ms`, borderWidth: '0.5px', borderStyle: 'solid' }}
+    >
+      <div className="flex items-center gap-4 sm:gap-5">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-brand-lightOrange/30 dark:border-brand-darkGold/30 shrink-0">
+          <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
         </div>
-        <div className="flex text-[#e31c25] dark:text-[#FFD700] text-[11px] sm:text-sm mt-0.5 sm:mt-1">
-          ★★★★★
+        <div>
+          <div className="flex items-center gap-2">
+            <h3 className="font-heading font-bold text-lg sm:text-xl text-zinc-900 dark:text-white">
+              {review.name}
+            </h3>
+            <a href={review.url} target="_blank" rel="noopener noreferrer" className="text-[#e31c25] dark:text-[#FFD700] hover:scale-110 hover:-translate-y-0.5 transition-all duration-300" onClick={(e) => e.stopPropagation()}>
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+            </a>
+          </div>
+          <div className="flex text-[#e31c25] dark:text-[#FFD700] text-[11px] sm:text-sm mt-0.5 sm:mt-1">
+            ★★★★★
+          </div>
+        </div>
+      </div>
+      <div className="font-body text-[13px] sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed sm:leading-loose text-justify mt-1 relative z-10 flex-grow overflow-y-auto">
+        {/* Desktop version (Always full text) */}
+        <div className="hidden sm:block">
+          {review.review}
+        </div>
+        
+        {/* Mobile version (Truncated with Read More/Less) */}
+        <div className="block sm:hidden">
+          {isExpanded || !isLong ? review.review : truncatedText}
+          {isLong && (
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(!isExpanded);
+              }}
+              className="text-[#e31c25] dark:text-[#FFD700] font-bold ml-1 hover:underline focus:outline-none inline"
+            >
+              {isExpanded ? 'Read Less' : 'Read More'}
+            </button>
+          )}
         </div>
       </div>
     </div>
-    <div className="font-body text-[13px] sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed sm:leading-loose text-justify mt-1 relative z-10 flex-grow">
-      {review.review}
-    </div>
-  </div>
-);
+  );
+};
 
 const TestimonialCarousel = ({ reviews }) => {
   const [activeIndex, setActiveIndex] = useState(0);
