@@ -7,6 +7,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Send,
   Loader2,
   Sparkles,
@@ -199,7 +200,7 @@ const CustomDropdown = ({ id, value, onChange, options, placeholder, disabled })
         <span className={value ? 'text-zinc-900 dark:text-white' : 'text-zinc-500'}>
           {value ? options.find(opt => opt.value === value)?.label || value : placeholder}
         </span>
-        <Compass className={`w-4 h-4 text-zinc-400 transition-transform duration-300 ${isOpen ? '' : 'rotate-180'}`} />
+        <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </div>
 
       <div 
