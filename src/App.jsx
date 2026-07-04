@@ -212,7 +212,7 @@ const CustomDropdown = ({ id, value, onChange, options, placeholder, disabled })
               onChange(option.value);
               setIsOpen(false);
             }}
-            className={`px-4 py-3 cursor-pointer flex items-center justify-between font-body text-sm transition-colors ${value === option.value ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 text-[#D10000] dark:text-[#FFD700] font-bold' : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}
+            className={`px-4 py-3 cursor-pointer flex items-center justify-between font-body text-sm transition-colors ${value === option.value ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 text-[#D10000] dark:text-[#FFD700] font-bold' : `text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 ${option.isBold ? 'font-bold' : ''}`}`}
           >
             {option.label}
             {value === option.value && <CheckCircle className="w-4 h-4" />}
@@ -2332,9 +2332,9 @@ export default function App() {
                           disabled={formSubmitting}
                           placeholder="Select"
                           options={[
-                            { value: 'Hire for Video Editing (PAID)', label: 'Hire for Video Editing (PAID)' },
-                            { value: 'Hire for Podcast/YT Video Editing (PAID)', label: 'Hire for Podcast/YT Video Editing (PAID)' },
-                            { value: 'Hire for Photoshoot (PAID)', label: 'Hire for Photoshoot (PAID)' },
+                            { value: 'Hire for Video Editing (PAID)', label: 'Hire for Video Editing (PAID)', isBold: true },
+                            { value: 'Hire for Podcast/YT Video Editing (PAID)', label: 'Hire for Podcast/YT Video Editing (PAID)', isBold: true },
+                            { value: 'Hire for Photoshoot (PAID)', label: 'Hire for Photoshoot (PAID)', isBold: true },
                             { value: 'Ask for Collaboration', label: 'Ask for Collaboration' },
                             { value: 'Let\'s Work Together', label: 'Let\'s Work Together' },
                             { value: 'Avgeek - Let\'s Connect', label: 'Avgeek - Let\'s Connect' },
