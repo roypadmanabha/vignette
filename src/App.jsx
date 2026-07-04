@@ -178,10 +178,10 @@ const CLIENT_REVIEWS = [
 
 const TestimonialCard = ({ review, idx, isCarousel = false }) => (
   <div
-    className={`reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-6 sm:p-10 flex flex-col gap-6 shadow-xl group h-full ${!isCarousel ? 'hover:shadow-2xl hover:-translate-y-2 transition-premium' : ''}`}
+    className={`reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-5 sm:p-8 flex flex-col gap-4 sm:gap-6 shadow-xl group h-full ${!isCarousel ? 'hover:shadow-2xl hover:-translate-y-2 transition-premium' : ''}`}
     style={{ transitionDelay: isCarousel ? '0ms' : `${idx * 150}ms`, borderWidth: '0.5px', borderStyle: 'solid' }}
   >
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-4 sm:gap-5">
       <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden border-2 border-brand-lightOrange/30 dark:border-brand-darkGold/30 shrink-0">
         <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
       </div>
@@ -196,12 +196,12 @@ const TestimonialCard = ({ review, idx, isCarousel = false }) => (
             </svg>
           </a>
         </div>
-        <div className="flex text-[#e31c25] dark:text-[#FFD700] text-xs sm:text-sm mt-1">
+        <div className="flex text-[#e31c25] dark:text-[#FFD700] text-[11px] sm:text-sm mt-0.5 sm:mt-1">
           ★★★★★
         </div>
       </div>
     </div>
-    <div className="font-body text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed text-justify mt-2 relative z-10 flex-grow">
+    <div className="font-body text-[13px] sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed sm:leading-loose text-justify mt-1 relative z-10 flex-grow">
       {review.review}
     </div>
   </div>
@@ -221,7 +221,7 @@ const TestimonialCarousel = ({ reviews }) => {
         ))}
       </div>
 
-      <div className="xl:hidden relative w-full h-[540px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4">
+      <div className="xl:hidden relative w-full h-[560px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4">
         {reviews.map((review, idx) => {
           let position = 'next';
           if (idx === activeIndex) position = 'active';
