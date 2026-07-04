@@ -153,19 +153,19 @@ const FAQS_DATA = [
 
 const CLIENT_REVIEWS = [
   {
-    client: "Astrofied",
-    text: "Working with Vignette has been one of the best decisions for Astrofied. From developing our website to managing our social media presence, every detail has been handled with remarkable creativity, professionalism, and precision. Their understanding of aesthetics, branding, and user experience helped us create a modern and trustworthy identity that truly represents our vision. Every design, post, and website element feels thoughtfully crafted rather than generic. They are highly responsive, committed to quality, and always open to feedback while delivering beyond expectations. We genuinely appreciate their dedication and would confidently recommend Vignette to anyone looking for premium digital branding and creative solutions.",
-    image: "client-astrofied.png"
+    name: 'Astrofied',
+    image: 'astrofied.png',
+    review: 'Working with Vignette has been one of the best decisions for Astrofied. From developing our website to managing our social media presence, every detail has been handled with remarkable creativity, professionalism, and precision. Their understanding of aesthetics, branding, and user experience helped us create a modern and trustworthy identity that truly represents our vision. Every design, post, and website element feels thoughtfully crafted rather than generic. They are highly responsive, committed to quality, and always open to feedback while delivering beyond expectations. We genuinely appreciate their dedication and would confidently recommend Vignette to anyone looking for premium digital branding and creative solutions.',
   },
   {
-    client: "Hinest Interiors",
-    text: "Vignette has completely transformed the way our brand is presented online. They designed a clean, elegant website and continue to manage our social media with exceptional attention to detail and consistency. Every post reflects our brand identity beautifully, helping us build credibility and attract more engagement from potential clients. Their creative approach, aesthetic sense, and professionalism are evident in every project they deliver. What impressed us most was their ability to understand our requirements and convert them into visually appealing, high-quality content. Vignette is reliable, innovative, and passionate about their work, making them an excellent creative partner for any business.",
-    image: "client-hinest.jpg"
+    name: 'Hinest Interiors',
+    image: 'hinest.jpg',
+    review: 'Vignette has completely transformed the way our brand is presented online. They designed a clean, elegant website and continue to manage our social media with exceptional attention to detail and consistency. Every post reflects our brand identity beautifully, helping us build credibility and attract more engagement from potential clients. Their creative approach, aesthetic sense, and professionalism are evident in every project they deliver. What impressed us most was their ability to understand our requirements and convert them into visually appealing, high-quality content. Vignette is reliable, innovative, and passionate about their work, making them an excellent creative partner for any business.',
   },
   {
-    client: "Beauty of Agartala",
-    text: "Vignette has been behind the journey of Beauty of Agartala right from the very beginning, and their contribution has been invaluable. From building our social media presence from day one to consistently creating engaging and visually stunning content, they have always maintained exceptional quality and originality. Their creativity, eye for detail, and understanding of audience engagement have helped our page grow while maintaining a unique identity. Every post is thoughtfully designed and professionally executed, making our content stand out naturally. We truly appreciate their dedication, timely delivery, and passion for visual storytelling, and we highly recommend Vignette for creative digital content and social media management.",
-    image: "client-boa.png"
+    name: 'Beauty of Agartala',
+    image: 'boa.jpg',
+    review: 'Vignette has been behind the journey of Beauty of Agartala right from the very beginning, and their contribution has been invaluable. From building our social media presence from day one to consistently creating engaging and visually stunning content, they have always maintained exceptional quality and originality. Their creativity, eye for detail, and understanding of audience engagement have helped our page grow while maintaining a unique identity. Every post is thoughtfully designed and professionally executed, making our content stand out naturally. We truly appreciate their dedication, timely delivery, and passion for visual storytelling, and we highly recommend Vignette for creative digital content and social media management.',
   }
 ];
 
@@ -1997,47 +1997,50 @@ export default function App() {
           </div>
         </section>
 
-        {/* 2.8.5. CLIENT REVIEWS SECTION */}
-        <section id="reviews" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* 2.8.5. TESTIMONIALS SECTION */}
+        <section id="testimonials" className="bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-1/4 -right-1/4 w-[500px] h-[500px] bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 rounded-full blur-[100px]" />
+            <div className="absolute bottom-1/4 -left-1/4 w-[500px] h-[500px] bg-[#e31c25]/10 dark:bg-[#e31c25]/10 rounded-full blur-[100px]" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase mb-3 block">
+              <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#e31c25] dark:text-[#FFD700] uppercase mb-3">
                 Testimonials
               </span>
-              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
+              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
                 What Our Clients Say
               </h2>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {CLIENT_REVIEWS.map((review, idx) => (
                 <div
                   key={idx}
-                  className="reveal reveal-scale rounded-2xl bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm border border-black/5 dark:border-white/10 p-6 sm:p-8 shadow-xl flex flex-col h-full hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group"
+                  className="reveal reveal-scale relative rounded-3xl bg-white/40 dark:bg-zinc-900/40 backdrop-blur-xl border border-black/5 dark:border-white/10 p-8 sm:p-10 flex flex-col gap-6 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 group"
                   style={{ transitionDelay: `${idx * 150}ms` }}
                 >
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden bg-zinc-200 dark:bg-zinc-800 border-2 border-[#e31c25] dark:border-[#FFD700] flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
-                      <img src={review.image} alt={review.client} className="w-full h-full object-cover" />
+                  <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <svg className="w-16 h-16 text-[#e31c25] dark:text-brand-darkGold" fill="currentColor" viewBox="0 0 32 32">
+                      <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14H10c0-1.1.9-2 2-2V8zm16 0c-3.3 0-6 2.7-6 6v10h10V14H20c0-1.1.9-2 2-2V8z" />
+                    </svg>
+                  </div>
+                  <div className="flex items-center gap-5">
+                    <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-brand-lightOrange/30 dark:border-brand-darkGold/30">
+                      <img src={review.image} alt={review.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <h3 className="font-heading font-black text-lg text-zinc-900 dark:text-white leading-tight">
-                        {review.client}
+                      <h3 className="font-heading font-bold text-xl text-zinc-900 dark:text-white">
+                        {review.name}
                       </h3>
-                      <div className="flex text-[#FFD700] mt-1 gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <svg key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        ))}
+                      <div className="flex text-[#e31c25] dark:text-[#FFD700] text-sm mt-1">
+                        ★★★★★
                       </div>
                     </div>
                   </div>
-                  <div className="relative flex-grow">
-                    <span className="absolute -top-4 -left-2 text-6xl text-[#e31c25]/10 dark:text-[#FFD700]/10 font-serif leading-none select-none transition-colors duration-300 group-hover:text-[#e31c25]/20 dark:group-hover:text-[#FFD700]/20">"</span>
-                    <p className="relative z-10 font-body text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed text-justify italic">
-                      {review.text}
-                    </p>
+                  <div className="font-body text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed text-justify mt-2 relative z-10 flex-grow">
+                    "{review.review}"
                   </div>
                 </div>
               ))}
