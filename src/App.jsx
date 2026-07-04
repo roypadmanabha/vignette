@@ -712,9 +712,12 @@ export default function App() {
   // Hire Modal Open State
   const [isHireModalOpen, setIsHireModalOpen] = useState(false);
 
+  // Legal Modal State — 'terms' | 'privacy' | null
+  const [legalModal, setLegalModal] = useState(null);
+
   // Lock background scroll when modal is active
   useEffect(() => {
-    if (isHireModalOpen) {
+    if (isHireModalOpen || legalModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -722,20 +725,21 @@ export default function App() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isHireModalOpen]);
+  }, [isHireModalOpen, legalModal]);
 
   // Close modal on Escape key press
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         setIsHireModalOpen(false);
+        setLegalModal(null);
       }
     };
-    if (isHireModalOpen) {
+    if (isHireModalOpen || legalModal) {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isHireModalOpen]);
+  }, [isHireModalOpen, legalModal]);
 
   // Hero section background image url state (static only, no video)
   const heroBgUrl = 'virat.png';
@@ -2371,14 +2375,20 @@ export default function App() {
               </h4>
               <ul className="flex flex-col gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400">
                 <li>
-                  <a href="/terms" className="hover:text-[#c0392b] dark:hover:text-[#FFD700] transition-colors">
+                  <button
+                    onClick={() => setLegalModal('terms')}
+                    className="hover:text-[#c0392b] dark:hover:text-[#FFD700] transition-colors cursor-pointer text-left"
+                  >
                     Terms and Conditions
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="/privacy" className="hover:text-[#c0392b] dark:hover:text-[#FFD700] transition-colors">
+                  <button
+                    onClick={() => setLegalModal('privacy')}
+                    className="hover:text-[#c0392b] dark:hover:text-[#FFD700] transition-colors cursor-pointer text-left"
+                  >
                     Privacy Policy
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -2808,6 +2818,115 @@ export default function App() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
           </svg>
         </button>
+      )}
+
+      {/* LEGAL MODAL — Terms & Conditions / Privacy Policy */}
+      {legalModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto"
+          onClick={() => setLegalModal(null)}
+        >
+          <div
+            className="relative w-full max-w-2xl max-h-[85vh] bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col my-8 select-none"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="sticky top-0 z-10 bg-[#f5f5dd] dark:bg-zinc-950 px-6 sm:px-8 pt-6 pb-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+              <div>
+                <span className="font-heading font-extrabold text-xs tracking-widest text-[#c0392b] dark:text-[#FFD700] uppercase block mb-1">
+                  Legal
+                </span>
+                <h2 className="font-heading font-black text-lg sm:text-xl text-zinc-900 dark:text-white">
+                  {legalModal === 'terms' ? 'Terms and Conditions' : 'Privacy Policy'}
+                </h2>
+              </div>
+              <button
+                onClick={() => setLegalModal(null)}
+                className="p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-colors"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Scrollable Content */}
+            <div className="overflow-y-auto px-6 sm:px-8 py-6 font-body text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-5">
+              {legalModal === 'terms' ? (
+                <>
+                  <p className="text-zinc-500 dark:text-zinc-400 text-xs">Last updated: July 2026</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">1. Acceptance of Terms</h3>
+                  <p className="text-justify">By accessing and using the Vignette website and services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our services.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">2. Services Offered</h3>
+                  <p className="text-justify">Vignette provides professional video editing, promotional content creation, podcast editing, and visual storytelling services. All deliverables, timelines, and project scopes are agreed upon individually with each client prior to commencement of work.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">3. Intellectual Property</h3>
+                  <p className="text-justify">All original content, designs, video edits, graphics, and creative assets produced by Vignette remain the intellectual property of Vignette until full payment has been received. Upon completion and full payment, ownership of the final deliverables transfers to the client unless otherwise stated in writing.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">4. Client Responsibilities</h3>
+                  <p className="text-justify">Clients are responsible for providing accurate project briefs, reference materials, and raw footage or assets in a timely manner. Delays in providing required materials may affect project timelines and delivery dates.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">5. Payment Terms</h3>
+                  <p className="text-justify">Payment terms are communicated on a project-by-project basis. A non-refundable deposit may be required before work begins. Final payment is due upon delivery of the completed project unless alternative arrangements have been agreed upon in writing.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">6. Revisions Policy</h3>
+                  <p className="text-justify">Each project includes a specified number of revision rounds as agreed at the outset. Additional revisions beyond the agreed scope may incur extra charges, which will be communicated to the client before proceeding.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">7. Limitation of Liability</h3>
+                  <p className="text-justify">Vignette shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability shall not exceed the amount paid by the client for the specific project in question.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">8. Termination</h3>
+                  <p className="text-justify">Either party may terminate a project agreement with written notice. In the event of termination, the client shall be responsible for payment of all work completed up to the date of termination.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">9. Contact</h3>
+                  <p className="text-justify">For questions regarding these Terms and Conditions, please contact us at <a href="mailto:vignetteworks.official@gmail.com" className="text-[#c0392b] dark:text-[#FFD700] underline">vignetteworks.official@gmail.com</a>.</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-zinc-500 dark:text-zinc-400 text-xs">Last updated: July 2026</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">1. Information We Collect</h3>
+                  <p className="text-justify">When you use our website or contact us through our inquiry form, we may collect personal information including your name, email address, phone number, and any message content you provide. We also collect non-personal data such as browser type, device information, and usage analytics.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">2. How We Use Your Information</h3>
+                  <p className="text-justify">Your personal information is used solely for responding to inquiries, delivering our services, communicating project updates, and improving user experience on our platform. We do not sell, rent, or trade your personal information to third parties.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">3. Data Storage &amp; Security</h3>
+                  <p className="text-justify">We employ industry-standard security measures to protect your personal data. Information submitted through our forms is transmitted securely and stored using trusted third-party services (such as Supabase) with encryption at rest and in transit.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">4. Cookies &amp; Analytics</h3>
+                  <p className="text-justify">Our website may use cookies and similar technologies to enhance your browsing experience and gather anonymous usage statistics. You may disable cookies in your browser settings, though some features of the site may not function as intended.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">5. Third-Party Services</h3>
+                  <p className="text-justify">We may utilise third-party services for analytics, hosting, and form processing. These services have their own privacy policies and we encourage you to review them. We are not responsible for the privacy practices of third-party providers.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">6. Your Rights</h3>
+                  <p className="text-justify">You have the right to access, correct, or request deletion of your personal data at any time. To exercise these rights, please contact us using the information provided below. We will respond to your request within a reasonable timeframe.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">7. Children&apos;s Privacy</h3>
+                  <p className="text-justify">Our services are not directed at individuals under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal data, please contact us so we can take appropriate action.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">8. Changes to This Policy</h3>
+                  <p className="text-justify">We reserve the right to update this Privacy Policy at any time. Changes will be reflected on this page with an updated revision date. Continued use of our website after changes constitutes acceptance of the revised policy.</p>
+
+                  <h3 className="font-heading font-bold text-base text-zinc-900 dark:text-white">9. Contact</h3>
+                  <p className="text-justify">If you have any questions or concerns about this Privacy Policy, please reach out to us at <a href="mailto:vignetteworks.official@gmail.com" className="text-[#c0392b] dark:text-[#FFD700] underline">vignetteworks.official@gmail.com</a>.</p>
+                </>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="sticky bottom-0 bg-[#f5f5dd] dark:bg-zinc-950 px-6 sm:px-8 py-4 border-t border-zinc-200 dark:border-zinc-800 flex justify-end">
+              <button
+                onClick={() => setLegalModal(null)}
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#c0392b] to-[#e67e22] dark:from-[#FFD700] dark:to-[#e67e22] text-white dark:text-black font-heading font-bold text-xs tracking-wider uppercase hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       )}
 
     </div>
