@@ -82,9 +82,9 @@ const ThreadsIcon = (props) => (
 );
 
 const PURPOSE_OPTIONS = [
-  { value: "Hire for Video Editing (PAID)", label: "Hire for Video Editing (PAID)" },
-  { value: "Hire for Podcast/YT Video Editing (PAID)", label: "Hire for Podcast/YT Video Editing (PAID)" },
-  { value: "Hire for Photoshoot (PAID)", label: "Hire for Photoshoot (PAID)" },
+  { value: "Hire for Video Editing (PAID)", label: "Hire for Video Editing (PAID)", isRedText: true },
+  { value: "Hire for Podcast/YT Video Editing (PAID)", label: "Hire for Podcast/YT Video Editing (PAID)", isRedText: true },
+  { value: "Hire for Photoshoot (PAID)", label: "Hire for Photoshoot (PAID)", isRedText: true },
   { value: "Ask for Collaboration", label: "Ask for Collaboration" },
   { value: "Let's Work Together", label: "Let's Work Together" },
   { value: "Avgeek - Let's Connect", label: "Avgeek - Let's Connect" },
@@ -136,9 +136,9 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
       <div
         className={`absolute z-50 w-full mt-2 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-2xl overflow-hidden transition-all duration-300 origin-top ${
           isOpen ? 'scale-y-100 opacity-100 pointer-events-auto' : 'scale-y-95 opacity-0 pointer-events-none'
-        } ${bgClass}`}
+        } bg-[#f5f5dd] dark:bg-zinc-900`}
       >
-        <div className="max-h-60 overflow-y-auto custom-scrollbar py-2">
+        <div className="max-h-60 overflow-y-auto custom-scrollbar flex flex-col">
           {options.map((option, idx) => (
             <div
               key={idx}
@@ -146,10 +146,12 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
                 onChange(option.value);
                 setIsOpen(false);
               }}
-              className={`px-4 py-3 text-sm sm:text-base font-body cursor-pointer transition-colors flex items-center gap-2 ${
+              className={`px-4 py-3 text-sm sm:text-base font-body cursor-pointer transition-colors flex items-center gap-2 ${idx !== options.length - 1 ? 'border-b-[0.5px] border-black dark:border-zinc-700/50' : ''} ${
                 value === option.value
                   ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 text-brand-lightOrange dark:text-brand-darkGold font-bold'
-                  : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white'
+                  : option.isRedText
+                    ? 'text-[#D10000] dark:text-red-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-[#D10000] dark:hover:text-red-300'
+                    : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white'
               }`}
             >
               {value === option.value && <CheckCircle className="w-4 h-4" />}
