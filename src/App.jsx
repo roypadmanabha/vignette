@@ -151,7 +151,7 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
                   setIsOpen(false);
                 }}
                 className={`px-4 py-3 text-sm sm:text-base cursor-pointer transition-colors flex items-center gap-2 ${
-                  idx !== options.length - 1 ? 'border-b-[0.3px] border-black/50 dark:border-b-0 dark:border-transparent' : ''
+                  idx !== options.length - 1 ? 'border-b border-black/50 dark:border-b-0 dark:border-transparent' : ''
                 } ${
                   value === option.value
                     ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10'
@@ -162,7 +162,7 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
                 <span className={`
                   ${value === option.value ? '' : 'pl-6'} 
                   ${isPaid 
-                    ? 'bg-gradient-to-r from-black to-[#FF0000] bg-clip-text text-transparent font-heading dark:font-body dark:bg-none ' + (value === option.value ? 'dark:text-brand-darkGold font-bold' : 'dark:text-zinc-300 dark:hover:text-white')
+                    ? 'bg-gradient-to-r from-black to-[#FF0000] bg-clip-text text-transparent font-heading font-bold dark:font-normal dark:font-body dark:bg-none ' + (value === option.value ? 'dark:text-brand-darkGold dark:font-bold' : 'dark:text-zinc-300 dark:hover:text-white')
                     : 'font-body ' + (value === option.value ? 'text-brand-lightOrange dark:text-brand-darkGold font-bold' : 'text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white')
                   }
                 `}>
