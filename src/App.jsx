@@ -299,7 +299,7 @@ const TestimonialCarousel = ({ reviews }) => {
       </div>
 
       <div 
-        className="xl:hidden relative w-full h-[560px] sm:h-[540px] flex items-center justify-center overflow-visible mt-4 touch-pan-y"
+        className="xl:hidden relative w-full h-[460px] sm:h-[540px] flex items-center justify-center overflow-visible mt-4 touch-pan-y"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -340,7 +340,7 @@ const TestimonialCarousel = ({ reviews }) => {
         })}
       </div>
       
-      <div className="xl:hidden flex justify-center items-center gap-6 mt-6 sm:mt-8 relative z-30">
+      <div className="xl:hidden flex justify-center items-center gap-6 mt-2 sm:mt-8 relative z-30">
         <button 
           onClick={handlePrev} 
           disabled={activeIndex === 0}
