@@ -2247,7 +2247,9 @@ export default function App() {
                     <div className="absolute bottom-0 left-0 right-0 px-5 py-4">
                       <div className="flex flex-col">
                         <h3 className="font-heading font-bold text-base text-white leading-tight">Padmanabha Roy</h3>
-                        <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">{formatVignette('Founder · Vignette')}</p>
+                        <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">
+                          Founder &middot; <span className="font-bold bg-gradient-to-r from-[#FF0000] to-[#FFA500] bg-clip-text text-transparent">Vignette</span>
+                        </p>
                       </div>
                     </div>
                   </div>
