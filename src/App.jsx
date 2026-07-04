@@ -312,7 +312,7 @@ const TestimonialCarousel = ({ reviews }) => {
           else if (idx < activeIndex - 1) position = 'prev-hidden';
           else if (idx > activeIndex + 1) position = 'next-hidden';
           
-          let classes = 'absolute transition-all duration-500 ease-in-out w-[85%] sm:w-[70%] cursor-pointer shadow-2xl ';
+          let classes = 'absolute transition-all duration-500 ease-in-out w-[85%] sm:w-[70%] cursor-pointer ';
           
           if (position === 'active') {
             classes += ' z-20 scale-100 opacity-100 translate-x-0';
