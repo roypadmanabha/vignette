@@ -113,7 +113,8 @@ const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "S
   }, []);
 
   const bgClass = inModal ? 'bg-[#fffff0] dark:bg-zinc-900' : 'bg-[#fffff0] dark:bg-zinc-950';
-  const menuBgClass = inModal ? 'bg-[#f5f5f5] dark:bg-zinc-900' : 'bg-[#f5f5f5] dark:bg-zinc-950';
+  const menuBgClass = inModal ? 'bg-[#FAF9F6] dark:bg-zinc-900' : 'bg-[#FAF9F6] dark:bg-zinc-950';
+
 
   return (
     <div ref={wrapperRef} className="relative w-full">
