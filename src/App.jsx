@@ -1448,19 +1448,26 @@ export default function App() {
               { label: 'Services', id: 'services' },
               { label: 'Highlights', id: 'videos' },
               { label: 'Our Clients', id: 'testimonials' },
-              { label: 'Royography', url: '/' },
+              { label: 'Explore', url: '/explore' },
               { label: 'About', id: 'vision' },
               { label: 'Contact', id: 'hire' }
             ].map(link => {
+              const isExplore = link.label === 'Explore';
+              const textClasses = isExplore
+                ? "relative py-2 bg-gradient-to-r from-black to-[#FF0000] dark:from-[#FF0000] dark:to-[#FFA500] bg-clip-text text-transparent hover:opacity-80 transition-opacity group font-extrabold"
+                : "relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group";
+
               if (link.url) {
                 return (
                   <a
                     key={link.label}
                     href={link.url}
-                    className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
+                    className={textClasses}
                   >
                     {link.label}
-                    <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
+                    {!isExplore && (
+                      <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
+                    )}
                   </a>
                 );
               }
@@ -1566,12 +1573,16 @@ export default function App() {
               { label: 'Services', id: 'services', icon: Sliders },
               { label: 'Highlights', id: 'videos', icon: Play },
               { label: 'Our Clients', id: 'testimonials', icon: Video },
-              { label: 'Royography', url: '/', icon: Camera },
+              { label: 'Explore', url: '/explore', icon: Camera },
               { label: 'About', id: 'vision', icon: Sparkles },
               { label: 'Contact', id: 'hire', icon: Send }
             ].map((link) => {
               const Icon = link.icon;
-              const linkClasses = "flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs sm:text-sm font-brand font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group";
+              const isExplore = link.label === 'Explore';
+              const textClasses = isExplore
+                ? "bg-gradient-to-r from-black to-[#FF0000] dark:from-[#FF0000] dark:to-[#FFA500] bg-clip-text text-transparent font-extrabold"
+                : "";
+              const linkClasses = `flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs sm:text-sm font-brand font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group`;
 
               if (link.url) {
                 return (
@@ -1582,7 +1593,7 @@ export default function App() {
                     className={linkClasses}
                   >
                     <Icon className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-brand-lightOrange dark:group-hover:text-brand-darkGold transition-colors" />
-                    <span>{link.label}</span>
+                    <span className={textClasses}>{link.label}</span>
                   </a>
                 );
               }
