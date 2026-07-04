@@ -2421,17 +2421,27 @@ export default function App() {
           <div className="flex flex-col items-center gap-6 mt-4">
 
             {/* Social Icons Row */}
-            <div className="flex gap-5 items-center justify-center">
+            <div className="flex gap-6 items-center justify-center">
+
+              {/* Hidden SVG gradient definition */}
+              <svg width="0" height="0" className="absolute">
+                <defs>
+                  <linearGradient id="social-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor={isDark ? '#c0392b' : '#000000'} />
+                    <stop offset="100%" stopColor={isDark ? '#e67e22' : '#c0392b'} />
+                  </linearGradient>
+                </defs>
+              </svg>
 
               {/* Instagram */}
               <a
                 href="https://www.instagram.com/proy____"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md"
+                className="hover:scale-125 active:scale-95 transition-all duration-300"
                 aria-label="Visit proy____ on Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <Instagram className="w-7 h-7" fill="url(#social-icon-gradient)" />
               </a>
 
               {/* Threads */}
@@ -2439,10 +2449,10 @@ export default function App() {
                 href="https://www.threads.net"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 shadow-md border border-zinc-200 dark:border-zinc-800"
+                className="hover:scale-125 active:scale-95 transition-all duration-300"
                 aria-label="Visit Threads"
               >
-                <ThreadsIcon className="w-5 h-5" />
+                <ThreadsIcon className="w-7 h-7" fill="url(#social-icon-gradient)" />
               </a>
 
               {/* Facebook */}
@@ -2450,10 +2460,10 @@ export default function App() {
                 href="https://www.facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-[#1877F2] flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all duration-300 shadow-md"
+                className="hover:scale-125 active:scale-95 transition-all duration-300"
                 aria-label="Visit Facebook page"
               >
-                <Facebook className="w-5 h-5" />
+                <Facebook className="w-7 h-7" fill="url(#social-icon-gradient)" />
               </a>
 
             </div>
