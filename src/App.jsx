@@ -245,7 +245,7 @@ const TestimonialCarousel = ({ reviews }) => {
       </div>
 
       <div 
-        className="xl:hidden relative w-full h-[560px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4"
+        className="xl:hidden relative w-full h-[560px] sm:h-[460px] flex items-center justify-center overflow-visible mt-4 perspective-[1500px]"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -255,16 +255,16 @@ const TestimonialCarousel = ({ reviews }) => {
           else if (idx === activeIndex - 1) position = 'prev';
           else if (idx === activeIndex + 1) position = 'next';
           
-          let classes = 'absolute transition-all duration-[800ms] ease-[cubic-bezier(0.25,1,0.5,1)] w-[85%] sm:w-[70%] cursor-pointer shadow-2xl ';
+          let classes = 'absolute transition-all duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] w-[85%] sm:w-[70%] cursor-pointer shadow-2xl origin-center ';
           
           if (position === 'active') {
-            classes += ' z-20 scale-100 opacity-100 [transform:perspective(1200px)_rotateY(0deg)] origin-center';
+            classes += ' z-20 opacity-100 [transform:translateX(0)_scale(1)_rotateY(0deg)]';
           } else if (position === 'prev') {
-            classes += ' z-10 scale-95 opacity-50 -translate-x-12 sm:-translate-x-24 [transform:perspective(1200px)_rotateY(15deg)] origin-right blur-[1px] hover:opacity-100 hover:blur-none';
+            classes += ' z-10 opacity-50 [transform:translateX(-30%)_scale(0.85)_rotateY(25deg)] sm:[transform:translateX(-40%)_scale(0.85)_rotateY(25deg)] blur-[1px] hover:opacity-100 hover:blur-none';
           } else if (position === 'next') {
-            classes += ' z-10 scale-95 opacity-50 translate-x-12 sm:translate-x-24 [transform:perspective(1200px)_rotateY(-15deg)] origin-left blur-[1px] hover:opacity-100 hover:blur-none';
+            classes += ' z-10 opacity-50 [transform:translateX(30%)_scale(0.85)_rotateY(-25deg)] sm:[transform:translateX(40%)_scale(0.85)_rotateY(-25deg)] blur-[1px] hover:opacity-100 hover:blur-none';
           } else {
-            classes += ' z-0 scale-90 opacity-0 pointer-events-none';
+            classes += ' z-0 opacity-0 [transform:translateX(0)_scale(0.7)_rotateY(0deg)] pointer-events-none';
           }
 
           return (
