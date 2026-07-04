@@ -1505,7 +1505,7 @@ export default function App() {
               { label: 'At Glance', id: 'gallery' },
               { label: 'Services', id: 'services' },
               { label: 'Highlights', id: 'videos' },
-              { label: 'Our Works', id: 'editing' },
+              { label: 'Our Clients', id: 'testimonials' },
               { label: 'Royography', url: '/' },
               { label: 'About', id: 'vision' },
               { label: 'Contact', id: 'hire' }
@@ -1623,7 +1623,7 @@ export default function App() {
               { label: 'At Glance', id: 'gallery', icon: Compass },
               { label: 'Services', id: 'services', icon: Sliders },
               { label: 'Highlights', id: 'videos', icon: Play },
-              { label: 'Our Works', id: 'editing', icon: Video },
+              { label: 'Our Clients', id: 'testimonials', icon: Video },
               { label: 'Royography', url: '/', icon: Camera },
               { label: 'About', id: 'vision', icon: Sparkles },
               { label: 'Contact', id: 'hire', icon: Send }
@@ -3047,7 +3047,7 @@ export default function App() {
             { id: 'gallery', label: 'At Glance' },
             { id: 'services', label: 'Services' },
             { id: 'videos', label: 'Highlights' },
-            { id: 'editing', label: 'Our Works' },
+            { id: 'testimonials', label: 'Our Clients' },
             { id: 'vision', label: 'About' },
             { id: 'hire', label: 'Contact' }
           ].map(sec => (
