@@ -81,102 +81,6 @@ const ThreadsIcon = (props) => (
   </svg>
 );
 
-const PURPOSE_OPTIONS = [
-  { value: "Hire for Video Editing (PAID)", label: "Hire for Video Editing (PAID)" },
-  { value: "Hire for Podcast/YT Video Editing (PAID)", label: "Hire for Podcast/YT Video Editing (PAID)" },
-  { value: "Hire for Photoshoot (PAID)", label: "Hire for Photoshoot (PAID)" },
-  { value: "Ask for Collaboration", label: "Ask for Collaboration" },
-  { value: "Let's Work Together", label: "Let's Work Together" },
-  { value: "Avgeek - Let's Connect", label: "Avgeek - Let's Connect" },
-  { value: "Planespotting", label: "Planespotting" },
-  { value: "Want to join the 'Vignette' team", label: "Want to join the 'Vignette' team" }
-];
-
-const TITLE_OPTIONS = [
-  { value: "Mr", label: "Mr" },
-  { value: "Mrs", label: "Mrs" },
-  { value: "Ms", label: "Ms" }
-];
-
-const CustomSelect = ({ id, value, onChange, options, disabled, placeholder = "Select", inModal = false }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const wrapperRef = useRef(null);
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const bgClass = inModal ? 'bg-[#fffff0] dark:bg-zinc-900' : 'bg-[#fffff0] dark:bg-zinc-950';
-  const menuBgClass = inModal ? 'bg-[#FAF9F6] dark:bg-zinc-900' : 'bg-[#FAF9F6] dark:bg-zinc-950';
-
-
-  return (
-    <div ref={wrapperRef} className="relative w-full">
-      <button
-        type="button"
-        id={id}
-        disabled={disabled}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
-        className={`w-full px-4 py-3 rounded-xl border flex items-center justify-between transition-all font-body ${
-          isOpen
-            ? 'border-brand-lightOrange dark:border-brand-darkGold ring-2 ring-brand-lightOrange/30 dark:ring-brand-darkGold/30 ' + bgClass
-            : 'border-zinc-300 dark:border-zinc-700 hover:border-brand-lightOrange/50 dark:hover:border-brand-darkGold/50 ' + bgClass
-        } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-      >
-        <span className={`truncate text-sm sm:text-base ${!value ? 'text-zinc-500 dark:text-zinc-400' : 'text-zinc-900 dark:text-white'}`}>
-          {value ? options.find(opt => opt.value === value)?.label || value : placeholder}
-        </span>
-        <Compass className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-0 text-brand-lightOrange dark:text-brand-darkGold' : 'rotate-180 text-zinc-400'}`} />
-      </button>
-
-      <div
-        className={`absolute z-50 w-full mt-2 rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-2xl overflow-hidden transition-all duration-300 origin-top ${
-          isOpen ? 'scale-y-100 opacity-100 pointer-events-auto' : 'scale-y-95 opacity-0 pointer-events-none'
-        } ${menuBgClass}`}
-      >
-        <div className="max-h-60 overflow-y-auto custom-scrollbar py-2">
-          {options.map((option, idx) => {
-            const isPaid = option.label.includes('(PAID)');
-            return (
-              <div
-                key={idx}
-                onClick={() => {
-                  onChange(option.value);
-                  setIsOpen(false);
-                }}
-                className={`px-4 py-3 text-sm sm:text-base cursor-pointer transition-colors flex items-center gap-2 ${
-                  idx !== options.length - 1 ? 'border-b border-black/50 dark:border-b-0 dark:border-transparent' : ''
-                } ${
-                  value === option.value
-                    ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10'
-                    : 'hover:bg-[#fffff0] dark:hover:bg-zinc-800'
-                }`}
-              >
-                {value === option.value && <CheckCircle className={`w-4 h-4 ${isPaid ? 'text-black dark:text-brand-darkGold' : 'text-brand-lightOrange dark:text-brand-darkGold'}`} />}
-                <span className={`
-                  ${value === option.value ? '' : 'pl-6'} 
-                  ${isPaid 
-                    ? 'bg-gradient-to-r from-black to-[#FF0000] bg-clip-text text-transparent font-heading font-bold dark:font-normal dark:font-body dark:bg-none ' + (value === option.value ? 'dark:text-brand-darkGold dark:font-bold' : 'dark:text-zinc-300 dark:hover:text-white')
-                    : 'font-body ' + (value === option.value ? 'text-brand-lightOrange dark:text-brand-darkGold font-bold' : 'text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white')
-                  }
-                `}>
-                  {option.label}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 
 // ==========================================
 // 0. MOCK DATA FALLBACKS
@@ -271,6 +175,53 @@ const CLIENT_REVIEWS = [
 // ==========================================
 // 1. HELPERS & CHILD COMPONENTS
 // ==========================================
+
+const CustomDropdown = ({ id, value, onChange, options, placeholder, disabled }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <div 
+        onClick={() => !disabled && setIsOpen(!isOpen)}
+        className={`w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white transition-all font-body flex justify-between items-center cursor-pointer select-none ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:border-brand-lightOrange/50 dark:hover:border-brand-darkGold/50 hover:shadow-lg'} ${isOpen ? 'ring-2 ring-brand-lightOrange/30 dark:ring-brand-darkGold/30 border-brand-lightOrange dark:border-brand-darkGold' : ''}`}
+      >
+        <span className={value ? 'text-zinc-900 dark:text-white' : 'text-zinc-500'}>
+          {value ? options.find(opt => opt.value === value)?.label || value : placeholder}
+        </span>
+        <Compass className={`w-4 h-4 text-zinc-400 transition-transform duration-300 ${isOpen ? '' : 'rotate-180'}`} />
+      </div>
+
+      <div 
+        className={`absolute z-50 w-full mt-2 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-2xl shadow-brand-lightOrange/10 dark:shadow-brand-darkGold/10 max-h-60 overflow-y-auto transition-all duration-300 origin-top ${isOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-95 pointer-events-none'}`}
+      >
+        {options.map((option) => (
+          <div
+            key={option.value}
+            onClick={() => {
+              onChange(option.value);
+              setIsOpen(false);
+            }}
+            className={`px-4 py-3 cursor-pointer flex items-center justify-between font-body text-sm transition-colors ${value === option.value ? 'bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 text-[#D10000] dark:text-[#FFD700] font-bold' : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'}`}
+          >
+            {option.label}
+            {value === option.value && <CheckCircle className="w-4 h-4" />}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const formatVignette = (text) => {
   if (typeof text !== 'string') return text;
@@ -2371,15 +2322,25 @@ export default function App() {
 
                       {/* Purpose Dropdown */}
                       <div className="flex flex-col gap-2">
-                        <label htmlFor="form-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                        <label className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                           Purpose
                         </label>
-                        <CustomSelect
+                        <CustomDropdown
                           id="form-purpose"
                           value={formState.purpose}
                           onChange={(val) => setFormState(prev => ({ ...prev, purpose: val }))}
-                          options={PURPOSE_OPTIONS}
                           disabled={formSubmitting}
+                          placeholder="Select"
+                          options={[
+                            { value: 'Hire for Video Editing (PAID)', label: 'Hire for Video Editing (PAID)' },
+                            { value: 'Hire for Podcast/YT Video Editing (PAID)', label: 'Hire for Podcast/YT Video Editing (PAID)' },
+                            { value: 'Hire for Photoshoot (PAID)', label: 'Hire for Photoshoot (PAID)' },
+                            { value: 'Ask for Collaboration', label: 'Ask for Collaboration' },
+                            { value: 'Let\'s Work Together', label: 'Let\'s Work Together' },
+                            { value: 'Avgeek - Let\'s Connect', label: 'Avgeek - Let\'s Connect' },
+                            { value: 'Planespotting', label: 'Planespotting' },
+                            { value: 'Want to join the \'Vignette\' team', label: 'Want to join the \'Vignette\' team' }
+                          ]}
                         />
                       </div>
 
@@ -2387,15 +2348,20 @@ export default function App() {
                       <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
                         {/* Salutation Dropdown */}
                         <div className="flex flex-col gap-2 sm:col-span-3">
-                          <label htmlFor="form-salutation" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                          <label className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                             Title
                           </label>
-                          <CustomSelect
+                          <CustomDropdown
                             id="form-salutation"
                             value={formState.salutation}
                             onChange={(val) => setFormState(prev => ({ ...prev, salutation: val }))}
-                            options={TITLE_OPTIONS}
                             disabled={formSubmitting}
+                            placeholder="Select"
+                            options={[
+                              { value: 'Mr', label: 'Mr' },
+                              { value: 'Mrs', label: 'Mrs' },
+                              { value: 'Ms', label: 'Ms' }
+                            ]}
                           />
                         </div>
 
@@ -2442,7 +2408,7 @@ export default function App() {
                             Mobile Number (WhatsApp Number)
                           </label>
                           <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
-                            <span className="flex items-center px-3.5 bg-[#fffff0] dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
+                            <span className="flex items-center px-3.5 bg-white dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
                               +91
                             </span>
                             <input
@@ -2849,30 +2815,49 @@ export default function App() {
                   <label htmlFor="modal-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                     Purpose
                   </label>
-                  <CustomSelect
-                    id="modal-purpose"
-                    value={formState.purpose}
-                    onChange={(val) => setFormState(prev => ({ ...prev, purpose: val }))}
-                    options={PURPOSE_OPTIONS}
-                    disabled={formSubmitting}
-                    inModal={true}
-                  />
+                  <div className="relative">
+                    <select
+                      id="modal-purpose"
+                      value={formState.purpose}
+                      disabled={formSubmitting}
+                      onChange={(e) => setFormState(prev => ({ ...prev, purpose: e.target.value }))}
+                      required
+                      className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
+                    >
+                      <option value="" disabled>Select</option>
+                      <option value="Hire for Video Editing (PAID)">Hire for Video Editing (PAID)</option>
+                      <option value="Hire for Podcast/YT Video Editing (PAID)">Hire for Podcast/YT Video Editing (PAID)</option>
+                      <option value="Hire for Photoshoot (PAID)">Hire for Photoshoot (PAID)</option>
+                      <option value="Ask for Collaboration">Ask for Collaboration</option>
+                      <option value="Let's Work Together">Let's Work Together</option>
+                      <option value="Avgeek - Let's Connect">Avgeek - Let's Connect</option>
+                      <option value="Planespotting">Planespotting</option>
+                      <option value="Want to join the 'Vignette' team">Want to join the 'Vignette' Team</option>
+                    </select>
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
+                      <Compass className="w-4 h-4 transform rotate-180" />
+                    </div>
+                  </div>
                 </div>
 
                 {/* Title + Names Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
                   {/* Title Dropdown */}
                   <div className="flex flex-col gap-2 sm:col-span-3">
-                    <label htmlFor="modal-salutation" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                    <label className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                       Title
                     </label>
-                    <CustomSelect
+                    <CustomDropdown
                       id="modal-salutation"
                       value={formState.salutation}
                       onChange={(val) => setFormState(prev => ({ ...prev, salutation: val }))}
-                      options={TITLE_OPTIONS}
                       disabled={formSubmitting}
-                      inModal={true}
+                      placeholder="Select"
+                      options={[
+                        { value: 'Mr', label: 'Mr' },
+                        { value: 'Mrs', label: 'Mrs' },
+                        { value: 'Ms', label: 'Ms' }
+                      ]}
                     />
                   </div>
 
@@ -2919,7 +2904,7 @@ export default function App() {
                       Mobile Number (WhatsApp Number)
                     </label>
                     <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
-                      <span className="flex items-center px-3.5 bg-[#fffff0] dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
+                      <span className="flex items-center px-3.5 bg-white dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
                         +91
                       </span>
                       <input

@@ -315,11 +315,11 @@ form .flex > span {
   transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light mode form fields: ivory bg inputs over ivory card */
+/* Light mode form fields: white bg inputs over ivory card */
 html:not(.dark) form input,
 html:not(.dark) form select,
 html:not(.dark) form textarea {
-  background-color: #fffff0 !important;
+  background-color: #ffffff !important;
 }
 
 /* Prevent textarea user resize globally */
