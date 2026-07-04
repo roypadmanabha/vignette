@@ -84,16 +84,7 @@ const ThreadsIcon = (props) => (
 // 0. MOCK DATA FALLBACKS
 // ==========================================
 
-const MOCK_GALLERY = [
-  { id: 1, type: 'image', title: 'Swiss Alps Horizon', category: 'Travel', media_url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1000&auto=format&fit=crop&q=80', display_order: 1 },
-  { id: 2, type: 'image', title: 'Kyoto Golden Sunset', category: 'Travel', media_url: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1000&auto=format&fit=crop&q=80', display_order: 2 },
-  { id: 3, type: 'image', title: 'Editing Workflow Setup', category: 'Lifestyle', media_url: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1000&auto=format&fit=crop&q=80', display_order: 3 },
-  { id: 4, type: 'image', title: 'In-Flight wing view Boeing 777', category: 'Avgeek', media_url: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1000&auto=format&fit=crop&q=80', display_order: 4 },
-  { id: 5, type: 'image', title: 'Cozy Creative Nook', category: 'Lifestyle', media_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1000&auto=format&fit=crop&q=80', display_order: 5 },
-  { id: 6, type: 'image', title: 'Runway Approach Landing', category: 'Avgeek', media_url: 'https://images.unsplash.com/photo-1507608869274-d3177c8bb4c7?w=1000&auto=format&fit=crop&q=80', display_order: 6 },
-  { id: 7, type: 'image', title: 'Golden Hour Silhouette', category: 'Storytelling', media_url: 'https://images.unsplash.com/photo-1472214222541-d510753a8707?w=1000&auto=format&fit=crop&q=80', display_order: 7 },
-  { id: 8, type: 'image', title: 'Neon Urban Cyberpunk', category: 'Storytelling', media_url: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1000&auto=format&fit=crop&q=80', display_order: 8 }
-];
+const MOCK_GALLERY = [];
 
 const MOCK_VIDEOS = [
   {
@@ -1042,7 +1033,7 @@ export default function App() {
             return edit;
           });
 
-          if (loadedImages.length > 0) setGalleryItems(loadedImages);
+          // if (loadedImages.length > 0) setGalleryItems(loadedImages);
           if (loadedVideos.length > 0) setVideos(loadedVideos);
           if (loadedEdits.length > 0) setEdits(loadedEdits);
         }
@@ -2103,7 +2094,7 @@ export default function App() {
 
               {/* Inquiries Form Column */}
               <div className="reveal lg:col-span-7">
-                <div className="p-5 sm:p-8 md:p-10 rounded-3xl bg-[#f5f5dd] dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-2xl">
+                <div className="p-5 sm:p-8 md:p-10 rounded-3xl bg-white dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 shadow-2xl">
 
                   {formSuccess ? (
                     /* Success State checkmark container animation */
@@ -2144,7 +2135,7 @@ export default function App() {
                             disabled={formSubmitting}
                             onChange={(e) => setFormState(prev => ({ ...prev, purpose: e.target.value }))}
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
+                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
                           >
                             <option value="" disabled>Select</option>
                             <option value="Hire for Video Editing (PAID)">Hire for Video Editing (PAID)</option>
@@ -2176,7 +2167,7 @@ export default function App() {
                               disabled={formSubmitting}
                               onChange={(e) => setFormState(prev => ({ ...prev, salutation: e.target.value }))}
                               required
-                              className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
+                              className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
                             >
                               <option value="" disabled>Select</option>
                               <option value="Mr">Mr</option>
@@ -2202,7 +2193,7 @@ export default function App() {
                             disabled={formSubmitting}
                             required
                             minLength={2}
-                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
                           />
                         </div>
 
@@ -2219,7 +2210,7 @@ export default function App() {
                             disabled={formSubmitting}
                             required
                             minLength={2}
-                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
                           />
                         </div>
                       </div>
@@ -2231,8 +2222,8 @@ export default function App() {
                           <label htmlFor="form-mobile" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                             Mobile Number (WhatsApp Number)
                           </label>
-                          <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
-                            <span className="flex items-center px-3.5 bg-zinc-100 dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
+                          <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
+                            <span className="flex items-center px-3.5 bg-[#f5f5dd] dark:bg-zinc-900 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
                               +91
                             </span>
                             <input
@@ -2261,7 +2252,7 @@ export default function App() {
                             placeholder="john@example.com"
                             disabled={formSubmitting}
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                            className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
                           />
                         </div>
                       </div>
@@ -2287,7 +2278,7 @@ export default function App() {
                           required
                           minLength={30}
                           maxLength={5000}
-                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-none"
+                          className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-[#fffff0] dark:bg-zinc-950 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-none"
                         />
                       </div>
 
