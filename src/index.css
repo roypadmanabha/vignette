@@ -274,14 +274,14 @@ form .flex > span {
   width: 100%;
   height: 100%;
   background-size: cover;
-  background-position: top right;
+  background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.25;
+  opacity: 1;
   transition: opacity 0.4s, filter 0.4s;
 }
 
 .dark .hero-bg-image {
-  opacity: 0.15;
+  opacity: 1;
 }
 
 .hero-overlay {
@@ -289,9 +289,7 @@ form .flex > span {
 }
 
 @media (max-width: 1024px) {
-  .hero-bg-image {
-    background-position: top center;
-  }
+  /* removed background-position override to keep it center */
 }
 
 @media (max-width: 768px) {
