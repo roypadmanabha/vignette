@@ -914,7 +914,7 @@ export default function App() {
 
   // Lock background scroll when modal is active
   useEffect(() => {
-    if (isHireModalOpen || legalModal) {
+    if (isHireModalOpen || legalModal || videoModalUrl !== null || lightboxIndex !== null) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -922,7 +922,7 @@ export default function App() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isHireModalOpen, legalModal]);
+  }, [isHireModalOpen, legalModal, videoModalUrl, lightboxIndex]);
 
   // Close modal on Escape key press
   useEffect(() => {
