@@ -277,25 +277,21 @@ form .flex > span {
   inset: 0;
   width: 100%;
   height: 100%;
-  background-size: cover; /* On desktop, we'll position and scale with width */
-  background-position: right top;
+  background-size: cover;
+  background-position: center bottom;
   background-repeat: no-repeat;
   /* Cinematic monochrome: blur, contrast up, brightness down */
   filter: blur(0.5px) contrast(1.15) brightness(0.9) grayscale(100%) sepia(0.2) hue-rotate(-15deg);
   /* Professional multi-directional fade mask */
   -webkit-mask-image: 
-    linear-gradient(to right, transparent 0%, transparent 20%, rgba(0,0,0,0.8) 55%, black 100%),
-    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 15%, black 85%, transparent 100%);
+    linear-gradient(to right, transparent 0%, transparent 45%, rgba(0,0,0,0.8) 70%, black 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 15%, black 90%, transparent 100%);
   -webkit-mask-composite: source-in;
   mask-image: 
-    linear-gradient(to right, transparent 0%, transparent 20%, rgba(0,0,0,0.8) 55%, black 100%),
-    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 15%, black 85%, transparent 100%);
+    linear-gradient(to right, transparent 0%, transparent 45%, rgba(0,0,0,0.8) 70%, black 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, black 15%, black 90%, transparent 100%);
   mask-composite: intersect;
   transition: opacity 0.4s, filter 0.4s;
-  /* Width constraint for desktop */
-  width: 55%;
-  left: auto;
-  right: 0;
   opacity: 0.9;
 }
 
