@@ -768,21 +768,6 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
         }`}
       onClick={handleClose}
     >
-      {/* Close Button — sits ABOVE the video frame, always fully visible */}
-      <div
-        className="flex justify-end w-full mb-2 flex-shrink-0 z-40"
-        style={{ maxWidth: aspectRatio <= 1 ? `min(92vw, calc((100svh - 100px) * ${aspectRatio}))` : 'min(896px, 92vw)' }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          className="p-2 bg-white/15 hover:bg-white/30 rounded-full text-white transition-colors backdrop-blur-sm border border-white/20 shadow-lg"
-          onClick={handleClose}
-          aria-label="Close video"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
-
       {/* Video Container — fluid portrait/landscape sizing, never overflows screen */}
       <div
         className={`relative bg-zinc-950 rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex items-center justify-center flex-shrink-0 transition-premium duration-500 ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
@@ -798,6 +783,14 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
         onClick={(e) => e.stopPropagation()}
         onMouseMove={resetControlsTimeout}
       >
+        {/* Close Button — sits inside the video frame, top right corner */}
+        <button
+          className={`absolute top-4 right-4 z-50 p-1.5 bg-black/40 hover:bg-black/60 rounded-full text-white transition-opacity duration-300 backdrop-blur-md border border-white/20 shadow-lg ${showControls || !isPlaying ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+          onClick={handleClose}
+          aria-label="Close video"
+        >
+          <X className="w-4 h-4" />
+        </button>
         <video
           ref={videoRef}
           src={src || undefined}
