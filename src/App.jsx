@@ -1758,7 +1758,7 @@ export default function App() {
                 <div className="absolute w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] rounded-full border border-red-500/20 dark:border-red-400/25" />
 
                 {/* Main Logo Frame */}
-                <div className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] rounded-full overflow-hidden border-[1.5px] border-white/80 dark:border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.8)] dark:shadow-[0_0_40px_rgba(209,0,0,0.2)] z-10 bg-transparent flex items-center justify-center backdrop-blur-sm">
+                <div className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] rounded-full overflow-hidden border-[1.5px] border-white/80 dark:border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.8)] dark:shadow-[0_0_40px_rgba(209,0,0,0.2)] z-10 bg-transparent flex items-center justify-center">
                   <img
                     src="logo-icon.png"
                     alt="Vignette Brand Logo"
