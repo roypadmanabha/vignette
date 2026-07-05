@@ -1721,7 +1721,7 @@ export default function App() {
                 </div>
 
                 {/* H1 Heading */}
-                <h1 className="reveal font-heading font-black text-hero-fluid tracking-tight leading-[1.1] select-none text-[#d10000] mb-6">
+                <h1 className="reveal font-heading font-black text-hero-fluid tracking-tight leading-[1.1] select-none text-[#d10000] dark:text-[#ffec4e] mb-6">
                   Frames that tell a story.
                 </h1>
 
