@@ -365,7 +365,7 @@ form .flex > span {
   background: linear-gradient(90deg, #111111 0%, #a80000 100%);
 }
 .dark .pill-gradient-black-red {
-  background: linear-gradient(90deg, #111111 0%, #c4b53b 100%);
+  background: #1A1A1A;
 }
 
 /* Mobile adjustments */
