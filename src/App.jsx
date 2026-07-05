@@ -1694,7 +1694,7 @@ export default function App() {
             {/* Static Background Image */}
             <div
               className="hero-bg-image"
-              style={{ backgroundImage: "url('virat.png')" }}
+              style={{ backgroundImage: "url('hero-section-background-image.png')" }}
             />
 
             {/* Looping Muted Local Video Background — REMOVED; using static virat.png */}
