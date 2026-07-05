@@ -193,7 +193,7 @@ const CustomDropdown = ({ id, value, onChange, options, placeholder, disabled })
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <div 
+      <div
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={`w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white transition-all font-body flex justify-between items-center cursor-pointer select-none ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:border-brand-lightOrange/50 dark:hover:border-brand-darkGold/50 hover:shadow-lg'} ${isOpen ? 'ring-2 ring-brand-lightOrange/30 dark:ring-brand-darkGold/30 border-brand-lightOrange dark:border-brand-darkGold' : ''}`}
       >
@@ -203,7 +203,7 @@ const CustomDropdown = ({ id, value, onChange, options, placeholder, disabled })
         <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </div>
 
-      <div 
+      <div
         className={`absolute z-50 w-full mt-2 py-2 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl shadow-2xl shadow-brand-lightOrange/10 dark:shadow-brand-darkGold/10 max-h-60 overflow-y-auto transition-all duration-300 origin-top ${isOpen ? 'opacity-100 scale-y-100 pointer-events-auto' : 'opacity-0 scale-y-95 pointer-events-none'}`}
       >
         {options.map((option) => (
@@ -1739,15 +1739,15 @@ export default function App() {
               <div className="reveal flex flex-col sm:flex-row gap-4 mt-8 w-full justify-center lg:justify-start">
                 <button
                   onClick={() => scrollToSection('gallery')}
-                  className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black shadow-lg hover:shadow-brand-lightOrange/30 dark:hover:shadow-brand-darkGold/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
+                  className="px-8 py-3.5 rounded-2xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-black to-[#d10000] dark:from-black dark:to-[#ffec4e] shadow-lg hover:shadow-[#d10000]/30 dark:hover:shadow-[#ffec4e]/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
                 >
-                  View My Work →
+                  View our works
                 </button>
                 <button
                   onClick={() => setIsHireModalOpen(true)}
-                  className="px-8 py-3.5 rounded-full font-brand font-extrabold text-sm border-2 border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 hover:bg-zinc-800/5 dark:hover:bg-white/5 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300 dark:text-white"
+                  className="px-8 py-3.5 rounded-2xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-[#d10000] to-black dark:from-[#ffec4e] dark:to-black shadow-lg hover:shadow-[#d10000]/30 dark:hover:shadow-[#ffec4e]/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
                 >
-                  Hire Me
+                  Hire Us
                 </button>
               </div>
             </div>
@@ -2566,8 +2566,8 @@ export default function App() {
                 <div
                   key={index}
                   className={`rounded-2xl border-2 transition-colors duration-300 cursor-pointer ${isOpen
-                      ? 'border-[#e31c25] bg-[#fffff0] dark:bg-transparent dark:border-brand-darkGold'
-                      : 'border-brand-lightRed/20 dark:border-zinc-800 bg-white dark:bg-transparent hover:border-[#e31c25]/50 dark:hover:border-brand-darkGold/50'
+                    ? 'border-[#e31c25] bg-[#fffff0] dark:bg-transparent dark:border-brand-darkGold'
+                    : 'border-brand-lightRed/20 dark:border-zinc-800 bg-white dark:bg-transparent hover:border-[#e31c25]/50 dark:hover:border-brand-darkGold/50'
                     }`}
                   onClick={() => setOpenFaq(isOpen ? null : index)}
                 >
@@ -2662,8 +2662,8 @@ export default function App() {
               <ul className="flex flex-col gap-3.5 font-body text-xs text-zinc-600 dark:text-zinc-400">
                 <li className="flex items-center gap-3">
                   <Phone className="w-4 h-4 text-[#D10000] dark:text-[#FFD700] flex-shrink-0" />
-                  <a href="tel:+918258814126" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
-                    +91 8258814126
+                  <a href="tel:+919342385565" className="hover:text-zinc-950 dark:hover:text-white transition-colors">
+                    +91 9342385565
                   </a>
                 </li>
                 <li className="flex items-center gap-3">
