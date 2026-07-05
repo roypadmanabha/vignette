@@ -774,11 +774,11 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
           }`}
         style={{
           aspectRatio: `${aspectRatio}`,
-          maxHeight: 'calc(100dvh - 40px)',
-          maxWidth: 'calc(100vw - 40px)',
+          maxHeight: 'calc(100svh - 100px)',
+          maxWidth: '92vw',
           width: aspectRatio > 1
-            ? 'min(896px, calc(100vw - 40px))'
-            : `min(calc(100vw - 40px), calc((100dvh - 40px) * ${aspectRatio}))`,
+            ? 'min(896px, 92vw)'
+            : `min(92vw, calc((100svh - 100px) * ${aspectRatio}))`,
         }}
         onClick={(e) => e.stopPropagation()}
         onMouseMove={resetControlsTimeout}
@@ -3043,22 +3043,22 @@ export default function App() {
             }`}
           aria-label="Scroll back to top"
         >
-          <svg className="absolute inset-0 w-full h-full transform -rotate-90 pointer-events-none select-none">
+          <svg viewBox="0 0 44 44" className="absolute inset-0 w-full h-full transform -rotate-90 pointer-events-none select-none">
             <circle
               cx="22"
               cy="22"
-              r="18"
+              r="19"
               className="stroke-zinc-200 dark:stroke-zinc-800 fill-none"
               strokeWidth="2.5"
             />
             <circle
               cx="22"
               cy="22"
-              r="18"
-              className="stroke-brand-lightOrange dark:stroke-brand-darkGold fill-none"
+              r="19"
+              className="stroke-[#d10000] dark:stroke-[#ffec4e] fill-none"
               strokeWidth="2.5"
-              strokeDasharray={2 * Math.PI * 18}
-              strokeDashoffset={2 * Math.PI * 18 * (1 - scrollProgress / 100)}
+              strokeDasharray={2 * Math.PI * 19}
+              strokeDashoffset={2 * Math.PI * 19 * (1 - scrollProgress / 100)}
               strokeLinecap="round"
             />
           </svg>
