@@ -1739,13 +1739,13 @@ export default function App() {
               <div className="reveal flex flex-col sm:flex-row gap-4 mt-8 w-full justify-center lg:justify-start">
                 <button
                   onClick={() => scrollToSection('gallery')}
-                  className="px-8 py-3.5 rounded-2xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-black to-[#d10000] dark:from-black dark:to-[#ffec4e] shadow-lg hover:shadow-[#d10000]/30 dark:hover:shadow-[#ffec4e]/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
+                  className="px-8 py-3.5 rounded-2xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-black to-[#d10000] dark:from-[#27231F] dark:to-[#ffec4e] shadow-lg hover:shadow-[#d10000]/30 dark:hover:shadow-[#ffec4e]/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
                 >
                   View our works
                 </button>
                 <button
                   onClick={() => setIsHireModalOpen(true)}
-                  className="px-8 py-3.5 rounded-2xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-[#d10000] to-black dark:from-[#ffec4e] dark:to-black shadow-lg hover:shadow-[#d10000]/30 dark:hover:shadow-[#ffec4e]/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
+                  className="px-8 py-3.5 rounded-2xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-[#d10000] to-black dark:from-[#ffec4e] dark:to-[#27231F] shadow-lg hover:shadow-[#d10000]/30 dark:hover:shadow-[#ffec4e]/20 hover:-translate-y-[3px] hover:scale-[1.03] active:scale-95 transition-all duration-300"
                 >
                   Hire Us
                 </button>
