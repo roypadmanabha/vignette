@@ -1684,121 +1684,121 @@ export default function App() {
       <main className="relative z-10 w-full overflow-x-hidden">
 
         {/* 2.5. HERO SECTION */}
-        <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 mt-0">
+        <div className="p-4 sm:p-6 lg:p-8 xl:p-10 w-full max-w-[1440px] mx-auto">
           <section
             id="home"
-            className="hero-section min-h-[90vh] flex flex-col justify-center items-center py-20 lg:py-24 relative select-none overflow-hidden rounded-[32px] lg:rounded-[48px] mt-4"
+            className="hero-section min-h-[85vh] flex flex-col justify-center items-center relative select-none rounded-[24px] lg:rounded-[32px] overflow-hidden shadow-sm border border-black/5 dark:border-white/5"
           >
-            {/* Background elements grouped for smooth edge masking */}
-            <div className="hero-bg-container">
-              {/* Static Background Image */}
-              <div
-                className="hero-bg-image"
-                style={{ backgroundImage: "url('hero-section-background-image.png')" }}
-              />
+          {/* Static Background Image */}
+          <img
+            src="hero-section-background-image.png"
+            alt="Hero Background"
+            className="hero-bg-image pointer-events-none select-none"
+            draggable="false"
+          />
+
+          <div className="hero-overlay" />
+
+          {/* Vertical Dot Navigation Capsule */}
+          <div className="dot-nav-container hidden lg:flex">
+            <div className="dot-nav-item active" />
+            <div className="dot-nav-item" />
+            <div className="dot-nav-item" />
+            <div className="dot-nav-item" />
+            <div className="dot-nav-item" />
+          </div>
+
+          {/* Hero Content Grid */}
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center w-full max-w-7xl px-8 py-16 lg:px-16 lg:py-20 flex-grow">
+
+            {/* Left Column: Text Content */}
+            <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
+              {/* Eyebrow */}
+              <div className="reveal flex items-center justify-center lg:justify-start gap-2 mb-6 font-brand font-extrabold text-[10px] sm:text-xs tracking-[0.25em] text-zinc-950 dark:text-white uppercase select-none w-full">
+                <Sparkles className="w-4 h-4 text-[#d10000] animate-pulse flex-shrink-0" />
+                <span className="whitespace-nowrap">DIGITAL CREATOR • STORYTELLER • AVGEEK</span>
+              </div>
+
+              {/* H1 Heading */}
+              <h1 className="reveal font-heading font-black text-hero-fluid tracking-tight leading-[1.1] select-none text-[#d10000] mb-6">
+                Frames that tell a story.
+              </h1>
+
+              {/* Short Bio Paragraph */}
+              <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[520px] leading-relaxed transition-colors mb-10">
+                Welcome to <strong className="font-bold select-none text-black dark:text-white">Vignette</strong>,
+                the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
+                and high-altitude aviation storytelling into cinematic digital capsules.
+              </p>
+
+              {/* CTA Buttons */}
+              <div className="reveal flex flex-col sm:flex-row gap-4 w-full justify-center lg:justify-start">
+                <button
+                  onClick={() => scrollToSection('gallery')}
+                  className="w-full sm:w-auto px-8 py-4 rounded-full font-brand font-extrabold text-sm text-white pill-gradient-black-red shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                >
+                  View our works
+                </button>
+                <button
+                  onClick={() => setIsHireModalOpen(true)}
+                  className="w-full sm:w-auto px-8 py-4 rounded-full font-brand font-extrabold text-sm text-white bg-gradient-to-r from-[#d10000] to-[#111111] dark:from-[#ffec4e] dark:to-[#111111] shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(0,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                >
+                  Hire Us
+                </button>
+              </div>
             </div>
 
-            <div className="hero-overlay" />
+            {/* Right Column: Visual Portrait with Floating Badge Stats */}
+            <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0 w-full h-full min-h-[300px] sm:min-h-[380px]">
 
-            {/* Vertical Dot Navigation Capsule */}
-            <div className="dot-nav-container hidden lg:flex">
-              <div className="dot-nav-item active" />
-              <div className="dot-nav-item" />
-              <div className="dot-nav-item" />
-              <div className="dot-nav-item" />
-              <div className="dot-nav-item" />
-            </div>
+              {/* Visual Graphic Backdrop (Concentric circles behind logo) */}
+              <div className="absolute w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] rounded-full bg-red-500/5 dark:bg-red-500/10 blur-xl" />
+              <div className="absolute w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] rounded-full border border-red-500/10 dark:border-red-400/15" />
+              <div className="absolute w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] rounded-full border border-red-500/20 dark:border-red-400/25" />
 
-            {/* Hero Content Grid */}
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center w-full max-w-7xl px-0 lg:pl-12 py-4">
+              {/* Main Logo Frame */}
+              <div className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] rounded-full overflow-hidden border-[1.5px] border-white/80 dark:border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.8)] dark:shadow-[0_0_40px_rgba(209,0,0,0.2)] z-10 bg-transparent flex items-center justify-center backdrop-blur-sm">
+                <img
+                  src="logo-icon.png"
+                  alt="Vignette Brand Logo"
+                  className="w-full h-full object-contain p-6 select-none pointer-events-none drop-shadow-[0_0_15px_rgba(209,0,0,0.4)]"
+                  draggable="false"
+                />
+              </div>
 
-              {/* Left Column: Text Content */}
-              <div className="lg:col-span-7 flex flex-col items-center lg:items-start text-center lg:text-left">
-                {/* Eyebrow */}
-                <div className="reveal flex items-center justify-center lg:justify-start gap-2 mb-6 font-brand font-extrabold text-[10px] sm:text-xs tracking-[0.25em] text-zinc-950 dark:text-white uppercase select-none w-full">
-                  <Sparkles className="w-4 h-4 text-[#d10000] animate-pulse flex-shrink-0" />
-                  <span className="whitespace-nowrap">DIGITAL CREATOR • STORYTELLER • AVGEEK</span>
-                </div>
-
-                {/* H1 Heading */}
-                <h1 className="reveal font-heading font-black text-hero-fluid tracking-tight leading-[1.1] select-none text-[#d10000] mb-6">
-                  Frames that tell a story.
-                </h1>
-
-                {/* Short Bio Paragraph */}
-                <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[520px] leading-relaxed transition-colors mb-10">
-                  Welcome to <strong className="font-bold select-none text-black dark:text-white">Vignette</strong>,
-                  the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
-                  and high-altitude aviation storytelling into cinematic digital capsules.
-                </p>
-
-                {/* CTA Buttons */}
-                <div className="reveal flex flex-col sm:flex-row gap-4 w-full justify-center lg:justify-start">
-                  <button
-                    onClick={() => scrollToSection('gallery')}
-                    className="w-full sm:w-auto px-8 py-4 rounded-[18px] font-brand font-extrabold text-sm text-white pill-gradient-black-red shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
-                  >
-                    View our works
-                  </button>
-                  <button
-                    onClick={() => setIsHireModalOpen(true)}
-                    className="w-full sm:w-auto px-8 py-4 rounded-[18px] font-brand font-extrabold text-sm text-white bg-gradient-to-r from-[#d10000] to-[#111111] dark:from-[#ffec4e] dark:to-[#111111] shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(0,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
-                  >
-                    Hire Us
-                  </button>
+              {/* Floating Badge 1: 5+ Years Experience */}
+              <div className="absolute left-[0%] sm:left-[-5%] top-[10%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2.5 z-20 hover:scale-105 transition-transform duration-300 opacity-40 lg:opacity-100">
+                <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
+                  5+
+                </span>
+                <div className="flex flex-col leading-tight">
+                  <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">Years of</span>
+                  <span className="font-body text-[8px] text-zinc-500 uppercase tracking-widest">Experience</span>
                 </div>
               </div>
 
-              {/* Right Column: Visual Portrait with Floating Badge Stats */}
-              <div className="lg:col-span-5 flex justify-center items-center relative mt-4 lg:mt-0 w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] mx-auto">
-
-                {/* Visual Graphic Backdrop (Concentric circles behind logo) */}
-                <div className="absolute w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] rounded-full bg-red-500/5 dark:bg-red-500/10 blur-xl" />
-                <div className="absolute w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] rounded-full border border-red-500/10 dark:border-red-400/15" />
-                <div className="absolute w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] rounded-full border border-red-500/20 dark:border-red-400/25" />
-
-                {/* Main Logo Frame */}
-                <div className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] rounded-full overflow-hidden border-[1.5px] border-white/80 dark:border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.8)] dark:shadow-[0_0_40px_rgba(209,0,0,0.2)] z-10 bg-transparent flex items-center justify-center backdrop-blur-sm">
-                  <img
-                    src="logo-icon.png"
-                    alt="Vignette Brand Logo"
-                    className="w-full h-full object-contain p-6 select-none pointer-events-none drop-shadow-[0_0_15px_rgba(209,0,0,0.4)]"
-                    draggable="false"
-                  />
-                </div>
-
-                {/* Floating Badge 1: 5+ Years Experience */}
-                <div className="absolute left-[-10%] sm:left-[-5%] top-[15%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2.5 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
-                    5+
-                  </span>
-                  <div className="flex flex-col leading-tight">
-                    <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">Years of</span>
-                    <span className="font-body text-[8px] text-zinc-500 uppercase tracking-widest">Experience</span>
-                  </div>
-                </div>
-
-                {/* Floating Badge 2: 200+ Posts */}
-                <div className="absolute right-[-10%] sm:right-[0%] top-[40%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
-                    200+
-                  </span>
-                  <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider leading-none">Posts</span>
-                </div>
-
-                {/* Floating Badge 3: 2.1K Followers */}
-                <div className="absolute left-[5%] bottom-[15%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
-                    2.1K
-                  </span>
-                  <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider leading-none">Followers</span>
-                </div>
-
-                {/* Curved Ribbon Tag Line at Bottom */}
-                <div className="absolute bottom-[-15px] sm:bottom-[-20px] left-1/2 -translate-x-1/2 px-6 py-2.5 pill-gradient-black-red rounded-full shadow-xl text-[10px] font-brand font-extrabold uppercase tracking-[0.2em] text-white whitespace-nowrap z-20 select-none border border-white/10">
-                  Telling Stories One Frame At A Time
-                </div>
+              {/* Floating Badge 2: 200+ Posts */}
+              <div className="absolute right-[0%] sm:right-[5%] top-[45%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300 opacity-40 lg:opacity-100">
+                <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
+                  200+
+                </span>
+                <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider leading-none">Posts</span>
               </div>
+
+              {/* Floating Badge 3: 2.1K Followers */}
+              <div className="absolute left-[10%] bottom-[15%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300 opacity-40 lg:opacity-100">
+                <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
+                  2.1K
+                </span>
+                <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider leading-none">Followers</span>
+              </div>
+
+              {/* Curved Ribbon Tag Line at Bottom */}
+              <div className="absolute bottom-[-15px] sm:bottom-[-20px] left-1/2 -translate-x-1/2 px-6 py-2.5 pill-gradient-black-red rounded-full shadow-xl text-[10px] font-brand font-extrabold uppercase tracking-[0.2em] text-white whitespace-nowrap z-20 select-none border border-white/10">
+                Telling Stories One Frame At A Time
+              </div>
+            </div>
+          </div>
             </div>
           </section>
         </div>
