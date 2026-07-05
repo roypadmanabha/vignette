@@ -1736,13 +1736,13 @@ export default function App() {
                 <div className="reveal flex flex-col sm:flex-row gap-4 w-full justify-center lg:justify-start">
                   <button
                     onClick={() => scrollToSection('gallery')}
-                    className="w-full sm:w-auto px-8 py-4 rounded-[18px] font-brand font-extrabold text-sm text-white pill-gradient-black-red shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                    className="w-full sm:w-auto px-8 py-4 rounded-[18px] font-brand font-extrabold text-sm text-white bg-gradient-to-r from-black to-[#d10000] dark:from-[#27231F] dark:to-[#ffec4e] shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
                   >
                     View our works
                   </button>
                   <button
                     onClick={() => setIsHireModalOpen(true)}
-                    className="w-full sm:w-auto px-8 py-4 rounded-[18px] font-brand font-extrabold text-sm text-white bg-gradient-to-r from-[#d10000] to-[#111111] dark:from-[#ffec4e] dark:to-[#111111] shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(0,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                    className="w-full sm:w-auto px-8 py-4 rounded-[18px] font-brand font-extrabold text-sm text-white bg-gradient-to-r from-[#d10000] to-black dark:from-[#ffec4e] dark:to-[#27231F] shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(0,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
                   >
                     Hire Us
                   </button>

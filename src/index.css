@@ -258,11 +258,8 @@ form .flex > span {
 .hero-section {
   position: relative;
   isolation: isolate;
-  background: radial-gradient(circle at top right, #F8F5EA, #F6F2E7);
+  background: transparent;
   width: 100%;
-}
-.dark .hero-section {
-  background: radial-gradient(circle at top right, #12100E, #0A0908);
 }
 
 .hero-bg-container {
@@ -272,6 +269,14 @@ form .flex > span {
   height: 100%;
   z-index: 0;
   pointer-events: none;
+  background: radial-gradient(circle at top right, #F8F5EA, #F6F2E7);
+}
+
+.dark .hero-bg-container {
+  background: radial-gradient(circle at top right, #12100E, #0A0908);
+  /* Seamless bottom fade in dark mode so the animated starfield backdrop shows through */
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
 }
 
 .hero-bg-image {
