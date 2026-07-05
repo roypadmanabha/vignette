@@ -2654,10 +2654,10 @@ export default function App() {
               </ul>
             </div>
 
-            {/* Contact Details */}
+            {/* Support */}
             <div className="flex flex-col gap-4 lg:border-l border-zinc-200 dark:border-zinc-800 lg:pl-8">
               <h4 className="font-heading font-black text-sm text-[#D10000] dark:text-[#FFD700] uppercase tracking-wider">
-                Contact Details
+                Support
               </h4>
               <ul className="flex flex-col gap-3.5 font-body text-xs text-zinc-600 dark:text-zinc-400">
                 <li className="flex items-center gap-3">
