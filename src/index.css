@@ -259,38 +259,51 @@ form .flex > span {
   position: relative;
   isolation: isolate;
   background: radial-gradient(circle at top right, #F8F5EA, #F6F2E7);
+  width: 100%;
 }
 .dark .hero-section {
   background: radial-gradient(circle at top right, #12100E, #0A0908);
 }
 
+.hero-bg-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .hero-bg-image {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  width: auto;
-  object-fit: contain;
-  object-position: right bottom;
-  z-index: 0;
-  /* Cinematic monochrome */
-  filter: blur(0.5px) contrast(1.15) brightness(0.9) grayscale(100%) sepia(0.2) hue-rotate(-15deg);
-  /* Professional multi-directional fade mask directly on the image */
+  background-size: cover;
+  background-position: right top;
+  background-repeat: no-repeat;
+  /* Cinematic washed grayscale with warm tint */
+  filter: grayscale(100%) sepia(0.25) brightness(1.18) contrast(0.85);
+  /* Multi-directional mask to fade out the left and bottom edges seamlessly */
   -webkit-mask-image: 
-    linear-gradient(to right, transparent 0%, transparent 10%, rgba(0,0,0,0.8) 45%, black 100%),
-    linear-gradient(to top, transparent 0%, rgba(0,0,0,0.6) 10%, black 25%, black 100%);
+    linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,1) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
   -webkit-mask-composite: source-in;
   mask-image: 
-    linear-gradient(to right, transparent 0%, transparent 10%, rgba(0,0,0,0.8) 45%, black 100%),
-    linear-gradient(to top, transparent 0%, rgba(0,0,0,0.6) 10%, black 25%, black 100%);
+    linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 10%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,1) 100%),
+    linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
   mask-composite: intersect;
   transition: opacity 0.4s, filter 0.4s;
-  opacity: 0.9;
+  /* Occupy around 45% width on desktop and stay right */
+  width: 50%;
+  left: auto;
+  right: 0;
+  opacity: 0.95;
 }
 
 .dark .hero-bg-image {
-  opacity: 0.7;
-  filter: blur(0.5px) contrast(1.2) brightness(0.7) grayscale(100%);
+  opacity: 0.55;
+  filter: grayscale(100%) sepia(0.1) brightness(0.65) contrast(0.95);
 }
 
 .hero-overlay {
@@ -354,13 +367,17 @@ form .flex > span {
 @media (max-width: 1024px) {
   .hero-bg-image {
     width: 100%;
-    object-fit: cover;
-    object-position: center top;
-    opacity: 0.2; /* low-opacity background focal element */
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,1) 40%, transparent 100%);
+    left: 0;
+    right: auto;
+    background-size: cover;
+    background-position: center 20%;
+    opacity: 0.22; /* faint background layout */
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%);
     -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,1) 40%, transparent 100%);
-    mask-composite: intersect;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0) 100%);
+  }
+  .dark .hero-bg-image {
+    opacity: 0.12;
   }
   .dot-nav-container {
     display: none;
@@ -369,7 +386,7 @@ form .flex > span {
 
 @media (max-width: 768px) {
   .hero-section {
-    min-height: 100svh !important;
+    min-height: auto !important;
   }
 }
 
