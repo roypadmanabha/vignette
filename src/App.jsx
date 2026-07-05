@@ -774,11 +774,11 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
           }`}
         style={{
           aspectRatio: `${aspectRatio}`,
-          maxHeight: 'calc(100svh - 100px)',
-          maxWidth: '92vw',
+          maxHeight: 'calc(100dvh - 40px)',
+          maxWidth: 'calc(100vw - 40px)',
           width: aspectRatio > 1
-            ? 'min(896px, 92vw)'
-            : `min(92vw, calc((100svh - 100px) * ${aspectRatio}))`,
+            ? 'min(896px, calc(100vw - 40px))'
+            : `min(calc(100vw - 40px), calc((100dvh - 40px) * ${aspectRatio}))`,
         }}
         onClick={(e) => e.stopPropagation()}
         onMouseMove={resetControlsTimeout}
