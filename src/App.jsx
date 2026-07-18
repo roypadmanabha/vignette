@@ -932,6 +932,12 @@ export default function App() {
   };
 
   const handleChatOptionClick = (option) => {
+    const audio = new Audio('./sent_sound.mp3');
+    audio.volume = 1.0;
+    audio.play().catch(err => {
+      console.warn("Audio play blocked or failed:", err);
+    });
+
     const userMsg = { sender: 'user', text: option };
     
     if (chatStep === 'welcome') {
