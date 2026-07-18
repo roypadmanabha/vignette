@@ -866,7 +866,7 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
 
 export default function App() {
   // --- States ---
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '' });
 
@@ -911,10 +911,19 @@ export default function App() {
 
   // Legal Modal State — 'terms' | 'privacy' | null
   const [legalModal, setLegalModal] = useState(null);
+  const [activeLegalTab, setActiveLegalTab] = useState('terms');
+
+  // OTP Verification States
+  const [correctOtp, setCorrectOtp] = useState('');
+  const [otpAttempts, setOtpAttempts] = useState(0);
+  const [otpError, setOtpError] = useState(null);
+  const [otpVerifying, setOtpVerifying] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
 
   // Lock background scroll when modal is active
   useEffect(() => {
-    if (isHireModalOpen || legalModal || videoModalUrl !== null || lightboxIndex !== null) {
+    if (isHireModalOpen || legalModal || videoModalUrl !== null || lightboxIndex !== null || showOtpModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -922,7 +931,7 @@ export default function App() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [isHireModalOpen, legalModal, videoModalUrl, lightboxIndex]);
+  }, [isHireModalOpen, legalModal, videoModalUrl, lightboxIndex, showOtpModal]);
 
   // Close modal on Escape key press
   useEffect(() => {
@@ -930,13 +939,14 @@ export default function App() {
       if (e.key === 'Escape') {
         setIsHireModalOpen(false);
         setLegalModal(null);
+        setShowOtpModal(false);
       }
     };
-    if (isHireModalOpen || legalModal) {
+    if (isHireModalOpen || legalModal || showOtpModal) {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isHireModalOpen, legalModal]);
+  }, [isHireModalOpen, legalModal, showOtpModal]);
 
   // Hero section background image url state (static only, no video)
   const heroBgUrl = 'virat.png';
@@ -971,12 +981,35 @@ export default function App() {
 
   // Form sanitization helpers
   const handleNameChange = (field, value) => {
-    // Only letters allowed
-    let cleaned = value.replace(/[^a-zA-Z]/g, '');
+    // Only letters and spaces allowed
+    let cleaned = value.replace(/[^a-zA-Z ]/g, '');
+    
+    // Limit to at most 1 space character
+    let spaceCount = 0;
+    let filtered = '';
+    for (let i = 0; i < cleaned.length; i++) {
+      if (cleaned[i] === ' ') {
+        if (spaceCount === 0) {
+          filtered += ' ';
+          spaceCount++;
+        }
+      } else {
+        filtered += cleaned[i];
+      }
+    }
+    cleaned = filtered;
+
     // Capitalize first character by default
     if (cleaned.length > 0) {
       cleaned = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
     }
+    
+    // Also capitalize character after the space if present
+    const spaceIdx = cleaned.indexOf(' ');
+    if (spaceIdx !== -1 && spaceIdx + 1 < cleaned.length) {
+      cleaned = cleaned.slice(0, spaceIdx + 1) + cleaned.charAt(spaceIdx + 1).toUpperCase() + cleaned.slice(spaceIdx + 2);
+    }
+
     setFormState(prev => ({ ...prev, [field]: cleaned }));
   };
 
@@ -993,9 +1026,14 @@ export default function App() {
 
   // --- Theme Initializer & Gesture Zoom Prevention ---
   useEffect(() => {
+    // Reset scroll position to top on refresh (hard or soft)
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const savedTheme = localStorage.getItem('vignette-theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialDarkState = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    const initialDarkState = savedTheme ? savedTheme === 'dark' : true;
     setIsDark(initialDarkState);
     if (initialDarkState) {
       document.documentElement.classList.add('dark');
@@ -1324,6 +1362,20 @@ export default function App() {
     setFormSubmitting(true);
     setFormError(null);
 
+    // 1. Check if user is currently blocked from generating OTP (24h lock)
+    const blockedUntil = localStorage.getItem('vignette_otp_blocked_until');
+    if (blockedUntil) {
+      const blockedTime = parseInt(blockedUntil, 10);
+      if (Date.now() < blockedTime) {
+        const hoursLeft = Math.ceil((blockedTime - Date.now()) / (1000 * 60 * 60));
+        setFormError(`OTP generation blocked. Exceeded maximum attempts. Please try again in ${hoursLeft} hour(s).`);
+        setFormSubmitting(false);
+        return;
+      } else {
+        localStorage.removeItem('vignette_otp_blocked_until');
+      }
+    }
+
     const { salutation, firstName, lastName, purpose, mobile, email, message } = formState;
 
     // Validate purpose dropdown selection
@@ -1377,33 +1429,209 @@ export default function App() {
       return;
     }
 
-    const fullName = `${salutation} ${firstName} ${lastName}`.trim();
-    const messageWithDetails = `Purpose: ${purpose}\nMobile: +91 ${mobile} (WhatsApp)\n\n${message}`;
+    // Generate 6-digit OTP passcode
+    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiryTime = new Date(Date.now() + 15 * 60 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     try {
-      if (supabase) {
-        const { error } = await supabase
-          .from('hire_inquiries')
-          .insert([{ name: fullName, email, message: messageWithDetails, status: 'pending' }]);
-        if (error) throw error;
-      } else {
-        // Simulated local dev delay
-        await new Promise(resolve => setTimeout(resolve, 1200));
-      }
-      setFormSuccess(true);
-      setFormState({
-        salutation: '',
-        firstName: '',
-        lastName: '',
-        purpose: '',
-        mobile: '',
-        email: '',
-        message: ''
+      // Send OTP via EmailJS REST API
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          service_id: 'default_service',
+          template_id: 'template_zrc3x89',
+          user_id: 'bk3HY4v6_Tdobanpt',
+          accessToken: 'fr4pKzwDw-1tLT6Kty4Vv',
+          template_params: {
+            email: email,
+            'First Name': firstName,
+            'Last Name': lastName,
+            passcode: generatedOtp,
+            time: expiryTime
+          }
+        })
       });
+
+      if (!response.ok) {
+        const text = await response.ok ? '' : await response.text();
+        throw new Error(text || 'Failed to send verification email. Please check your credentials or limits.');
+      }
+
+      // Store OTP and open Verification screen
+      setCorrectOtp(generatedOtp);
+      setOtpAttempts(0);
+      setOtpError(null);
+      setOtpDigits(['', '', '', '', '', '']);
+      setShowOtpModal(true);
     } catch (err) {
-      setFormError(err.message || 'An error occurred during submission.');
+      setFormError(err.message || 'Failed to send verification email. Please try again later.');
     } finally {
       setFormSubmitting(false);
+    }
+  };
+
+  // --- OTP Verification Logic ---
+  const handleOtpChange = (index, value) => {
+    // Only digits allowed
+    if (value !== '' && !/^\d$/.test(value)) return;
+
+    const newDigits = [...otpDigits];
+    newDigits[index] = value;
+    setOtpDigits(newDigits);
+
+    // Auto-focus next box
+    if (value !== '' && index < 5) {
+      const nextInput = document.getElementById(`otp-input-${index + 1}`);
+      if (nextInput) nextInput.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    // Backspace moves to previous box
+    if (e.key === 'Backspace' && otpDigits[index] === '' && index > 0) {
+      const prevInput = document.getElementById(`otp-input-${index - 1}`);
+      if (prevInput) {
+        prevInput.focus();
+      }
+    }
+  };
+
+  const handleOtpPaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData('text').trim();
+    if (/^\d{6}$/.test(pastedData)) {
+      const digits = pastedData.split('');
+      setOtpDigits(digits);
+      // Focus last box
+      const lastInput = document.getElementById('otp-input-5');
+      if (lastInput) lastInput.focus();
+    }
+  };
+
+  const handleVerifyOtp = async () => {
+    setOtpError(null);
+    const enteredOtp = otpDigits.join('');
+    if (enteredOtp.length !== 6) {
+      setOtpError('Please enter a complete 6-digit OTP.');
+      return;
+    }
+
+    if (enteredOtp === correctOtp) {
+      setOtpVerifying(true);
+      try {
+        const scriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL || '';
+        if (!scriptUrl) {
+          throw new Error('Google Script Web App URL is not configured. Please set VITE_GOOGLE_SCRIPT_URL in your .env file.');
+        }
+        
+        const payload = {
+          title: formState.salutation,
+          firstName: formState.firstName,
+          lastName: formState.lastName,
+          purpose: formState.purpose,
+          mobile: formState.mobile,
+          email: formState.email,
+          message: formState.message
+        };
+
+        // Post responses to Google Sheet
+        const response = await fetch(scriptUrl, {
+          method: 'POST',
+          mode: 'no-cors', // Enables request to execute successfully despite GScript redirect CORS issues
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        setFormSuccess(true);
+        setShowOtpModal(false);
+        setFormState({
+          salutation: '',
+          firstName: '',
+          lastName: '',
+          purpose: '',
+          mobile: '',
+          email: '',
+          message: ''
+        });
+        setOtpDigits(['', '', '', '', '', '']);
+        setOtpAttempts(0);
+      } catch (err) {
+        setOtpError(err.message || 'Failed to record submission. Please check your network connection.');
+      } finally {
+        setOtpVerifying(false);
+      }
+    } else {
+      const newAttempts = otpAttempts + 1;
+      setOtpAttempts(newAttempts);
+      if (newAttempts >= 3) {
+        const blockExpiry = Date.now() + 24 * 60 * 60 * 1000;
+        localStorage.setItem('vignette_otp_blocked_until', blockExpiry.toString());
+        setOtpError('Exceeded maximum wrong OTP attempts. Verification is blocked for the next 24 hours.');
+        setTimeout(() => {
+          setShowOtpModal(false);
+          setFormError('OTP generation blocked. Exceeded maximum attempts (24h block applied).');
+        }, 3000);
+      } else {
+        setOtpError(`Invalid OTP. ${3 - newAttempts} attempt(s) remaining.`);
+      }
+    }
+  };
+
+  const handleResendOtp = async () => {
+    // Check block
+    const blockedUntil = localStorage.getItem('vignette_otp_blocked_until');
+    if (blockedUntil) {
+      const blockedTime = parseInt(blockedUntil, 10);
+      if (Date.now() < blockedTime) {
+        setOtpError('OTP generation is blocked. Please try again later.');
+        return;
+      }
+    }
+
+    setOtpVerifying(true);
+    setOtpError(null);
+    setOtpDigits(['', '', '', '', '', '']);
+
+    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiryTime = new Date(Date.now() + 15 * 60 * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    try {
+      const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          service_id: 'default_service',
+          template_id: 'template_zrc3x89',
+          user_id: 'bk3HY4v6_Tdobanpt',
+          accessToken: 'fr4pKzwDw-1tLT6Kty4Vv',
+          template_params: {
+            email: formState.email,
+            'First Name': formState.firstName,
+            'Last Name': formState.lastName,
+            passcode: generatedOtp,
+            time: expiryTime
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const text = await response.ok ? '' : await response.text();
+        throw new Error(text || 'Failed to resend verification email.');
+      }
+
+      setCorrectOtp(generatedOtp);
+      setOtpError('New OTP has been sent successfully.');
+    } catch (err) {
+      setOtpError(err.message || 'Failed to resend verification email.');
+    } finally {
+      setOtpVerifying(false);
     }
   };
 
@@ -2632,7 +2860,7 @@ export default function App() {
               <ul className="flex flex-col gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400">
                 <li>
                   <button
-                    onClick={() => setLegalModal('terms')}
+                    onClick={() => { setLegalModal('terms'); setActiveLegalTab('terms'); }}
                     className="hover:text-[#D10000] dark:hover:text-[#FFD700] transition-colors cursor-pointer text-left"
                   >
                     Terms and Conditions
@@ -2640,7 +2868,7 @@ export default function App() {
                 </li>
                 <li>
                   <button
-                    onClick={() => setLegalModal('privacy')}
+                    onClick={() => { setLegalModal('privacy'); setActiveLegalTab('privacy'); }}
                     className="hover:text-[#D10000] dark:hover:text-[#FFD700] transition-colors cursor-pointer text-left"
                   >
                     Privacy Policy
@@ -3071,37 +3299,40 @@ export default function App() {
       )}
 
       {/* LEGAL MODAL — Terms & Conditions / Privacy Policy */}
-      {legalModal && (
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto transition-all duration-300 ease-out ${
+          legalModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setLegalModal(null)}
+      >
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto"
-          onClick={() => setLegalModal(null)}
+          className={`relative w-full max-w-2xl max-h-[85vh] bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col my-8 select-none transition-all duration-300 ease-out ${
+            legalModal ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          <div
-            className="relative w-full max-w-2xl max-h-[85vh] bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col my-8 select-none"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="sticky top-0 z-10 bg-[#f5f5dd] dark:bg-zinc-950 px-6 sm:px-8 pt-6 pb-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
-              <div>
-                <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase block mb-1">
-                  Legal
-                </span>
-                <h2 className="font-heading font-black text-lg sm:text-xl text-zinc-900 dark:text-white">
-                  {legalModal === 'terms' ? 'Terms and Conditions' : 'Privacy Policy'}
-                </h2>
-              </div>
-              <button
-                onClick={() => setLegalModal(null)}
-                className="p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-colors"
-                aria-label="Close modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
+          {/* Header */}
+          <div className="sticky top-0 z-10 bg-[#f5f5dd] dark:bg-zinc-950 px-6 sm:px-8 pt-6 pb-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+            <div>
+              <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase block mb-1">
+                Legal
+              </span>
+              <h2 className="font-heading font-black text-lg sm:text-xl text-zinc-900 dark:text-white">
+                {activeLegalTab === 'terms' ? 'Terms and Conditions' : 'Privacy Policy'}
+              </h2>
+            </div>
+            <button
+              onClick={() => setLegalModal(null)}
+              className="p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-colors"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
             </div>
 
             {/* Scrollable Content */}
             <div className="overflow-y-auto px-6 sm:px-8 py-6 font-body text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed space-y-5">
-              {legalModal === 'terms' ? (
+              {activeLegalTab === 'terms' ? (
                 <>
                   <p className="text-zinc-500 dark:text-zinc-400 text-xs">Last updated: July 2026</p>
 
@@ -3177,7 +3408,96 @@ export default function App() {
             </div>
           </div>
         </div>
-      )}
+
+      {/* OTP VERIFICATION MODAL */}
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto transition-all duration-300 ease-out ${
+          showOtpModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setShowOtpModal(false)}
+      >
+        <div
+          className={`relative w-full max-w-md bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col p-6 sm:p-8 select-none transition-all duration-300 ease-out ${
+            showOtpModal ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="text-center mb-6">
+            <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase block mb-2">
+              Security Verification
+            </span>
+            <h2 className="font-heading font-black text-xl sm:text-2xl text-zinc-900 dark:text-white mb-2">
+              Verify Email Address
+            </h2>
+            <p className="font-body text-xs text-zinc-600 dark:text-zinc-400">
+              We have sent a 6-digit verification code to <span className="font-semibold text-zinc-900 dark:text-white">{formState.email}</span>. Please enter it below:
+            </p>
+          </div>
+
+          {/* 6 Digit Input Boxes */}
+          <div className="flex justify-between gap-2 sm:gap-3 mb-6" onPaste={handleOtpPaste}>
+            {otpDigits.map((digit, idx) => (
+              <input
+                key={idx}
+                id={`otp-input-${idx}`}
+                type="text"
+                maxLength="1"
+                value={digit}
+                onChange={(e) => handleOtpChange(idx, e.target.value)}
+                onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                className="w-12 h-14 text-center font-heading font-bold text-xl rounded-xl border border-zinc-300 dark:border-zinc-800 bg-[#fbfbfa] dark:bg-[#0c0b0a] text-zinc-900 dark:text-white focus:border-[#D10000] dark:focus:border-[#FFD700] focus:ring-1 focus:ring-[#D10000] dark:focus:ring-[#FFD700] outline-none transition-all duration-200"
+              />
+            ))}
+          </div>
+
+          {/* Error Message */}
+          {otpError && (
+            <p className={`text-center font-body text-xs font-semibold mb-4 ${otpError.includes('sent') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+              {otpError}
+            </p>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-3">
+            <button
+              onClick={handleVerifyOtp}
+              disabled={otpVerifying}
+              className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#D10000] to-[#e67e22] dark:from-[#FFD700] dark:to-[#e67e22] text-white dark:text-black font-heading font-bold text-xs tracking-wider uppercase hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:scale-100 disabled:active:scale-100 transition-all duration-300 cursor-pointer flex items-center justify-center gap-2"
+            >
+              {otpVerifying ? (
+                <>
+                  <svg className="animate-spin h-4 w-4 text-current" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  <span>Verifying...</span>
+                </>
+              ) : (
+                'Validate OTP'
+              )}
+            </button>
+
+            <div className="flex items-center justify-between text-xs font-body text-zinc-500 mt-2 px-1">
+              <button
+                type="button"
+                onClick={handleResendOtp}
+                disabled={otpVerifying}
+                className="text-[#D10000] dark:text-[#FFD700] hover:underline cursor-pointer disabled:opacity-50"
+              >
+                Resend Code
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowOtpModal(false)}
+                className="hover:underline cursor-pointer"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   );
