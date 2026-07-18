@@ -496,3 +496,48 @@ form textarea {
 .animate-flower-bloom {
   animation: flowerBloom 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
+
+/* Custom Hero CTA Buttons Styling */
+.hero-btn-works {
+  border-radius: 5px !important;
+  border: 1px solid #000000 !important;
+  background: linear-gradient(90deg, #111111 0%, #d10000 100%) !important;
+  color: #ffffff !important;
+  transition: all 0.3s ease !important;
+}
+.hero-btn-works:hover {
+  background: #f5f5dd !important;
+  background-image: none !important;
+  color: #d10000 !important;
+}
+.dark .hero-btn-works {
+  border-color: #ffffff !important;
+  background: #ffec4e !important;
+  background-image: none !important;
+  color: #000000 !important;
+}
+.dark .hero-btn-works:hover {
+  background: #000000 !important;
+  color: #ffec4e !important;
+}
+
+.hero-btn-hire {
+  border-radius: 5px !important;
+  border: 1px solid #000000 !important;
+  background: #d10000 !important;
+  color: #f5f5dd !important;
+  transition: all 0.3s ease !important;
+}
+.hero-btn-hire:hover {
+  background: #f5f5dd !important;
+  color: #d10000 !important;
+}
+.dark .hero-btn-hire {
+  border-color: #ffffff !important;
+  background: #ffec4e !important;
+  color: #000000 !important;
+}
+.dark .hero-btn-hire:hover {
+  background: #000000 !important;
+  color: #ffec4e !important;
+}

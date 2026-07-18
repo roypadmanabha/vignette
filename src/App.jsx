@@ -2060,13 +2060,13 @@ export default function App() {
                 <div className="reveal flex flex-row gap-3 sm:gap-4 w-full justify-center lg:justify-start">
                   <button
                     onClick={() => scrollToSection('gallery')}
-                    className="w-full sm:w-auto flex-1 sm:flex-none px-3.5 py-2.5 sm:px-6 sm:py-3.5 lg:px-8 lg:py-4 rounded-[5px] font-brand font-extrabold text-[11px] sm:text-sm text-white dark:text-black bg-gradient-to-r from-[#111111] to-[#d10000] dark:bg-none dark:bg-[#ffec4e] border border-black dark:border-white shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                    className="w-full sm:w-auto flex-1 sm:flex-none px-2 py-2.5 sm:px-6 sm:py-3.5 lg:px-8 lg:py-4 font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
                   >
                     View our works
                   </button>
                   <button
                     onClick={() => setIsHireModalOpen(true)}
-                    className="w-full sm:w-auto flex-1 sm:flex-none px-3.5 py-2.5 sm:px-6 sm:py-3.5 lg:px-8 lg:py-4 rounded-[5px] font-brand font-extrabold text-[11px] sm:text-sm text-[#f5f5dd] dark:text-black bg-[#d10000] dark:bg-[#ffec4e] border border-black dark:border-white shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(0,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                    className="w-full sm:w-auto flex-1 sm:flex-none px-2 py-2.5 sm:px-6 sm:py-3.5 lg:px-8 lg:py-4 font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(0,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-hire"
                   >
                     Hire Us
                   </button>
