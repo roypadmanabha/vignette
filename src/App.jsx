@@ -3636,7 +3636,7 @@ export default function App() {
                     <span className="font-heading font-black text-xs text-zinc-900 dark:text-white transition-colors">Viki</span>
                     <span className="text-[8px] bg-[#d10000]/10 dark:bg-white/10 text-[#d10000] dark:text-[#ffec4e] px-1.5 py-0.5 rounded-full font-brand font-extrabold uppercase tracking-wider">AI Assistant</span>
                   </div>
-                  <span className="text-[10px] text-zinc-600 dark:text-zinc-400 font-body">Online</span>
+                  <span className="text-[10px] text-zinc-600 dark:text-zinc-400 font-body">Online Chat Support</span>
                 </div>
               </div>
               <button 
