@@ -1949,8 +1949,10 @@ export default function App() {
                 </div>
 
                 {/* H1 Heading */}
-                <h1 className="reveal font-heading font-black text-hero-fluid tracking-tight leading-[1.1] select-none text-transparent bg-clip-text bg-gradient-to-r from-black to-[#d10000] dark:bg-none dark:text-[#ffec4e] w-fit mb-6">
-                  Frames that tell a story
+                <h1 className="reveal font-heading font-black text-hero-fluid tracking-tight leading-[1.1] select-none mb-6">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#d10000] dark:bg-none dark:text-[#ffec4e] box-decoration-clone">
+                    Frames that tell a story
+                  </span>
                 </h1>
 
                 {/* Short Bio Paragraph */}
