@@ -3592,7 +3592,7 @@ export default function App() {
       {/* ========================================== */}
       {/* 2.15. VIKI AI CHATBOT ASSISTANT */}
       {/* ========================================== */}
-      <div className="fixed bottom-[74px] right-6 lg:right-8 z-40 flex flex-col items-end select-none">
+      <div className="fixed bottom-[80px] right-6 lg:right-8 z-40 flex flex-col items-end select-none">
         
         {/* Floating Tooltip "Ask Viki" */}
         {!isChatOpen && (
