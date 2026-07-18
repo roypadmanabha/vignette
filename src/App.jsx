@@ -1522,7 +1522,7 @@ export default function App() {
     if (enteredOtp === correctOtp) {
       setOtpVerifying(true);
       try {
-        const scriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL || '';
+        const scriptUrl = import.meta.env.VITE_GOOGLE_SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxMJZ6wIEVBtY85jtS4WGhLsuiS7aGbakAU4M4eVRbayZjIdSzumMLVDfC-hwW4hEh5Yg/exec';
         if (!scriptUrl) {
           throw new Error('Google Script Web App URL is not configured. Please set VITE_GOOGLE_SCRIPT_URL in your .env file.');
         }
