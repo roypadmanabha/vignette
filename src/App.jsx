@@ -3705,7 +3705,7 @@ export default function App() {
                   <button
                     key={option}
                     onClick={() => handleChatOptionClick(option)}
-                    className="w-full text-left px-3.5 py-2.5 rounded-xl border border-transparent dark:border-zinc-800 hover:bg-[#FFFFF5]/90 dark:hover:bg-[#ffec4e]/10 dark:hover:border-[#ffec4e] text-black dark:text-zinc-200 bg-[#FFFFF5] dark:bg-transparent font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl border border-transparent hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
                   >
                     {option}
                   </button>
