@@ -764,7 +764,7 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md px-4 py-3 transition-premium duration-500 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none invisible'
+      className={`fixed inset-0 z-[1000] flex flex-col items-center justify-center bg-black/90 backdrop-blur-md px-4 py-3 transition-premium duration-500 ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none invisible'
         }`}
       onClick={handleClose}
     >
@@ -2094,59 +2094,7 @@ export default function App() {
               ))}
             </div>
 
-            {/* Custom Lightbox Modal */}
-            {lightboxIndex !== null && (
-              <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md select-none"
-                onClick={handleCloseLightbox}
-              >
-                {/* Close Button */}
-                <button
-                  className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
-                  onClick={handleCloseLightbox}
-                >
-                  <X className="w-6 h-6" />
-                </button>
-
-                {/* Prev Button */}
-                <button
-                  className="absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
-                  onClick={handlePrevLightbox}
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-
-                {/* Active Image container */}
-                <div
-                  className="max-w-[90vw] max-h-[80vh] flex flex-col items-center justify-center relative"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <img
-                    src={filteredGallery[lightboxIndex].media_url}
-                    alt={filteredGallery[lightboxIndex].title}
-                    className="max-w-full max-h-[72vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
-                    draggable="false"
-                  />
-                  {/* Floating caption below image */}
-                  <div className="mt-5 text-center">
-                    <span className="font-brand font-extrabold text-xs uppercase tracking-widest text-[#FFD700]">
-                      {filteredGallery[lightboxIndex].category}
-                    </span>
-                    <h3 className="font-heading font-black text-lg sm:text-xl text-white mt-1.5 leading-tight">
-                      {filteredGallery[lightboxIndex].title}
-                    </h3>
-                  </div>
-                </div>
-
-                {/* Next Button */}
-                <button
-                  className="absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
-                  onClick={handleNextLightbox}
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
-              </div>
-            )}
+            {/* Custom Lightbox Modal (Moved to root level for proper stacking context) */}
           </div>
         </section>
 
@@ -2354,16 +2302,7 @@ export default function App() {
               ))}
             </div>
 
-            {/* Fullscreen Video Player */}
-            <CustomVideoPlayer
-              src={videoModalUrl}
-              poster={videoModalPoster}
-              isOpen={!!videoModalUrl}
-              onClose={() => {
-                setVideoModalUrl(null);
-                setVideoModalPoster(null);
-              }}
-            />
+            {/* Fullscreen Video Player (Moved to root level for proper stacking context) */}
           </div>
         </section>
 
@@ -3498,6 +3437,71 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      {/* Custom Lightbox Modal */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/95 backdrop-blur-md select-none"
+          onClick={handleCloseLightbox}
+        >
+          {/* Close Button */}
+          <button
+            className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+            onClick={handleCloseLightbox}
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Prev Button */}
+          <button
+            className="absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
+            onClick={handlePrevLightbox}
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          {/* Active Image container */}
+          <div
+            className="max-w-[90vw] max-h-[80vh] flex flex-col items-center justify-center relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={filteredGallery[lightboxIndex].media_url}
+              alt={filteredGallery[lightboxIndex].title}
+              className="max-w-full max-h-[72vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
+              draggable="false"
+            />
+            {/* Floating caption below image */}
+            <div className="mt-5 text-center">
+              <span className="font-brand font-extrabold text-xs uppercase tracking-widest text-[#FFD700]">
+                {filteredGallery[lightboxIndex].category}
+              </span>
+              <h3 className="font-heading font-black text-lg sm:text-xl text-white mt-1.5 leading-tight">
+                {filteredGallery[lightboxIndex].title}
+              </h3>
+            </div>
+          </div>
+
+          {/* Next Button */}
+          <button
+            className="absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
+            onClick={handleNextLightbox}
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+        </div>
+      )}
+
+      {/* Fullscreen Video Player */}
+      <CustomVideoPlayer
+        src={videoModalUrl}
+        poster={videoModalPoster}
+        isOpen={!!videoModalUrl}
+        onClose={() => {
+          setVideoModalUrl(null);
+          setVideoModalPoster(null);
+        }}
+      />
 
     </div>
   );
