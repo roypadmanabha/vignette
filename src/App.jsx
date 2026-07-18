@@ -923,7 +923,7 @@ export default function App() {
 
   const handleOpenChat = () => {
     setIsChatOpen(true);
-    const audio = new Audio('/chatbot_onclick_sound.mp3');
+    const audio = new Audio('./chatbot_onclick_sound.mp3');
     audio.volume = 1.0;
     audio.play().catch(err => {
       console.warn("Audio play blocked or failed:", err);
@@ -3616,7 +3616,7 @@ export default function App() {
               aria-label="Ask Viki AI Chatbot"
             >
               <img 
-                src="/viki_avatar.png" 
+                src="viki_avatar.png" 
                 alt="Viki" 
                 className="w-full h-full object-cover"
               />
@@ -3640,7 +3640,7 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <div className="relative w-9 h-9 flex-shrink-0">
                   <div className="w-full h-full rounded-full overflow-hidden border border-black/10 dark:border-white/10">
-                    <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                    <img src="viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
                   </div>
                   {/* Green status indicator outside overflow-hidden to prevent cropping */}
                   <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#ffffcc] dark:border-[#17202A] z-10" />
@@ -3666,8 +3666,8 @@ export default function App() {
               className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 font-body text-xs sm:text-sm bg-[#f5f5dd] dark:bg-[#111821] transition-colors"
               style={{
                 backgroundImage: isDark 
-                  ? `url("/chat_bg_dark.png")`
-                  : `url("/chat_bg_light.png")`,
+                  ? `url("chat_bg_dark.png")`
+                  : `url("chat_bg_light.png")`,
                 backgroundSize: '240px auto',
                 backgroundRepeat: 'repeat'
               }}
@@ -3680,7 +3680,7 @@ export default function App() {
                   {msg.sender === 'viki' && (
                     <div className="relative w-6 h-6 flex-shrink-0">
                       <div className="w-full h-full rounded-full overflow-hidden border border-black/5">
-                        <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                        <img src="viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
                       </div>
                       {/* Green status indicator outside overflow-hidden to prevent cropping */}
                       <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-[#ffffcc] dark:border-[#17202A] z-10" />
