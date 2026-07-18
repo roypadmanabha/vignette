@@ -2982,29 +2982,23 @@ export default function App() {
                   <label htmlFor="modal-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
                     Purpose
                   </label>
-                  <div className="relative">
-                    <select
-                      id="modal-purpose"
-                      value={formState.purpose}
-                      disabled={formSubmitting}
-                      onChange={(e) => setFormState(prev => ({ ...prev, purpose: e.target.value }))}
-                      required
-                      className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body appearance-none cursor-pointer"
-                    >
-                      <option value="" disabled>Select</option>
-                      <option value="Hire for Video Editing (PAID)">Hire for Video Editing (PAID)</option>
-                      <option value="Hire for Podcast/YT Video Editing (PAID)">Hire for Podcast/YT Video Editing (PAID)</option>
-                      <option value="Hire for Photoshoot (PAID)">Hire for Photoshoot (PAID)</option>
-                      <option value="Ask for Collaboration">Ask for Collaboration</option>
-                      <option value="Let's Work Together">Let's Work Together</option>
-                      <option value="Avgeek - Let's Connect">Avgeek - Let's Connect</option>
-                      <option value="Planespotting">Planespotting</option>
-                      <option value="Want to join the 'Vignette' team">Want to join the 'Vignette' Team</option>
-                    </select>
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400">
-                      <Compass className="w-4 h-4 transform rotate-180" />
-                    </div>
-                  </div>
+                  <CustomDropdown
+                    id="modal-purpose"
+                    value={formState.purpose}
+                    onChange={(val) => setFormState(prev => ({ ...prev, purpose: val }))}
+                    disabled={formSubmitting}
+                    placeholder="Select"
+                    options={[
+                      { value: 'Hire for Video Editing (PAID)', label: 'Hire for Video Editing (PAID)', isBold: true },
+                      { value: 'Hire for Podcast/YT Video Editing (PAID)', label: 'Hire for Podcast/YT Video Editing (PAID)', isBold: true },
+                      { value: 'Hire for Photoshoot (PAID)', label: 'Hire for Photoshoot (PAID)', isBold: true },
+                      { value: 'Ask for Collaboration', label: 'Ask for Collaboration' },
+                      { value: 'Let\'s Work Together', label: 'Let\'s Work Together' },
+                      { value: 'Avgeek - Let\'s Connect', label: 'Avgeek - Let\'s Connect' },
+                      { value: 'Planespotting', label: 'Planespotting' },
+                      { value: 'Want to join the \'Vignette\' team', label: 'Want to join the \'Vignette\' team' }
+                    ]}
+                  />
                 </div>
 
                 {/* Title + Names Grid */}
