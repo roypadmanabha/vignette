@@ -1961,16 +1961,16 @@ export default function App() {
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="reveal flex flex-col sm:flex-row dark:flex-row gap-4 dark:gap-3 w-full justify-center lg:justify-start">
+                <div className="reveal flex flex-row gap-3 w-full justify-center lg:justify-start">
                   <button
                     onClick={() => scrollToSection('gallery')}
-                    className="w-full sm:w-auto dark:flex-1 sm:dark:flex-none px-8 py-4 dark:px-3.5 dark:py-2.5 sm:dark:px-6 sm:dark:py-3.5 lg:dark:px-8 lg:dark:py-4 rounded-[18px] dark:rounded-[14px] sm:dark:rounded-[16px] lg:dark:rounded-[18px] font-brand font-extrabold text-sm dark:text-[11px] sm:dark:text-sm text-white bg-gradient-to-r from-black to-[#d10000] dark:from-[#f5f5dd] dark:to-[#f5f5dd] dark:text-[#D10000] shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                    className="flex-1 sm:flex-none px-3.5 py-2.5 sm:px-6 sm:py-3.5 lg:px-8 lg:py-4 rounded-[14px] sm:rounded-[16px] lg:rounded-[18px] font-brand font-extrabold text-[11px] sm:text-sm text-[#f5f5dd] bg-gradient-to-r from-[#FF4433] to-[#FF4433] dark:from-[#f5f5dd] dark:to-[#f5f5dd] dark:text-[#D10000] shadow-[0_8px_20px_rgba(255,68,51,0.15)] hover:shadow-[0_12px_25px_rgba(255,68,51,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
                   >
                     View our works
                   </button>
                   <button
                     onClick={() => setIsHireModalOpen(true)}
-                    className="w-full sm:w-auto dark:flex-1 sm:dark:flex-none px-8 py-4 dark:px-3.5 dark:py-2.5 sm:dark:px-6 sm:dark:py-3.5 lg:dark:px-8 lg:dark:py-4 rounded-[18px] dark:rounded-[14px] sm:dark:rounded-[16px] lg:dark:rounded-[18px] font-brand font-extrabold text-sm dark:text-[11px] sm:dark:text-sm text-white bg-gradient-to-r from-[#d10000] to-black dark:from-[#f5f5dd] dark:to-[#f5f5dd] dark:text-[#D10000] shadow-[0_8px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(0,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
+                    className="flex-1 sm:flex-none px-3.5 py-2.5 sm:px-6 sm:py-3.5 lg:px-8 lg:py-4 rounded-[14px] sm:rounded-[16px] lg:rounded-[18px] font-brand font-extrabold text-[11px] sm:text-sm text-[#f5f5dd] bg-gradient-to-r from-[#FF4433] to-[#FF4433] dark:from-[#f5f5dd] dark:to-[#f5f5dd] dark:text-[#D10000] shadow-[0_8px_20px_rgba(255,68,51,0.15)] hover:shadow-[0_12px_25px_rgba(255,68,51,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300"
                   >
                     Hire Us
                   </button>
