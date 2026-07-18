@@ -3649,7 +3649,7 @@ export default function App() {
 
             {/* Scrollable Conversation History */}
             <div 
-              className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 font-body text-xs sm:text-sm bg-[#FFF0F0] dark:bg-[#111821] transition-colors"
+              className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 font-body text-xs sm:text-sm bg-[#f5f5dd] dark:bg-[#111821] transition-colors"
               style={{
                 backgroundImage: isDark 
                   ? `url("/chat_bg_dark.png")`
