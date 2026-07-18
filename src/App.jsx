@@ -3619,7 +3619,7 @@ export default function App() {
 
         {/* Chat Window Panel */}
         {isChatOpen && (
-          <div className="w-80 sm:w-96 max-w-[90vw] h-[480px] max-h-[70vh] bg-[#ffec4e] dark:bg-[#17202A] border border-black/10 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col transform origin-bottom-right transition-all duration-300 ease-out scale-100 translate-y-0 animate-in fade-in slide-in-from-bottom-4">
+          <div className="w-80 sm:w-96 max-w-[90vw] h-[480px] max-h-[70vh] bg-[#ffffcc] dark:bg-[#17202A] border border-black/10 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col transform origin-bottom-right transition-all duration-300 ease-out scale-100 translate-y-0 animate-in fade-in slide-in-from-bottom-4">
             
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/10 bg-black/5 dark:bg-white/5 transition-colors">
@@ -3629,7 +3629,7 @@ export default function App() {
                     <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
                   </div>
                   {/* Green status indicator outside overflow-hidden to prevent cropping */}
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#ffec4e] dark:border-[#17202A] z-10" />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#ffffcc] dark:border-[#17202A] z-10" />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
@@ -3660,7 +3660,7 @@ export default function App() {
                         <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
                       </div>
                       {/* Green status indicator outside overflow-hidden to prevent cropping */}
-                      <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-[#ffec4e] dark:border-[#17202A] z-10" />
+                      <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-[#ffffcc] dark:border-[#17202A] z-10" />
                     </div>
                   )}
                   <div className={`p-3 rounded-2xl leading-relaxed shadow-sm ${
