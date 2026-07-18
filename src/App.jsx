@@ -2844,7 +2844,7 @@ export default function App() {
               </h4>
               <p className="flex items-start gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 <MapPin className="w-4 h-4 text-[#D10000] dark:text-[#FFD700] mt-0.5 flex-shrink-0" />
-                <span>Ramnagar, Agartala, West Tripura District, Tripura - 799002</span>
+                <span>Ramnagar, Agartala, Tripura(W) - 799002</span>
               </p>
             </div>
 
