@@ -921,6 +921,15 @@ export default function App() {
     }
   }, [chatMessages, isChatOpen]);
 
+  const handleOpenChat = () => {
+    setIsChatOpen(true);
+    const audio = new Audio('/chatbot_onclick_sound.mp3');
+    audio.volume = 1.0;
+    audio.play().catch(err => {
+      console.warn("Audio play blocked or failed:", err);
+    });
+  };
+
   const handleChatOptionClick = (option) => {
     const userMsg = { sender: 'user', text: option };
     
@@ -3589,7 +3598,7 @@ export default function App() {
         {!isChatOpen && (
           <div 
             className="mb-2 mr-1 px-3.5 py-1.5 bg-[#f5f5dd] dark:bg-zinc-900 border border-black/5 dark:border-white/10 rounded-xl shadow-lg flex items-center gap-1.5 animate-bounce hover:scale-105 cursor-pointer transition-all duration-300"
-            onClick={() => setIsChatOpen(true)}
+            onClick={handleOpenChat}
           >
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="font-brand font-extrabold text-[10px] uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
@@ -3602,7 +3611,7 @@ export default function App() {
         {!isChatOpen && (
           <div className="relative">
             <button
-              onClick={() => setIsChatOpen(true)}
+              onClick={handleOpenChat}
               className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#d10000] dark:border-[#ffec4e] shadow-[0_8px_24px_rgba(209,0,0,0.3)] dark:shadow-[0_8px_24px_rgba(255,236,78,0.2)] hover:scale-110 active:scale-95 transition-all duration-300 relative group cursor-pointer"
               aria-label="Ask Viki AI Chatbot"
             >
