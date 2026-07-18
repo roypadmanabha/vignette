@@ -3601,14 +3601,10 @@ export default function App() {
         }}
       />
 
+      {/* ========================================== */}
+      {/* 2.15. VIKI AI CHATBOT ASSISTANT */}
+      {/* ========================================== */}
       <div className="fixed bottom-[80px] right-6 lg:right-8 z-40 flex flex-col items-end select-none">
-        {/* Chatbot Screen Backdrop (Overlay) to disable background interaction */}
-        <div 
-          className={`fixed inset-0 bg-black/10 transition-opacity duration-300 z-30 ${
-            isChatOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-          }`}
-          onClick={() => setIsChatOpen(false)}
-        />
         
         {/* Floating Tooltip "Ask Viki" */}
         {!isChatOpen && (
