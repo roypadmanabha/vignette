@@ -1114,15 +1114,19 @@ export default function App() {
       history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
+    // Loop top scroll during the first 300ms to guarantee override of browser native scroll cache
+    const scrollInterval = setInterval(() => {
+      window.scrollTo(0, 0);
+    }, 30);
+    const scrollTimeout = setTimeout(() => {
+      clearInterval(scrollInterval);
+      window.scrollTo(0, 0);
+    }, 300);
 
-    const savedTheme = localStorage.getItem('vignette-theme');
-    const initialDarkState = savedTheme ? savedTheme === 'dark' : true;
-    setIsDark(initialDarkState);
-    if (initialDarkState) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    // Force Dark Mode by default on every refresh or initial loading
+    setIsDark(true);
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('vignette-theme', 'dark');
 
     // Disable pinch-to-zoom for iOS Safari and mobile devices
     const preventPinchZoom = (e) => {
@@ -1139,6 +1143,8 @@ export default function App() {
     document.addEventListener('gesturestart', preventGestureZoom, { passive: false });
 
     return () => {
+      clearInterval(scrollInterval);
+      clearTimeout(scrollTimeout);
       document.removeEventListener('touchstart', preventPinchZoom);
       document.removeEventListener('gesturestart', preventGestureZoom);
     };
