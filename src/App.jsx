@@ -3624,7 +3624,7 @@ export default function App() {
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/10 bg-black/5 dark:bg-white/5 transition-colors">
               <div className="flex items-center gap-3">
-                <div className="relative w-9 h-9">
+                <div className="relative w-9 h-9 flex-shrink-0">
                   <div className="w-full h-full rounded-full overflow-hidden border border-black/10 dark:border-white/10">
                     <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
                   </div>
@@ -3664,7 +3664,7 @@ export default function App() {
                   className={`flex gap-2 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}
                 >
                   {msg.sender === 'viki' && (
-                    <div className="relative w-6 h-6">
+                    <div className="relative w-6 h-6 flex-shrink-0">
                       <div className="w-full h-full rounded-full overflow-hidden border border-black/5">
                         <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
                       </div>
