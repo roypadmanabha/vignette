@@ -1731,6 +1731,12 @@ export default function App() {
                     key={link.label}
                     href={link.url}
                     className={textClasses}
+                    onClick={(e) => {
+                      if (isExplore) {
+                        e.preventDefault();
+                        alert("This feature is currently being updated. You can access it later!");
+                      }
+                    }}
                   >
                     {link.label}
                     <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
@@ -1855,7 +1861,13 @@ export default function App() {
                   <a
                     key={link.label}
                     href={link.url}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      setMobileMenuOpen(false);
+                      if (isExplore) {
+                        e.preventDefault();
+                        alert("This feature is currently being updated. You can access it later!");
+                      }
+                    }}
                     className={linkClasses}
                   >
                     <Icon className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-brand-lightOrange dark:group-hover:text-brand-darkGold transition-colors" />
