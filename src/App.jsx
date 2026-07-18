@@ -3718,7 +3718,7 @@ export default function App() {
                   <button
                     key={option}
                     onClick={() => handleChatOptionClick(option)}
-                    className="w-full text-center px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-[#d10000]/10 hover:border-[#d10000] dark:hover:bg-[#ffec4e]/10 dark:hover:border-[#ffec4e] text-zinc-800 dark:text-zinc-200 font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
+                    className="w-full text-center px-3.5 py-2.5 rounded-xl border border-zinc-200 dark:border-transparent hover:bg-[#d10000]/10 hover:border-[#d10000] dark:hover:bg-white/90 text-zinc-800 dark:text-[#17202A] dark:bg-white font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
                   >
                     {option === 'All good, understood' ? '✅ ' : '💬 '}{option}
                   </button>
