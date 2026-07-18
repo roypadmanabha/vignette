@@ -3600,43 +3600,48 @@ export default function App() {
 
         {/* Floating Chatbot Bubble Button */}
         {!isChatOpen && (
-          <button
-            onClick={() => setIsChatOpen(true)}
-            className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#d10000] dark:border-[#ffec4e] shadow-[0_8px_24px_rgba(209,0,0,0.3)] dark:shadow-[0_8px_24px_rgba(255,236,78,0.2)] hover:scale-110 active:scale-95 transition-all duration-300 relative group cursor-pointer"
-            aria-label="Ask Viki AI Chatbot"
-          >
-            <img 
-              src="/viki_avatar.png" 
-              alt="Viki" 
-              className="w-full h-full object-cover"
-            />
-            {/* Pulsing online status indicator */}
-            <span className="absolute top-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-white dark:border-zinc-950 animate-pulse" />
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setIsChatOpen(true)}
+              className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#d10000] dark:border-[#ffec4e] shadow-[0_8px_24px_rgba(209,0,0,0.3)] dark:shadow-[0_8px_24px_rgba(255,236,78,0.2)] hover:scale-110 active:scale-95 transition-all duration-300 relative group cursor-pointer"
+              aria-label="Ask Viki AI Chatbot"
+            >
+              <img 
+                src="/viki_avatar.png" 
+                alt="Viki" 
+                className="w-full h-full object-cover"
+              />
+            </button>
+            {/* Pulsing online status indicator outside button to prevent cropping */}
+            <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-[#f8f5ea] dark:border-[#0a0908] z-10 animate-pulse pointer-events-none" />
+          </div>
         )}
 
         {/* Chat Window Panel */}
         {isChatOpen && (
-          <div className="w-80 sm:w-96 max-w-[90vw] h-[480px] max-h-[70vh] bg-white/95 dark:bg-zinc-950/95 backdrop-blur-xl border border-black/10 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col transform origin-bottom-right transition-all duration-300 ease-out scale-100 translate-y-0 animate-in fade-in slide-in-from-bottom-4">
+          <div className="w-80 sm:w-96 max-w-[90vw] h-[480px] max-h-[70vh] bg-[#ffec4e] dark:bg-[#17202A] border border-black/10 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col transform origin-bottom-right transition-all duration-300 ease-out scale-100 translate-y-0 animate-in fade-in slide-in-from-bottom-4">
             
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/10 bg-[#f5f5dd] dark:bg-zinc-900/60 transition-colors">
+            <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/10 bg-black/5 dark:bg-white/5 transition-colors">
               <div className="flex items-center gap-3">
-                <div className="relative w-9 h-9 rounded-full overflow-hidden border border-black/10 dark:border-white/10">
-                  <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white dark:border-zinc-900" />
+                <div className="relative w-9 h-9">
+                  <div className="w-full h-full rounded-full overflow-hidden border border-black/10 dark:border-white/10">
+                    <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                  </div>
+                  {/* Green status indicator outside overflow-hidden to prevent cropping */}
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#ffec4e] dark:border-[#17202A] z-10" />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
                     <span className="font-heading font-black text-xs text-zinc-900 dark:text-white transition-colors">Viki</span>
-                    <span className="text-[8px] bg-[#d10000]/10 dark:bg-[#ffec4e]/10 text-[#d10000] dark:text-[#ffec4e] px-1.5 py-0.5 rounded-full font-brand font-extrabold uppercase tracking-wider">Assistant</span>
+                    <span className="text-[8px] bg-[#d10000]/10 dark:bg-white/10 text-[#d10000] dark:text-[#ffec4e] px-1.5 py-0.5 rounded-full font-brand font-extrabold uppercase tracking-wider">AI Assistant</span>
                   </div>
-                  <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-body">Online | Vignette Team</span>
+                  <span className="text-[10px] text-zinc-600 dark:text-zinc-400 font-body">Online</span>
                 </div>
               </div>
               <button 
                 onClick={() => setIsChatOpen(false)}
-                className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-white transition-colors cursor-pointer"
+                className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -3650,14 +3655,18 @@ export default function App() {
                   className={`flex gap-2 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}
                 >
                   {msg.sender === 'viki' && (
-                    <div className="w-6 h-6 rounded-full overflow-hidden border border-black/5 flex-shrink-0 mt-0.5">
-                      <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                    <div className="relative w-6 h-6">
+                      <div className="w-full h-full rounded-full overflow-hidden border border-black/5">
+                        <img src="/viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                      </div>
+                      {/* Green status indicator outside overflow-hidden to prevent cropping */}
+                      <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-[#ffec4e] dark:border-[#17202A] z-10" />
                     </div>
                   )}
                   <div className={`p-3 rounded-2xl leading-relaxed shadow-sm ${
                     msg.sender === 'user' 
                       ? 'bg-[#d10000] text-white dark:bg-[#ffec4e] dark:text-black rounded-tr-none' 
-                      : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-200 rounded-tl-none border border-black/5 dark:border-white/5'
+                      : 'bg-white/90 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 rounded-tl-none border border-black/5 dark:border-white/5'
                   }`}>
                     {msg.text}
 
@@ -3681,7 +3690,7 @@ export default function App() {
             </div>
 
             {/* Conversation Controls (MCQs) */}
-            <div className="p-4 border-t border-black/5 dark:border-white/10 bg-zinc-50/50 dark:bg-zinc-900/30">
+            <div className="p-4 border-t border-black/5 dark:border-white/10 bg-black/5 dark:bg-black/20">
               <div className="flex flex-col gap-2 max-h-40 overflow-y-auto pr-1">
                 {chatStep === 'welcome' && [
                   'Hire for Video Editing (PAID)',
