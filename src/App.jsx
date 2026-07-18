@@ -3703,7 +3703,7 @@ export default function App() {
                       ? 'bg-[#d10000] text-white dark:bg-[#ffec4e] dark:text-black rounded-tr-none' 
                       : 'bg-white/90 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 rounded-tl-none border border-black/5 dark:border-white/5'
                   }`}>
-                    {msg.text}
+                    {formatVignette(msg.text)}
 
                     {/* Viki's Direct Contact Card (Step 3) */}
                     {msg.type === 'need_help' && (
@@ -3742,7 +3742,7 @@ export default function App() {
                     onClick={() => handleChatOptionClick(option)}
                     className="w-full text-left px-3.5 py-2.5 rounded-xl border border-transparent hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
                   >
-                    {option}
+                    {formatVignette(option)}
                   </button>
                 ))}
 
