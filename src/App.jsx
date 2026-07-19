@@ -2524,7 +2524,7 @@ export default function App() {
                       <div className="flex flex-col">
                         <h3 className="font-heading font-bold text-base text-white leading-tight">Padmanabha Roy</h3>
                         <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">
-                          Founder &middot; <span className="font-bold bg-gradient-to-r from-black via-[#d10000] to-[#FFA500] bg-clip-text text-transparent normal-case">Vignette</span>
+                          Founder &middot; <span className="font-brand font-black normal-case bg-gradient-to-r from-[#FF0000] to-[#FFA500] bg-clip-text text-transparent">Vignette</span>
                         </p>
                       </div>
                     </div>
@@ -3029,15 +3029,18 @@ export default function App() {
       </footer>
 
       {/* 2.12. HIRE ME RESPONSIVE MODAL FORM */}
-      {isHireModalOpen && (
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isHireModalOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsHireModalOpen(false)}
+      >
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto"
-          onClick={() => setIsHireModalOpen(false)}
+          className={`relative w-full max-w-2xl bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 p-5 sm:p-8 md:p-10 flex flex-col my-8 select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+            isHireModalOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          <div
-            className="relative w-full max-w-2xl bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 p-5 sm:p-8 md:p-10 flex flex-col my-8 select-none"
-            onClick={(e) => e.stopPropagation()}
-          >
             {/* Close Button */}
             <button
               onClick={() => setIsHireModalOpen(false)}
@@ -3277,7 +3280,6 @@ export default function App() {
             )}
           </div>
         </div>
-      )}
       {/* Floating Stepper Navigation (Desktop only) */}
       {videoModalUrl === null && lightboxIndex === null && (
         <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-4 z-40 bg-white/20 dark:bg-black/25 backdrop-blur-md p-3.5 rounded-full border border-black/5 dark:border-white/10 shadow-lg select-none">
@@ -3347,21 +3349,15 @@ export default function App() {
 
       {/* LEGAL MODAL — Terms & Conditions / Privacy Policy */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto ${
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           legalModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
-        style={{
-          transition: 'opacity 0.25s ease-out',
-        }}
         onClick={() => setLegalModal(null)}
       >
         <div
-          className={`relative w-full max-w-2xl max-h-[85vh] bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col my-8 select-none ${
+          className={`relative w-full max-w-2xl max-h-[85vh] bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col my-8 select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
             legalModal ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
           }`}
-          style={{
-            transition: 'opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)'
-          }}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
