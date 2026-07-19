@@ -30,7 +30,8 @@ import {
   Mic,
   Megaphone,
   ShieldCheck,
-  BadgeCheck
+  BadgeCheck,
+  Plane
 } from 'lucide-react';
 import { supabase } from './supabase';
 
@@ -1810,13 +1811,14 @@ export default function App() {
               { label: 'At Glance', id: 'gallery' },
               { label: 'Services', id: 'services' },
               { label: 'Highlights', id: 'videos' },
+              { label: 'aVgeek', id: 'avgeeks' },
               { label: 'Our Clients', id: 'testimonials' },
               { label: 'Explore', url: '/explore' },
               { label: 'About', id: 'vision' },
               { label: 'Contact', id: 'hire' }
             ].map(link => {
-              const isExplore = link.label === 'Explore';
-              const textClasses = isExplore
+              const isSpecial = link.label === 'Explore' || link.label === 'aVgeek';
+              const textClasses = isSpecial
                 ? "relative py-2 bg-gradient-to-r from-black to-[#FF0000] dark:from-[#FF0000] dark:to-[#FFA500] bg-clip-text text-transparent hover:opacity-80 transition-opacity group font-extrabold"
                 : "relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group";
 
@@ -1827,7 +1829,7 @@ export default function App() {
                     href={link.url}
                     className={textClasses}
                     onClick={(e) => {
-                      if (isExplore) {
+                      if (link.label === 'Explore') {
                         e.preventDefault();
                         alert("This feature is currently being updated. You can access it later!");
                       }
@@ -1842,7 +1844,7 @@ export default function App() {
                 <button
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
-                  className="relative py-2 text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white transition-colors group"
+                  className={textClasses}
                 >
                   {link.label}
                   <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow group-hover:w-full transition-all duration-300" />
@@ -1944,14 +1946,15 @@ export default function App() {
               { label: 'At Glance', id: 'gallery', icon: Compass },
               { label: 'Services', id: 'services', icon: Sliders },
               { label: 'Highlights', id: 'videos', icon: Play },
+              { label: 'aVgeek', id: 'avgeeks', icon: Plane },
               { label: 'Our Clients', id: 'testimonials', icon: Video },
               { label: 'Explore', url: '/explore', icon: Camera },
               { label: 'About', id: 'vision', icon: Sparkles },
               { label: 'Contact', id: 'hire', icon: Send }
             ].map((link) => {
               const Icon = link.icon;
-              const isExplore = link.label === 'Explore';
-              const textClasses = isExplore
+              const isSpecial = link.label === 'Explore' || link.label === 'aVgeek';
+              const textClasses = isSpecial
                 ? "bg-gradient-to-r from-black to-[#FF0000] dark:from-[#FF0000] dark:to-[#FFA500] bg-clip-text text-transparent font-extrabold"
                 : "";
               const linkClasses = `flex items-center gap-3.5 px-4 py-3 rounded-xl text-xs sm:text-sm font-brand font-bold text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-all duration-300 group`;
@@ -1963,7 +1966,7 @@ export default function App() {
                     href={link.url}
                     onClick={(e) => {
                       setMobileMenuOpen(false);
-                      if (isExplore) {
+                      if (link.label === 'Explore') {
                         e.preventDefault();
                         alert("This feature is currently being updated. You can access it later!");
                       }
@@ -1985,7 +1988,7 @@ export default function App() {
                   className={linkClasses}
                 >
                   <Icon className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-brand-lightOrange dark:group-hover:text-brand-darkGold transition-colors" />
-                  <span>{link.label}</span>
+                  <span className={textClasses}>{link.label}</span>
                 </button>
               );
             })}
