@@ -2062,7 +2062,7 @@ export default function App() {
 
                 {/* H1 Heading */}
                 <h1 className="reveal font-heading font-black text-hero-fluid tracking-tight leading-[1.1] select-none mb-6">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#d10000] dark:bg-none dark:text-[#ffec4e] box-decoration-clone">
+                  <span className="text-[#A30000] dark:text-[#ffec4e]">
                     Frames that tell a story
                   </span>
                 </h1>
