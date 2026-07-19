@@ -88,7 +88,20 @@ const ThreadsIcon = (props) => (
 // 0. MOCK DATA FALLBACKS
 // ==========================================
 
-const MOCK_GALLERY = [];
+const MOCK_GALLERY = [
+  { id: 1, category: 'Travel', title: 'Sunset Over Peaks', imageUrl: 'https://picsum.photos/seed/peaks1/800/600' },
+  { id: 2, category: 'Travel', title: 'Mist in Valley', imageUrl: 'https://picsum.photos/seed/valley1/800/600' },
+  { id: 3, category: 'Travel', title: 'Coastal Shorelines', imageUrl: 'https://picsum.photos/seed/coast1/800/600' },
+  { id: 4, category: 'Lifestyle', title: 'Morning Brew Café', imageUrl: 'https://picsum.photos/seed/cafe1/800/600' },
+  { id: 5, category: 'Lifestyle', title: 'Urban Workspaces', imageUrl: 'https://picsum.photos/seed/urban1/800/600' },
+  { id: 6, category: 'Lifestyle', title: 'Quiet Reading Corner', imageUrl: 'https://picsum.photos/seed/reading1/800/600' },
+  { id: 7, category: 'Avgeek', title: 'Boeing 777 Nosecone', imageUrl: 'https://picsum.photos/seed/plane1/800/600' },
+  { id: 8, category: 'Avgeek', title: 'Terminal Wing Views', imageUrl: 'https://picsum.photos/seed/wing1/800/600' },
+  { id: 9, category: 'Avgeek', title: 'High-Altitude Cruising', imageUrl: 'https://picsum.photos/seed/cruise1/800/600' },
+  { id: 10, category: 'Storytelling', title: 'Street Corner Rain', imageUrl: 'https://picsum.photos/seed/rain1/800/600' },
+  { id: 11, category: 'Storytelling', title: 'Train Station Goodbye', imageUrl: 'https://picsum.photos/seed/train1/800/600' },
+  { id: 12, category: 'Storytelling', title: 'Solitary Path Walking', imageUrl: 'https://picsum.photos/seed/walk1/800/600' }
+];
 
 const MOCK_VIDEOS = [
   {
@@ -1374,7 +1387,13 @@ export default function App() {
             return edit;
           });
 
-          // if (loadedImages.length > 0) setGalleryItems(loadedImages);
+          const mappedImages = data.filter(item => item.type === 'image').map(item => ({
+            id: item.id,
+            category: item.category,
+            title: item.title,
+            imageUrl: item.media_url || item.imageUrl
+          }));
+          if (mappedImages.length > 0) setGalleryItems(mappedImages);
           if (loadedVideos.length > 0) setVideos(loadedVideos);
           if (loadedEdits.length > 0) setEdits(loadedEdits);
         }
@@ -1425,10 +1444,19 @@ export default function App() {
 
   // --- Filtered Gallery logic ---
   const filteredGallery = galleryItems.filter(item =>
-    galleryFilter === 'All' || item.category.toLowerCase() === galleryFilter.toLowerCase()
+    galleryFilter.toLowerCase() === 'all' || item.category.toLowerCase() === galleryFilter.toLowerCase()
   );
 
   // Lightbox Navigation helpers
+  const handleImageClick = (idx) => {
+    setLightboxIndex(idx);
+  };
+
+  const handleCloseLightbox = (e) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    setLightboxIndex(null);
+  };
+
   const handlePrevLightbox = (e) => {
     e.stopPropagation();
     if (lightboxIndex === null) return;
@@ -2149,12 +2177,12 @@ export default function App() {
         </div>
 
         {/* 2.6. GALLERY SECTION */}
-        <section id="gallery" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="gallery" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
+              <h1 className="reveal reveal-blur font-brand font-black text-4xl sm:text-5xl lg:text-6xl text-[#d10000] dark:text-[#e31c25] select-none mb-4">
                 At a Glance
-              </h2>
+              </h1>
               <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors">
                 Freezing time across terminals, peaks, and street corners. Discover visual stories filtered by category.
               </p>
@@ -2168,9 +2196,10 @@ export default function App() {
                   <button
                     key={category}
                     onClick={() => setGalleryFilter(category)}
-                    className={`px-6 py-2.5 rounded-full font-brand font-extrabold text-xs transition-all duration-300 ${isActive
-                      ? 'bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow text-white dark:text-black shadow-md'
-                      : 'border border-zinc-300 dark:border-zinc-700 hover:border-zinc-800 dark:hover:border-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/20'
+                    aria-pressed={isActive}
+                    className={`px-6 py-2.5 rounded-full font-brand font-extrabold text-xs transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#d10000] dark:focus-visible:ring-[#FFBF00] outline-none cursor-pointer ${isActive
+                      ? 'bg-gradient-to-r from-black to-[#d10000] dark:from-[#e31c25] dark:to-[#FFBF00] text-white dark:text-zinc-950 shadow-md font-extrabold'
+                      : 'bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:border-[#d10000] dark:hover:border-[#FFBF00]'
                       }`}
                   >
                     {category}
@@ -2179,33 +2208,42 @@ export default function App() {
               })}
             </div>
 
-            {/* Gallery Cards Masonry/Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8">
+            {/* Gallery Cards Grid (4 col desktop, 3 col tablet, 2 col sm tablet, 1 col mobile) */}
+            <div className="grid grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
               {filteredGallery.map((item, idx) => (
                 <div
                   key={item.id}
                   onClick={() => handleImageClick(idx)}
-                  className="reveal reveal-scale group relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2 transition-premium select-none"
-                  style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleImageClick(idx);
+                    }
+                  }}
+                  tabIndex={0}
+                  className="reveal reveal-scale group flex flex-col bg-transparent cursor-pointer select-none focus-visible:ring-2 focus-visible:ring-[#d10000] dark:focus-visible:ring-[#FFBF00] rounded-2xl outline-none"
+                  style={{ transitionDelay: `${(idx % 4) * 80}ms` }}
                 >
-                  <img
-                    src={item.media_url}
-                    alt={item.title}
-                    className="w-full h-full object-cover select-none pointer-events-none group-hover:scale-105 transition-premium"
-                    draggable="false"
-                    loading="lazy"
-                  />
-                  {/* Frosted Metadata Strip bottom */}
-                  <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4 p-2 sm:p-4 rounded-lg sm:rounded-xl bg-black/60 dark:bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between text-white transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-premium z-10">
-                    <div className="flex flex-col">
-                      <span className="font-brand font-extrabold text-[8px] sm:text-xs uppercase tracking-wider text-brand-darkGold select-none">
-                        {item.category}
-                      </span>
-                      <h3 className="font-heading font-black text-[10px] sm:text-sm mt-0.5 sm:mt-1 leading-tight select-none">
-                        {item.title}
-                      </h3>
-                    </div>
-                    <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-300 group-hover:text-white flex-shrink-0 ml-1.5" />
+                  {/* Image wrapper with 4:3 Aspect Ratio */}
+                  <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 shadow-sm group-hover:shadow-lg hover:-translate-y-1 transition-premium mb-3">
+                    <img
+                      src={item.imageUrl}
+                      srcSet={`${item.imageUrl.replace('/800/600', '/400/300')} 400w, ${item.imageUrl} 800w, ${item.imageUrl.replace('/800/600', '/1200/900')} 1200w`}
+                      sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      alt={item.title}
+                      className="w-full h-full object-cover select-none pointer-events-none group-hover:scale-105 transition-premium"
+                      draggable="false"
+                      loading="lazy"
+                    />
+                  </div>
+                  {/* Category label and Title below image */}
+                  <div className="flex flex-col px-1">
+                    <span className="font-brand font-extrabold text-[10px] uppercase tracking-wider text-[#A30000] dark:text-[#FFBF00] select-none">
+                      {item.category}
+                    </span>
+                    <h3 className="font-heading font-black text-sm sm:text-base text-zinc-950 dark:text-white transition-colors mt-1 select-none leading-snug">
+                      {item.title}
+                    </h3>
                   </div>
                 </div>
               ))}
@@ -3649,7 +3687,7 @@ export default function App() {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={filteredGallery[lightboxIndex].media_url}
+              src={filteredGallery[lightboxIndex].imageUrl}
               alt={filteredGallery[lightboxIndex].title}
               className="max-w-full max-h-[72vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
               draggable="false"
