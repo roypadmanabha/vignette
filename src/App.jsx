@@ -2463,7 +2463,7 @@ export default function App() {
               
               {/* Left Column: Text & CTA */}
               <div className="relative z-10 w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
-                <h2 className="reveal font-brand font-black text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.1] select-none mb-6">
+                <h2 className="reveal font-brand font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.1] select-none mb-6">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#d10000] dark:from-[#e31c25] dark:to-[#FFBF00] box-decoration-clone">
                     aVgeeks Connect!
                   </span>
