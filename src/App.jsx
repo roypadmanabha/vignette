@@ -2453,7 +2453,7 @@ export default function App() {
         </section>
 
         {/* 2.8.3. AVGEEKS CONNECT SECTION */}
-        <section id="avgeeks" className="bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative">
+        <section id="avgeeks" className="bg-transparent py-12 sm:py-16 scroll-mt-20 overflow-hidden relative">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-1/2 -left-1/4 w-[400px] h-[400px] bg-brand-lightOrange/5 dark:bg-brand-darkGold/5 rounded-full blur-[80px]" />
           </div>
@@ -2485,10 +2485,10 @@ export default function App() {
               </p>
 
               {/* Button */}
-              <div className="reveal w-full sm:w-auto flex justify-center">
+              <div className="reveal w-full flex justify-center">
                 <button
                   onClick={() => alert("This feature is coming soon!")}
-                  className="w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
+                  className="px-5 py-2.5 sm:px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
                 >
                   Ready for Takeoff
                 </button>
@@ -2507,10 +2507,10 @@ export default function App() {
                 <p className="reveal font-body text-lg text-[#333333] dark:text-zinc-300 max-w-[460px] leading-relaxed transition-colors mb-10">
                   Join a premier global hub for aviation enthusiasts. Share high-altitude perspectives, review flight grading coordinates, and explore the skies together.
                 </p>
-                <div className="reveal w-full sm:w-auto flex justify-start">
+                <div className="reveal w-full flex justify-start">
                   <button
                     onClick={() => alert("This feature is coming soon!")}
-                    className="w-full sm:w-auto px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
+                    className="px-8 py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
                   >
                     Ready for Takeoff
                   </button>
