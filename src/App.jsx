@@ -2453,7 +2453,7 @@ export default function App() {
         </section>
 
         {/* 2.8.3. AVGEEKS CONNECT SECTION */}
-        <section id="avgeeks" className="bg-transparent py-12 sm:py-16 scroll-mt-20 overflow-hidden relative">
+        <section id="avgeeks" className="bg-[#f5f5dd] dark:bg-transparent py-12 sm:py-16 scroll-mt-20 overflow-hidden relative">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-1/2 -left-1/4 w-[400px] h-[400px] bg-brand-lightOrange/5 dark:bg-brand-darkGold/5 rounded-full blur-[80px]" />
           </div>
