@@ -2453,22 +2453,22 @@ export default function App() {
         </section>
 
         {/* 2.8.3. AVGEEKS CONNECT SECTION */}
-        <section id="avgeeks" className="bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative">
+        <section id="avgeeks" className="bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative min-h-[460px] lg:min-h-[520px] flex items-center">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-1/2 -left-1/4 w-[400px] h-[400px] bg-brand-lightOrange/5 dark:bg-brand-darkGold/5 rounded-full blur-[80px]" />
           </div>
 
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative w-full">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full">
               
               {/* Left Column: Text & CTA */}
-              <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
+              <div className="relative z-10 w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
                 <h2 className="reveal font-brand font-black text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.1] select-none mb-6">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#d10000] dark:from-[#e31c25] dark:to-[#FFBF00] box-decoration-clone">
                     aVgeeks Connect!
                   </span>
                 </h2>
-                <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[500px] leading-relaxed transition-colors mb-10">
+                <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[460px] leading-relaxed transition-colors mb-10">
                   Join a premier global hub for aviation enthusiasts. Share high-altitude perspectives, review flight grading coordinates, and explore the skies together.
                 </p>
                 <div className="reveal w-full sm:w-auto flex justify-center lg:justify-start">
@@ -2481,15 +2481,15 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Right Column: Visual B777 PNG */}
-              <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 w-full">
-                <div className="reveal reveal-scale relative w-full max-w-[480px] lg:max-w-none flex justify-center">
+              {/* Absolute Plane Background Overlay (Flys behind the text, taking over the space) */}
+              <div className="absolute right-[-15%] sm:right-[-10%] lg:right-[-5%] top-[10%] sm:top-[5%] lg:top-1/2 lg:-translate-y-1/2 w-[115%] sm:w-[95%] lg:w-[65%] xl:w-[60%] z-[-1] pointer-events-none select-none opacity-45 dark:opacity-40 lg:opacity-100 transition-opacity duration-300">
+                <div className="reveal reveal-scale relative w-full h-full flex justify-center">
                   {/* Decorative background glow under the plane */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 bg-gradient-to-tr from-[#d10000]/10 to-[#ffec4e]/10 dark:from-[#d10000]/20 dark:to-[#ffec4e]/20 rounded-full blur-[40px] sm:blur-[60px] pointer-events-none" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-gradient-to-tr from-[#d10000]/15 to-[#ffec4e]/15 dark:from-[#d10000]/25 dark:to-[#ffec4e]/25 rounded-full blur-[60px] sm:blur-[80px]" />
                   <img
                     src="b777.png"
                     alt="Boeing 777 Aviation"
-                    className="w-full h-auto object-contain select-none pointer-events-none hover:scale-105 hover:-rotate-1 transition-transform duration-700 ease-out z-10"
+                    className="w-full h-auto object-contain select-none pointer-events-none hover:scale-[1.03] transition-transform duration-700 ease-out"
                     draggable="false"
                   />
                 </div>
