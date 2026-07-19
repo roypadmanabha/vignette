@@ -2452,7 +2452,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="avgeeks" className={`py-12 sm:py-16 scroll-mt-20 overflow-hidden relative isolate ${isDark ? 'bg-transparent' : 'bg-[#f5f5dd]'}`}>
+        <section id="avgeeks" className="bg-transparent py-12 sm:py-16 scroll-mt-20 overflow-hidden relative isolate">
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative w-full">
             
