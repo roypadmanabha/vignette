@@ -2452,7 +2452,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="avgeeks" className={`py-12 sm:py-16 scroll-mt-20 overflow-hidden relative ${isDark ? 'bg-transparent' : 'bg-[#f5f5dd]'}`}>
+        <section id="avgeeks" className={`py-12 sm:py-16 scroll-mt-20 overflow-hidden relative isolate ${isDark ? 'bg-transparent' : 'bg-[#f5f5dd]'}`}>
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative w-full">
             
@@ -2514,7 +2514,7 @@ export default function App() {
               </div>
 
               {/* Absolute Plane Background Overlay (Flys behind the text, taking over the space) */}
-              <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[65%] xl:w-[60%] z-[-1] pointer-events-none select-none opacity-100 transition-opacity duration-300">
+              <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[65%] xl:w-[60%] z-[1] pointer-events-none select-none opacity-100 transition-opacity duration-300">
                 <div className="reveal reveal-scale relative w-full h-full flex justify-center">
                   <img
                     src="b777.png"
