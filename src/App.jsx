@@ -2524,7 +2524,7 @@ export default function App() {
                       <div className="flex flex-col">
                         <h3 className="font-heading font-bold text-base text-white leading-tight">Padmanabha Roy</h3>
                         <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">
-                          Founder &middot; <span className="font-brand font-black normal-case bg-gradient-to-r from-[#FF0000] to-[#FFA500] bg-clip-text text-transparent">Vignette</span>
+                          Founder &middot; <span className="font-brand font-black normal-case text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#FFBF00]">Vignette</span>
                         </p>
                       </div>
                     </div>
