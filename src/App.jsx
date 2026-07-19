@@ -939,11 +939,11 @@ export default function App() {
     });
 
     const userMsg = { sender: 'user', text: option };
-    
+
     if (chatStep === 'welcome') {
       setChatMessages(prev => [...prev, userMsg]);
       setChatStep('guide_form');
-      
+
       setTimeout(() => {
         setChatMessages(prev => [...prev, {
           sender: 'viki',
@@ -951,10 +951,10 @@ export default function App() {
           type: 'guide_form'
         }]);
       }, 600);
-      
+
     } else if (chatStep === 'guide_form') {
       setChatMessages(prev => [...prev, userMsg]);
-      
+
       if (option === 'All good, understood') {
         setTimeout(() => {
           setChatMessages(prev => [...prev, {
@@ -962,7 +962,7 @@ export default function App() {
             text: "Awesome! Scrolling you down to the contact form now. Looking forward to collaborating!",
             type: 'completed'
           }]);
-          
+
           setTimeout(() => {
             setIsChatOpen(false);
             scrollToSection('hire');
@@ -978,11 +978,11 @@ export default function App() {
           }]);
         }, 600);
       }
-      
+
     } else if (chatStep === 'need_help' && option === 'Start Over') {
       setChatMessages(prev => [...prev, userMsg]);
       setChatStep('welcome');
-      
+
       setTimeout(() => {
         setChatMessages(prev => [...prev, {
           sender: 'viki',
@@ -2070,7 +2070,7 @@ export default function App() {
                 {/* Short Bio Paragraph */}
                 <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[520px] leading-relaxed transition-colors mb-10">
                   Welcome to <strong className="font-bold select-none text-black dark:text-white">Vignette</strong>,
-                  the creative sandbox of Padmanabha Roy. Merging dynamic reels, custom video color edits,
+                  the creative platform of Padmanabha Roy. Merging dynamic reels, custom video color edits,
                   and high-altitude aviation storytelling into cinematic digital capsules.
                 </p>
 
@@ -2448,6 +2448,53 @@ export default function App() {
                   />
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 2.8.3. AVGEEKS CONNECT SECTION */}
+        <section id="avgeeks" className="bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <div className="absolute top-1/2 -left-1/4 w-[400px] h-[400px] bg-brand-lightOrange/5 dark:bg-brand-darkGold/5 rounded-full blur-[80px]" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+              
+              {/* Left Column: Text & CTA */}
+              <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left order-2 lg:order-1">
+                <h2 className="reveal font-brand font-black text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.1] select-none mb-6">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#d10000] dark:from-[#e31c25] dark:to-[#FFBF00] box-decoration-clone">
+                    aVgeeks Connect!
+                  </span>
+                </h2>
+                <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[500px] leading-relaxed transition-colors mb-10">
+                  Join a premier global hub for aviation enthusiasts. Share high-altitude perspectives, review flight grading coordinates, and explore the skies together.
+                </p>
+                <div className="reveal w-full sm:w-auto flex justify-center lg:justify-start">
+                  <button
+                    onClick={() => alert("This feature is coming soon!")}
+                    className="w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
+                  >
+                    Ready for Takeoff
+                  </button>
+                </div>
+              </div>
+
+              {/* Right Column: Visual B777 PNG */}
+              <div className="lg:col-span-6 flex justify-center items-center order-1 lg:order-2 w-full">
+                <div className="reveal reveal-scale relative w-full max-w-[480px] lg:max-w-none flex justify-center">
+                  {/* Decorative background glow under the plane */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 sm:w-64 h-48 sm:h-64 bg-gradient-to-tr from-[#d10000]/10 to-[#ffec4e]/10 dark:from-[#d10000]/20 dark:to-[#ffec4e]/20 rounded-full blur-[40px] sm:blur-[60px] pointer-events-none" />
+                  <img
+                    src="b777.png"
+                    alt="Boeing 777 Aviation"
+                    className="w-full h-auto object-contain select-none pointer-events-none hover:scale-105 hover:-rotate-1 transition-transform duration-700 ease-out z-10"
+                    draggable="false"
+                  />
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
@@ -3030,256 +3077,254 @@ export default function App() {
 
       {/* 2.12. HIRE ME RESPONSIVE MODAL FORM */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isHireModalOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isHireModalOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
         onClick={() => setIsHireModalOpen(false)}
       >
         <div
-          className={`relative w-full max-w-2xl bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 p-5 sm:p-8 md:p-10 flex flex-col my-8 select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            isHireModalOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
-          }`}
+          className={`relative w-full max-w-2xl bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 p-5 sm:p-8 md:p-10 flex flex-col my-8 select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isHireModalOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+            }`}
           onClick={(e) => e.stopPropagation()}
         >
-            {/* Close Button */}
-            <button
-              onClick={() => setIsHireModalOpen(false)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-colors"
-              aria-label="Close modal"
-            >
-              <X className="w-5 h-5" />
-            </button>
+          {/* Close Button */}
+          <button
+            onClick={() => setIsHireModalOpen(false)}
+            className="absolute top-4 right-4 p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-white/10 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-colors"
+            aria-label="Close modal"
+          >
+            <X className="w-5 h-5" />
+          </button>
 
-            {/* Modal Heading */}
-            <div className="mb-6">
-              <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase block mb-1">
-                Let's Collaborate
-              </span>
-              <h3 className="font-heading font-black text-2xl sm:text-3xl text-gradient">
-                Let's Create Together
+          {/* Modal Heading */}
+          <div className="mb-6">
+            <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase block mb-1">
+              Let's Collaborate
+            </span>
+            <h3 className="font-heading font-black text-2xl sm:text-3xl text-gradient">
+              Let's Create Together
+            </h3>
+            <p className="font-body text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed text-justify">
+              Ready to take your brand narrative to the sky? Get in touch for content consulting, sponsored edits, photography campaigns, or direct avgeek story writeups.
+            </p>
+          </div>
+
+          {/* Form body */}
+          {formSuccess ? (
+            <div className="flex flex-col items-center justify-center py-10 text-center">
+              <CheckCircle className="w-16 h-16 text-emerald-500 animate-bounce" />
+              <h3 className="font-brand font-black text-2xl text-zinc-950 dark:text-white mt-6 transition-colors">
+                Message Sent!
               </h3>
-              <p className="font-body text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 mt-2 leading-relaxed text-justify">
-                Ready to take your brand narrative to the sky? Get in touch for content consulting, sponsored edits, photography campaigns, or direct avgeek story writeups.
+              <p className="font-body text-zinc-600 dark:text-zinc-400 mt-2 max-w-xs leading-relaxed transition-colors">
+                Thank you for reaching out. I'll review your details and get back to you soon!
               </p>
+              <button
+                onClick={() => {
+                  setFormSuccess(false);
+                  setIsHireModalOpen(false);
+                }}
+                className="mt-8 px-6 py-2.5 rounded-full font-brand font-extrabold text-xs border border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 transition-colors"
+              >
+                Close Window
+              </button>
             </div>
+          ) : (
+            <form onSubmit={handleFormSubmit} className="flex flex-col gap-5 overflow-y-auto max-h-[60vh] pr-1">
+              {formError && (
+                <div className="flex items-center gap-2 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm font-body">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                  <span>{formError}</span>
+                </div>
+              )}
 
-            {/* Form body */}
-            {formSuccess ? (
-              <div className="flex flex-col items-center justify-center py-10 text-center">
-                <CheckCircle className="w-16 h-16 text-emerald-500 animate-bounce" />
-                <h3 className="font-brand font-black text-2xl text-zinc-950 dark:text-white mt-6 transition-colors">
-                  Message Sent!
-                </h3>
-                <p className="font-body text-zinc-600 dark:text-zinc-400 mt-2 max-w-xs leading-relaxed transition-colors">
-                  Thank you for reaching out. I'll review your details and get back to you soon!
-                </p>
-                <button
-                  onClick={() => {
-                    setFormSuccess(false);
-                    setIsHireModalOpen(false);
-                  }}
-                  className="mt-8 px-6 py-2.5 rounded-full font-brand font-extrabold text-xs border border-zinc-400 hover:border-zinc-800 dark:border-zinc-700 dark:hover:border-zinc-300 transition-colors"
-                >
-                  Close Window
-                </button>
+              {/* Purpose Dropdown */}
+              <div className="flex flex-col gap-2">
+                <label htmlFor="modal-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                  Purpose
+                </label>
+                <CustomDropdown
+                  id="modal-purpose"
+                  value={formState.purpose}
+                  onChange={(val) => setFormState(prev => ({ ...prev, purpose: val }))}
+                  disabled={formSubmitting}
+                  placeholder="Select"
+                  options={[
+                    { value: 'Hire for Video Editing (PAID)', label: 'Hire for Video Editing (PAID)', isBold: true },
+                    { value: 'Hire for Podcast/YT Video Editing (PAID)', label: 'Hire for Podcast/YT Video Editing (PAID)', isBold: true },
+                    { value: 'Hire for Photoshoot (PAID)', label: 'Hire for Photoshoot (PAID)', isBold: true },
+                    { value: 'Ask for Collaboration', label: 'Ask for Collaboration' },
+                    { value: 'Let\'s Work Together', label: 'Let\'s Work Together' },
+                    { value: 'Avgeek - Let\'s Connect', label: 'Avgeek - Let\'s Connect' },
+                    { value: 'Planespotting', label: 'Planespotting' },
+                    { value: 'Want to join the \'Vignette\' team', label: 'Want to join the \'Vignette\' team' }
+                  ]}
+                />
               </div>
-            ) : (
-              <form onSubmit={handleFormSubmit} className="flex flex-col gap-5 overflow-y-auto max-h-[60vh] pr-1">
-                {formError && (
-                  <div className="flex items-center gap-2 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-sm font-body">
-                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                    <span>{formError}</span>
-                  </div>
-                )}
 
-                {/* Purpose Dropdown */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="modal-purpose" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                    Purpose
+              {/* Title + Names Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                {/* Title Dropdown */}
+                <div className="flex flex-col gap-2 sm:col-span-3">
+                  <label className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                    Title
                   </label>
                   <CustomDropdown
-                    id="modal-purpose"
-                    value={formState.purpose}
-                    onChange={(val) => setFormState(prev => ({ ...prev, purpose: val }))}
+                    id="modal-salutation"
+                    value={formState.salutation}
+                    onChange={(val) => setFormState(prev => ({ ...prev, salutation: val }))}
                     disabled={formSubmitting}
                     placeholder="Select"
                     options={[
-                      { value: 'Hire for Video Editing (PAID)', label: 'Hire for Video Editing (PAID)', isBold: true },
-                      { value: 'Hire for Podcast/YT Video Editing (PAID)', label: 'Hire for Podcast/YT Video Editing (PAID)', isBold: true },
-                      { value: 'Hire for Photoshoot (PAID)', label: 'Hire for Photoshoot (PAID)', isBold: true },
-                      { value: 'Ask for Collaboration', label: 'Ask for Collaboration' },
-                      { value: 'Let\'s Work Together', label: 'Let\'s Work Together' },
-                      { value: 'Avgeek - Let\'s Connect', label: 'Avgeek - Let\'s Connect' },
-                      { value: 'Planespotting', label: 'Planespotting' },
-                      { value: 'Want to join the \'Vignette\' team', label: 'Want to join the \'Vignette\' team' }
+                      { value: 'Mr', label: 'Mr' },
+                      { value: 'Mrs', label: 'Mrs' },
+                      { value: 'Ms', label: 'Ms' }
                     ]}
                   />
                 </div>
 
-                {/* Title + Names Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-12 gap-4">
-                  {/* Title Dropdown */}
-                  <div className="flex flex-col gap-2 sm:col-span-3">
-                    <label className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                      Title
-                    </label>
-                    <CustomDropdown
-                      id="modal-salutation"
-                      value={formState.salutation}
-                      onChange={(val) => setFormState(prev => ({ ...prev, salutation: val }))}
-                      disabled={formSubmitting}
-                      placeholder="Select"
-                      options={[
-                        { value: 'Mr', label: 'Mr' },
-                        { value: 'Mrs', label: 'Mrs' },
-                        { value: 'Ms', label: 'Ms' }
-                      ]}
-                    />
-                  </div>
-
-                  {/* First Name Input */}
-                  <div className="flex flex-col gap-2 sm:col-span-4">
-                    <label htmlFor="modal-first-name" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      id="modal-first-name"
-                      value={formState.firstName}
-                      onChange={(e) => handleNameChange('firstName', e.target.value)}
-                      disabled={formSubmitting}
-                      required
-                      minLength={2}
-                      className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
-                    />
-                  </div>
-
-                  {/* Last Name Input */}
-                  <div className="flex flex-col gap-2 sm:col-span-5">
-                    <label htmlFor="modal-last-name" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      id="modal-last-name"
-                      value={formState.lastName}
-                      onChange={(e) => handleNameChange('lastName', e.target.value)}
-                      disabled={formSubmitting}
-                      required
-                      minLength={2}
-                      className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
-                    />
-                  </div>
-                </div>
-
-                {/* Mobile + Email Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Mobile Number */}
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="modal-mobile" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                      Mobile Number (WhatsApp Number)
-                    </label>
-                    <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
-                      <span className="flex items-center px-3.5 bg-white dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
-                        +91
-                      </span>
-                      <input
-                        type="tel"
-                        id="modal-mobile"
-                        value={formState.mobile}
-                        onChange={(e) => handleMobileChange(e.target.value)}
-                        placeholder="10-digit number"
-                        disabled={formSubmitting}
-                        required
-                        className="w-full px-4 py-3 bg-transparent text-zinc-900 dark:text-white focus:outline-none font-body"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Email ID */}
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="modal-email" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                      Email ID
-                    </label>
-                    <input
-                      type="email"
-                      id="modal-email"
-                      value={formState.email}
-                      onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="abcdef@xyz.com"
-                      disabled={formSubmitting}
-                      required
-                      className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
-                    />
-                  </div>
-                </div>
-
-                {/* Message textarea with counter */}
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <label htmlFor="modal-message" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
-                      Message
-                    </label>
-                    <span className={`text-[10px] font-mono transition-colors ${formState.message.length > 4900 ? 'text-red-500 font-bold animate-pulse' : 'text-zinc-400 dark:text-zinc-500'
-                      }`}>
-                      {formState.message.length} / 5000 chars
-                    </span>
-                  </div>
-                  <textarea
-                    id="modal-message"
-                    rows="4"
-                    value={formState.message}
-                    onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value.slice(0, 5000) }))}
-                    placeholder="Write details about your project or collaboration opportunity..."
+                {/* First Name Input */}
+                <div className="flex flex-col gap-2 sm:col-span-4">
+                  <label htmlFor="modal-first-name" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    id="modal-first-name"
+                    value={formState.firstName}
+                    onChange={(e) => handleNameChange('firstName', e.target.value)}
                     disabled={formSubmitting}
                     required
-                    minLength={30}
-                    maxLength={5000}
-                    className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-y"
+                    minLength={2}
+                    className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
                   />
                 </div>
 
-                {/* Submit Button */}
-                <button
-                  type="submit"
-                  disabled={formSubmitting}
-                  className="mt-2 w-full py-4 rounded-xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black flex items-center justify-center gap-2 hover:-translate-y-[2px] active:scale-98 shadow-md transition-all duration-300 disabled:opacity-50"
-                >
-                  {formSubmitting ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>Sending Inquiries...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" />
-                      <span>Submit</span>
-                    </>
-                  )}
-                </button>
-
-                {/* Reset Button */}
-                <div className="flex justify-center mt-3">
-                  <button
-                    type="button"
-                    onClick={() => setFormState({
-                      salutation: '',
-                      firstName: '',
-                      lastName: '',
-                      purpose: '',
-                      mobile: '',
-                      email: '',
-                      message: ''
-                    })}
-                    className="font-brand font-extrabold text-[10px] tracking-widest text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors uppercase cursor-pointer"
-                  >
-                    Reset
-                  </button>
+                {/* Last Name Input */}
+                <div className="flex flex-col gap-2 sm:col-span-5">
+                  <label htmlFor="modal-last-name" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="modal-last-name"
+                    value={formState.lastName}
+                    onChange={(e) => handleNameChange('lastName', e.target.value)}
+                    disabled={formSubmitting}
+                    required
+                    minLength={2}
+                    className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                  />
                 </div>
-              </form>
-            )}
-          </div>
+              </div>
+
+              {/* Mobile + Email Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Mobile Number */}
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="modal-mobile" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                    Mobile Number (WhatsApp Number)
+                  </label>
+                  <div className="flex rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 focus-within:ring-2 focus-within:ring-brand-lightOrange/30 dark:focus-within:ring-brand-darkGold/30 focus-within:border-brand-lightOrange dark:focus-within:border-brand-darkGold overflow-hidden transition-all">
+                    <span className="flex items-center px-3.5 bg-white dark:bg-zinc-800 border-r border-zinc-300 dark:border-zinc-700 font-body font-bold text-sm text-zinc-500 dark:text-zinc-400 select-none">
+                      +91
+                    </span>
+                    <input
+                      type="tel"
+                      id="modal-mobile"
+                      value={formState.mobile}
+                      onChange={(e) => handleMobileChange(e.target.value)}
+                      placeholder="10-digit number"
+                      disabled={formSubmitting}
+                      required
+                      className="w-full px-4 py-3 bg-transparent text-zinc-900 dark:text-white focus:outline-none font-body"
+                    />
+                  </div>
+                </div>
+
+                {/* Email ID */}
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="modal-email" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                    Email ID
+                  </label>
+                  <input
+                    type="email"
+                    id="modal-email"
+                    value={formState.email}
+                    onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
+                    placeholder="abcdef@xyz.com"
+                    disabled={formSubmitting}
+                    required
+                    className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body"
+                  />
+                </div>
+              </div>
+
+              {/* Message textarea with counter */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <label htmlFor="modal-message" className="font-body font-bold text-xs uppercase tracking-wider text-zinc-500">
+                    Message
+                  </label>
+                  <span className={`text-[10px] font-mono transition-colors ${formState.message.length > 4900 ? 'text-red-500 font-bold animate-pulse' : 'text-zinc-400 dark:text-zinc-500'
+                    }`}>
+                    {formState.message.length} / 5000 chars
+                  </span>
+                </div>
+                <textarea
+                  id="modal-message"
+                  rows="4"
+                  value={formState.message}
+                  onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value.slice(0, 5000) }))}
+                  placeholder="Write details about your project or collaboration opportunity..."
+                  disabled={formSubmitting}
+                  required
+                  minLength={30}
+                  maxLength={5000}
+                  className="w-full px-4 py-3 rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-lightOrange/30 dark:focus:ring-brand-darkGold/30 focus:border-brand-lightOrange dark:focus:border-brand-darkGold transition-all font-body resize-y"
+                />
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                disabled={formSubmitting}
+                className="mt-2 w-full py-4 rounded-xl font-brand font-extrabold text-sm text-white bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow dark:text-black flex items-center justify-center gap-2 hover:-translate-y-[2px] active:scale-98 shadow-md transition-all duration-300 disabled:opacity-50"
+              >
+                {formSubmitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Sending Inquiries...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>Submit</span>
+                  </>
+                )}
+              </button>
+
+              {/* Reset Button */}
+              <div className="flex justify-center mt-3">
+                <button
+                  type="button"
+                  onClick={() => setFormState({
+                    salutation: '',
+                    firstName: '',
+                    lastName: '',
+                    purpose: '',
+                    mobile: '',
+                    email: '',
+                    message: ''
+                  })}
+                  className="font-brand font-extrabold text-[10px] tracking-widest text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 transition-colors uppercase cursor-pointer"
+                >
+                  Reset
+                </button>
+              </div>
+            </form>
+          )}
         </div>
+      </div>
       {/* Floating Stepper Navigation (Desktop only) */}
       {videoModalUrl === null && lightboxIndex === null && (
         <div className="hidden lg:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-4 z-40 bg-white/20 dark:bg-black/25 backdrop-blur-md p-3.5 rounded-full border border-black/5 dark:border-white/10 shadow-lg select-none">
@@ -3349,15 +3394,13 @@ export default function App() {
 
       {/* LEGAL MODAL — Terms & Conditions / Privacy Policy */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          legalModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${legalModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
         onClick={() => setLegalModal(null)}
       >
         <div
-          className={`relative w-full max-w-2xl max-h-[85vh] bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col my-8 select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            legalModal ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
-          }`}
+          className={`relative w-full max-w-2xl max-h-[85vh] bg-[#f5f5dd] dark:bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10 flex flex-col my-8 select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${legalModal ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'
+            }`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
@@ -3615,10 +3658,10 @@ export default function App() {
       {/* 2.15. VIKI AI CHATBOT ASSISTANT */}
       {/* ========================================== */}
       <div className="fixed bottom-[80px] right-6 lg:right-8 z-40 flex flex-col items-end select-none">
-        
+
         {/* Floating Tooltip "Ask Viki" */}
         {!isChatOpen && (
-          <div 
+          <div
             className="mb-2 mr-1 px-3.5 py-1.5 bg-[#f5f5dd] dark:bg-zinc-900 border border-black/5 dark:border-white/10 rounded-xl shadow-lg flex items-center gap-1.5 animate-bounce hover:scale-105 cursor-pointer transition-all duration-300"
             onClick={handleOpenChat}
           >
@@ -3637,9 +3680,9 @@ export default function App() {
               className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#d10000] dark:border-[#ffec4e] shadow-[0_8px_24px_rgba(209,0,0,0.3)] dark:shadow-[0_8px_24px_rgba(255,236,78,0.2)] hover:scale-110 active:scale-95 transition-all duration-300 relative group cursor-pointer"
               aria-label="Ask Viki AI Chatbot"
             >
-              <img 
-                src="viki_avatar.png" 
-                alt="Viki" 
+              <img
+                src="viki_avatar.png"
+                alt="Viki"
                 className="w-full h-full object-cover"
               />
             </button>
@@ -3649,138 +3692,136 @@ export default function App() {
         )}
 
         {/* Chat Window Panel */}
-        <div 
-          className={`absolute bottom-0 right-0 w-80 sm:w-96 max-w-[90vw] h-[480px] max-h-[70vh] bg-[#ffffcc] dark:bg-[#17202A] border border-black/10 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col transform origin-bottom-right transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-            isChatOpen 
-              ? 'opacity-100 scale-100 rotate-0 pointer-events-auto translate-y-0' 
+        <div
+          className={`absolute bottom-0 right-0 w-80 sm:w-96 max-w-[90vw] h-[480px] max-h-[70vh] bg-[#ffffcc] dark:bg-[#17202A] border border-black/10 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col transform origin-bottom-right transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isChatOpen
+              ? 'opacity-100 scale-100 rotate-0 pointer-events-auto translate-y-0'
               : 'opacity-0 scale-[0.2] -rotate-6 pointer-events-none translate-y-12'
-          }`}
+            }`}
         >
-            
-            {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/10 bg-black/5 dark:bg-white/5 transition-colors">
-              <div className="flex items-center gap-3">
-                <div className="relative w-9 h-9 flex-shrink-0">
-                  <div className="w-full h-full rounded-full overflow-hidden border border-black/10 dark:border-white/10">
-                    <img src="viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
-                  </div>
-                  {/* Green status indicator outside overflow-hidden to prevent cropping */}
-                  <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#ffffcc] dark:border-[#17202A] z-10" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-heading font-black text-xs text-zinc-900 dark:text-white transition-colors">Viki</span>
-                    <span className="text-[8px] bg-[#d10000]/10 dark:bg-white/10 text-[#d10000] dark:text-[#ffec4e] px-1.5 py-0.5 rounded-full font-brand font-extrabold uppercase tracking-wider">AI Assistant</span>
-                  </div>
-                  <span className="text-[10px] text-zinc-600 dark:text-zinc-400 font-body">Online Chat Support</span>
-                </div>
-              </div>
-              <button 
-                onClick={() => setIsChatOpen(false)}
-                className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
 
-            {/* Scrollable Conversation History */}
-            <div 
-              className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 font-body text-xs sm:text-sm bg-[#f5f5dd] dark:bg-[#111821] transition-colors"
-              style={{
-                backgroundImage: isDark 
-                  ? `url("chat_bg_dark.png")`
-                  : `url("chat_bg_light.png")`,
-                backgroundSize: '240px auto',
-                backgroundRepeat: 'repeat'
-              }}
+          {/* Header */}
+          <div className="flex items-center justify-between px-5 py-4 border-b border-black/5 dark:border-white/10 bg-black/5 dark:bg-white/5 transition-colors">
+            <div className="flex items-center gap-3">
+              <div className="relative w-9 h-9 flex-shrink-0">
+                <div className="w-full h-full rounded-full overflow-hidden border border-black/10 dark:border-white/10">
+                  <img src="viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                </div>
+                {/* Green status indicator outside overflow-hidden to prevent cropping */}
+                <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#ffffcc] dark:border-[#17202A] z-10" />
+              </div>
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-heading font-black text-xs text-zinc-900 dark:text-white transition-colors">Viki</span>
+                  <span className="text-[8px] bg-[#d10000]/10 dark:bg-white/10 text-[#d10000] dark:text-[#ffec4e] px-1.5 py-0.5 rounded-full font-brand font-extrabold uppercase tracking-wider">AI Assistant</span>
+                </div>
+                <span className="text-[10px] text-zinc-600 dark:text-zinc-400 font-body">Online Chat Support</span>
+              </div>
+            </div>
+            <button
+              onClick={() => setIsChatOpen(false)}
+              className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
             >
-              {chatMessages.map((msg, index) => (
-                <div 
-                  key={index}
-                  className={`flex gap-2 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}
-                >
-                  {msg.sender === 'viki' && (
-                    <div className="relative w-6 h-6 flex-shrink-0">
-                      <div className="w-full h-full rounded-full overflow-hidden border border-black/5">
-                        <img src="viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
-                      </div>
-                      {/* Green status indicator outside overflow-hidden to prevent cropping */}
-                      <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-[#ffffcc] dark:border-[#17202A] z-10" />
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Scrollable Conversation History */}
+          <div
+            className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 font-body text-xs sm:text-sm bg-[#f5f5dd] dark:bg-[#111821] transition-colors"
+            style={{
+              backgroundImage: isDark
+                ? `url("chat_bg_dark.png")`
+                : `url("chat_bg_light.png")`,
+              backgroundSize: '240px auto',
+              backgroundRepeat: 'repeat'
+            }}
+          >
+            {chatMessages.map((msg, index) => (
+              <div
+                key={index}
+                className={`flex gap-2 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}
+              >
+                {msg.sender === 'viki' && (
+                  <div className="relative w-6 h-6 flex-shrink-0">
+                    <div className="w-full h-full rounded-full overflow-hidden border border-black/5">
+                      <img src="viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                    </div>
+                    {/* Green status indicator outside overflow-hidden to prevent cropping */}
+                    <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-[#ffffcc] dark:border-[#17202A] z-10" />
+                  </div>
+                )}
+                <div className={`p-3 rounded-2xl leading-relaxed shadow-sm ${msg.sender === 'user'
+                    ? 'bg-[#d10000] text-white dark:bg-[#ffec4e] dark:text-black rounded-tr-none'
+                    : 'bg-white/90 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 rounded-tl-none border border-black/5 dark:border-white/5'
+                  }`}>
+                  {formatVignette(msg.text)}
+
+                  {/* Viki's Direct Contact Card (Step 3) */}
+                  {msg.type === 'need_help' && (
+                    <div className="mt-3 p-3 bg-white dark:bg-zinc-950 rounded-xl border border-black/5 dark:border-white/10 flex flex-col gap-2 shadow-xs text-zinc-700 dark:text-zinc-300">
+                      <a href="tel:+919342385565" className="flex items-center gap-2 hover:text-[#d10000] dark:hover:text-[#ffec4e] transition-colors">
+                        <Phone className="w-3.5 h-3.5" />
+                        <span>+91 9342385565</span>
+                      </a>
+                      <a href="mailto:vignetteworks.official@gmail.com" className="flex items-center gap-2 hover:text-[#d10000] dark:hover:text-[#ffec4e] transition-colors">
+                        <Mail className="w-3.5 h-3.5" />
+                        <span>vignetteworks.official@gmail.com</span>
+                      </a>
                     </div>
                   )}
-                  <div className={`p-3 rounded-2xl leading-relaxed shadow-sm ${
-                    msg.sender === 'user' 
-                      ? 'bg-[#d10000] text-white dark:bg-[#ffec4e] dark:text-black rounded-tr-none' 
-                      : 'bg-white/90 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 rounded-tl-none border border-black/5 dark:border-white/5'
-                  }`}>
-                    {formatVignette(msg.text)}
-
-                    {/* Viki's Direct Contact Card (Step 3) */}
-                    {msg.type === 'need_help' && (
-                      <div className="mt-3 p-3 bg-white dark:bg-zinc-950 rounded-xl border border-black/5 dark:border-white/10 flex flex-col gap-2 shadow-xs text-zinc-700 dark:text-zinc-300">
-                        <a href="tel:+919342385565" className="flex items-center gap-2 hover:text-[#d10000] dark:hover:text-[#ffec4e] transition-colors">
-                          <Phone className="w-3.5 h-3.5" />
-                          <span>+91 9342385565</span>
-                        </a>
-                        <a href="mailto:vignetteworks.official@gmail.com" className="flex items-center gap-2 hover:text-[#d10000] dark:hover:text-[#ffec4e] transition-colors">
-                          <Mail className="w-3.5 h-3.5" />
-                          <span>vignetteworks.official@gmail.com</span>
-                        </a>
-                      </div>
-                    )}
-                  </div>
                 </div>
-              ))}
-              <div ref={chatEndRef} />
-            </div>
-
-            {/* Conversation Controls (MCQs) */}
-            <div className="p-4 border-t border-black/5 dark:border-white/10 bg-black/5 dark:bg-black/20">
-              <div className="flex flex-col gap-2 max-h-40 overflow-y-auto pr-1">
-                {chatStep === 'welcome' && [
-                  'Hire for Video Editing (PAID)',
-                  'Hire for Podcast/YT Video Editing (PAID)',
-                  'Hire for Photoshoot (PAID)',
-                  'Ask for Collaboration',
-                  "Let's Work Together",
-                  "Avgeek - Let's Connect",
-                  'Planespotting',
-                  "Want to join the 'Vignette' team"
-                ].map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleChatOptionClick(option)}
-                    className="w-full text-left px-3.5 py-2.5 rounded-xl border border-transparent hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
-                  >
-                    {formatVignette(option)}
-                  </button>
-                ))}
-
-                {chatStep === 'guide_form' && [
-                  'All good, understood',
-                  'Still need help'
-                ].map((option) => (
-                  <button
-                    key={option}
-                    onClick={() => handleChatOptionClick(option)}
-                    className="w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
-                  >
-                    {option === 'All good, understood' ? '✅ ' : '💬 '}{option}
-                  </button>
-                ))}
-
-                {chatStep === 'need_help' && (
-                  <button
-                    onClick={() => handleChatOptionClick('Start Over')}
-                    className="w-full text-center px-3.5 py-2.5 rounded-xl border border-[#d10000] dark:border-[#ffec4e] text-[#d10000] dark:text-[#ffec4e] hover:bg-[#d10000] dark:hover:bg-[#ffec4e] hover:text-white dark:hover:text-black font-brand font-extrabold text-xs uppercase tracking-wider hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
-                  >
-                    🔄 Start Over
-                  </button>
-                )}
               </div>
-            </div>
-
+            ))}
+            <div ref={chatEndRef} />
           </div>
+
+          {/* Conversation Controls (MCQs) */}
+          <div className="p-4 border-t border-black/5 dark:border-white/10 bg-black/5 dark:bg-black/20">
+            <div className="flex flex-col gap-2 max-h-40 overflow-y-auto pr-1">
+              {chatStep === 'welcome' && [
+                'Hire for Video Editing (PAID)',
+                'Hire for Podcast/YT Video Editing (PAID)',
+                'Hire for Photoshoot (PAID)',
+                'Ask for Collaboration',
+                "Let's Work Together",
+                "Avgeek - Let's Connect",
+                'Planespotting',
+                "Want to join the 'Vignette' team"
+              ].map((option) => (
+                <button
+                  key={option}
+                  onClick={() => handleChatOptionClick(option)}
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl border border-transparent hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
+                >
+                  {formatVignette(option)}
+                </button>
+              ))}
+
+              {chatStep === 'guide_form' && [
+                'All good, understood',
+                'Still need help'
+              ].map((option) => (
+                <button
+                  key={option}
+                  onClick={() => handleChatOptionClick(option)}
+                  className="w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
+                >
+                  {option === 'All good, understood' ? '✅ ' : '💬 '}{option}
+                </button>
+              ))}
+
+              {chatStep === 'need_help' && (
+                <button
+                  onClick={() => handleChatOptionClick('Start Over')}
+                  className="w-full text-center px-3.5 py-2.5 rounded-xl border border-[#d10000] dark:border-[#ffec4e] text-[#d10000] dark:text-[#ffec4e] hover:bg-[#d10000] dark:hover:bg-[#ffec4e] hover:text-white dark:hover:text-black font-brand font-extrabold text-xs uppercase tracking-wider hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
+                >
+                  🔄 Start Over
+                </button>
+              )}
+            </div>
+          </div>
+
+        </div>
 
       </div>
 
