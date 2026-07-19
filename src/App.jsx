@@ -2484,8 +2484,6 @@ export default function App() {
               {/* Absolute Plane Background Overlay (Flys behind the text, taking over the space) */}
               <div className="absolute right-[-15%] sm:right-[-10%] lg:right-[-5%] top-[10%] sm:top-[5%] lg:top-1/2 lg:-translate-y-1/2 w-[115%] sm:w-[95%] lg:w-[65%] xl:w-[60%] z-[-1] pointer-events-none select-none opacity-45 dark:opacity-40 lg:opacity-100 transition-opacity duration-300">
                 <div className="reveal reveal-scale relative w-full h-full flex justify-center">
-                  {/* Decorative background glow under the plane */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 sm:w-96 h-64 sm:h-96 bg-gradient-to-tr from-[#d10000]/15 to-[#ffec4e]/15 dark:from-[#d10000]/25 dark:to-[#ffec4e]/25 rounded-full blur-[60px] sm:blur-[80px]" />
                   <img
                     src="b777.png"
                     alt="Boeing 777 Aviation"
