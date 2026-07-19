@@ -2453,36 +2453,25 @@ export default function App() {
         </section>
 
         {/* 2.8.3. AVGEEKS CONNECT SECTION */}
-        <section id="avgeeks" className="bg-transparent py-20 sm:py-28 scroll-mt-20 overflow-hidden relative min-h-[460px] md:min-h-[480px] flex items-center">
+        <section id="avgeeks" className="bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative min-h-[460px] lg:min-h-[520px] flex items-center">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-1/2 -left-1/4 w-[400px] h-[400px] bg-brand-lightOrange/5 dark:bg-brand-darkGold/5 rounded-full blur-[80px]" />
           </div>
 
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 relative w-full">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 w-full">
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative w-full">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 w-full">
               
               {/* Left Column: Text & CTA */}
-              <div className="relative z-10 w-full md:w-1/2 flex flex-col items-start text-left">
-                <h2 className="reveal font-brand font-bold text-4xl sm:text-5xl md:text-5xl lg:text-6xl tracking-tight leading-[1.1] select-none mb-6">
+              <div className="relative z-10 w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left">
+                <h2 className="reveal font-brand font-bold text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-[1.1] select-none mb-6">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-[#d10000] dark:from-[#e31c25] dark:to-[#FFBF00] box-decoration-clone">
                     aVgeeks Connect!
                   </span>
                 </h2>
-                <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[460px] leading-relaxed transition-colors mb-6 md:mb-10">
+                <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[460px] leading-relaxed transition-colors mb-10">
                   Join a premier global hub for aviation enthusiasts. Share high-altitude perspectives, review flight grading coordinates, and explore the skies together.
                 </p>
-
-                {/* Mobile Plane (Only visible on screens < 768px, sits between description and button) */}
-                <div className="md:hidden w-full my-6 flex justify-center">
-                  <img
-                    src="b777.png"
-                    alt="Boeing 777 Aviation"
-                    className="w-[90%] max-w-[340px] h-auto object-contain select-none pointer-events-none hover:scale-[1.03] transition-transform duration-700 ease-out"
-                    draggable="false"
-                  />
-                </div>
-
-                <div className="reveal w-full sm:w-auto flex justify-start">
+                <div className="reveal w-full sm:w-auto flex justify-center lg:justify-start">
                   <button
                     onClick={() => alert("This feature is coming soon!")}
                     className="w-full sm:w-auto px-6 py-3.5 sm:px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
@@ -2492,9 +2481,9 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Absolute Plane Background Overlay (Only visible on screens >= 768px, flys behind text on the right) */}
-              <div className="hidden md:block absolute right-[-10%] lg:right-[-5%] top-1/2 -translate-y-1/2 w-[55%] lg:w-[50%] z-[-1] pointer-events-none select-none">
-                <div className="reveal reveal-scale w-full h-full">
+              {/* Absolute Plane Background Overlay (Flys behind the text, taking over the space) */}
+              <div className="absolute right-[-15%] sm:right-[-10%] lg:right-[-5%] top-[10%] sm:top-[5%] lg:top-1/2 lg:-translate-y-1/2 w-[115%] sm:w-[95%] lg:w-[65%] xl:w-[60%] z-[-1] pointer-events-none select-none opacity-100 transition-opacity duration-300">
+                <div className="reveal reveal-scale relative w-full h-full flex justify-center">
                   <img
                     src="b777.png"
                     alt="Boeing 777 Aviation"
