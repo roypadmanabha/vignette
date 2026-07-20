@@ -974,7 +974,7 @@ export default function App() {
         setTimeout(() => {
           setChatMessages(prev => [...prev, {
             sender: 'viki',
-            text: "No worries! You can contact Padmanabha Roy directly via phone or email:",
+            text: "No worries! You can contact Vignette Support Center directly via phone or email:",
             type: 'need_help'
           }]);
         }, 600);
@@ -2839,7 +2839,7 @@ export default function App() {
                         ) : (
                           <>
                             <Send className="w-4 h-4" />
-                            <span>Submit</span>
+                            <span>Send OTP</span>
                           </>
                         )}
                       </button>
@@ -3330,7 +3330,7 @@ export default function App() {
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>Submit</span>
+                    <span>Send OTP</span>
                   </>
                 )}
               </button>
