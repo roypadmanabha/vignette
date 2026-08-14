@@ -34,6 +34,8 @@ import {
   Plane
 } from 'lucide-react';
 import { supabase } from './supabase';
+import AtAGlanceGallery from './AtAGlanceGallery';
+import AvgeekConnect from './AvgeekConnect';
 
 // Local SVG declarations for social icons (Boxicons v3.0.8)
 const Instagram = (props) => (
@@ -871,6 +873,15 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '' });
 
+  // Cookie Consent States
+  const [showCookieConsent, setShowCookieConsent] = useState(false);
+  const [customizeCookies, setCustomizeCookies] = useState(false);
+  const [cookiePreferences, setCookiePreferences] = useState({
+    essential: true,
+    analytics: true,
+    personalization: true
+  });
+
   // Scrollytelling
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
@@ -880,6 +891,7 @@ export default function App() {
   const [galleryItems, setGalleryItems] = useState(MOCK_GALLERY);
   const [galleryLoading, setGalleryLoading] = useState(true);
   const [lightboxIndex, setLightboxIndex] = useState(null); // index of filtered list
+  const [lightboxGallery, setLightboxGallery] = useState([]);
 
   // Videos / Reels
   const [videos, setVideos] = useState(MOCK_VIDEOS);
@@ -904,13 +916,14 @@ export default function App() {
   const [formSuccess, setFormSuccess] = useState(false);
   const [formError, setFormError] = useState(null);
 
-  // Chatbot Viki States
+  // Chatbot Vyn States
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isAvgeekConnectOpen, setIsAvgeekConnectOpen] = useState(false);
   const [chatStep, setChatStep] = useState('welcome');
   const [chatMessages, setChatMessages] = useState([
     {
-      sender: 'viki',
-      text: "Hi! I'm Viki, your chat assistant for Vignette. How can I help you today?",
+      sender: 'vyn',
+      text: "Hi! I'm Vyn, your chat assistant for Vignette. How can I help you today?",
       type: 'welcome'
     }
   ]);
@@ -922,6 +935,30 @@ export default function App() {
     }
   }, [chatMessages, isChatOpen]);
 
+  // Auto-open community portal if user is signed in
+  useEffect(() => {
+    if (supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) {
+          setIsAvgeekConnectOpen(true);
+        }
+      });
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (session) {
+          setIsAvgeekConnectOpen(true);
+        }
+      });
+      return () => {
+        if (subscription) subscription.unsubscribe();
+      };
+    } else {
+      const saved = localStorage.getItem('avgeek_mock_user');
+      if (saved) {
+        setIsAvgeekConnectOpen(true);
+      }
+    }
+  }, []);
+
   const handleOpenChat = () => {
     setIsChatOpen(true);
     setMobileMenuOpen(false);
@@ -932,7 +969,27 @@ export default function App() {
     });
   };
 
+  const handleCloseChat = () => {
+    setIsChatOpen(false);
+    setTimeout(() => {
+      setChatStep('welcome');
+      setChatMessages([
+        {
+          sender: 'vyn',
+          text: "Hi! I'm Vyn, your chat assistant for Vignette. How can I help you today?",
+          type: 'welcome'
+        }
+      ]);
+    }, 300);
+  };
+
   const handleChatOptionClick = (option) => {
+    if (option === 'All good, understood' && chatMessages.some(msg => msg.sender === 'user' && msg.text === 'All good, understood')) {
+      return;
+    }
+    if (option === 'Start Over' && chatMessages.some(msg => msg.sender === 'user' && msg.text === 'Still need help')) {
+      return;
+    }
     const audio = new Audio('./sent_sound.mp3');
     audio.volume = 1.0;
     audio.play().catch(err => {
@@ -942,55 +999,67 @@ export default function App() {
     const userMsg = { sender: 'user', text: option };
 
     if (chatStep === 'welcome') {
-      setChatMessages(prev => [...prev, userMsg]);
+      setChatMessages(prev => [...prev, userMsg, { id: 'typing', sender: 'vyn', text: '...', isTyping: true }]);
       setChatStep('guide_form');
 
       setTimeout(() => {
-        setChatMessages(prev => [...prev, {
-          sender: 'viki',
-          text: `Got it! You are interested in "${option}". To proceed, please fill out our contact form. It helps us review all your project details and get back to you quickly!`,
-          type: 'guide_form'
-        }]);
-      }, 600);
+        setChatMessages(prev => {
+          const filtered = prev.filter(msg => msg.id !== 'typing');
+          return [...filtered, {
+            sender: 'vyn',
+            text: `Got it! You are interested in "${option}". To proceed, please fill out our contact form. It helps us review all your project details and get back to you quickly!`,
+            type: 'guide_form'
+          }];
+        });
+      }, 1000);
 
     } else if (chatStep === 'guide_form') {
-      setChatMessages(prev => [...prev, userMsg]);
+      setChatMessages(prev => [...prev, userMsg, { id: 'typing', sender: 'vyn', text: '...', isTyping: true }]);
 
       if (option === 'All good, understood') {
         setTimeout(() => {
-          setChatMessages(prev => [...prev, {
-            sender: 'viki',
-            text: "Awesome! Scrolling you down to the contact form now. Looking forward to collaborating!",
-            type: 'completed'
-          }]);
+          setChatMessages(prev => {
+            const filtered = prev.filter(msg => msg.id !== 'typing');
+            return [...filtered, {
+              sender: 'vyn',
+              text: "Awesome! Scrolling you down to the contact form now. Looking forward to collaborating!",
+              type: 'completed'
+            }];
+          });
 
           setTimeout(() => {
             setIsChatOpen(false);
             scrollToSection('hire');
           }, 1500);
-        }, 600);
+        }, 1000);
       } else {
         setChatStep('need_help');
         setTimeout(() => {
-          setChatMessages(prev => [...prev, {
-            sender: 'viki',
-            text: "No worries! You can contact Vignette Support Center directly via phone or email:",
-            type: 'need_help'
-          }]);
-        }, 600);
+          setChatMessages(prev => {
+            const filtered = prev.filter(msg => msg.id !== 'typing');
+            return [...filtered, {
+              sender: 'vyn',
+              text: "No worries! You can contact Vignette Support directly via phone or email:",
+              type: 'need_help'
+            }];
+          });
+        }, 1000);
       }
 
     } else if (chatStep === 'need_help' && option === 'Start Over') {
-      setChatMessages(prev => [...prev, userMsg]);
+      setChatMessages(prev => [...prev, userMsg, { id: 'typing', sender: 'vyn', text: '...', isTyping: true }]);
       setChatStep('welcome');
 
       setTimeout(() => {
-        setChatMessages(prev => [...prev, {
-          sender: 'viki',
-          text: "Hi! I'm Viki, your chat assistant for Vignette. How can I help you today?",
-          type: 'welcome'
-        }]);
-      }, 600);
+        setChatMessages(prev => {
+          const filtered = prev.filter(msg => msg.id !== 'typing');
+          return [...filtered, {
+            sender: 'vyn',
+            text: "Hi! I'm Vyn, your chat assistant for Vignette. How can I help you today?",
+            type: 'welcome'
+          }];
+        });
+      }, 1000);
     }
   };
 
@@ -1136,6 +1205,21 @@ export default function App() {
     document.documentElement.classList.remove('dark');
     localStorage.setItem('vignette-theme', 'light');
 
+    // Check cookie consent on mount
+    const consent = localStorage.getItem('vignette-cookie-consent');
+    if (!consent) {
+      setTimeout(() => {
+        setShowCookieConsent(true);
+      }, 1000);
+    } else {
+      try {
+        const parsed = JSON.parse(consent);
+        setCookiePreferences(parsed);
+      } catch (e) {
+        setShowCookieConsent(true);
+      }
+    }
+
     // Disable pinch-to-zoom for iOS Safari and mobile devices
     const preventPinchZoom = (e) => {
       if (e.touches.length > 1) {
@@ -1157,6 +1241,34 @@ export default function App() {
       document.removeEventListener('gesturestart', preventGestureZoom);
     };
   }, []);
+
+  // --- Cookie Consent Handlers ---
+  const handleAcceptAllCookies = () => {
+    const preferences = { essential: true, analytics: true, personalization: true };
+    setCookiePreferences(preferences);
+    localStorage.setItem('vignette-cookie-consent', JSON.stringify(preferences));
+    setShowCookieConsent(false);
+  };
+
+  const handleRejectNonEssentialCookies = () => {
+    const preferences = { essential: true, analytics: false, personalization: false };
+    setCookiePreferences(preferences);
+    localStorage.setItem('vignette-cookie-consent', JSON.stringify(preferences));
+    setShowCookieConsent(false);
+  };
+
+  const handleSaveCustomCookies = () => {
+    localStorage.setItem('vignette-cookie-consent', JSON.stringify(cookiePreferences));
+    setShowCookieConsent(false);
+  };
+
+  const toggleCookiePreference = (type) => {
+    if (type === 'essential') return;
+    setCookiePreferences(prev => ({
+      ...prev,
+      [type]: !prev[type]
+    }));
+  };
 
   const toggleTheme = () => {
     const newDark = !isDark;
@@ -1260,26 +1372,33 @@ export default function App() {
   // --- Scrollytelling Progress & Active Section Stepper ---
   useEffect(() => {
     const sections = ['home', 'gallery', 'services', 'videos', 'editing', 'vision', 'hire'];
+    let ticking = false;
 
     const handleScroll = () => {
-      // 1. Calculate general scroll progress
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        setScrollProgress((window.scrollY / totalHeight) * 100);
-      }
-
-      // 2. Track which section is active
-      const scrollPos = window.scrollY + window.innerHeight / 3;
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(sectionId);
-            break;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // 1. Calculate general scroll progress
+          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+          if (totalHeight > 0) {
+            setScrollProgress((window.scrollY / totalHeight) * 100);
           }
-        }
+
+          // 2. Track which section is active
+          const scrollPos = window.scrollY + window.innerHeight / 3;
+          for (const sectionId of sections) {
+            const el = document.getElementById(sectionId);
+            if (el) {
+              const top = el.offsetTop;
+              const height = el.offsetHeight;
+              if (scrollPos >= top && scrollPos < top + height) {
+                setActiveSection(prev => prev !== sectionId ? sectionId : prev);
+                break;
+              }
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
@@ -1428,17 +1547,28 @@ export default function App() {
     galleryFilter === 'All' || item.category.toLowerCase() === galleryFilter.toLowerCase()
   );
 
+  const handleAtAGlanceImageClick = (index, filteredItems) => {
+    setLightboxGallery(filteredItems);
+    setLightboxIndex(index);
+  };
+
+  const handleCloseLightbox = () => {
+    setLightboxIndex(null);
+  };
+
   // Lightbox Navigation helpers
   const handlePrevLightbox = (e) => {
     e.stopPropagation();
     if (lightboxIndex === null) return;
-    setLightboxIndex(prev => (prev === 0 ? filteredGallery.length - 1 : prev - 1));
+    const galleryToUse = lightboxGallery.length > 0 ? lightboxGallery : filteredGallery;
+    setLightboxIndex(prev => (prev === 0 ? galleryToUse.length - 1 : prev - 1));
   };
 
   const handleNextLightbox = (e) => {
     e.stopPropagation();
     if (lightboxIndex === null) return;
-    setLightboxIndex(prev => (prev === filteredGallery.length - 1 ? 0 : prev + 1));
+    const galleryToUse = lightboxGallery.length > 0 ? lightboxGallery : filteredGallery;
+    setLightboxIndex(prev => (prev === galleryToUse.length - 1 ? 0 : prev + 1));
   };
 
   // Keyboard controls for lightbox
@@ -1451,7 +1581,7 @@ export default function App() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxIndex, filteredGallery]);
+  }, [lightboxIndex, lightboxGallery, filteredGallery]);
 
   // --- Contact Form Submission ---
   const handleFormSubmit = async (e) => {
@@ -2149,71 +2279,7 @@ export default function App() {
         </div>
 
         {/* 2.6. GALLERY SECTION */}
-        <section id="gallery" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
-                At a Glance
-              </h2>
-              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors">
-                Freezing time across terminals, peaks, and street corners. Discover visual stories filtered by category.
-              </p>
-            </div>
-
-            {/* Filter Pill List Row */}
-            <div className="reveal reveal-left flex flex-wrap justify-center gap-2.5 mb-12 select-none">
-              {['All', 'Travel', 'Lifestyle', 'Avgeek', 'Storytelling'].map((category) => {
-                const isActive = galleryFilter.toLowerCase() === category.toLowerCase();
-                return (
-                  <button
-                    key={category}
-                    onClick={() => setGalleryFilter(category)}
-                    className={`px-6 py-2.5 rounded-full font-brand font-extrabold text-xs transition-all duration-300 ${isActive
-                      ? 'bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow text-white dark:text-black shadow-md'
-                      : 'border border-zinc-300 dark:border-zinc-700 hover:border-zinc-800 dark:hover:border-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/20'
-                      }`}
-                  >
-                    {category}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Gallery Cards Masonry/Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-8">
-              {filteredGallery.map((item, idx) => (
-                <div
-                  key={item.id}
-                  onClick={() => handleImageClick(idx)}
-                  className="reveal reveal-scale group relative rounded-xl sm:rounded-2xl overflow-hidden aspect-[4/5] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-2 transition-premium select-none"
-                  style={{ transitionDelay: `${(idx % 3) * 80}ms` }}
-                >
-                  <img
-                    src={item.media_url}
-                    alt={item.title}
-                    className="w-full h-full object-cover select-none pointer-events-none group-hover:scale-105 transition-premium"
-                    draggable="false"
-                    loading="lazy"
-                  />
-                  {/* Frosted Metadata Strip bottom */}
-                  <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4 p-2 sm:p-4 rounded-lg sm:rounded-xl bg-black/60 dark:bg-black/75 backdrop-blur-md border border-white/10 flex items-center justify-between text-white transform translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-premium z-10">
-                    <div className="flex flex-col">
-                      <span className="font-brand font-extrabold text-[8px] sm:text-xs uppercase tracking-wider text-brand-darkGold select-none">
-                        {item.category}
-                      </span>
-                      <h3 className="font-heading font-black text-[10px] sm:text-sm mt-0.5 sm:mt-1 leading-tight select-none">
-                        {item.title}
-                      </h3>
-                    </div>
-                    <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-zinc-300 group-hover:text-white flex-shrink-0 ml-1.5" />
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Custom Lightbox Modal (Moved to root level for proper stacking context) */}
-          </div>
-        </section>
+        <AtAGlanceGallery onImageClick={handleAtAGlanceImageClick} />
 
         {/* 2.6.5. SERVICES SECTION */}
         <section id="services" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
@@ -2323,7 +2389,7 @@ export default function App() {
         </section>
 
         {/* 2.7. VIDEOS / REELS SECTION */}
-        <section id="videos" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="videos" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -2424,7 +2490,7 @@ export default function App() {
         </section>
 
         {/* 2.8. EDITING SHOWCASE SECTION */}
-        <section id="editing" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="editing" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
@@ -2455,10 +2521,10 @@ export default function App() {
           </div>
         </section>
 
-        <section id="avgeeks" className="bg-transparent py-12 sm:py-16 scroll-mt-20 overflow-hidden relative isolate">
+        <section id="avgeeks" className="bg-[#f5f5dd] dark:bg-transparent py-12 sm:py-16 scroll-mt-20 overflow-hidden relative isolate transition-colors">
 
           <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 relative w-full">
-            
+
             {/* 1. MOBILE & TABLET LAYOUT (< 1024px) */}
             <div className="lg:hidden flex flex-col items-center text-center w-full">
               {/* Heading */}
@@ -2467,11 +2533,11 @@ export default function App() {
                   aVgeeks Connect!
                 </span>
               </h2>
-              
+
               {/* Airplane Image (Whole screen width on mobile) */}
               <div className="reveal w-full max-w-[540px] my-6 flex justify-center">
                 <img
-                  src="b777.png"
+                  src="b777-vignette.png"
                   alt="Boeing 777 Aviation"
                   className="w-full h-auto object-contain select-none pointer-events-none hover:scale-[1.02] transition-transform duration-700 ease-out"
                   draggable="false"
@@ -2486,7 +2552,7 @@ export default function App() {
               {/* Button */}
               <div className="reveal w-full flex justify-center">
                 <button
-                  onClick={() => alert("This feature is coming soon!")}
+                  onClick={() => setIsAvgeekConnectOpen(true)}
                   className="px-5 py-2.5 sm:px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
                 >
                   Ready for Takeoff
@@ -2508,7 +2574,7 @@ export default function App() {
                 </p>
                 <div className="reveal w-full flex justify-start">
                   <button
-                    onClick={() => alert("This feature is coming soon!")}
+                    onClick={() => setIsAvgeekConnectOpen(true)}
                     className="px-8 py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
                   >
                     Ready for Takeoff
@@ -2520,7 +2586,7 @@ export default function App() {
               <div className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[65%] xl:w-[60%] z-[1] pointer-events-none select-none opacity-100 transition-opacity duration-300">
                 <div className="reveal reveal-scale relative w-full h-full flex justify-center">
                   <img
-                    src="b777.png"
+                    src="b777-vignette.png"
                     alt="Boeing 777 Aviation"
                     className="w-full h-auto object-contain select-none pointer-events-none hover:scale-[1.03] transition-transform duration-700 ease-out"
                     draggable="false"
@@ -3622,58 +3688,65 @@ export default function App() {
       </div>
 
       {/* Custom Lightbox Modal */}
-      {lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/95 backdrop-blur-md select-none"
-          onClick={handleCloseLightbox}
-        >
-          {/* Close Button */}
-          <button
-            className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+      {(() => {
+        if (lightboxIndex === null) return null;
+        const galleryToUse = lightboxGallery.length > 0 ? lightboxGallery : filteredGallery;
+        const activeItem = galleryToUse[lightboxIndex];
+        if (!activeItem) return null;
+
+        return (
+          <div
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/95 backdrop-blur-md select-none"
             onClick={handleCloseLightbox}
           >
-            <X className="w-6 h-6" />
-          </button>
+            {/* Close Button */}
+            <button
+              className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
+              onClick={handleCloseLightbox}
+            >
+              <X className="w-6 h-6" />
+            </button>
 
-          {/* Prev Button */}
-          <button
-            className="absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
-            onClick={handlePrevLightbox}
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
+            {/* Prev Button */}
+            <button
+              className="absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
+              onClick={handlePrevLightbox}
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
 
-          {/* Active Image container */}
-          <div
-            className="max-w-[90vw] max-h-[80vh] flex flex-col items-center justify-center relative"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={filteredGallery[lightboxIndex].media_url}
-              alt={filteredGallery[lightboxIndex].title}
-              className="max-w-full max-h-[72vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
-              draggable="false"
-            />
-            {/* Floating caption below image */}
-            <div className="mt-5 text-center">
-              <span className="font-brand font-extrabold text-xs uppercase tracking-widest text-[#FFD700]">
-                {filteredGallery[lightboxIndex].category}
-              </span>
-              <h3 className="font-heading font-black text-lg sm:text-xl text-white mt-1.5 leading-tight">
-                {filteredGallery[lightboxIndex].title}
-              </h3>
+            {/* Active Image container */}
+            <div
+              className="max-w-[90vw] max-h-[80vh] flex flex-col items-center justify-center relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={activeItem.media_url}
+                alt={activeItem.title}
+                className="max-w-full max-h-[72vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
+                draggable="false"
+              />
+              {/* Floating caption below image */}
+              <div className="mt-5 text-center">
+                <span className="font-brand font-extrabold text-xs uppercase tracking-widest text-[#FFD700]">
+                  {activeItem.category}
+                </span>
+                <h3 className="font-heading font-black text-lg sm:text-xl text-white mt-1.5 leading-tight">
+                  {activeItem.title}
+                </h3>
+              </div>
             </div>
-          </div>
 
-          {/* Next Button */}
-          <button
-            className="absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
-            onClick={handleNextLightbox}
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </div>
-      )}
+            {/* Next Button */}
+            <button
+              className="absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
+              onClick={handleNextLightbox}
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        );
+      })()}
 
       {/* Fullscreen Video Player */}
       <CustomVideoPlayer
@@ -3687,11 +3760,11 @@ export default function App() {
       />
 
       {/* ========================================== */}
-      {/* 2.15. VIKI AI CHATBOT ASSISTANT */}
+      {/* 2.15. VYN AI CHATBOT ASSISTANT */}
       {/* ========================================== */}
       <div className="fixed bottom-[80px] right-6 lg:right-8 z-40 flex flex-col items-end select-none">
 
-        {/* Floating Tooltip "Ask Viki" */}
+        {/* Floating Tooltip "Ask Vyn" */}
         {!isChatOpen && (
           <div
             className="mb-2 mr-1 px-3.5 py-1.5 bg-[#f5f5dd] dark:bg-zinc-900 border border-black/5 dark:border-white/10 rounded-xl shadow-lg flex items-center gap-1.5 animate-bounce hover:scale-105 cursor-pointer transition-all duration-300"
@@ -3699,7 +3772,7 @@ export default function App() {
           >
             <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="font-brand font-extrabold text-[10px] uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
-              Ask Viki
+              Ask Vyn
             </span>
           </div>
         )}
@@ -3710,11 +3783,11 @@ export default function App() {
             <button
               onClick={handleOpenChat}
               className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#d10000] dark:border-[#ffec4e] shadow-[0_8px_24px_rgba(209,0,0,0.3)] dark:shadow-[0_8px_24px_rgba(255,236,78,0.2)] hover:scale-110 active:scale-95 transition-all duration-300 relative group cursor-pointer"
-              aria-label="Ask Viki AI Chatbot"
+              aria-label="Ask Vyn AI Chatbot"
             >
               <img
                 src="viki_avatar.png"
-                alt="Viki"
+                alt="Vyn"
                 className="w-full h-full object-cover"
               />
             </button>
@@ -3726,8 +3799,8 @@ export default function App() {
         {/* Chat Window Panel */}
         <div
           className={`absolute bottom-0 right-0 w-80 sm:w-96 max-w-[90vw] h-[480px] max-h-[70vh] bg-[#ffffcc] dark:bg-[#17202A] border border-black/10 dark:border-white/15 rounded-3xl shadow-2xl overflow-hidden flex flex-col transform origin-bottom-right transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isChatOpen
-              ? 'opacity-100 scale-100 rotate-0 pointer-events-auto translate-y-0'
-              : 'opacity-0 scale-[0.2] -rotate-6 pointer-events-none translate-y-12'
+            ? 'opacity-100 scale-100 rotate-0 pointer-events-auto translate-y-0'
+            : 'opacity-0 scale-[0.2] -rotate-6 pointer-events-none translate-y-12'
             }`}
         >
 
@@ -3736,21 +3809,21 @@ export default function App() {
             <div className="flex items-center gap-3">
               <div className="relative w-9 h-9 flex-shrink-0">
                 <div className="w-full h-full rounded-full overflow-hidden border border-black/10 dark:border-white/10">
-                  <img src="viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                  <img src="viki_avatar.png" alt="Vyn" className="w-full h-full object-cover" />
                 </div>
                 {/* Green status indicator outside overflow-hidden to prevent cropping */}
                 <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-[#ffffcc] dark:border-[#17202A] z-10" />
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-heading font-black text-xs text-zinc-900 dark:text-white transition-colors">Viki</span>
+                  <span className="font-heading font-black text-xs text-zinc-900 dark:text-white transition-colors">Vyn</span>
                   <span className="text-[8px] bg-[#d10000]/10 dark:bg-white/10 text-[#d10000] dark:text-[#ffec4e] px-1.5 py-0.5 rounded-full font-brand font-extrabold uppercase tracking-wider">AI Assistant</span>
                 </div>
                 <span className="text-[10px] text-zinc-600 dark:text-zinc-400 font-body">Online Chat Support</span>
               </div>
             </div>
             <button
-              onClick={() => setIsChatOpen(false)}
+              onClick={handleCloseChat}
               className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
@@ -3773,22 +3846,30 @@ export default function App() {
                 key={index}
                 className={`flex gap-2 max-w-[85%] ${msg.sender === 'user' ? 'self-end flex-row-reverse' : 'self-start'}`}
               >
-                {msg.sender === 'viki' && (
+                {msg.sender === 'vyn' && (
                   <div className="relative w-6 h-6 flex-shrink-0">
                     <div className="w-full h-full rounded-full overflow-hidden border border-black/5">
-                      <img src="viki_avatar.png" alt="Viki" className="w-full h-full object-cover" />
+                      <img src="viki_avatar.png" alt="Vyn" className="w-full h-full object-cover" />
                     </div>
                     {/* Green status indicator outside overflow-hidden to prevent cropping */}
                     <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 rounded-full border border-[#ffffcc] dark:border-[#17202A] z-10" />
                   </div>
                 )}
                 <div className={`p-3 rounded-2xl leading-relaxed shadow-sm ${msg.sender === 'user'
-                    ? 'bg-[#d10000] text-white dark:bg-[#ffec4e] dark:text-black rounded-tr-none'
-                    : 'bg-white/90 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 rounded-tl-none border border-black/5 dark:border-white/5'
+                  ? 'bg-[#d10000] text-white dark:bg-[#ffec4e] dark:text-black rounded-tr-none'
+                  : 'bg-white/90 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 rounded-tl-none border border-black/5 dark:border-white/5'
                   }`}>
-                  {formatVignette(msg.text)}
+                  {msg.isTyping ? (
+                    <div className="flex items-center gap-1.5 py-1.5 px-0.5">
+                      <span className="w-1.5 h-1.5 bg-[#d10000] dark:bg-[#ffec4e] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-1.5 h-1.5 bg-[#d10000] dark:bg-[#ffec4e] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1.5 h-1.5 bg-[#d10000] dark:bg-[#ffec4e] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                  ) : (
+                    formatVignette(msg.text)
+                  )}
 
-                  {/* Viki's Direct Contact Card (Step 3) */}
+                  {/* Vyn's Direct Contact Card (Step 3) */}
                   {msg.type === 'need_help' && (
                     <div className="mt-3 p-3 bg-white dark:bg-zinc-950 rounded-xl border border-black/5 dark:border-white/10 flex flex-col gap-2 shadow-xs text-zinc-700 dark:text-zinc-300">
                       <a href="tel:+919342385565" className="flex items-center gap-2 hover:text-[#d10000] dark:hover:text-[#ffec4e] transition-colors">
@@ -3832,30 +3913,188 @@ export default function App() {
               {chatStep === 'guide_form' && [
                 'All good, understood',
                 'Still need help'
-              ].map((option) => (
-                <button
-                  key={option}
-                  onClick={() => handleChatOptionClick(option)}
-                  className="w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white font-body text-xs font-semibold hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
-                >
-                  {option === 'All good, understood' ? '✅ ' : '💬 '}{option}
-                </button>
-              ))}
+              ].map((option) => {
+                const isAllGood = option === 'All good, understood';
+                const isAllGoodClicked = chatMessages.some(
+                  (msg) => msg.sender === 'user' && msg.text === 'All good, understood'
+                );
 
-              {chatStep === 'need_help' && (
-                <button
-                  onClick={() => handleChatOptionClick('Start Over')}
-                  className="w-full text-center px-3.5 py-2.5 rounded-xl border border-[#d10000] dark:border-[#ffec4e] text-[#d10000] dark:text-[#ffec4e] hover:bg-[#d10000] dark:hover:bg-[#ffec4e] hover:text-white dark:hover:text-black font-brand font-extrabold text-xs uppercase tracking-wider hover:scale-[1.01] active:scale-99 transition-all duration-200 cursor-pointer"
-                >
-                  🔄 Start Over
-                </button>
-              )}
+                return (
+                  <button
+                    key={option}
+                    disabled={isAllGood && isAllGoodClicked}
+                    onClick={() => handleChatOptionClick(option)}
+                    className={`w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent transition-all duration-200 ${
+                      isAllGood && isAllGoodClicked
+                        ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600 cursor-not-allowed opacity-50'
+                        : 'hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white hover:scale-[1.01] active:scale-99 cursor-pointer'
+                    } font-body text-xs font-semibold`}
+                  >
+                    {option === 'All good, understood' ? '✅ ' : '💬 '}{option}
+                  </button>
+                );
+              })}
+
+              {chatStep === 'need_help' && (() => {
+                const isStillNeedHelpClicked = chatMessages.some(
+                  (msg) => msg.sender === 'user' && msg.text === 'Still need help'
+                );
+
+                return (
+                  <button
+                    disabled={isStillNeedHelpClicked}
+                    onClick={() => handleChatOptionClick('Start Over')}
+                    className={`w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent transition-all duration-200 ${
+                      isStillNeedHelpClicked
+                        ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600 cursor-not-allowed opacity-50'
+                        : 'border border-[#d10000] dark:border-[#ffec4e] text-[#d10000] dark:text-[#ffec4e] hover:bg-[#d10000] dark:hover:bg-[#ffec4e] hover:text-white dark:hover:text-black hover:scale-[1.01] active:scale-99 cursor-pointer'
+                    } font-brand font-extrabold text-xs uppercase tracking-wider`}
+                  >
+                    🔄 Start Over
+                  </button>
+                );
+              })()}
             </div>
           </div>
 
         </div>
 
       </div>
+
+      {/* Cookie Consent Banner */}
+      {showCookieConsent && (
+        <div className="fixed bottom-6 left-6 right-6 sm:right-auto sm:max-w-md z-[100] animate-slide-up select-none">
+          <div className="bg-[#ffffcc]/95 dark:bg-[#17202A]/95 border-2 border-[#d10000] dark:border-[#ffec4e] rounded-3xl p-5 sm:p-6 shadow-[0_12px_40px_rgba(0,0,0,0.15)] backdrop-blur-md transition-all duration-300">
+            <div className="flex items-start gap-4">
+              <div className="p-2.5 bg-[#d10000]/10 dark:bg-[#ffec4e]/10 rounded-2xl text-[#d10000] dark:text-[#ffec4e] shrink-0">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-heading font-black text-xs uppercase tracking-widest text-[#d10000] dark:text-[#ffec4e]">
+                    Cookie Preferences
+                  </h3>
+                  <button
+                    onClick={() => setShowCookieConsent(false)}
+                    className="p-1 hover:bg-black/5 dark:hover:bg-white/10 rounded-full text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white transition-all cursor-pointer"
+                    aria-label="Dismiss banner"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                <p className="font-body text-[11px] sm:text-xs leading-relaxed text-zinc-700 dark:text-zinc-300 mb-4">
+                  We use cookies to optimize site performance, analyze traffic, and personalize content. You can accept all or customize your preferences below.
+                </p>
+
+                {/* Customizable Preferences Section */}
+                {customizeCookies ? (
+                  <div className="space-y-3 mb-5 p-3.5 bg-black/5 dark:bg-black/25 rounded-2xl border border-black/5 dark:border-white/5 transition-all duration-300">
+                    {/* Essential */}
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="font-brand font-extrabold text-[10px] uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+                          Essential Cookies
+                        </span>
+                        <p className="text-[9px] sm:text-[10px] text-zinc-500 dark:text-zinc-400">Required for the website to function.</p>
+                      </div>
+                      <span className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500 select-none">
+                        Always On
+                      </span>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-black/5 dark:border-white/5 my-1" />
+
+                    {/* Analytics */}
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="font-brand font-extrabold text-[10px] uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+                          Analytics Cookies
+                        </span>
+                        <p className="text-[9px] sm:text-[10px] text-zinc-500 dark:text-zinc-400">Help us analyze visitor count and performance.</p>
+                      </div>
+                      <button
+                        onClick={() => toggleCookiePreference('analytics')}
+                        className={`w-10 h-5 rounded-full p-0.5 transition-all duration-300 cursor-pointer ${cookiePreferences.analytics ? 'bg-[#d10000] dark:bg-[#ffec4e]' : 'bg-zinc-300 dark:bg-zinc-700'}`}
+                      >
+                        <div className={`w-4 h-4 rounded-full bg-white dark:bg-zinc-950 transition-all duration-300 ${cookiePreferences.analytics ? 'translate-x-5' : 'translate-x-0'}`} />
+                      </button>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-black/5 dark:border-white/5 my-1" />
+
+                    {/* Personalization */}
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="font-brand font-extrabold text-[10px] uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+                          Personalization
+                        </span>
+                        <p className="text-[9px] sm:text-[10px] text-zinc-500 dark:text-zinc-400">Remember your themes and options.</p>
+                      </div>
+                      <button
+                        onClick={() => toggleCookiePreference('personalization')}
+                        className={`w-10 h-5 rounded-full p-0.5 transition-all duration-300 cursor-pointer ${cookiePreferences.personalization ? 'bg-[#d10000] dark:bg-[#ffec4e]' : 'bg-zinc-300 dark:bg-zinc-700'}`}
+                      >
+                        <div className={`w-4 h-4 rounded-full bg-white dark:bg-zinc-950 transition-all duration-300 ${cookiePreferences.personalization ? 'translate-x-5' : 'translate-x-0'}`} />
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setCustomizeCookies(true)}
+                    className="flex items-center gap-1 text-[10px] font-brand font-extrabold uppercase tracking-wider text-[#d10000] dark:text-[#ffec4e] hover:underline cursor-pointer mb-4"
+                  >
+                    <Sliders className="w-3.5 h-3.5" />
+                    <span>Customize Preferences</span>
+                  </button>
+                )}
+
+                {/* Buttons Container */}
+                <div className="flex flex-col sm:flex-row gap-2">
+                  {customizeCookies ? (
+                    <>
+                      <button
+                        onClick={handleSaveCustomCookies}
+                        className="flex-1 py-2.5 bg-[#d10000] hover:bg-[#b00000] text-white dark:bg-[#ffec4e] dark:hover:bg-[#e0cf3a] dark:text-black rounded-xl font-brand font-extrabold text-[10px] uppercase tracking-wider shadow-md hover:scale-[1.02] active:scale-98 transition-all cursor-pointer"
+                      >
+                        Save Settings
+                      </button>
+                      <button
+                        onClick={() => setCustomizeCookies(false)}
+                        className="py-2.5 px-4 bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-zinc-700 dark:text-zinc-300 rounded-xl font-brand font-extrabold text-[10px] uppercase tracking-wider hover:scale-[1.02] active:scale-98 transition-all cursor-pointer"
+                      >
+                        Back
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        onClick={handleAcceptAllCookies}
+                        className="flex-1 py-2.5 bg-[#d10000] hover:bg-[#b00000] text-white dark:bg-[#ffec4e] dark:hover:bg-[#e0cf3a] dark:text-black rounded-xl font-brand font-extrabold text-[10px] uppercase tracking-wider shadow-md hover:scale-[1.02] active:scale-98 transition-all cursor-pointer"
+                      >
+                        Accept All
+                      </button>
+                      <button
+                        onClick={handleRejectNonEssentialCookies}
+                        className="flex-1 py-2.5 bg-black/5 hover:bg-black/10 dark:bg-white/5 dark:hover:bg-white/10 text-zinc-700 dark:text-zinc-300 rounded-xl font-brand font-extrabold text-[10px] uppercase tracking-wider hover:scale-[1.02] active:scale-98 transition-all cursor-pointer"
+                      >
+                        Essential Only
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* aVgeek Connect Community Portal Overlay */}
+      <AvgeekConnect
+        isOpen={isAvgeekConnectOpen}
+        onClose={() => setIsAvgeekConnectOpen(false)}
+      />
 
     </div>
   );
