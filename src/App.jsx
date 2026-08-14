@@ -3924,11 +3924,10 @@ export default function App() {
                     key={option}
                     disabled={isAllGood && isAllGoodClicked}
                     onClick={() => handleChatOptionClick(option)}
-                    className={`w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent transition-all duration-200 ${
-                      isAllGood && isAllGoodClicked
-                        ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600 cursor-not-allowed opacity-50'
-                        : 'hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white hover:scale-[1.01] active:scale-99 cursor-pointer'
-                    } font-body text-xs font-semibold`}
+                    className={`w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent transition-all duration-200 ${isAllGood && isAllGoodClicked
+                      ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600 cursor-not-allowed opacity-50'
+                      : 'hover:bg-[#FFFFF5]/90 dark:hover:bg-white/90 text-black dark:text-[#17202A] bg-[#FFFFF5] dark:bg-white hover:scale-[1.01] active:scale-99 cursor-pointer'
+                      } font-body text-xs font-semibold`}
                   >
                     {option === 'All good, understood' ? '✅ ' : '💬 '}{option}
                   </button>
@@ -3944,11 +3943,10 @@ export default function App() {
                   <button
                     disabled={isStillNeedHelpClicked}
                     onClick={() => handleChatOptionClick('Start Over')}
-                    className={`w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent transition-all duration-200 ${
-                      isStillNeedHelpClicked
-                        ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600 cursor-not-allowed opacity-50'
-                        : 'border border-[#d10000] dark:border-[#ffec4e] text-[#d10000] dark:text-[#ffec4e] hover:bg-[#d10000] dark:hover:bg-[#ffec4e] hover:text-white dark:hover:text-black hover:scale-[1.01] active:scale-99 cursor-pointer'
-                    } font-brand font-extrabold text-xs uppercase tracking-wider`}
+                    className={`w-full text-center px-3.5 py-2.5 rounded-xl border border-transparent transition-all duration-200 ${isStillNeedHelpClicked
+                      ? 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-600 cursor-not-allowed opacity-50'
+                      : 'border border-[#d10000] dark:border-[#ffec4e] text-[#d10000] dark:text-[#ffec4e] hover:bg-[#d10000] dark:hover:bg-[#ffec4e] hover:text-white dark:hover:text-black hover:scale-[1.01] active:scale-99 cursor-pointer'
+                      } font-brand font-extrabold text-xs uppercase tracking-wider`}
                   >
                     🔄 Start Over
                   </button>

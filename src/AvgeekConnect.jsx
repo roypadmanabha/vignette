@@ -1199,6 +1199,9 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                     key={currentMedia}
                     src={currentMedia}
                     controls
+                    controlsList="nodownload noplaybackrate"
+                    disablePictureInPicture
+                    onContextMenu={(e) => e.preventDefault()}
                     preload="metadata"
                     className="w-full h-full object-contain animate-fadeIn"
                     playsInline
