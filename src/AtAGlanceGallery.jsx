@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ShieldCheck, Sliders, Maximize2, ChevronDown, ChevronUp } from 'lucide-react';
 import { supabase } from './supabase';
 
@@ -60,6 +60,7 @@ export default function AtAGlanceGallery({ onImageClick }) {
   const [loading, setLoading] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDesktop, setIsDesktop] = useState(true);
+  const accordionRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -164,7 +165,7 @@ export default function AtAGlanceGallery({ onImageClick }) {
 
         {/* Gallery Grid */}
         {loading ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 xl:grid-cols-4 gap-6">
             {[...Array(4)].map((_, idx) => (
               <div
                 key={idx}
@@ -175,11 +176,11 @@ export default function AtAGlanceGallery({ onImageClick }) {
         ) : (
           <>
             {/* First Row (Always Visible) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-6">
               {firstRowItems.map((item, idx) => (
                 <div
                   key={item.id}
-                  onClick={() => onImageClick && onImageClick(idx, isExpanded ? items : firstRowItems)}
+                  onClick={() => onImageClick && onImageClick(idx, items)}
                   className="group relative rounded-xl overflow-hidden aspect-[3/4] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out select-none"
                 >
                   <img
@@ -206,42 +207,48 @@ export default function AtAGlanceGallery({ onImageClick }) {
               ))}
             </div>
 
-            {/* Expandable Wrapper (Slide / Calendar Opening Effect) */}
+            {/* Expandable Wrapper (Exact Height Accordion transition) */}
             {activeTab === 'All' && remainingItems.length > 0 && (
-              <div className={`grid transition-[grid-template-rows,opacity] duration-500 ease-in-out ${
-                isExpanded ? 'grid-rows-[1fr] opacity-100 mt-6' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
-              }`}>
-                <div className="overflow-hidden">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {remainingItems.map((item, idx) => (
-                      <div
-                        key={item.id}
-                        onClick={() => onImageClick && onImageClick(firstRowItems.length + idx, items)}
-                        className="group relative rounded-xl overflow-hidden aspect-[3/4] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out select-none"
-                      >
-                        <img
-                          src={item.media_url}
-                          alt={item.title}
-                          className="w-full h-full object-cover select-none pointer-events-none group-hover:scale-105 transition-all duration-500 ease-out"
-                          draggable="false"
-                          loading="lazy"
-                        />
-                        
-                        {/* Gradient Overlay & Title */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 opacity-100 transition-opacity duration-300">
-                          <span className="font-brand font-extrabold text-[8px] sm:text-[10px] uppercase tracking-wider text-brand-darkGold dark:text-[#ffec4e] mb-1">
-                            {item.category}
-                          </span>
-                          <div className="flex items-center justify-between gap-2">
-                            <h3 className="font-heading font-black text-xs sm:text-sm text-white leading-tight">
-                              {item.title}
-                            </h3>
-                            <Maximize2 className="w-3.5 h-3.5 text-zinc-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shrink-0" />
-                          </div>
+              <div
+                ref={accordionRef}
+                className="overflow-hidden transition-[height,opacity] duration-500 ease-in-out transform-gpu"
+                style={{
+                  height: isExpanded ? `${accordionRef.current?.scrollHeight || 500}px` : '0px',
+                  opacity: isExpanded ? 1 : 0,
+                  marginTop: isExpanded ? '1.5rem' : '0px',
+                  pointerEvents: isExpanded ? 'auto' : 'none',
+                  willChange: 'height, opacity'
+                }}
+              >
+                <div className="grid grid-cols-2 xl:grid-cols-4 gap-6 pb-2">
+                  {remainingItems.map((item, idx) => (
+                    <div
+                      key={item.id}
+                      onClick={() => onImageClick && onImageClick(firstRowItems.length + idx, items)}
+                      className="group relative rounded-xl overflow-hidden aspect-[3/4] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out select-none"
+                    >
+                      <img
+                        src={item.media_url}
+                        alt={item.title}
+                        className="w-full h-full object-cover select-none pointer-events-none group-hover:scale-105 transition-all duration-500 ease-out"
+                        draggable="false"
+                        loading="lazy"
+                      />
+                      
+                      {/* Gradient Overlay & Title */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 opacity-100 transition-opacity duration-300">
+                        <span className="font-brand font-extrabold text-[8px] sm:text-[10px] uppercase tracking-wider text-brand-darkGold dark:text-[#ffec4e] mb-1">
+                          {item.category}
+                        </span>
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="font-heading font-black text-xs sm:text-sm text-white leading-tight">
+                            {item.title}
+                          </h3>
+                          <Maximize2 className="w-3.5 h-3.5 text-zinc-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shrink-0" />
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}

@@ -920,6 +920,55 @@ export default function App() {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAvgeekConnectOpen, setIsAvgeekConnectOpen] = useState(false);
   const [chatStep, setChatStep] = useState('welcome');
+
+  const handleOpenAvgeekConnect = () => {
+    setIsAvgeekConnectOpen(true);
+    const path = window.location.pathname.toLowerCase();
+    if (!path.endsWith('/avgeek') && !path.endsWith('/avgeek/')) {
+      const base = path.endsWith('/') ? path : path + '/';
+      window.history.pushState({ avgeek: true }, '', base + 'avgeek');
+    }
+  };
+
+  const handleCloseAvgeekConnect = () => {
+    setIsAvgeekConnectOpen(false);
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase();
+    if (path.endsWith('/avgeek') || path.endsWith('/avgeek/')) {
+      const newPath = path.replace(/\/avgeek\/?$/, '') || '/';
+      window.history.pushState(null, '', newPath);
+    } else if (hash === '#avgeek' || hash === '#/avgeek') {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+    window.location.reload();
+  };
+
+  // Handle /avgeek route detection on page load and navigation
+  useEffect(() => {
+    const checkRoute = () => {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      if (path.endsWith('/avgeek') || path.endsWith('/avgeek/') || hash === '#avgeek' || hash === '#/avgeek') {
+        setIsAvgeekConnectOpen(true);
+      } else {
+        setIsAvgeekConnectOpen((wasOpen) => {
+          if (wasOpen) {
+            setTimeout(() => {
+              window.location.reload();
+            }, 0);
+          }
+          return false;
+        });
+      }
+    };
+    checkRoute();
+    window.addEventListener('popstate', checkRoute);
+    window.addEventListener('hashchange', checkRoute);
+    return () => {
+      window.removeEventListener('popstate', checkRoute);
+      window.removeEventListener('hashchange', checkRoute);
+    };
+  }, []);
   const [chatMessages, setChatMessages] = useState([
     {
       sender: 'vyn',
@@ -940,12 +989,12 @@ export default function App() {
     if (supabase) {
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session) {
-          setIsAvgeekConnectOpen(true);
+          handleOpenAvgeekConnect();
         }
       });
       const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
         if (session) {
-          setIsAvgeekConnectOpen(true);
+          handleOpenAvgeekConnect();
         }
       });
       return () => {
@@ -954,7 +1003,7 @@ export default function App() {
     } else {
       const saved = localStorage.getItem('avgeek_mock_user');
       if (saved) {
-        setIsAvgeekConnectOpen(true);
+        handleOpenAvgeekConnect();
       }
     }
   }, []);
@@ -1877,6 +1926,15 @@ export default function App() {
     }
   };
 
+  if (isAvgeekConnectOpen) {
+    return (
+      <AvgeekConnect
+        isOpen={true}
+        onClose={handleCloseAvgeekConnect}
+      />
+    );
+  }
+
   return (
     <div className={`min-h-screen w-full max-w-full text-zinc-900 dark:text-zinc-100 transition-colors duration-300 relative ${isDark ? 'bg-dark-theme' : 'bg-light-theme'}`}>
 
@@ -2552,7 +2610,7 @@ export default function App() {
               {/* Button */}
               <div className="reveal w-full flex justify-center">
                 <button
-                  onClick={() => setIsAvgeekConnectOpen(true)}
+                  onClick={handleOpenAvgeekConnect}
                   className="px-5 py-2.5 sm:px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
                 >
                   Ready for Takeoff
@@ -2574,7 +2632,7 @@ export default function App() {
                 </p>
                 <div className="reveal w-full flex justify-start">
                   <button
-                    onClick={() => setIsAvgeekConnectOpen(true)}
+                    onClick={handleOpenAvgeekConnect}
                     className="px-8 py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
                   >
                     Ready for Takeoff
@@ -4088,11 +4146,6 @@ export default function App() {
         </div>
       )}
 
-      {/* aVgeek Connect Community Portal Overlay */}
-      <AvgeekConnect
-        isOpen={isAvgeekConnectOpen}
-        onClose={() => setIsAvgeekConnectOpen(false)}
-      />
 
     </div>
   );

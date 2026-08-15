@@ -1,6 +1,103 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from './supabase';
-import { X, LogOut, Upload, Image, Video, User, Calendar, Plane, Globe, AlertCircle, CheckCircle, ShieldCheck, Download, Trash2, ChevronLeft, ChevronRight, Layers } from 'lucide-react';
+import { X, LogOut, Upload, Image, Video, User, Calendar, Plane, Globe, AlertCircle, CheckCircle, ShieldCheck, Download, Trash2, ChevronLeft, ChevronRight, Layers, Volume2, VolumeX, Smile, MoreHorizontal, Megaphone, Send, TriangleAlert, MapPin, Phone, Mail, Radar } from 'lucide-react';
+
+const Instagram = (props) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248m0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008m4.807-8.875a1.078 1.078 0 1 0 0 2.156 1.078 1.078 0 1 0 0-2.156" />
+    <path d="M20.533 6.111A4.6 4.6 0 0 0 17.9 3.479a6.6 6.6 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.6 6.6 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.6 6.6 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71s0 2.753.056 3.71c.015.748.156 1.486.419 2.187a4.6 4.6 0 0 0 2.634 2.632 6.6 6.6 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.6 6.6 0 0 0 2.186-.419 4.6 4.6 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.6 6.6 0 0 0-.421-2.217m-1.218 9.532a5 5 0 0 1-.311 1.688 3 3 0 0 1-1.712 1.711 5 5 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a5 5 0 0 1-1.669-.311 3 3 0 0 1-1.719-1.711 5.1 5.1 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654s0-2.686.053-3.655a5 5 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5 5 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a5 5 0 0 1 1.67.311 3 3 0 0 1 1.712 1.712 5.1 5.1 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655s0 2.698-.043 3.654z" />
+  </svg>
+);
+
+const ThreadsIcon = (props) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M16.39 11.27c-.09-.04-.17-.08-.26-.12-.15-2.84-1.71-4.47-4.32-4.49h-.04c-1.56 0-2.86.67-3.66 1.88l1.44.98c.6-.91 1.53-1.1 2.22-1.1h.02c.86 0 1.51.26 1.93.74.31.35.51.84.61 1.46-.76-.13-1.59-.17-2.47-.12-2.48.14-4.08 1.59-3.97 3.6.05 1.02.56 1.9 1.43 2.47.73.48 1.68.72 2.66.67 1.3-.07 2.32-.57 3.03-1.47.54-.69.88-1.58 1.03-2.7.62.37 1.08.86 1.33 1.45.43 1 .46 2.65-.89 4-1.18 1.18-2.6 1.69-4.74 1.7-2.38-.02-4.17-.78-5.34-2.26-1.09-1.39-1.66-3.4-1.68-5.97.02-2.57.59-4.58 1.68-5.97 1.17-1.49 2.97-2.25 5.34-2.26 2.39.02 4.22.78 5.43 2.28.59.73 1.04 1.65 1.34 2.73l1.68-.45c-.36-1.32-.92-2.46-1.69-3.4-1.56-1.91-3.83-2.89-6.76-2.91h-.01c-2.92.02-5.17 1-6.68 2.92C3.71 6.64 3.01 9.02 2.99 12c.02 3 .72 5.37 2.06 7.08C6.56 21 8.81 21.98 11.73 22h.01c2.6-.02 4.43-.7 5.94-2.21 1.98-1.97 1.92-4.45 1.26-5.97-.47-1.09-1.36-1.97-2.58-2.56Zm-4.49 4.22c-1.09.06-2.22-.43-2.27-1.47-.04-.78.55-1.64 2.34-1.74.2-.01.41-.02.6-.02.65 0 1.26.06 1.81.18-.21 2.57-1.41 2.99-2.48 3.05" />
+  </svg>
+);
+
+const Facebook = (props) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M12 2.06c-5.5 0-10 4.5-10 10 0 4.94 3.61 9.06 8.33 9.89l.06-.05h-.06v-7.06h-2.5v-2.78h2.5V9.84c0-2.5 1.61-3.89 3.89-3.89.72 0 1.5.11 2.22.22v2.56h-1.28c-1.22 0-1.5.61-1.5 1.39v1.94h2.67l-.44 2.78h-2.22v7.06h-.06l.06.05c4.72-.83 8.33-4.94 8.33-9.89 0-5.5-4.5-10-10-10" />
+  </svg>
+);
+
+const EMOJI_CATEGORIES = {
+  smileys: {
+    icon: '😃',
+    emojis: [
+      '😀', '😃', '😄', '😁', '😆', '😅', '😂', '🤣', '😊', '😇',
+      '🙂', '🙃', '😉', '😌', '😍', '🥰', '😘', '😗', '😙', '😚',
+      '😋', '😛', '😝', '😜', '🤪', '🤨', '🧐', '🤓', '😎', '🥸',
+      '🤩', '🥳', '😏', '😒', '😞', '😔', '😟', '😕', '🙁', '☹️'
+    ]
+  },
+  animals: {
+    icon: '🐻',
+    emojis: [
+      '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐨', '🐯',
+      '🦁', '🐮', '🐷', '🐸', '🐵', '🐔', '🐧', '🐦', '🦆', '🦅',
+      '🦉', '🦇', '🐺', '🐗', '🐴', '🦄', '🐝', '🐛', '🦋', '🐌',
+      '🐞', '🐜', '🕷️', '🐢', '🐍', '🐙', '🐠', '🐬', '🐳', '🦖'
+    ]
+  },
+  food: {
+    icon: '🍔',
+    emojis: [
+      '🍏', '🍎', '🍐', '🍊', '🍋', '🍌', '🍉', '🍇', '🍓', '🍒',
+      '🍑', '🥭', '🍍', '🥥', '🥝', '🍅', '🍆', '🥑', '🥦', '🌽',
+      '🥕', '🥔', '🥐', '🍞', '🍕', '🍟', '🍔', '🌭', '🥪', '🌮',
+      '🍿', '🍩', '🍪', '🎂', '🍰', '🍫', '🍬', '☕', '🍺'
+    ]
+  },
+  travel: {
+    icon: '✈️',
+    emojis: [
+      '✈️', '🛫', '🛬', '🚀', '🚁', '⛵', '🚢', '🛸', '🚗', '🚕',
+      '🚙', '🚌', '🏎️', '🚓', '🚒', '🚚', '🚲', '🛴', '🏍️', '🚨',
+      '🚇', '🗺️', '🧭', '🏔️', '🌋', '⛺', '🏖️', '🏝️', '🏙️', '🌇',
+      '🌅', '🌃', '🌉', '🎆', '🎈', '🎉', '🎊', '🎀', '🎁', '🏰'
+    ]
+  },
+  activities: {
+    icon: '⚽',
+    emojis: [
+      '⚽', '🏀', '🏈', '⚾', '🥎', '🎾', '🏐', '🏉', '🎱', '🏓',
+      '🏸', '🏒', '🎯', '⛳', '🎿', '🏂', '🏄', '🏊', '🏋️', '🚴',
+      '🤸', '🤼', '🎭', '🎨', '🎬', '🎤', '🎧', '🎼', '🎹', '🎸',
+      '🎮', '🕹️', '👾', '🎰', '🎲', '🎳', '🧗', '🛹', '🛶', '🏆'
+    ]
+  },
+  objects: {
+    icon: '💡',
+    emojis: [
+      '⌚', '📱', '📲', '💻', '⌨️', '🖥️', '🖨️', '💾', '💿', '📀',
+      '📸', '📷', '📹', '🎥', '📽️', '📺', '📻', '🎙️', '🎚️', '🎛️',
+      '🔍', '🔎', '💡', '🔦', '🏮', '📔', '📕', '📖', '📚', '✉️',
+      '📮', '✏️', '✒️', '✂️', '🔑', '🗝️', '🔨', '🪓', '🛡️', '💣'
+    ]
+  },
+  symbols: {
+    icon: '🔣',
+    emojis: [
+      '❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔',
+      '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '☮️',
+      '✝️', '☪️', '🕉️', '☸️', '✡️', '🕎', '☯️', '⛎', '♈', '♉',
+      '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'
+    ]
+  }
+};
 
 export default function AvgeekConnect({ isOpen, onClose }) {
   const fileInputRef = useRef(null);
@@ -26,13 +123,23 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [regUsername, setRegUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
 
+  // Legal Modal States
+  const [legalModal, setLegalModal] = useState(null);
+  const [activeLegalTab, setActiveLegalTab] = useState('terms');
+
   // Instagram grid interactions
   const [selectedPost, setSelectedPost] = useState(null);
+  const [isModalVideoMuted, setIsModalVideoMuted] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [commentsMap, setCommentsMap] = useState(() => {
     return JSON.parse(localStorage.getItem('avgeek_comments') || '{}');
   });
   const [newCommentText, setNewCommentText] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [activeEmojiTab, setActiveEmojiTab] = useState('smileys');
+  const [activePostMenuId, setActivePostMenuId] = useState(null);
+  const [activeCommentMenuId, setActiveCommentMenuId] = useState(null);
+  const emojiPickerRef = useRef(null);
   const [likedPosts, setLikedPosts] = useState(() => {
     return JSON.parse(localStorage.getItem('avgeek_liked_posts') || '[]');
   });
@@ -40,9 +147,36 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     return JSON.parse(localStorage.getItem('avgeek_likes_map') || '{}');
   });
 
+  // Live Updates States
+  const [liveUpdates, setLiveUpdates] = useState([]);
+  const [newUpdateText, setNewUpdateText] = useState('');
+  const [updatesLoading, setUpdatesLoading] = useState(false);
+
+  // Content Protection Toast
+  const [toast, setToast] = useState({ show: false, message: '' });
+
   useEffect(() => {
     setActiveSlideIndex(0);
   }, [selectedPost]);
+
+  // Click outside to close emoji picker, post menu, or comment menu
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(e.target)) {
+        setShowEmojiPicker(false);
+      }
+      if (!e.target.closest('.post-menu-trigger') && !e.target.closest('.post-menu-dropdown')) {
+        setActivePostMenuId(null);
+      }
+      if (!e.target.closest('.comment-menu-trigger') && !e.target.closest('.comment-menu-dropdown')) {
+        setActiveCommentMenuId(null);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [showEmojiPicker]);
 
   // Auto-dismiss status message after 3 seconds
   useEffect(() => {
@@ -53,6 +187,71 @@ export default function AvgeekConnect({ isOpen, onClose }) {
       return () => clearTimeout(timer);
     }
   }, [statusMessage]);
+
+
+
+  // Content Protection & Custom Toast inside portal
+  const showProtectionToast = (message) => {
+    setToast({ show: true, message });
+    if (window.avgeekToastTimeout) {
+      clearTimeout(window.avgeekToastTimeout);
+    }
+    window.avgeekToastTimeout = setTimeout(() => {
+      setToast({ show: false, message: '' });
+    }, 3000);
+  };
+
+  useEffect(() => {
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+      showProtectionToast("Right-click is disabled");
+    };
+
+    const handleCopy = (e) => {
+      const activeEl = document.activeElement;
+      const isInput = activeEl && (
+        activeEl.tagName === 'INPUT' ||
+        activeEl.tagName === 'TEXTAREA' ||
+        activeEl.getAttribute('contenteditable') === 'true'
+      );
+      if (!isInput) {
+        e.preventDefault();
+        showProtectionToast("Copying content is disabled");
+      }
+    };
+
+    const handleCut = (e) => {
+      const activeEl = document.activeElement;
+      const isInput = activeEl && (
+        activeEl.tagName === 'INPUT' ||
+        activeEl.tagName === 'TEXTAREA' ||
+        activeEl.getAttribute('contenteditable') === 'true'
+      );
+      if (!isInput) {
+        e.preventDefault();
+        showProtectionToast("Cutting content is disabled");
+      }
+    };
+
+    const handleDragStart = (e) => {
+      if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+        e.preventDefault();
+        showProtectionToast("Dragging media is disabled");
+      }
+    };
+
+    window.addEventListener('contextmenu', handleContextMenu);
+    window.addEventListener('copy', handleCopy);
+    window.addEventListener('cut', handleCut);
+    window.addEventListener('dragstart', handleDragStart);
+
+    return () => {
+      window.removeEventListener('contextmenu', handleContextMenu);
+      window.removeEventListener('copy', handleCopy);
+      window.removeEventListener('cut', handleCut);
+      window.removeEventListener('dragstart', handleDragStart);
+    };
+  }, []);
 
 
 
@@ -115,10 +314,11 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     }
   };
 
-  // 3. Load Posts (Supabase or Local Storage fallback)
+  // 3. Load Posts and Live Updates (Supabase or Local Storage fallback)
   useEffect(() => {
     if (!isOpen) return;
     fetchPosts();
+    fetchLiveUpdates();
   }, [isOpen, session]);
 
   const fetchPosts = async () => {
@@ -142,6 +342,118 @@ export default function AvgeekConnect({ isOpen, onClose }) {
       loadMockPosts();
       setLoading(false);
     }
+  };
+
+  const fetchLiveUpdates = async () => {
+    setUpdatesLoading(true);
+    if (supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('live_updates')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        setLiveUpdates(data || []);
+      } catch (err) {
+        console.warn('[aVgeek Connect] Supabase live updates query failed, using localStorage:', err.message);
+        loadMockUpdates();
+      } finally {
+        setUpdatesLoading(false);
+      }
+    } else {
+      loadMockUpdates();
+      setUpdatesLoading(false);
+    }
+  };
+
+  const loadMockUpdates = () => {
+    const saved = localStorage.getItem('avgeek_live_updates');
+    if (saved) {
+      try {
+        setLiveUpdates(JSON.parse(saved));
+      } catch {
+        setLiveUpdates([]);
+      }
+    } else {
+      const defaultUpdates = [
+        {
+          id: 'update-1',
+          text: 'Vignette has planned to go for a planespotting session at IXA Airport (Agartala) on August 20th at 4:30 PM. Spotters can join near the ATC watchtower!',
+          created_at: new Date(Date.now() - 7200000).toISOString()
+        },
+        {
+          id: 'update-2',
+          text: 'Live airport updates: Spotting runway 18 visibility is clear. Lufthansa flight LH756 is expected to land 15 mins early.',
+          created_at: new Date(Date.now() - 86400000).toISOString()
+        }
+      ];
+      setLiveUpdates(defaultUpdates);
+      localStorage.setItem('avgeek_live_updates', JSON.stringify(defaultUpdates));
+    }
+  };
+
+  const handleAddLiveUpdate = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!newUpdateText.trim()) return;
+
+    const newUpdateItem = {
+      text: newUpdateText.trim(),
+      created_at: new Date().toISOString()
+    };
+
+    if (supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('live_updates')
+          .insert([newUpdateItem])
+          .select();
+
+        if (error) throw error;
+        setLiveUpdates(prev => [data[0], ...prev]);
+        setNewUpdateText('');
+      } catch (err) {
+        console.warn('[aVgeek Connect] Supabase live update insert failed, writing to localStorage fallback:', err.message);
+        saveMockUpdate(newUpdateItem);
+      }
+    } else {
+      saveMockUpdate(newUpdateItem);
+    }
+  };
+
+  const saveMockUpdate = (item) => {
+    const updated = [
+      { id: 'mock-upd-' + Date.now(), ...item },
+      ...liveUpdates
+    ];
+    setLiveUpdates(updated);
+    localStorage.setItem('avgeek_live_updates', JSON.stringify(updated));
+    setNewUpdateText('');
+  };
+
+  const handleDeleteLiveUpdate = async (id) => {
+    if (supabase && typeof id === 'number') {
+      try {
+        const { error } = await supabase
+          .from('live_updates')
+          .delete()
+          .eq('id', id);
+
+        if (error) throw error;
+        setLiveUpdates(prev => prev.filter(upd => upd.id !== id));
+      } catch (err) {
+        console.warn('[aVgeek Connect] Supabase live update delete failed, removing from local fallback:', err.message);
+        deleteMockUpdate(id);
+      }
+    } else {
+      deleteMockUpdate(id);
+    }
+  };
+
+  const deleteMockUpdate = (id) => {
+    const updated = liveUpdates.filter(upd => upd.id !== id);
+    setLiveUpdates(updated);
+    localStorage.setItem('avgeek_live_updates', JSON.stringify(updated));
   };
 
   const loadMockPosts = () => {
@@ -200,8 +512,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
         setStatusMessage({ type: 'error', text: `Login failed: ${err.message}` });
       }
     } else {
-      // If Supabase not connected, show dynamic simulation form
-      setShowDemoLogin(true);
+      setStatusMessage({ type: 'error', text: 'Google authentication service is offline (Supabase client not initialized).' });
     }
   };
 
@@ -276,6 +587,14 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     setStatusMessage({ type: 'success', text: `Welcome to the crew, @${cleanUsername}!` });
   };
 
+  const truncateUsername = (name) => {
+    if (!name) return '';
+    if (name.length > 10) {
+      return name.slice(0, 10) + '..';
+    }
+    return name;
+  };
+
   const handleLikePost = (postId) => {
     let isLikedNow = false;
     let updated;
@@ -303,10 +622,16 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     e.preventDefault();
     if (!newCommentText.trim()) return;
 
+    if (newCommentText.length > 1000) {
+      setStatusMessage({ type: 'error', text: 'Comments cannot exceed 1000 characters.' });
+      return;
+    }
+
     const postComments = commentsMap[postId] || [];
     const newComment = {
       id: `comment-${Date.now()}`,
       username: username || 'anonymous',
+      email: session?.user?.email || '',
       text: newCommentText.trim(),
       created_at: new Date().toISOString()
     };
@@ -335,27 +660,56 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
     return { likes, commentsCount, isLiked };
   };
+
+  const renderAvatar = (email, username, sizeClass = "w-6 h-6") => {
+    const isAdmin = email === 'vignetteworks.official@gmail.com' || username === 'vignetteworks.official' || username === 'vignette';
+    const isLarge = sizeClass.includes("w-8");
+    
+    if (isAdmin) {
+      return (
+        <div className={`${sizeClass} rounded-full bg-white/10 border-2 border-[#ffec4e] flex items-center justify-center overflow-hidden shrink-0 shadow-[0_0_8px_rgba(255,236,78,0.2)]`}>
+          <img src="logo-icon.png" alt="Admin Profile" className="w-full h-full object-cover p-1 bg-zinc-950" />
+        </div>
+      );
+    } else {
+      return (
+        <div className={`${sizeClass} rounded-full bg-white/10 border border-white/15 flex items-center justify-center overflow-hidden shrink-0 shadow-inner`}>
+          <img src="logo-icon.png" alt="Profile" className="w-full h-full object-cover p-1 bg-zinc-950" />
+        </div>
+      );
+    }
+  };
+
   const handleDeletePost = async (postId) => {
-    const isSure = window.confirm("Are you sure you want to delete this aviation broadcast?");
+    const targetPost = posts.find(p => p.id === postId);
+    if (!targetPost) return;
+
+    // Enforce frontend security check
+    const isAdmin = session?.user?.email === 'vignetteworks.official@gmail.com';
+    const isCreator = session && (targetPost.user_id === session.user?.id || targetPost.email === session.user?.email);
+
+    if (!isAdmin && !isCreator) {
+      alert("Permission denied: You can only delete your own posts.");
+      return;
+    }
+
+    const isSure = window.confirm("Are you sure you want to delete this aviation broadcast? This will permanently delete the post and its media files from the database and storage.");
     if (!isSure) return;
 
     const isMock = String(postId).startsWith('mock-');
     if (supabase && !isMock) {
       try {
         // 1. Delete associated media files from storage bucket
-        const targetPost = posts.find(p => p.id === postId);
-        if (targetPost) {
-          const mediaList = getPostMediaList(targetPost.media_url);
-          const filePaths = mediaList
-            .map(url => {
-              const parts = url.split('/community-media/');
-              return parts.length > 1 ? parts[1] : null;
-            })
-            .filter(Boolean);
+        const mediaList = getPostMediaList(targetPost.media_url);
+        const filePaths = mediaList
+          .map(url => {
+            const parts = url.split('/community-media/');
+            return parts.length > 1 ? parts[1] : null;
+          })
+          .filter(Boolean);
 
-          if (filePaths.length > 0) {
-            await supabase.storage.from('community-media').remove(filePaths);
-          }
+        if (filePaths.length > 0) {
+          await supabase.storage.from('community-media').remove(filePaths);
         }
 
         // 2. Delete database post record
@@ -367,6 +721,17 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
         // 3. Update local state directly
         setPosts(prev => prev.filter(post => post.id !== postId));
+
+        // 4. Clean up local comments and likes
+        const newComments = { ...commentsMap };
+        delete newComments[postId];
+        setCommentsMap(newComments);
+        localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
+
+        const newLikes = { ...likesMap };
+        delete newLikes[postId];
+        setLikesMap(newLikes);
+        localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
       } catch (err) {
         console.warn('[aVgeek Connect] Supabase delete failed, falling back to Local Storage:', err.message);
       }
@@ -376,6 +741,16 @@ export default function AvgeekConnect({ isOpen, onClose }) {
       const updated = saved.filter(post => post.id !== postId);
       localStorage.setItem('avgeek_posts', JSON.stringify(updated));
       setPosts(updated);
+
+      const newComments = { ...commentsMap };
+      delete newComments[postId];
+      setCommentsMap(newComments);
+      localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
+
+      const newLikes = { ...likesMap };
+      delete newLikes[postId];
+      setLikesMap(newLikes);
+      localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
     }
 
     setSelectedPost(null);
@@ -450,6 +825,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     setSession(null);
     setStatusMessage({ type: 'success', text: 'Signed out successfully.' });
     onClose();
+    window.location.reload();
   };
 
   const handleClosePortal = async () => {
@@ -462,8 +838,11 @@ export default function AvgeekConnect({ isOpen, onClose }) {
       }
       localStorage.removeItem('avgeek_mock_user');
       setSession(null);
+      onClose();
+      window.location.reload();
+    } else {
+      onClose();
     }
-    onClose();
   };
 
   const handleFileChange = (e) => {
@@ -667,12 +1046,21 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const formatDate = (isoString) => {
     try {
       const date = new Date(isoString);
-      return date.toLocaleDateString(undefined, {
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+      const day = date.toLocaleDateString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        day: 'numeric'
       });
+      const month = date.toLocaleDateString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        month: 'short'
+      });
+      const time = date.toLocaleTimeString('en-IN', {
+        timeZone: 'Asia/Kolkata',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+      return `${day} ${month}, ${time.toUpperCase()}`;
     } catch {
       return isoString;
     }
@@ -703,17 +1091,23 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
       {/* 2. Header Control Bar */}
       <header className="relative z-10 bg-[#1c0709]/60 backdrop-blur-md border-b border-white/10 px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between">
-        <div className="select-none">
-          <h1 className="font-brand font-semibold text-lg sm:text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffc72c]">
-            aVgeek Connect
-          </h1>
+        <div className="select-none flex items-center gap-2 cursor-pointer" onClick={onClose}>
+          <img
+            src="logo-icon.png"
+            alt="V"
+            className="w-6 h-6 lg:w-7 lg:h-7 object-contain select-none pointer-events-none"
+            draggable="false"
+          />
+          <span className="font-brand font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] text-xl lg:text-2xl tracking-tight select-none">
+            Vignette
+          </span>
         </div>
 
         <div className="flex items-center gap-4">
           {session && (
             <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-zinc-300">
               <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-              <span>@{username || session.user.email.split('@')[0]}</span>
+              <span className="font-sabon" title={`@${username || session.user.email.split('@')[0]}`}>@{truncateUsername(username || session.user.email.split('@')[0])}</span>
             </div>
           )}
 
@@ -761,12 +1155,30 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                ======================================= */
             <div className="flex-1 flex items-center justify-center py-4 sm:py-12 px-2 sm:px-4">
               <div className="bg-zinc-950/95 border border-white/10 p-5 sm:p-10 rounded-2xl shadow-2xl max-w-sm sm:max-w-md w-full text-center flex flex-col gap-4 sm:gap-6 select-none animate-slideUp mx-auto">
-                <div className="relative w-14 h-14 sm:w-20 sm:h-20 mx-auto flex items-center justify-center bg-white/5 border border-white/15 rounded-full shadow-inner">
-                  <Plane className="w-7 h-7 sm:w-10 sm:h-10 text-[#ffec4e] rotate-45 transform hover:scale-110 transition-transform duration-300" />
+                <div className="mx-auto flex items-center justify-center select-none pointer-events-none -mb-6 sm:-mb-8">
+                  <img
+                    src="vignette-b777.png"
+                    alt="Vignette B777"
+                    className="w-48 sm:w-56 h-auto object-contain drop-shadow-[0_10px_15px_rgba(0,0,0,0.6)] transform -rotate-6 hover:scale-105 transition-transform duration-300"
+                    draggable="false"
+                  />
                 </div>
 
                 <div className="flex flex-col gap-1.5 sm:gap-2">
-                  <h2 className="font-heading font-black text-xl sm:text-2xl tracking-wide">Welcome to the Hangar</h2>
+                  <h2 
+                    className="font-brand text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] text-xl sm:text-2xl tracking-wide select-none inline-flex items-start justify-center gap-0.5 animate-slideUp"
+                    style={{ fontWeight: 650 }}
+                  >
+                    <span>aVgeek Connect</span>
+                    <span className="self-start -mt-0.5 sm:-mt-1 select-none shrink-0">
+                      <img 
+                        src="logo-icon.png" 
+                        alt="" 
+                        className="w-3 h-3 sm:w-3.5 sm:h-3.5 object-contain pointer-events-none inline-block" 
+                        draggable="false" 
+                      />
+                    </span>
+                  </h2>
                   <p className="font-body text-zinc-400 text-xs sm:text-sm leading-relaxed">
                     Access the interactive flight crew board. Share high-altitude views and connect with avgeeks worldwide.
                   </p>
@@ -778,58 +1190,16 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                     onClick={handleGoogleSignIn}
                     className="w-full flex items-center justify-center gap-3 py-3 sm:py-3.5 px-4 rounded-xl bg-white hover:bg-zinc-100 text-black font-brand font-extrabold text-xs sm:text-sm hover:scale-[1.01] active:scale-99 transition-all cursor-pointer shadow-md"
                   >
-                    <svg className="w-4 h-4" viewBox="0 0 24 24">
-                      <path
-                        fill="#EA4335"
-                        d="M12.24 10.285V14.4h6.887c-.648 2.41-2.519 4.2-5.136 4.2A5.76 5.76 0 0 1 8.2 12.8a5.76 5.76 0 0 1 5.79-5.8c1.47 0 2.8.536 3.834 1.417L20.94 5.3A9.9 9.9 0 0 0 13.99 2.2a9.9 9.9 0 0 0-9.9 9.9 9.9 9.9 0 0 0 9.9 9.9 9.9 9.9 0 0 0 9.9-9.9c0-.62-.055-1.226-.16-1.815H12.24Z"
-                      />
+                    <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                     </svg>
                     <span>Sign in with Google</span>
                   </button>
 
-                  {!supabase && (
-                    <div className="mt-1 text-zinc-500 text-[9px] sm:text-[10px] uppercase tracking-wider flex items-center justify-center gap-1.5 select-none">
-                      <ShieldCheck className="w-3.5 h-3.5 text-zinc-600" />
-                      <span>Sandbox Mode Enabled</span>
-                    </div>
-                  )}
-
-                  {/* Sandbox Demo Login Toggle */}
-                  {!showDemoLogin ? (
-                    <button
-                      onClick={() => setShowDemoLogin(true)}
-                      className="text-xs text-[#ffec4e] hover:text-[#ffea2e] font-semibold underline underline-offset-4 cursor-pointer mt-1 sm:mt-2 hover:scale-[1.01] transition-transform"
-                    >
-                      Use email address
-                    </button>
-                  ) : (
-                    <form onSubmit={handleDemoLoginSubmit} className="mt-3 p-3.5 rounded-xl bg-white/5 border border-white/10 flex flex-col gap-2.5 sm:gap-3 animate-slideUp">
-                      <label className="text-left text-xs font-bold text-zinc-300">Enter Demo Email:</label>
-                      <input
-                        type="email"
-                        required
-                        value={demoEmail}
-                        onChange={(e) => setDemoEmail(e.target.value)}
-                        placeholder="pilot.delta@gmail.com"
-                        className="w-full px-3 py-2 text-xs sm:text-sm bg-zinc-900 border border-white/10 rounded-lg text-black dark:text-white focus:outline-none focus:border-[#ffec4e]"
-                      />
-                      <div className="flex gap-2">
-                        <button
-                          type="submit"
-                          className="flex-1 py-2.5 rounded-lg bg-[#d10000] hover:bg-[#b00000] text-xs font-extrabold uppercase tracking-wide transition-colors cursor-pointer"
-                        >
-                          Confirm Login
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setShowDemoLogin(false)}
-                          className="px-3 py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold transition-colors cursor-pointer"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
-                  )}
+                  {/* Only Google authenticated users can enter */}
                 </div>
               </div>
             </div>
@@ -897,10 +1267,90 @@ export default function AvgeekConnect({ isOpen, onClose }) {
             /* =======================================
                C. AUTHENTICATED: COMMUNITY DASHBOARD
                ======================================= */
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start my-4 pb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-4 pb-12">
+              
+              {/* Sleek, Responsive Glassmorphic Hero Section */}
+              <div className="col-span-1 lg:col-span-12 relative overflow-hidden rounded-3xl border border-white/10 bg-zinc-950/40 backdrop-blur-md p-6 sm:p-8 lg:p-10 select-none shadow-2xl grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-center animate-slideUp">
+                
+                {/* Decorative radial gradients for lighting glow effects */}
+                <div className="absolute w-72 h-72 bg-[#e31c25]/15 rounded-full blur-3xl -top-20 -left-20 pointer-events-none" />
+                <div className="absolute w-60 h-60 bg-[#ffec4e]/5 rounded-full blur-3xl -bottom-10 right-20 pointer-events-none" />
+
+                {/* Left Text Block */}
+                <div className="col-span-1 md:col-span-8 lg:col-span-9 flex flex-col items-start text-left relative z-10">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[9px] sm:text-xs text-[#ffec4e] uppercase font-brand font-black tracking-wider mb-4">
+                    <Plane className="w-3.5 h-3.5 rotate-45 text-[#ffec4e]" />
+                    <span>ENTHUSIASTS PLATFORM</span>
+                  </div>
+                  
+                  <h2 
+                    className="font-brand text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] text-2xl sm:text-3xl lg:text-4xl leading-tight mb-4 select-none"
+                    style={{ fontWeight: 650 }}
+                  >
+                    aVgeek Connect
+                  </h2>
+                  
+                  <p className="font-body text-xs sm:text-sm text-zinc-300 leading-relaxed text-justify mb-6 max-w-none">
+                    Vignette aVgeek Connect is a dedicated virtual hangar where flight crew, plane spotters, and aviation visual artists converge. Designed with bespoke media grading and content locks, this board serves as a canvas to share breathtaking flight approaches, runway views, and deck captures. Create your unique callsign, interact with global pilots, and stay tuned to live updates directly from our flight desk.
+                  </p>
+
+                  {/* Highlights Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                        <Upload className="w-4 h-4 text-[#ffec4e]" />
+                      </div>
+                      <div>
+                        <h5 className="font-brand font-bold text-xs text-white">Share Captures</h5>
+                        <p className="text-[10px] text-zinc-400">Post high-altitude flight views</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                        <User className="w-4 h-4 text-[#ffec4e]" />
+                      </div>
+                      <div>
+                        <h5 className="font-brand font-bold text-xs text-white">Unique Callsigns</h5>
+                        <p className="text-[10px] text-zinc-400">Secure your unique username</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                        <Megaphone className="w-4 h-4 text-[#ffec4e]" />
+                      </div>
+                      <div>
+                        <h5 className="font-brand font-bold text-xs text-white">Live Broadcasts</h5>
+                        <p className="text-[10px] text-zinc-400">Real-time crew announcements</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                        <Radar className="w-4 h-4 text-[#ffec4e]" />
+                      </div>
+                      <div>
+                        <h5 className="font-brand font-bold text-xs text-white">Plane-spotting Connect</h5>
+                        <p className="text-[10px] text-zinc-400">Link up with spotters worldwide</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Visual Image */}
+                <div className="col-span-1 md:col-span-4 lg:col-span-3 relative w-full flex items-center justify-center z-10">
+                  <div className="absolute w-36 h-36 bg-[#e31c25]/15 rounded-full blur-3xl -top-6 -right-6 pointer-events-none" />
+                  
+                  <img
+                    src="b777-vignette.png"
+                    alt="Boeing 777"
+                    className="w-56 sm:w-64 md:w-72 lg:w-80 xl:w-96 max-w-full h-auto object-contain drop-shadow-[0_15px_20px_rgba(0,0,0,0.6)] select-none pointer-events-none"
+                    draggable="false"
+                  />
+                </div>
+
+              </div>
               
               {/* Left Column: Create Post Form */}
-              <div className="md:col-span-5 bg-zinc-950/90 border border-white/10 p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl flex flex-col gap-4 sm:gap-6 animate-slideUp">
+              <div className="lg:col-span-5 bg-zinc-950/90 border border-white/10 p-3.5 sm:p-5 md:p-6 rounded-xl shadow-xl flex flex-col gap-3.5 sm:gap-5 animate-slideUp">
                 <div>
                   <h3 className="font-heading font-black text-sm sm:text-base md:text-lg tracking-wide uppercase flex items-center gap-2">
                     <Globe className="w-4 h-4 text-[#ffec4e]" />
@@ -916,7 +1366,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                   <div className="flex flex-col gap-3">
                     <div
                       onClick={triggerFileSelect}
-                      className="group relative border-2 border-dashed border-white/15 hover:border-[#ffec4e]/40 rounded-xl py-4 sm:py-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white/2 hover:bg-white/5 select-none"
+                      className="group relative border-2 border-dashed border-white/15 hover:border-[#ffec4e]/40 rounded-xl py-2.5 sm:py-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-white/2 hover:bg-white/5 select-none"
                     >
                       <input
                         type="file"
@@ -983,7 +1433,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                       onChange={(e) => setCaption(e.target.value)}
                       placeholder="Type your caption here"
                       rows="2"
-                      className="w-full text-xs font-body leading-relaxed bg-zinc-900/65 border border-white/10 rounded-xl p-3 text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:border-[#ffec4e] focus:bg-zinc-900 transition-colors resize-none"
+                      className="w-full text-xs font-body leading-relaxed bg-white border border-zinc-300 rounded-xl p-2.5 px-3 text-black placeholder-zinc-400 focus:outline-none focus:border-[#ffec4e] focus:bg-white transition-colors resize-none"
                     />
                   </div>
 
@@ -991,7 +1441,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                   <button
                     type="submit"
                     disabled={uploading}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 sm:py-3 px-4 rounded-xl bg-[#d10000] hover:bg-[#b00000] disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed text-white font-brand font-extrabold text-xs tracking-wider uppercase transition-all hover:scale-[1.01] active:scale-99 cursor-pointer shadow-md"
+                    className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#d10000] hover:bg-[#b00000] disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed text-white font-brand font-extrabold text-xs tracking-wider uppercase transition-all hover:scale-[1.01] active:scale-99 cursor-pointer shadow-md"
                   >
                     {uploading ? (
                       <>
@@ -1006,10 +1456,79 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                     )}
                   </button>
                 </form>
+
+                {/* Divider */}
+                <div className="border-t border-white/10 my-1"></div>
+
+                {/* Live Updates Section */}
+                <div className="flex flex-col gap-3.5">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-xs font-brand font-extrabold uppercase tracking-wider text-[#ffec4e] flex items-center gap-1.5 select-none">
+                      <Megaphone className="w-3.5 h-3.5 shrink-0 animate-pulse text-[#ffec4e]" />
+                      Vignette Live Updates
+                    </h4>
+                    {updatesLoading && (
+                      <span className="w-3 h-3 rounded-full border border-white/20 border-t-white animate-spin shrink-0" />
+                    )}
+                  </div>
+
+                  {/* Admin Broadcast Input Form */}
+                  {session?.user?.email === 'vignetteworks.official@gmail.com' && (
+                    <div className="flex gap-2 items-end bg-white border border-zinc-300 rounded-xl p-1.5 focus-within:border-zinc-400 transition-colors w-full">
+                      <textarea
+                        value={newUpdateText}
+                        onChange={(e) => setNewUpdateText(e.target.value)}
+                        maxLength={300}
+                        rows={2}
+                        className="flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 resize-none py-1 min-h-[40px] leading-normal"
+                      />
+                      <button
+                        onClick={() => handleAddLiveUpdate()}
+                        disabled={!newUpdateText.trim()}
+                        className="p-2 bg-[#d10000] hover:bg-[#b00000] disabled:bg-zinc-800 disabled:text-zinc-500 rounded-lg text-white cursor-pointer transition-colors flex items-center justify-center shrink-0 mb-0.5"
+                        title="Broadcast update"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Updates Scrollable List */}
+                  <div className="flex flex-col gap-2.5 max-h-[220px] overflow-y-auto pr-1 custom-scrollbar">
+                    {liveUpdates.length === 0 ? (
+                      <p className="text-[10px] text-zinc-500 italic select-none">No announcements posted yet.</p>
+                    ) : (
+                      liveUpdates.map((upd) => (
+                        <div
+                          key={upd.id}
+                          className="group/upd bg-white/2 border border-white/5 rounded-xl p-3 flex flex-col gap-1 transition-all hover:bg-white/5"
+                        >
+                          <div className="flex items-start justify-between gap-2">
+                            <p className="text-[11.5px] leading-relaxed text-zinc-300 font-body whitespace-pre-wrap">
+                              {upd.text}
+                            </p>
+                            {session?.user?.email === 'vignetteworks.official@gmail.com' && (
+                              <button
+                                onClick={() => handleDeleteLiveUpdate(upd.id)}
+                                className="shrink-0 p-1 text-zinc-500 hover:text-rose-500 rounded hover:bg-white/5 opacity-0 group-hover/upd:opacity-100 transition-all cursor-pointer"
+                                title="Delete announcement"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            )}
+                          </div>
+                          <span className="text-[8.5px] text-zinc-500 font-medium font-body select-none">
+                            {formatDate(upd.created_at)}
+                          </span>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
               </div>
 
               {/* Right Column: Feed posts */}
-              <div className="md:col-span-7 flex flex-col gap-6 min-h-[500px]">
+              <div className="lg:col-span-7 flex flex-col gap-6 min-h-[500px]">
                 <div className="flex items-center justify-between select-none">
                   <h3 className="font-heading font-black text-sm sm:text-base md:text-lg tracking-wide uppercase flex items-center gap-2">
                     <Globe className="w-4 h-4 text-[#ffec4e]" />
@@ -1089,7 +1608,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
                   return (
                     /* Render Posts Grid (Instagram style) */
-                    <div className="grid grid-cols-2 xl:grid-cols-3 gap-1.5 sm:gap-3 md:max-h-[800px] md:overflow-y-auto pr-1 custom-scrollbar">
+                    <div className="grid grid-cols-2 gap-1.5 sm:gap-3 md:max-h-[800px] md:overflow-y-auto pr-1 custom-scrollbar">
                       {filteredPosts.map((post) => {
                         const { likes, commentsCount } = getMockStats(post.id);
                         const mediaList = getPostMediaList(post.media_url);
@@ -1101,15 +1620,15 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                           <div
                             key={post.id}
                             onClick={() => setSelectedPost(post)}
-                            className="group aspect-square bg-zinc-900 border border-white/5 rounded-lg overflow-hidden relative cursor-pointer hover:scale-[1.01] hover:shadow-xl transition-all duration-300 select-none animate-scaleUp"
+                            className="group aspect-square bg-zinc-900 border border-white/5 rounded-lg overflow-hidden relative cursor-pointer hover:opacity-70 transition-opacity duration-300 select-none animate-scaleUp"
                           >
                             {/* Render Thumbnail Media */}
                             {isVideo ? (
                               <div className="w-full h-full bg-black relative flex items-center justify-center">
                                 <video
-                                  src={firstMedia}
+                                  src={firstMedia ? (firstMedia.includes('#') ? firstMedia : `${firstMedia}#t=0.001`) : ''}
                                   className="w-full h-full object-cover pointer-events-none"
-                                  preload="none"
+                                  preload="metadata"
                                   muted
                                   playsInline
                                 />
@@ -1121,8 +1640,12 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                               <img
                                 src={firstMedia}
                                 alt={post.caption || 'Aviation image'}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                                className="w-full h-full object-cover"
                                 loading="lazy"
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = 'b777-vignette.png';
+                                }}
                               />
                             )}
 
@@ -1159,6 +1682,144 @@ export default function AvgeekConnect({ isOpen, onClose }) {
             </div>
           )}
 
+          {/* Footer Component inside AvgeekConnect */}
+          <footer className="w-full border-t border-white/10 mt-16 py-12 select-none text-zinc-100 bg-transparent">
+            <div className="max-w-7xl mx-auto flex flex-col gap-10">
+
+              {/* Main Footer columns row — 1-col mobile, 2-col iPad, 4-col desktop */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 items-start">
+
+                {/* Logo Name & Brand Info */}
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3">
+                    <img
+                      src="logo-icon.png"
+                      alt="Vignette"
+                      className="w-8 h-8 sm:w-10 sm:h-10 object-contain select-none pointer-events-none"
+                      draggable="false"
+                    />
+                    <span className="font-brand font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] text-lg sm:text-xl md:text-2xl tracking-tight select-none">
+                      Vignette
+                    </span>
+                  </div>
+                  <p className="font-body text-[10px] sm:text-xs text-zinc-400 leading-relaxed text-justify">
+                    Cinematic visual storytelling. Capturing terminals, summits, and streetscapes with bespoke pacing and premium color grading.
+                  </p>
+                </div>
+
+                {/* Legal Links */}
+                <div className="flex flex-col gap-4 lg:border-l border-white/10 lg:pl-8">
+                  <h4 className="font-heading font-black text-[11px] sm:text-sm text-[#ffec4e] uppercase tracking-wider">
+                    Legal
+                  </h4>
+                  <ul className="flex flex-col gap-2.5 sm:gap-3 font-body text-[10px] sm:text-xs text-zinc-400">
+                    <li>
+                      <button
+                        onClick={() => { setLegalModal('terms'); setActiveLegalTab('terms'); }}
+                        className="hover:text-[#ffec4e] transition-colors cursor-pointer text-left"
+                      >
+                        Terms and Conditions
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => { setLegalModal('privacy'); setActiveLegalTab('privacy'); }}
+                        className="hover:text-[#ffec4e] transition-colors cursor-pointer text-left"
+                      >
+                        Privacy Policy
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Support */}
+                <div className="flex flex-col gap-4 lg:border-l border-white/10 lg:pl-8">
+                  <h4 className="font-heading font-black text-[11px] sm:text-sm text-[#ffec4e] uppercase tracking-wider">
+                    Support
+                  </h4>
+                  <ul className="flex flex-col gap-2.5 sm:gap-3.5 font-body text-[10px] sm:text-xs text-zinc-400">
+                    <li className="flex items-center gap-2.5 sm:gap-3">
+                      <Phone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ffec4e] flex-shrink-0" />
+                      <a href="tel:+919342385565" className="hover:text-white transition-colors">
+                        +91 9342385565
+                      </a>
+                    </li>
+                    <li className="flex items-center gap-2.5 sm:gap-3">
+                      <Mail className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ffec4e] flex-shrink-0" />
+                      <a href="mailto:vignetteworks.official@gmail.com" className="hover:text-white transition-colors break-all">
+                        vignetteworks.official@gmail.com
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Address */}
+                <div className="flex flex-col gap-4 lg:border-l border-white/10 lg:pl-8">
+                  <h4 className="font-heading font-black text-[11px] sm:text-sm text-[#ffec4e] uppercase tracking-wider">
+                    Address
+                  </h4>
+                  <p className="flex items-start gap-2.5 sm:gap-3 font-body text-[10px] sm:text-xs text-zinc-400 leading-relaxed">
+                    <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ffec4e] mt-0.5 flex-shrink-0" />
+                    <span>Ramnagar, Agartala, Tripura(W) - 799002</span>
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Social Media & Divider Line */}
+              <div className="flex flex-col items-center gap-6 mt-4">
+
+                {/* Social Icons Row */}
+                <div className="flex gap-6 items-center justify-center">
+
+                  {/* Instagram */}
+                  <a
+                    href="https://www.instagram.com/proy____"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:scale-125 active:scale-95 transition-all duration-300"
+                    aria-label="Visit proy____ on Instagram"
+                  >
+                    <Instagram className="w-5.5 h-5.5 sm:w-7 sm:h-7" fill="#f5f5dd" />
+                  </a>
+
+                  {/* Threads */}
+                  <a
+                    href="https://www.threads.net"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:scale-125 active:scale-95 transition-all duration-300"
+                    aria-label="Visit Threads"
+                  >
+                    <ThreadsIcon className="w-5.5 h-5.5 sm:w-7 sm:h-7" fill="#f5f5dd" />
+                  </a>
+
+                  {/* Facebook */}
+                  <a
+                    href="https://www.facebook.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:scale-125 active:scale-95 transition-all duration-300"
+                    aria-label="Visit Facebook page"
+                  >
+                    <Facebook className="w-5.5 h-5.5 sm:w-7 sm:h-7" fill="#f5f5dd" />
+                  </a>
+
+                </div>
+
+                {/* Bottom mini divider */}
+                <div className="w-full border-t border-white/10 my-2" />
+
+                {/* Copyright Metadata */}
+                <div className="font-body text-[9px] sm:text-xs text-zinc-500 flex flex-col md:flex-row items-center gap-2">
+                  <p>© {new Date().getFullYear()} <span className="font-brand font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] inline-block">Vignette</span>. All rights reserved | Made by <span className="font-brand font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] inline-block">Vignette</span></p>
+                </div>
+
+              </div>
+
+            </div>
+          </footer>
+
         </div>
       </main>
 
@@ -1183,7 +1844,10 @@ export default function AvgeekConnect({ isOpen, onClose }) {
             <div className="absolute inset-0 z-0 cursor-pointer" onClick={() => setSelectedPost(null)} />
 
             {/* Modal Body Container */}
-            <div className="relative z-10 bg-zinc-950 border border-white/10 rounded-2xl max-w-4xl w-full h-[90vh] md:h-[80vh] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden shadow-2xl animate-scaleUp">
+            <div 
+              className="relative z-10 rounded-2xl max-w-4xl w-full h-[90vh] md:h-[80vh] flex flex-col md:flex-row overflow-y-auto md:overflow-hidden shadow-2xl animate-scaleUp"
+              style={{ backgroundColor: '#17202A', border: '0.5px solid white' }}
+            >
               {/* Close Button Mobile */}
               <button
                 onClick={() => setSelectedPost(null)}
@@ -1195,24 +1859,52 @@ export default function AvgeekConnect({ isOpen, onClose }) {
               {/* A. Left Side: Media Viewport */}
               <div className="w-full md:w-3/5 bg-black flex items-center justify-center relative select-none border-b md:border-b-0 md:border-r border-white/10 aspect-square md:h-full group/modalmedia">
                 {isCurrentVideo ? (
-                  <video
-                    key={currentMedia}
-                    src={currentMedia}
-                    controls
-                    controlsList="nodownload noplaybackrate"
-                    disablePictureInPicture
-                    onContextMenu={(e) => e.preventDefault()}
-                    preload="metadata"
-                    className="w-full h-full object-contain animate-fadeIn"
-                    playsInline
-                    autoPlay
-                  />
+                  <div className="w-full h-full relative flex items-center justify-center">
+                    <video
+                      key={currentMedia}
+                      src={currentMedia}
+                      loop
+                      preload="metadata"
+                      className="w-full h-full object-contain animate-fadeIn cursor-pointer"
+                      playsInline
+                      autoPlay
+                      muted={isModalVideoMuted}
+                      onClick={(e) => {
+                        if (e.target.paused) {
+                          e.target.play().catch(() => {});
+                        } else {
+                          e.target.pause();
+                        }
+                      }}
+                      onContextMenu={(e) => e.preventDefault()}
+                    />
+                    
+                    {/* Subtle Premium Mute Toggle Button */}
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsModalVideoMuted(!isModalVideoMuted);
+                      }}
+                      className="absolute bottom-4 right-4 z-20 p-2.5 rounded-full bg-black/60 hover:bg-black/80 text-white border border-white/10 hover:border-white/20 transition-all cursor-pointer shadow-lg hover:scale-105 active:scale-95"
+                      title={isModalVideoMuted ? "Unmute Video" : "Mute Video"}
+                    >
+                      {isModalVideoMuted ? (
+                        <VolumeX className="w-4 h-4 text-zinc-300" />
+                      ) : (
+                        <Volume2 className="w-4 h-4 text-[#ffec4e]" />
+                      )}
+                    </button>
+                  </div>
                 ) : (
                   <img
                     key={currentMedia}
                     src={currentMedia}
                     alt={post.caption || 'Aviation highlight'}
                     className="w-full h-full object-contain animate-fadeIn"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = 'b777-vignette.png';
+                    }}
                   />
                 )}
 
@@ -1249,16 +1941,14 @@ export default function AvgeekConnect({ isOpen, onClose }) {
               </div>
 
               {/* B. Right Side: Metadata, Comments & Actions */}
-              <div className="w-full md:w-2/5 flex flex-col h-auto md:h-full bg-zinc-950 text-white font-body relative">
+              <div className="w-full md:w-2/5 flex flex-col h-auto md:h-full bg-transparent text-white font-body relative">
                 {/* 1. Header Control Panel */}
                 <div className="p-4 border-b border-white/5 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300">
-                      <User className="w-4 h-4" />
-                    </div>
+                    {renderAvatar(post.email, post.username, "w-8 h-8")}
                     <div>
-                      <span className="font-brand font-black text-xs sm:text-sm text-zinc-200 block">
-                        @{post.username || post.email.split('@')[0]}
+                      <span className="font-sabon font-semibold text-xs sm:text-sm text-zinc-200 block" title={`@${post.username || post.email.split('@')[0]}`}>
+                        @{truncateUsername(post.username || post.email.split('@')[0])}
                       </span>
                       <span className="text-[9px] text-zinc-500 block font-medium">
                         {formatDate(post.created_at)}
@@ -1273,31 +1963,61 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                         post.email === session.user?.email ||
                         session.user?.email === 'vignetteworks.official@gmail.com'
                       );
+
+                      const isMenuOpen = activePostMenuId === post.id;
+
                       return (
-                        <button
-                          onClick={() => {
-                            if (canDelete) handleDeletePost(post.id);
-                          }}
-                          disabled={!canDelete}
-                          className={`p-1.5 rounded-full transition-all border mr-1 ${
-                            canDelete
-                              ? 'hover:bg-rose-500/10 text-rose-400 hover:text-rose-500 border-transparent hover:border-rose-500/20 cursor-pointer'
-                              : 'text-zinc-600 bg-transparent border-transparent cursor-not-allowed opacity-50'
-                          }`}
-                          title={canDelete ? "Delete Broadcast" : "Only the post creator or Vignette Admin can delete this post"}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        <div className="relative">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActivePostMenuId(isMenuOpen ? null : post.id);
+                            }}
+                            className="post-menu-trigger p-1.5 rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                            title="Options"
+                          >
+                            <MoreHorizontal className="w-4.5 h-4.5" />
+                          </button>
+
+                          {/* Post Dropdown Menu */}
+                          {isMenuOpen && (
+                            <div className="post-menu-dropdown absolute right-0 mt-1 z-50 bg-[#17202A] border border-white/20 rounded-xl shadow-2xl py-1 w-32 animate-scaleUp select-none">
+                              {/* Download Option */}
+                              <button
+                                onClick={() => {
+                                  setActivePostMenuId(null);
+                                  handleDownloadMedia(currentMedia, post.id, isCurrentVideo);
+                                }}
+                                className="w-full text-left px-3.5 py-2 text-xs font-semibold text-[#ffec4e] hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer"
+                              >
+                                <Download className="w-3.5 h-3.5 text-[#ffec4e]" />
+                                Download
+                              </button>
+
+                              {/* Delete Option */}
+                              {canDelete && (
+                                <button
+                                  onClick={() => {
+                                    setActivePostMenuId(null);
+                                    handleDeletePost(post.id);
+                                  }}
+                                  className="w-full text-left px-3.5 py-2 text-xs font-semibold text-rose-500 hover:bg-rose-500/10 transition-colors flex items-center gap-2 border-t border-white/5 cursor-pointer"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                  Delete
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       );
                     })()}
 
-                    <div className={`px-2 py-0.5 rounded text-[9px] font-brand font-extrabold uppercase tracking-wider ${
-                      post.email === 'vignetteworks.official@gmail.com'
-                        ? 'bg-red-500/10 text-red-400 border border-red-500/20'
-                        : 'bg-[#ffec4e]/10 text-[#ffec4e] border border-[#ffec4e]/20'
-                    }`}>
-                      {post.email === 'vignetteworks.official@gmail.com' ? 'ADMIN' : 'SPOTTER'}
-                    </div>
+                    {post.email === 'vignetteworks.official@gmail.com' && (
+                      <div className="px-2 py-0.5 rounded text-[9px] font-brand font-extrabold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">
+                        ADMIN
+                      </div>
+                    )}
 
                     <button
                       onClick={() => setSelectedPost(null)}
@@ -1313,13 +2033,11 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                   {/* User original caption */}
                   {post.caption && (
                     <div className="flex gap-2.5 pb-3 border-b border-white/5">
-                      <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 shrink-0">
-                        <User className="w-3.5 h-3.5" />
-                      </div>
+                      {renderAvatar(post.email, post.username, "w-6 h-6")}
                       <div className="flex flex-col gap-0.5">
                         <p className="leading-relaxed">
-                          <span className="font-brand font-black text-zinc-200 mr-1.5">
-                            @{post.username || post.email.split('@')[0]}
+                          <span className="font-sabon font-semibold text-zinc-200 mr-1.5" title={`@${post.username || post.email.split('@')[0]}`}>
+                            @{truncateUsername(post.username || post.email.split('@')[0])}
                           </span>
                           {post.caption}
                         </p>
@@ -1334,28 +2052,52 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                   <div className="flex flex-col gap-3.5">
                     {allComments.map((comm) => (
                       <div key={comm.id} className="flex gap-2.5 items-start group/comment">
-                        <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-zinc-300 shrink-0">
-                          <User className="w-3.5 h-3.5" />
-                        </div>
+                        {renderAvatar(comm.email, comm.username, "w-6 h-6")}
                         <div className="flex-1 flex flex-col gap-0.5">
                           <div className="flex items-start justify-between gap-2">
                             <p className="leading-relaxed text-zinc-300">
-                              <span className="font-brand font-black text-zinc-200 mr-1.5">
-                                @{comm.username}
+                              <span className="font-sabon font-semibold text-zinc-200 mr-1.5" title={`@${comm.username}`}>
+                                @{truncateUsername(comm.username)}
                               </span>
                               {comm.text}
                             </p>
 
-                            {/* Delete comment button */}
-                            {(comm.username === username || (session && (post.user_id === session.user?.id || post.email === session.user?.email || session.user?.email === 'vignetteworks.official@gmail.com'))) && (
-                              <button
-                                onClick={() => handleDeleteComment(post.id, comm.id)}
-                                className="opacity-0 group-hover/comment:opacity-100 p-1 text-zinc-500 hover:text-rose-400 transition-all cursor-pointer rounded hover:bg-white/5"
-                                title="Delete Comment"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                            )}
+                            {/* Delete comment button -> 3-dot dropdown */}
+                            {(comm.username === username || (session && (post.user_id === session.user?.id || post.email === session.user?.email || session.user?.email === 'vignetteworks.official@gmail.com'))) && (() => {
+                              const isCommentMenuOpen = activeCommentMenuId === comm.id;
+                              return (
+                                <div className="relative shrink-0">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setActiveCommentMenuId(isCommentMenuOpen ? null : comm.id);
+                                    }}
+                                    className={`comment-menu-trigger p-1 text-zinc-400 hover:text-white transition-all cursor-pointer rounded hover:bg-white/5 ${
+                                      isCommentMenuOpen ? 'opacity-100' : 'opacity-60 md:opacity-0 md:group-hover/comment:opacity-100'
+                                    }`}
+                                    title="Options"
+                                  >
+                                    <MoreHorizontal className="w-3.5 h-3.5" />
+                                  </button>
+
+                                  {/* Comment Action Dropdown */}
+                                  {isCommentMenuOpen && (
+                                    <div className="comment-menu-dropdown absolute right-0 mt-1 z-50 bg-[#17202A] border border-white/20 rounded-xl shadow-2xl py-1 w-24 animate-scaleUp select-none">
+                                      <button
+                                        onClick={() => {
+                                          setActiveCommentMenuId(null);
+                                          handleDeleteComment(post.id, comm.id);
+                                        }}
+                                        className="w-full text-left px-3 py-1.5 text-[10px] font-semibold text-rose-500 hover:bg-rose-500/10 transition-colors flex items-center gap-1.5 cursor-pointer"
+                                      >
+                                        <Trash2 className="w-3 h-3" />
+                                        Delete
+                                      </button>
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })()}
                           </div>
                           <span className="text-[9px] text-zinc-500 font-medium">
                             {formatDate(comm.created_at)}
@@ -1367,7 +2109,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                 </div>
 
                 {/* 3. Action Deck (Likes, Share confirmation) */}
-                <div className="p-4 border-t border-white/5 bg-zinc-950/40 flex flex-col gap-2.5">
+                <div className="p-4 border-t border-white/5 bg-transparent flex flex-col gap-2.5">
                   <div className="flex items-center justify-between select-none">
                     <div className="flex items-center gap-3">
                       <button
@@ -1387,42 +2129,220 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                       </button>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => handleDownloadMedia(currentMedia, post.id, isCurrentVideo)}
-                        className="text-xs text-[#ffec4e] hover:text-[#ffea2e] font-semibold underline underline-offset-4 flex items-center gap-1 cursor-pointer"
-                      >
-                        <Download className="w-3.5 h-3.5" />
-                        Download
-                      </button>
-                    </div>
                   </div>
                 </div>
 
                 {/* 4. Interactive comments submission form */}
                 <form
                   onSubmit={(e) => handleAddComment(e, post.id)}
-                  className="p-3 border-t border-white/5 flex gap-2 items-center bg-zinc-950"
+                  className="p-3 border-t border-white/5 flex gap-2 items-center bg-transparent"
                 >
-                  <input
-                    type="text"
-                    value={newCommentText}
-                    onChange={(e) => setNewCommentText(e.target.value)}
-                    placeholder="Add a comment..."
-                    className="flex-1 px-3 py-2 text-xs bg-zinc-900 border border-white/10 rounded-xl text-black dark:text-white placeholder-zinc-500 focus:outline-none focus:border-[#ffec4e]"
-                  />
-                  <button
-                    type="submit"
-                    className="text-xs font-brand font-black uppercase text-[#ffec4e] hover:text-[#ffea2e] transition-colors cursor-pointer px-2"
-                  >
-                    Post
-                  </button>
+                  <div className="flex-1 flex items-center bg-[#10171e] border border-white/10 rounded-xl px-3 py-1.5 focus-within:border-white/20 transition-colors w-full relative" ref={emojiPickerRef}>
+                    {/* Smile Icon Button */}
+                    <button
+                      type="button"
+                      onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                      className="text-zinc-400 hover:text-white transition-colors mr-2.5 shrink-0 hover:scale-105 active:scale-95 cursor-pointer"
+                      title="Emojis"
+                    >
+                      <Smile className="w-4 h-4" />
+                    </button>
+
+                    {/* Popover Categorized Emoji Picker */}
+                    {showEmojiPicker && (
+                      <div className="absolute bottom-full left-0 mb-2 z-50 bg-[#17202A] border border-white/20 rounded-2xl p-3 shadow-2xl w-[280px] animate-scaleUp select-none flex flex-col gap-2">
+                        {/* Categories Tab Selector */}
+                        <div className="flex items-center justify-between pb-2 border-b border-white/5 overflow-x-auto gap-1.5 scrollbar-none">
+                          {Object.keys(EMOJI_CATEGORIES).map((key) => {
+                            const cat = EMOJI_CATEGORIES[key];
+                            const isActive = activeEmojiTab === key;
+                            return (
+                              <button
+                                key={key}
+                                type="button"
+                                onClick={() => setActiveEmojiTab(key)}
+                                className={`text-base p-1.5 rounded-lg transition-all hover:bg-white/5 cursor-pointer ${
+                                  isActive ? 'bg-white/10 scale-110' : 'opacity-60 hover:opacity-100'
+                                }`}
+                                title={key}
+                              >
+                                {cat.icon}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Emojis Grid */}
+                        <div className="grid grid-cols-6 gap-2.5 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar text-base">
+                          {EMOJI_CATEGORIES[activeEmojiTab].emojis.map((emoji) => (
+                            <button
+                              key={emoji}
+                              type="button"
+                              onClick={() => {
+                                setNewCommentText((prev) => {
+                                  const newVal = prev + emoji;
+                                  return newVal.slice(0, 1000);
+                                });
+                              }}
+                              className="hover:bg-white/10 p-1.5 rounded-lg transition-colors cursor-pointer text-center active:scale-120"
+                            >
+                              {emoji}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Input Field */}
+                    <input
+                      type="text"
+                      value={newCommentText}
+                      onChange={(e) => setNewCommentText(e.target.value)}
+                      placeholder="Add a comment..."
+                      maxLength={1000}
+                      className="flex-1 min-w-0 bg-transparent !bg-transparent border-none outline-none text-xs text-white placeholder-zinc-500 py-1"
+                    />
+
+                    {/* Post Button inside the input bar */}
+                    <button
+                      type="submit"
+                      disabled={!newCommentText.trim()}
+                      className={`text-xs font-semibold font-brand uppercase tracking-wider ml-2 shrink-0 transition-colors ${
+                        newCommentText.trim() 
+                          ? 'text-[#ffec4e] hover:text-[#ffea2e] cursor-pointer' 
+                          : 'text-zinc-600 cursor-not-allowed'
+                      }`}
+                    >
+                      Post
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
           </div>
         );
       })()}
+
+      {/* Content Protection Toast Banner */}
+      <div
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
+          ? 'top-20 opacity-100 translate-y-0 scale-100'
+          : 'top-20 opacity-0 -translate-y-4 scale-95'
+        }`}
+        style={{ borderRadius: '20px' }}
+      >
+        <TriangleAlert className="w-4.5 h-4.5 text-white flex-shrink-0 animate-bounce" />
+        <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap uppercase tracking-wider">
+          Not allowed! Content Protection enabled
+        </span>
+      </div>
+
+      {/* LEGAL MODAL — Terms & Conditions / Privacy Policy */}
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-md p-4 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${legalModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setLegalModal(null)}
+      >
+        <div
+          className={`relative w-full max-w-2xl max-h-[85vh] bg-[#17202A] rounded-3xl overflow-hidden shadow-2xl border border-white/15 flex flex-col my-8 select-none transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${legalModal ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="sticky top-0 z-10 bg-[#17202A] px-6 sm:px-8 pt-6 pb-4 border-b border-white/10 flex items-center justify-between">
+            <div>
+              <span className="font-heading font-extrabold text-xs tracking-widest text-[#ffec4e] uppercase block mb-1">
+                Legal
+              </span>
+              <h2 className="font-heading font-black text-lg sm:text-xl text-white">
+                {activeLegalTab === 'terms' ? 'Terms and Conditions' : 'Privacy Policy'}
+              </h2>
+            </div>
+            <button
+              onClick={() => setLegalModal(null)}
+              className="p-2 rounded-full hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Scrollable Content */}
+          <div className="overflow-y-auto px-6 sm:px-8 py-6 font-body text-sm text-zinc-300 leading-relaxed space-y-5">
+            {activeLegalTab === 'terms' ? (
+              <>
+                <p className="text-zinc-500 text-xs">Last updated: July 2026</p>
+
+                <h3 className="font-heading font-bold text-base text-white">1. Acceptance of Terms</h3>
+                <p className="text-justify">By accessing and using the Vignette website and services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you must not use our services.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">2. Services Offered</h3>
+                <p className="text-justify">Vignette provides professional video editing, promotional content creation, podcast editing, and visual storytelling services. All deliverables, timelines, and project scopes are agreed upon individually with each client prior to commencement of work.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">3. Intellectual Property</h3>
+                <p className="text-justify">All original content, designs, video edits, graphics, and creative assets produced by Vignette remain the intellectual property of Vignette until full payment has been received. Upon completion and full payment, ownership of the final deliverables transfers to the client unless otherwise stated in writing.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">4. Client Responsibilities</h3>
+                <p className="text-justify">The client agrees to provide all necessary materials, brand assets, and feedback in a timely manner. Delays in client feedback or asset delivery may result in adjusted project timelines and additional fees.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">5. Payment Terms</h3>
+                <p className="text-justify">Payments are to be made according to the schedule outlined in your specific proposal or invoice. A non-refundable deposit is often required to commence work. Late payments may incur additional charges.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">6. Revisions Policy</h3>
+                <p className="text-justify">Each project includes a predefined number of revision rounds. Any additional revisions beyond this scope will be billed at our standard hourly or per-project rate.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">7. Limitation of Liability</h3>
+                <p className="text-justify">Vignette shall not be liable for any indirect, incidental, or consequential damages arising from the use of our services. Our total liability shall not exceed the amount paid by the client for the specific project in question.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">8. Termination</h3>
+                <p className="text-justify">Either party may terminate a project agreement with written notice. In the event of termination, the client shall be responsible for payment of all work completed up to the date of termination.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">9. Contact</h3>
+                <p className="text-justify">For questions regarding these Terms and Conditions, please contact us at <a href="mailto:vignetteworks.official@gmail.com" className="text-[#ffec4e] underline">vignetteworks.official@gmail.com</a>.</p>
+              </>
+            ) : (
+              <>
+                <p className="text-zinc-500 text-xs">Last updated: July 2026</p>
+
+                <h3 className="font-heading font-bold text-base text-white">1. Information We Collect</h3>
+                <p className="text-justify">When you use our website or contact us through our inquiry form, we may collect personal information including your name, email address, phone number, and any message content you provide. We also collect non-personal data such as browser type, device information, and usage analytics.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">2. How We Use Your Information</h3>
+                <p className="text-justify">Your personal information is used solely for responding to inquiries, delivering our services, communicating project updates, and improving user experience on our platform. We do not sell, rent, or trade your personal information to third parties.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">3. Data Storage &amp; Security</h3>
+                <p className="text-justify">We employ industry-standard security measures to protect your personal data. Information submitted through our forms is transmitted securely and stored using trusted third-party services (such as Supabase) with encryption at rest and in transit.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">4. Cookies &amp; Analytics</h3>
+                <p className="text-justify">Our website may use cookies and similar technologies to enhance your browsing experience and gather anonymous usage statistics. You may disable cookies in your browser settings, though some features of the site may not function as intended.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">5. Third-Party Services</h3>
+                <p className="text-justify">We may utilise third-party services for analytics, hosting, and form processing. These services have their own privacy policies and we encourage you to review them. We are not responsible for the privacy practices of third-party providers.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">6. Your Rights</h3>
+                <p className="text-justify">You have the right to access, correct, or request deletion of your personal data at any time. To exercise these rights, please contact us using the information provided below. We will respond to your request within a reasonable timeframe.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">7. Children&apos;s Privacy</h3>
+                <p className="text-justify">Our services are not directed at individuals under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal data, please contact us so we can take appropriate action.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">8. Changes to This Policy</h3>
+                <p className="text-justify">We reserve the right to update this Privacy Policy at any time. Changes will be reflected on this page with an updated revision date. Continued use of our website after changes constitutes acceptance of the revised policy.</p>
+
+                <h3 className="font-heading font-bold text-base text-white">9. Contact</h3>
+                <p className="text-justify">If you have any questions or concerns about this Privacy Policy, please reach out to us at <a href="mailto:vignetteworks.official@gmail.com" className="text-[#ffec4e] underline">vignetteworks.official@gmail.com</a>.</p>
+              </>
+            )}
+          </div>
+
+          {/* Footer */}
+          <div className="sticky bottom-0 bg-[#17202A] px-6 sm:px-8 py-4 border-t border-white/10 flex justify-end">
+            <button
+              onClick={() => setLegalModal(null)}
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#e31c25] to-[#ff7a00] text-white font-heading font-bold text-xs tracking-wider uppercase hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer shadow-md"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

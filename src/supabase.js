@@ -6,7 +6,13 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishabl
 let client = null;
 if (supabaseUrl && supabaseAnonKey && !supabaseUrl.includes('your-project-id')) {
   try {
-    client = createClient(supabaseUrl, supabaseAnonKey);
+    client = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        storage: window.sessionStorage,
+        persistSession: true,
+        detectSessionInUrl: true
+      }
+    });
   } catch (err) {
     console.error('Supabase client initialization failed:', err);
   }
