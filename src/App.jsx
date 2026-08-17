@@ -869,7 +869,24 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
 
 export default function App() {
   // --- States ---
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const manual = sessionStorage.getItem('vignette-theme-manual');
+      if (manual) {
+        return manual === 'dark';
+      }
+      try {
+        const options = { timeZone: 'Asia/Kolkata', hour: 'numeric', hour12: false };
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+        const hour = Number(formatter.format(new Date()));
+        // 6 AM to 6 PM IST (6 to 17 inclusive) is Light Mode (isDark = false), otherwise Dark Mode (isDark = true)
+        return !(hour >= 6 && hour < 18);
+      } catch (e) {
+        return false;
+      }
+    }
+    return false;
+  });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '' });
 
@@ -931,6 +948,10 @@ export default function App() {
   };
 
   const handleCloseAvgeekConnect = () => {
+    if (window.isAvgeekUploading) {
+      const isSure = window.confirm("A media upload is currently in progress. If you leave, the upload will be aborted. Are you sure you want to close and leave?");
+      if (!isSure) return;
+    }
     setIsAvgeekConnectOpen(false);
     const path = window.location.pathname.toLowerCase();
     const hash = window.location.hash.toLowerCase();
@@ -951,6 +972,16 @@ export default function App() {
       if (path.endsWith('/avgeek') || path.endsWith('/avgeek/') || hash === '#avgeek' || hash === '#/avgeek') {
         setIsAvgeekConnectOpen(true);
       } else {
+        if (window.isAvgeekUploading) {
+          const isSure = window.confirm("A media upload is currently in progress. If you leave, the upload will be aborted. Are you sure you want to leave?");
+          if (!isSure) {
+            // Restore path history so they remain on /avgeek
+            const base = path.endsWith('/') ? path : path + '/';
+            window.history.pushState({ avgeek: true }, '', base + 'avgeek');
+            setIsAvgeekConnectOpen(true);
+            return;
+          }
+        }
         setIsAvgeekConnectOpen((wasOpen) => {
           if (wasOpen) {
             setTimeout(() => {
@@ -1249,10 +1280,29 @@ export default function App() {
       window.scrollTo(0, 0);
     }, 300);
 
-    // Force Light Mode by default on every refresh or initial loading
-    setIsDark(false);
-    document.documentElement.classList.remove('dark');
-    localStorage.setItem('vignette-theme', 'light');
+    // Determine and apply default theme on mount based on IST timezone frame
+    const manualTheme = sessionStorage.getItem('vignette-theme-manual');
+    let finalDark = false;
+    if (manualTheme) {
+      finalDark = manualTheme === 'dark';
+    } else {
+      try {
+        const options = { timeZone: 'Asia/Kolkata', hour: 'numeric', hour12: false };
+        const formatter = new Intl.DateTimeFormat('en-US', options);
+        const hour = Number(formatter.format(new Date()));
+        finalDark = !(hour >= 6 && hour < 18);
+      } catch (e) {
+        finalDark = false;
+      }
+    }
+    setIsDark(finalDark);
+    if (finalDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('vignette-theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('vignette-theme', 'light');
+    }
 
     // Check cookie consent on mount
     const consent = localStorage.getItem('vignette-cookie-consent');
@@ -1322,6 +1372,7 @@ export default function App() {
   const toggleTheme = () => {
     const newDark = !isDark;
     setIsDark(newDark);
+    const themeStr = newDark ? 'dark' : 'light';
     if (newDark) {
       document.documentElement.classList.add('dark');
       localStorage.setItem('vignette-theme', 'dark');
@@ -1329,6 +1380,7 @@ export default function App() {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('vignette-theme', 'light');
     }
+    sessionStorage.setItem('vignette-theme-manual', themeStr);
   };
 
   // --- Content Protection & Custom Toast ---
