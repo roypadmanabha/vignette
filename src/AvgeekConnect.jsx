@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from './supabase';
-import { X, LogOut, Upload, Image, Video, User, Calendar, Plane, Globe, AlertCircle, CheckCircle, ShieldCheck, Download, Trash2, ChevronLeft, ChevronRight, Layers, Volume2, VolumeX, Smile, MoreHorizontal, Megaphone, Send, TriangleAlert, MapPin, Phone, Mail, Radar } from 'lucide-react';
+import { X, LogOut, Upload, Image, Video, User, Calendar, Plane, Globe, AlertCircle, CheckCircle, ShieldCheck, Download, Trash2, ChevronLeft, ChevronRight, Layers, Volume2, VolumeX, Smile, MoreHorizontal, Megaphone, Send, TriangleAlert, MapPin, Phone, Mail, Radar, Edit } from 'lucide-react';
 
 const Instagram = (props) => (
   <svg
@@ -131,6 +131,8 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [selectedPost, setSelectedPost] = useState(null);
   const [isModalVideoMuted, setIsModalVideoMuted] = useState(false);
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
+  const [isEditingCaption, setIsEditingCaption] = useState(false);
+  const [editCaptionText, setEditCaptionText] = useState('');
   const [commentsMap, setCommentsMap] = useState(() => {
     return JSON.parse(localStorage.getItem('avgeek_comments') || '{}');
   });
@@ -141,12 +143,96 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [activeCommentMenuId, setActiveCommentMenuId] = useState(null);
   const emojiPickerRef = useRef(null);
   const carouselRef = useRef(null);
+  const touchStartRef = useRef(null);
+
+  const handleTouchStart = (e) => {
+    touchStartRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e, mediaList) => {
+    if (touchStartRef.current === null) return;
+    const touchEnd = e.changedTouches[0].clientX;
+    const diff = touchStartRef.current - touchEnd;
+    if (diff > 50) {
+      setActiveSlideIndex(prev => prev < mediaList.length - 1 ? prev + 1 : 0);
+    } else if (diff < -50) {
+      setActiveSlideIndex(prev => prev > 0 ? prev - 1 : mediaList.length - 1);
+    }
+    touchStartRef.current = null;
+  };
   const [likedPosts, setLikedPosts] = useState(() => {
     return JSON.parse(localStorage.getItem('avgeek_liked_posts') || '[]');
   });
   const [likesMap, setLikesMap] = useState(() => {
     return JSON.parse(localStorage.getItem('avgeek_likes_map') || '{}');
   });
+  const [selectedPostIds, setSelectedPostIds] = useState([]);
+  const [activeUploadPreview, setActiveUploadPreview] = useState(null);
+  const [showPrintBlocked, setShowPrintBlocked] = useState(false);
+
+  const handleBulkDelete = async () => {
+    if (selectedPostIds.length === 0) return;
+    const confirmDelete = window.confirm(`Warning: Are you sure you want to permanently delete all ${selectedPostIds.length} selected posts? This action will permanently delete these items and their media files from the Supabase database and storage.`);
+    if (!confirmDelete) return;
+
+    try {
+      // 1. Gather all file paths from the selected posts to delete from storage
+      const selectedPosts = posts.filter(post => selectedPostIds.includes(post.id));
+      const filePathsToDelete = [];
+      
+      selectedPosts.forEach(post => {
+        const mediaList = getPostMediaList(post.media_url);
+        mediaList.forEach(url => {
+          const parts = url.split('/community-media/');
+          if (parts.length > 1) {
+            filePathsToDelete.push(parts[1]);
+          }
+        });
+      });
+
+      if (supabase) {
+        // 2. Delete files from storage
+        if (filePathsToDelete.length > 0) {
+          try {
+            await supabase.storage.from('community-media').remove(filePathsToDelete);
+          } catch (storageErr) {
+            console.error('Failed to bulk delete files from storage:', storageErr);
+          }
+        }
+
+        // 3. Delete database records
+        const { error } = await supabase
+          .from('community_posts')
+          .delete()
+          .in('id', selectedPostIds);
+        if (error) throw error;
+      }
+
+      // Delete from LocalStorage fallback
+      const localData = JSON.parse(localStorage.getItem('avgeek_local_posts') || '[]');
+      const updatedLocal = localData.filter(post => !selectedPostIds.includes(post.id));
+      localStorage.setItem('avgeek_local_posts', JSON.stringify(updatedLocal));
+
+      // Clean up local comments and likes maps for each deleted post
+      const newComments = { ...commentsMap };
+      const newLikes = { ...likesMap };
+      selectedPostIds.forEach(id => {
+        delete newComments[id];
+        delete newLikes[id];
+      });
+      setCommentsMap(newComments);
+      setLikesMap(newLikes);
+      localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
+      localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
+
+      setPosts(prev => prev.filter(post => !selectedPostIds.includes(post.id)));
+      setSelectedPostIds([]);
+      setStatusMessage({ type: 'success', text: 'Selected posts and their media files permanently deleted.' });
+    } catch (err) {
+      console.error('Bulk delete failed:', err);
+      setStatusMessage({ type: 'error', text: 'Failed to delete selected posts.' });
+    }
+  };
 
   // Live Updates States
   const [liveUpdates, setLiveUpdates] = useState([]);
@@ -159,7 +245,69 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
   useEffect(() => {
     setActiveSlideIndex(0);
+    setIsEditingCaption(false);
+    setEditCaptionText('');
   }, [selectedPost]);
+
+  // Handle keyboard ArrowLeft and ArrowRight navigation across posts
+  useEffect(() => {
+    if (!selectedPost) return;
+
+    const handleKeyDown = (e) => {
+      if (window.innerWidth < 1024) return;
+
+      const activeEl = document.activeElement;
+      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+        return;
+      }
+
+      const filteredPosts = posts.filter(post => {
+        if (feedTab === 'community') {
+          return post.email !== 'vignetteworks.official@gmail.com';
+        }
+        if (feedTab === 'official') {
+          return post.email === 'vignetteworks.official@gmail.com';
+        }
+        return true;
+      });
+
+      if (filteredPosts.length <= 1) return;
+
+      const currentIndex = filteredPosts.findIndex(p => p.id === selectedPost.id);
+      if (currentIndex === -1) return;
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (currentIndex < filteredPosts.length - 1) {
+          setSelectedPost(filteredPosts[currentIndex + 1]);
+        }
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (currentIndex > 0) {
+          setSelectedPost(filteredPosts[currentIndex - 1]);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedPost, posts, feedTab]);
+
+  // Handle blocking of Ctrl+P / Cmd+P print triggers
+  useEffect(() => {
+    const handlePrintKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        setShowPrintBlocked(true);
+      }
+    };
+    window.addEventListener('keydown', handlePrintKey);
+    return () => {
+      window.removeEventListener('keydown', handlePrintKey);
+    };
+  }, []);
 
   // Click outside to close emoji picker, post menu, or comment menu
   useEffect(() => {
@@ -965,6 +1113,59 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     setStatusMessage({ type: 'success', text: 'Broadcast deleted successfully.' });
   };
 
+  const handleSaveCaption = async (postId) => {
+    const trimmed = editCaptionText.trim();
+    if (!trimmed) {
+      alert("Caption cannot be empty.");
+      return;
+    }
+
+    try {
+      const targetPost = posts.find(p => p.id === postId);
+      if (!targetPost) return;
+
+      let updatedCaptionStr = trimmed;
+      if (targetPost.caption && targetPost.caption.startsWith('{')) {
+        try {
+          const parsed = JSON.parse(targetPost.caption);
+          updatedCaptionStr = JSON.stringify({
+            ...parsed,
+            text: trimmed
+          });
+        } catch (_) {
+          // fallback
+        }
+      } else {
+        updatedCaptionStr = JSON.stringify({
+          text: trimmed,
+          likes: [],
+          comments: []
+        });
+      }
+
+      const isMock = String(postId).startsWith('mock-');
+      if (supabase && !isMock) {
+        const { error } = await supabase
+          .from('community_posts')
+          .update({ caption: updatedCaptionStr })
+          .eq('id', postId);
+        if (error) throw error;
+      } else {
+        const saved = JSON.parse(localStorage.getItem('avgeek_posts') || '[]');
+        const updated = saved.map(p => p.id === postId ? { ...p, caption: updatedCaptionStr } : p);
+        localStorage.setItem('avgeek_posts', JSON.stringify(updated));
+      }
+
+      setPosts(prev => prev.map(p => p.id === postId ? { ...p, caption: updatedCaptionStr } : p));
+      setSelectedPost(prev => prev ? { ...prev, caption: updatedCaptionStr } : null);
+      setIsEditingCaption(false);
+      setStatusMessage({ type: 'success', text: 'Caption updated successfully.' });
+    } catch (err) {
+      console.error('Failed to save caption:', err);
+      setStatusMessage({ type: 'error', text: 'Failed to update caption.' });
+    }
+  };
+
   const handleDeleteComment = (postId, commentId) => {
     const isSure = window.confirm("Are you sure you want to delete this comment?");
     if (!isSure) return;
@@ -1169,6 +1370,10 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     if (!isOpen) return;
 
     const handleGlobalPaste = (event) => {
+      const activeEl = document.activeElement;
+      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+        return;
+      }
       const items = event.clipboardData?.items;
       if (!items) return;
 
@@ -1219,7 +1424,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const handlePostSubmit = async (e) => {
     e.preventDefault();
     if (uploadFiles.length === 0) {
-      setStatusMessage({ type: 'error', text: 'Please select at least one photo or video to upload.' });
+      setStatusMessage({ type: 'error', text: 'Please add a media file (photo or video) before posting.' });
       return;
     }
 
@@ -1418,19 +1623,32 @@ export default function AvgeekConnect({ isOpen, onClose }) {
       </header>
 
       {/* 3. Main Dashboard Wrapper */}
-      <main className="relative z-10 flex-1 overflow-y-auto px-4 py-3 sm:py-6 lg:py-8 sm:px-6 lg:px-8">
+      <main className="relative z-10 flex-1 overflow-y-auto px-4 py-3 sm:py-6 lg:py-8 sm:px-6 lg:px-8 scrollbar-hidden-mobile main-custom-scrollbar">
         <div className="max-w-7xl mx-auto w-full min-h-[calc(100vh-120px)] flex flex-col py-2 sm:py-4 lg:py-6">
 
           {/* Status Toast Banner */}
           {statusMessage && (
-            <div className={`max-w-md mx-auto mb-6 px-4 py-3 rounded-xl border flex items-center gap-3 animate-slideUp text-xs font-semibold ${
+            <div className={`fixed top-20 left-1/2 -translate-x-1/2 z-[100] max-w-md w-[92%] sm:w-full mx-auto px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl border flex items-center gap-2 sm:gap-3 animate-slideUp text-[10.5px] sm:text-xs font-semibold shadow-2xl ${
               statusMessage.type === 'success'
-                ? 'bg-emerald-950/65 border-emerald-500/30 text-emerald-300'
-                : 'bg-rose-950/65 border-rose-500/30 text-rose-300'
+                ? 'bg-white border-emerald-500/30 text-emerald-600'
+                : 'bg-white border-red-500/30 text-[#d10000]'
             }`}>
-              {statusMessage.type === 'success' ? <CheckCircle className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
-              <span>{statusMessage.text}</span>
-              <button onClick={() => setStatusMessage(null)} className="ml-auto hover:text-white cursor-pointer"><X className="w-3.5 h-3.5" /></button>
+              {statusMessage.type === 'success' ? (
+                <CheckCircle className="w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 text-emerald-500" />
+              ) : (
+                <AlertCircle className="w-4 h-4 sm:w-4.5 sm:h-4.5 shrink-0 text-[#d10000]" />
+              )}
+              <span className="flex-1 break-words">{statusMessage.text}</span>
+              <button 
+                onClick={() => setStatusMessage(null)} 
+                className={`ml-auto p-1 rounded-lg transition-colors cursor-pointer ${
+                  statusMessage.type === 'success'
+                    ? 'text-zinc-500 hover:text-emerald-600 hover:bg-emerald-50'
+                    : 'text-zinc-500 hover:text-[#d10000] hover:bg-red-50'
+                }`}
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
             </div>
           )}
 
@@ -1666,7 +1884,11 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                     {filePreviews.length > 0 && (
                       <div className="grid grid-cols-3 gap-2 max-h-[160px] overflow-y-auto pr-1 custom-scrollbar">
                         {filePreviews.map((preview, index) => (
-                          <div key={index} className="aspect-square bg-zinc-900 border border-white/10 rounded-lg overflow-hidden relative group/preview select-none animate-scaleUp">
+                          <div 
+                            key={index} 
+                            onClick={() => setActiveUploadPreview(preview)}
+                            className="aspect-square bg-zinc-900 border border-white/10 hover:border-white/20 rounded-lg overflow-hidden relative group/preview select-none cursor-pointer transition-colors animate-scaleUp"
+                          >
                             {preview.type === 'video' ? (
                               <div className="w-full h-full relative">
                                 <video
@@ -1808,7 +2030,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
               </div>
 
               {/* Right Column: Feed posts */}
-              <div className="lg:col-span-7 flex flex-col gap-6 min-h-[500px]">
+              <div className="lg:col-span-7 flex flex-col gap-6 min-h-0 lg:min-h-[500px]">
                 <div className="flex items-center justify-between select-none">
                   <h3 className="font-heading font-black text-sm sm:text-base md:text-lg tracking-wide uppercase flex items-center gap-2">
                     <Globe className="w-4 h-4 text-[#ffec4e]" />
@@ -1913,12 +2135,42 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                     );
                   }
 
+                  const allSelected = filteredPosts.length > 0 && selectedPostIds.length === filteredPosts.length;
+                  const toggleSelectAll = () => {
+                    if (allSelected) {
+                      setSelectedPostIds([]);
+                    } else {
+                      setSelectedPostIds(filteredPosts.map(p => p.id));
+                    }
+                  };
+
                   return (
-                    /* Render Posts Grid (Instagram style) */
-                    <div 
-                      className="grid grid-cols-2 gap-1.5 sm:gap-3 md:max-h-[800px] md:overflow-y-auto pr-1 custom-scrollbar"
-                      style={{ overscrollBehavior: 'contain' }}
-                    >
+                    <>
+                      {session?.user?.email === 'vignetteworks.official@gmail.com' && (
+                        <div className="flex items-center gap-4 bg-zinc-950/40 border border-white/10 rounded-xl px-4 py-2 text-xs font-semibold select-none mb-3">
+                          <label className="flex items-center gap-2 cursor-pointer text-zinc-300 hover:text-white">
+                            <input 
+                              type="checkbox" 
+                              checked={allSelected} 
+                              onChange={toggleSelectAll} 
+                              className="rounded border-0 text-[#d10000] focus:ring-0 focus:ring-offset-0 w-4 h-4 cursor-pointer bg-zinc-800"
+                            />
+                            <span>Select All</span>
+                          </label>
+                          {selectedPostIds.length > 0 && (
+                            <button
+                              onClick={handleBulkDelete}
+                              className="ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-[#d10000] hover:bg-[#b00000] active:scale-95 transition-all text-white rounded-lg cursor-pointer font-bold"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                              <span>Delete ({selectedPostIds.length})</span>
+                            </button>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Render Posts Grid (Instagram style) */}
+                      <div className="grid grid-cols-2 gap-1.5 sm:gap-3 max-h-[360px] md:max-h-[630px] lg:max-h-[630px] xl:max-h-[800px] overflow-y-auto pr-1 custom-scrollbar scrollbar-hidden-mobile">
                       {filteredPosts.map((post) => {
                         const { likes, commentsCount } = getMockStats(post.id);
                         const mediaList = getPostMediaList(post.media_url);
@@ -1945,6 +2197,24 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                             }}
                             className="group aspect-square bg-zinc-900 border border-white/5 rounded-lg overflow-hidden relative cursor-pointer hover:opacity-70 transition-opacity duration-300 select-none animate-scaleUp"
                           >
+                            {/* Admin Select Checkbox */}
+                            {session?.user?.email === 'vignetteworks.official@gmail.com' && (
+                              <input 
+                                type="checkbox"
+                                checked={selectedPostIds.includes(post.id)}
+                                onClick={(e) => e.stopPropagation()}
+                                onChange={(e) => {
+                                  const checked = e.target.checked;
+                                  setSelectedPostIds(prev => 
+                                    checked 
+                                      ? [...prev, post.id]
+                                      : prev.filter(id => id !== post.id)
+                                  );
+                                }}
+                                className="absolute top-2 left-2 z-30 rounded border-0 text-[#d10000] focus:ring-0 focus:ring-offset-0 w-4 h-4 cursor-pointer bg-zinc-800"
+                              />
+                            )}
+
                             {/* Render Thumbnail Media */}
                             {isVideo ? (
                               <div className="w-full h-full bg-black relative flex items-center justify-center">
@@ -1999,7 +2269,8 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                         );
                       })}
                     </div>
-                  );
+                  </>
+                );
                 })()}
               </div>
 
@@ -2175,9 +2446,9 @@ export default function AvgeekConnect({ isOpen, onClose }) {
               {/* Close Button Mobile */}
               <button
                 onClick={() => setSelectedPost(null)}
-                className="absolute top-3 right-3 z-30 p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-zinc-400 hover:text-white md:hidden border border-white/10 transition-colors cursor-pointer"
+                className="absolute top-2 right-2 z-30 p-1.5 rounded-full bg-black/60 hover:bg-black/80 text-zinc-400 hover:text-white md:hidden border border-white/10 transition-colors cursor-pointer"
               >
-                <X className="w-5 h-5" />
+                <X className="w-3.5 h-3.5" />
               </button>
 
               {/* A. Left Side: Media Viewport */}
@@ -2185,6 +2456,8 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                 {/* Sliding Carousel Track */}
                 <div 
                   ref={carouselRef}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={(e) => handleTouchEnd(e, mediaList)}
                   className="flex w-full h-full transition-transform duration-500 ease-out"
                   style={{ transform: `translateX(-${activeSlideIndex * 100}%)` }}
                 >
@@ -2249,16 +2522,16 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                   <>
                     <button
                       onClick={() => setActiveSlideIndex(prev => prev > 0 ? prev - 1 : mediaList.length - 1)}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 text-white hover:bg-black/85 hover:scale-105 transition-all z-20 cursor-pointer border border-white/5 opacity-0 group-hover/modalmedia:opacity-100"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 rounded-full bg-black/60 text-white hover:bg-black/85 hover:scale-105 transition-all z-20 cursor-pointer border border-white/5 opacity-100 xl:opacity-0 xl:group-hover/modalmedia:opacity-100"
                     >
-                      <ChevronLeft className="w-5 h-5" />
+                      <ChevronLeft className="w-4 h-4 sm:w-5 h-5" />
                     </button>
 
                     <button
                       onClick={() => setActiveSlideIndex(prev => prev < mediaList.length - 1 ? prev + 1 : 0)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 text-white hover:bg-black/85 hover:scale-105 transition-all z-20 cursor-pointer border border-white/5 opacity-0 group-hover/modalmedia:opacity-100"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 rounded-full bg-black/60 text-white hover:bg-black/85 hover:scale-105 transition-all z-20 cursor-pointer border border-white/5 opacity-100 xl:opacity-0 xl:group-hover/modalmedia:opacity-100"
                     >
-                      <ChevronRight className="w-5 h-5" />
+                      <ChevronRight className="w-4 h-4 sm:w-5 h-5" />
                     </button>
 
                     {/* Navigation Dots Indicator */}
@@ -2317,14 +2590,29 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
                           {/* Post Dropdown Menu */}
                           {isMenuOpen && (
-                            <div className="post-menu-dropdown absolute right-0 mt-1 z-50 bg-[#17202A] border border-white/20 rounded-xl shadow-2xl py-1 w-32 animate-scaleUp select-none">
+                            <div className="post-menu-dropdown absolute right-0 mt-1 z-50 bg-[#17202A] border border-white/20 rounded-xl shadow-2xl py-1 w-32 animate-scaleUp select-none flex flex-col">
+                              {/* Edit Option */}
+                              {canDelete && (
+                                <button
+                                  onClick={() => {
+                                    setActivePostMenuId(null);
+                                    setIsEditingCaption(true);
+                                    setEditCaptionText(getCaptionText(post.caption) || '');
+                                  }}
+                                  className="w-full text-left px-3.5 py-2 text-xs font-semibold text-zinc-300 hover:bg-white/5 transition-colors flex items-center gap-2 border-t border-white/5 first:border-t-0 cursor-pointer"
+                                >
+                                  <Edit className="w-3.5 h-3.5 text-zinc-300" />
+                                  Edit
+                                </button>
+                              )}
+
                               {/* Download Option */}
                               <button
                                 onClick={() => {
                                   setActivePostMenuId(null);
                                   handleDownloadMedia(currentMedia, post.id, isCurrentVideo);
                                 }}
-                                className="w-full text-left px-3.5 py-2 text-xs font-semibold text-[#ffec4e] hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer"
+                                className="w-full text-left px-3.5 py-2 text-xs font-semibold text-[#ffec4e] hover:bg-white/5 transition-colors flex items-center gap-2 border-t border-white/5 first:border-t-0 cursor-pointer"
                               >
                                 <Download className="w-3.5 h-3.5 text-[#ffec4e]" />
                                 Download
@@ -2337,7 +2625,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                                     setActivePostMenuId(null);
                                     handleDeletePost(post.id);
                                   }}
-                                  className="w-full text-left px-3.5 py-2 text-xs font-semibold text-rose-500 hover:bg-rose-500/10 transition-colors flex items-center gap-2 border-t border-white/5 cursor-pointer"
+                                  className="w-full text-left px-3.5 py-2 text-xs font-semibold text-rose-500 hover:bg-rose-500/10 transition-colors flex items-center gap-2 border-t border-white/5 first:border-t-0 cursor-pointer"
                                 >
                                   <Trash2 className="w-3.5 h-3.5" />
                                   Delete
@@ -2365,13 +2653,53 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                 </div>
 
                 {/* 2. Scrollable Comments / Captions list */}
-                <div className="max-h-[280px] md:max-h-none md:flex-1 overflow-y-auto p-4 flex flex-col gap-4 custom-scrollbar text-xs">
+                <div className="max-h-[280px] md:max-h-none md:flex-1 overflow-y-auto p-4 flex flex-col gap-4 custom-scrollbar scrollbar-hidden-mobile text-xs">
+                  {/* Inline Edit Caption Container */}
+                  {isEditingCaption && (
+                    <div className="flex gap-2.5 pb-4 border-b border-white/5 animate-slideDown">
+                      {renderAvatar(post.email, post.username, "w-6 h-6")}
+                      <div className="flex-1 flex flex-col gap-2">
+                        <textarea
+                          value={editCaptionText}
+                          onChange={(e) => setEditCaptionText(e.target.value)}
+                          className="w-full bg-zinc-900 border border-white/20 rounded-xl p-2.5 text-xs text-white placeholder-zinc-500 outline-none resize-none h-20"
+                          placeholder="Write a caption... (Copy, Cut, Paste supported. Image pasting blocked)"
+                          maxLength={2200}
+                        />
+                        <div className="flex items-center gap-2 justify-end">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsEditingCaption(false);
+                              setEditCaptionText('');
+                            }}
+                            className="px-3 py-1.5 rounded-lg border border-white/10 hover:bg-white/5 text-zinc-400 hover:text-white transition-all text-[10px] uppercase tracking-wider font-semibold cursor-pointer"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleSaveCaption(post.id)}
+                            disabled={!editCaptionText.trim()}
+                            className={`px-3 py-1.5 rounded-lg text-[10px] uppercase tracking-wider font-semibold transition-all ${
+                              editCaptionText.trim()
+                                ? 'bg-gradient-to-r from-[#e31c25] to-[#ff7a00] hover:scale-105 active:scale-95 text-white cursor-pointer shadow-md'
+                                : 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                            }`}
+                          >
+                            Save
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   {/* User original caption */}
-                  {getCaptionText(post.caption) && (
+                  {getCaptionText(post.caption) && !isEditingCaption && (
                     <div className="flex gap-2.5 pb-3 border-b border-white/5">
                       {renderAvatar(post.email, post.username, "w-6 h-6")}
                       <div className="flex flex-col gap-0.5">
-                        <p className="leading-relaxed">
+                        <p className="leading-relaxed text-justify">
                           <span className="font-sabon font-semibold text-zinc-200 mr-1.5" title={`@${post.username || post.email.split('@')[0]}`}>
                             @{truncateUsername(post.username || post.email.split('@')[0])}
                           </span>
@@ -2561,14 +2889,13 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
       {/* Content Protection Toast Banner */}
       <div
-        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full shadow-2xl flex items-center gap-1.5 sm:gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
           ? 'top-20 opacity-100 translate-y-0 scale-100'
           : 'top-20 opacity-0 -translate-y-4 scale-95'
         }`}
-        style={{ borderRadius: '20px' }}
       >
-        <TriangleAlert className="w-4.5 h-4.5 text-white flex-shrink-0 animate-bounce" />
-        <span className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap uppercase tracking-wider">
+        <TriangleAlert className="w-3.5 h-3.5 sm:w-4.5 sm:h-4.5 text-white flex-shrink-0 animate-bounce" />
+        <span className="text-[8.5px] sm:text-[10px] md:text-xs whitespace-nowrap uppercase tracking-wider">
           Not allowed! Content Protection enabled
         </span>
       </div>
@@ -2679,6 +3006,85 @@ export default function AvgeekConnect({ isOpen, onClose }) {
           </div>
         </div>
       </div>
+      {/* Upload Preview Lightbox Modal */}
+      {activeUploadPreview && (
+        <div className="fixed inset-0 z-[110] bg-black/95 flex items-center justify-center p-4 animate-fadeIn">
+          {/* Backdrop close */}
+          <div className="absolute inset-0 z-0 cursor-pointer" onClick={() => setActiveUploadPreview(null)} />
+          
+          <div className="relative z-10 max-w-4xl w-full max-h-[85vh] flex items-center justify-center rounded-2xl overflow-hidden shadow-2xl border border-white/15 bg-zinc-950 animate-scaleUp">
+            {/* Close button */}
+            <button
+              onClick={() => setActiveUploadPreview(null)}
+              className="absolute top-2 right-2 sm:top-4 sm:right-4 z-20 p-1.5 sm:p-2.5 rounded-full bg-black/60 hover:bg-black/85 text-zinc-300 hover:text-white border border-white/10 transition-all cursor-pointer shadow-lg hover:scale-105"
+            >
+              <X className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+            </button>
+            
+            <div className="w-full h-full flex items-center justify-center p-2">
+              {activeUploadPreview.type === 'video' ? (
+                <video
+                  src={activeUploadPreview.url}
+                  controls
+                  autoPlay
+                  className="max-w-full max-h-[80vh] object-contain rounded-lg"
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              ) : (
+                <img
+                  src={activeUploadPreview.url}
+                  alt="Upload Preview"
+                  className="max-w-full max-h-[80vh] object-contain rounded-lg"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Print Blocked Fullscreen Demo Page */}
+      {showPrintBlocked && (
+        <div className="fixed inset-0 z-[200] bg-[#0A0908] text-white flex flex-col items-center justify-center p-6 select-none font-body">
+          {/* Direct style injection to handle @media print block and prevent bypassing via browser menu */}
+          <style>{`
+            @media print {
+              body {
+                display: none !important;
+              }
+              html::before {
+                content: "This page cannot be printed";
+                display: flex;
+                position: fixed;
+                inset: 0;
+                background: #0A0908;
+                color: #ffffff;
+                font-size: 24px;
+                font-family: system-ui, -apple-system, sans-serif;
+                font-weight: 800;
+                text-transform: uppercase;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                z-index: 9999999;
+              }
+            }
+          `}</style>
+
+          <div className="text-center max-w-md flex flex-col items-center gap-6 animate-scaleUp">
+            <TriangleAlert className="w-16 h-16 text-[#e31c25] animate-pulse" />
+            <h2 className="font-heading font-black text-2xl uppercase tracking-wider text-white">This page cannot be printed</h2>
+            <p className="text-sm text-zinc-400 leading-relaxed">
+              Content protection is active on Vignette. Printing, exporting to PDF, or hard-copy duplication of this portal is restricted.
+            </p>
+            <button
+              onClick={() => setShowPrintBlocked(false)}
+              className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#e31c25] to-[#ff7a00] hover:scale-105 active:scale-95 text-white font-heading font-bold text-xs tracking-wider uppercase transition-all cursor-pointer shadow-lg"
+            >
+              Return to Feed
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
