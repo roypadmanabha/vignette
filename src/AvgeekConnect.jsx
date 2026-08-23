@@ -3289,14 +3289,9 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                     return (
                       <div key={email} className="flex items-center gap-3 p-1.5 sm:p-2 rounded-xl hover:bg-white/5 transition-all cursor-pointer">
                         {renderAvatar(email, mappedUsername, "w-8 h-8 sm:w-9 sm:h-9")}
-                        <div className="flex flex-col min-w-0">
-                          <span className="text-xs font-bold text-white truncate">
-                            @{mappedUsername}
-                          </span>
-                          <span className="text-[10px] text-zinc-400 truncate">
-                            {email}
-                          </span>
-                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-white truncate">
+                          @{mappedUsername}
+                        </span>
                       </div>
                     );
                   })
