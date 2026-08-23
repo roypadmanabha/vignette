@@ -952,6 +952,13 @@ export default function App() {
       const isSure = window.confirm("A media upload is currently in progress. If you leave, the upload will be aborted. Are you sure you want to close and leave?");
       if (!isSure) return;
     }
+    
+    // Auto log out on close/exit
+    if (supabase) {
+      supabase.auth.signOut().catch(() => {});
+    }
+    localStorage.removeItem('avgeek_mock_user');
+
     setIsAvgeekConnectOpen(false);
     const path = window.location.pathname.toLowerCase();
     const hash = window.location.hash.toLowerCase();
@@ -966,6 +973,30 @@ export default function App() {
 
   // Handle /avgeek route detection on page load and navigation
   useEffect(() => {
+    const checkInitialHomeSession = async () => {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      const isAvgeek = path.endsWith('/avgeek') || path.endsWith('/avgeek/') || hash === '#avgeek' || hash === '#/avgeek';
+      if (!isAvgeek) {
+        let loggedOut = false;
+        if (localStorage.getItem('avgeek_mock_user')) {
+          localStorage.removeItem('avgeek_mock_user');
+          loggedOut = true;
+        }
+        if (supabase) {
+          const { data: { session } } = await supabase.auth.getSession();
+          if (session) {
+            await supabase.auth.signOut().catch(() => {});
+            loggedOut = true;
+          }
+        }
+        if (loggedOut) {
+          window.location.reload();
+        }
+      }
+    };
+    checkInitialHomeSession();
+
     const checkRoute = () => {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
@@ -984,6 +1015,10 @@ export default function App() {
         }
         setIsAvgeekConnectOpen((wasOpen) => {
           if (wasOpen) {
+            if (supabase) {
+              supabase.auth.signOut().catch(() => {});
+            }
+            localStorage.removeItem('avgeek_mock_user');
             setTimeout(() => {
               window.location.reload();
             }, 0);
