@@ -369,6 +369,30 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     };
   }, [uploading]);
 
+  // Intercept browser back button click
+  useEffect(() => {
+    // Push dummy state to enable popstate interception
+    window.history.pushState({ page: 'avgeek' }, '', window.location.href);
+
+    const handlePopState = (e) => {
+      const confirmed = window.confirm("Are you sure you want to sign out from aVgeek Connect?");
+      if (confirmed) {
+        onClose();
+      } else {
+        // Re-push state to keep interception working
+        window.history.pushState({ page: 'avgeek' }, '', window.location.href);
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      if (window.history.state?.page === 'avgeek') {
+        window.history.back();
+      }
+    };
+  }, [onClose]);
+
   // Content Protection & Custom Toast inside portal
   const showProtectionToast = (message) => {
     setToast({ show: true, message });
