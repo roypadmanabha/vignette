@@ -134,6 +134,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [isEditingCaption, setIsEditingCaption] = useState(false);
   const [editCaptionText, setEditCaptionText] = useState('');
   const [confirmDialog, setConfirmDialog] = useState(null); // Custom modal confirm state
+  const [likesModalPostId, setLikesModalPostId] = useState(null); // Active post ID for showing likes modal
   const [commentsMap, setCommentsMap] = useState(() => {
     return JSON.parse(localStorage.getItem('avgeek_comments') || '{}');
   });
@@ -853,6 +854,55 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     }
     return name;
   };
+
+  const getPostLikesList = (postObj) => {
+    if (!postObj) return [];
+    let parsedCaption = { text: postObj.caption, likes: [], comments: [] };
+    if (postObj.caption && postObj.caption.startsWith('{')) {
+      try {
+        const parsed = JSON.parse(postObj.caption);
+        if (parsed && typeof parsed === 'object') {
+          parsedCaption = {
+            text: parsed.text || '',
+            likes: Array.isArray(parsed.likes) ? parsed.likes : [],
+            comments: Array.isArray(parsed.comments) ? parsed.comments : []
+          };
+        }
+      } catch (e) {
+        // Ignore
+      }
+    }
+    return parsedCaption.likes;
+  };
+
+  const resolveEmailToUsername = useCallback((email) => {
+    if (!email) return 'anonymous';
+    if (email === 'vignetteworks.official@gmail.com') return 'vignette';
+    
+    // 1. Check local usernames map in LocalStorage
+    const savedUsernames = JSON.parse(localStorage.getItem('avgeek_usernames') || '{}');
+    if (savedUsernames[email]) {
+      return savedUsernames[email];
+    }
+    
+    // 2. Check comments map across all posts to see if they wrote a comment and have a username
+    for (const postId in commentsMap) {
+      const commentList = commentsMap[postId] || [];
+      const foundComment = commentList.find(c => c.email === email);
+      if (foundComment && foundComment.username) {
+        return foundComment.username;
+      }
+    }
+    
+    // 3. Check existing posts to see if they made a post and have a username
+    const foundPost = posts.find(p => p.email === email);
+    if (foundPost && foundPost.username) {
+      return foundPost.username;
+    }
+    
+    // 4. Fallback to name before the @
+    return email.split('@')[0];
+  }, [posts, commentsMap]);
 
   const handleLikePost = (postId) => {
     let isLikedNow = false;
@@ -2837,7 +2887,8 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                     <div className="flex items-center gap-3">
                       <button
                         onClick={() => handleLikePost(post.id)}
-                        className="group flex items-center gap-1.5 hover:text-rose-500 transition-colors cursor-pointer"
+                        className="group flex items-center justify-center hover:text-rose-500 transition-colors cursor-pointer"
+                        title={isLiked ? "Unlike post" : "Like post"}
                       >
                         <svg
                           className={`w-5 h-5 transition-transform group-active:scale-125 duration-100 ${
@@ -2848,7 +2899,14 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                         >
                           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                         </svg>
-                        <span className="text-xs font-bold text-zinc-300">{likes} likes</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setLikesModalPostId(post.id)}
+                        className="text-xs font-bold text-zinc-300 hover:text-white hover:underline transition-all cursor-pointer bg-transparent border-0 p-0"
+                        title="View likes"
+                      >
+                        {likes} likes
                       </button>
                     </div>
 
@@ -3199,6 +3257,55 @@ export default function AvgeekConnect({ isOpen, onClose }) {
           </div>
         </div>
       )}
+
+      {/* Liked Users List Modal (Instagram style) */}
+      {likesModalPostId && (() => {
+        const post = posts.find(p => p.id === likesModalPostId);
+        const likedEmails = getPostLikesList(post);
+        return (
+          <div className="fixed inset-0 z-[260] flex items-center justify-center bg-black/75 backdrop-blur-xs p-4 animate-fadeIn select-none font-body">
+            <div className="w-[92%] sm:w-full max-w-[280px] sm:max-w-xs md:max-w-sm bg-[#17202A] border border-white/15 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-scaleUp">
+              {/* Header */}
+              <div className="px-4 py-3 sm:py-3.5 border-b border-white/10 flex items-center justify-between">
+                <span className="font-heading font-black text-xs sm:text-sm uppercase tracking-wider text-white">Likes</span>
+                <button
+                  type="button"
+                  onClick={() => setLikesModalPostId(null)}
+                  className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Likes List */}
+              <div className="flex-1 max-h-[250px] sm:max-h-[300px] overflow-y-auto pr-1 custom-scrollbar p-3 flex flex-col gap-2">
+                {likedEmails.length === 0 ? (
+                  <div className="py-8 text-center text-xs text-zinc-500 font-medium">
+                    No likes yet.
+                  </div>
+                ) : (
+                  likedEmails.map((email) => {
+                    const mappedUsername = resolveEmailToUsername(email);
+                    return (
+                      <div key={email} className="flex items-center gap-3 p-1.5 sm:p-2 rounded-xl hover:bg-white/5 transition-all cursor-pointer">
+                        {renderAvatar(email, mappedUsername, "w-8 h-8 sm:w-9 sm:h-9")}
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-xs font-bold text-white truncate">
+                            @{mappedUsername}
+                          </span>
+                          <span className="text-[10px] text-zinc-400 truncate">
+                            {email}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
