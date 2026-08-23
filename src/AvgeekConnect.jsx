@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from './supabase';
-import { X, LogOut, Upload, Image, Video, User, Calendar, Plane, Globe, AlertCircle, CheckCircle, ShieldCheck, Download, Trash2, ChevronLeft, ChevronRight, Layers, Volume2, VolumeX, Smile, MoreHorizontal, Megaphone, Send, TriangleAlert, MapPin, Phone, Mail, Radar, Edit } from 'lucide-react';
+import { X, LogOut, Upload, Image, Video, User, Calendar, Plane, Globe, AlertCircle, CheckCircle, ShieldCheck, Download, Trash2, ChevronLeft, ChevronRight, Layers, Volume2, VolumeX, Smile, MoreHorizontal, Megaphone, Send, TriangleAlert, MapPin, Phone, Mail, Radar, Edit, AlertTriangle, HelpCircle } from 'lucide-react';
 
 const Instagram = (props) => (
   <svg
@@ -133,6 +133,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
   const [isEditingCaption, setIsEditingCaption] = useState(false);
   const [editCaptionText, setEditCaptionText] = useState('');
+  const [confirmDialog, setConfirmDialog] = useState(null); // Custom modal confirm state
   const [commentsMap, setCommentsMap] = useState(() => {
     return JSON.parse(localStorage.getItem('avgeek_comments') || '{}');
   });
@@ -170,68 +171,74 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [activeUploadPreview, setActiveUploadPreview] = useState(null);
   const [showPrintBlocked, setShowPrintBlocked] = useState(false);
 
-  const handleBulkDelete = async () => {
+  const handleBulkDelete = () => {
     if (selectedPostIds.length === 0) return;
-    const confirmDelete = window.confirm(`Warning: Are you sure you want to permanently delete all ${selectedPostIds.length} selected posts? This action will permanently delete these items and their media files from the Supabase database and storage.`);
-    if (!confirmDelete) return;
+    setConfirmDialog({
+      title: "Delete Selected Posts",
+      message: `Warning: Are you sure you want to permanently delete all ${selectedPostIds.length} selected posts? This action will permanently delete these items and their media files from the Supabase database and storage.`,
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      isDanger: true,
+      onConfirm: async () => {
+        try {
+          // 1. Gather all file paths from the selected posts to delete from storage
+          const selectedPosts = posts.filter(post => selectedPostIds.includes(post.id));
+          const filePathsToDelete = [];
+          
+          selectedPosts.forEach(post => {
+            const mediaList = getPostMediaList(post.media_url);
+            mediaList.forEach(url => {
+              const parts = url.split('/community-media/');
+              if (parts.length > 1) {
+                filePathsToDelete.push(parts[1]);
+              }
+            });
+          });
 
-    try {
-      // 1. Gather all file paths from the selected posts to delete from storage
-      const selectedPosts = posts.filter(post => selectedPostIds.includes(post.id));
-      const filePathsToDelete = [];
-      
-      selectedPosts.forEach(post => {
-        const mediaList = getPostMediaList(post.media_url);
-        mediaList.forEach(url => {
-          const parts = url.split('/community-media/');
-          if (parts.length > 1) {
-            filePathsToDelete.push(parts[1]);
-          }
-        });
-      });
+          if (supabase) {
+            // 2. Delete files from storage
+            if (filePathsToDelete.length > 0) {
+              try {
+                await supabase.storage.from('community-media').remove(filePathsToDelete);
+              } catch (storageErr) {
+                console.error('Failed to bulk delete files from storage:', storageErr);
+              }
+            }
 
-      if (supabase) {
-        // 2. Delete files from storage
-        if (filePathsToDelete.length > 0) {
-          try {
-            await supabase.storage.from('community-media').remove(filePathsToDelete);
-          } catch (storageErr) {
-            console.error('Failed to bulk delete files from storage:', storageErr);
+            // 3. Delete database records
+            const { error } = await supabase
+              .from('community_posts')
+              .delete()
+              .in('id', selectedPostIds);
+            if (error) throw error;
           }
+
+          // Delete from LocalStorage fallback
+          const localData = JSON.parse(localStorage.getItem('avgeek_local_posts') || '[]');
+          const updatedLocal = localData.filter(post => !selectedPostIds.includes(post.id));
+          localStorage.setItem('avgeek_local_posts', JSON.stringify(updatedLocal));
+
+          // Clean up local comments and likes maps for each deleted post
+          const newComments = { ...commentsMap };
+          const newLikes = { ...likesMap };
+          selectedPostIds.forEach(id => {
+            delete newComments[id];
+            delete newLikes[id];
+          });
+          setCommentsMap(newComments);
+          setLikesMap(newLikes);
+          localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
+          localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
+
+          setPosts(prev => prev.filter(post => !selectedPostIds.includes(post.id)));
+          setSelectedPostIds([]);
+          setStatusMessage({ type: 'success', text: 'Selected posts and their media files permanently deleted.' });
+        } catch (err) {
+          console.error('Bulk delete failed:', err);
+          setStatusMessage({ type: 'error', text: 'Failed to delete selected posts.' });
         }
-
-        // 3. Delete database records
-        const { error } = await supabase
-          .from('community_posts')
-          .delete()
-          .in('id', selectedPostIds);
-        if (error) throw error;
       }
-
-      // Delete from LocalStorage fallback
-      const localData = JSON.parse(localStorage.getItem('avgeek_local_posts') || '[]');
-      const updatedLocal = localData.filter(post => !selectedPostIds.includes(post.id));
-      localStorage.setItem('avgeek_local_posts', JSON.stringify(updatedLocal));
-
-      // Clean up local comments and likes maps for each deleted post
-      const newComments = { ...commentsMap };
-      const newLikes = { ...likesMap };
-      selectedPostIds.forEach(id => {
-        delete newComments[id];
-        delete newLikes[id];
-      });
-      setCommentsMap(newComments);
-      setLikesMap(newLikes);
-      localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
-      localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
-
-      setPosts(prev => prev.filter(post => !selectedPostIds.includes(post.id)));
-      setSelectedPostIds([]);
-      setStatusMessage({ type: 'success', text: 'Selected posts and their media files permanently deleted.' });
-    } catch (err) {
-      console.error('Bulk delete failed:', err);
-      setStatusMessage({ type: 'error', text: 'Failed to delete selected posts.' });
-    }
+    });
   };
 
   // Live Updates States
@@ -1036,7 +1043,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     }
   };
 
-  const handleDeletePost = async (postId) => {
+  const handleDeletePost = (postId) => {
     const targetPost = posts.find(p => p.id === postId);
     if (!targetPost) return;
 
@@ -1045,78 +1052,98 @@ export default function AvgeekConnect({ isOpen, onClose }) {
     const isCreator = session && (targetPost.user_id === session.user?.id || targetPost.email === session.user?.email);
 
     if (!isAdmin && !isCreator) {
-      alert("Permission denied: You can only delete your own posts.");
+      setConfirmDialog({
+        title: "Permission Denied",
+        message: "You can only delete your own posts.",
+        confirmText: "OK",
+        isAlert: true,
+        isDanger: true,
+        onConfirm: () => {}
+      });
       return;
     }
 
-    const isSure = window.confirm("Are you sure you want to delete this aviation broadcast? This will permanently delete the post and its media files from the database and storage.");
-    if (!isSure) return;
+    setConfirmDialog({
+      title: "Delete Aviation Broadcast",
+      message: "Are you sure you want to delete this aviation broadcast? This will permanently delete the post and its media files from the database and storage.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      isDanger: true,
+      onConfirm: async () => {
+        const isMock = String(postId).startsWith('mock-');
+        if (supabase && !isMock) {
+          try {
+            // 1. Delete associated media files from storage bucket
+            const mediaList = getPostMediaList(targetPost.media_url);
+            const filePaths = mediaList
+              .map(url => {
+                const parts = url.split('/community-media/');
+                return parts.length > 1 ? parts[1] : null;
+              })
+              .filter(Boolean);
 
-    const isMock = String(postId).startsWith('mock-');
-    if (supabase && !isMock) {
-      try {
-        // 1. Delete associated media files from storage bucket
-        const mediaList = getPostMediaList(targetPost.media_url);
-        const filePaths = mediaList
-          .map(url => {
-            const parts = url.split('/community-media/');
-            return parts.length > 1 ? parts[1] : null;
-          })
-          .filter(Boolean);
+            if (filePaths.length > 0) {
+              await supabase.storage.from('community-media').remove(filePaths);
+            }
 
-        if (filePaths.length > 0) {
-          await supabase.storage.from('community-media').remove(filePaths);
+            // 2. Delete database post record
+            const { error } = await supabase
+              .from('community_posts')
+              .delete()
+              .eq('id', postId);
+            if (error) throw error;
+
+            // 3. Update local state directly
+            setPosts(prev => prev.filter(post => post.id !== postId));
+
+            // 4. Clean up local comments and likes
+            const newComments = { ...commentsMap };
+            delete newComments[postId];
+            setCommentsMap(newComments);
+            localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
+
+            const newLikes = { ...likesMap };
+            delete newLikes[postId];
+            setLikesMap(newLikes);
+            localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
+          } catch (err) {
+            console.warn('[aVgeek Connect] Supabase delete failed, falling back to Local Storage:', err.message);
+          }
+        } else {
+          // Mock / Local storage deletion
+          const saved = JSON.parse(localStorage.getItem('avgeek_posts') || '[]');
+          const updated = saved.filter(post => post.id !== postId);
+          localStorage.setItem('avgeek_posts', JSON.stringify(updated));
+          setPosts(updated);
+
+          const newComments = { ...commentsMap };
+          delete newComments[postId];
+          setCommentsMap(newComments);
+          localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
+
+          const newLikes = { ...likesMap };
+          delete newLikes[postId];
+          setLikesMap(newLikes);
+          localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
         }
 
-        // 2. Delete database post record
-        const { error } = await supabase
-          .from('community_posts')
-          .delete()
-          .eq('id', postId);
-        if (error) throw error;
-
-        // 3. Update local state directly
-        setPosts(prev => prev.filter(post => post.id !== postId));
-
-        // 4. Clean up local comments and likes
-        const newComments = { ...commentsMap };
-        delete newComments[postId];
-        setCommentsMap(newComments);
-        localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
-
-        const newLikes = { ...likesMap };
-        delete newLikes[postId];
-        setLikesMap(newLikes);
-        localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
-      } catch (err) {
-        console.warn('[aVgeek Connect] Supabase delete failed, falling back to Local Storage:', err.message);
+        setSelectedPost(null);
+        setStatusMessage({ type: 'success', text: 'Broadcast deleted successfully.' });
       }
-    } else {
-      // Mock / Local storage deletion
-      const saved = JSON.parse(localStorage.getItem('avgeek_posts') || '[]');
-      const updated = saved.filter(post => post.id !== postId);
-      localStorage.setItem('avgeek_posts', JSON.stringify(updated));
-      setPosts(updated);
-
-      const newComments = { ...commentsMap };
-      delete newComments[postId];
-      setCommentsMap(newComments);
-      localStorage.setItem('avgeek_comments', JSON.stringify(newComments));
-
-      const newLikes = { ...likesMap };
-      delete newLikes[postId];
-      setLikesMap(newLikes);
-      localStorage.setItem('avgeek_likes_map', JSON.stringify(newLikes));
-    }
-
-    setSelectedPost(null);
-    setStatusMessage({ type: 'success', text: 'Broadcast deleted successfully.' });
+    });
   };
 
   const handleSaveCaption = async (postId) => {
     const trimmed = editCaptionText.trim();
     if (!trimmed) {
-      alert("Caption cannot be empty.");
+      setConfirmDialog({
+        title: "Validation Error",
+        message: "Caption cannot be empty.",
+        confirmText: "OK",
+        isAlert: true,
+        isDanger: true,
+        onConfirm: () => {}
+      });
       return;
     }
 
@@ -1167,72 +1194,78 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   };
 
   const handleDeleteComment = (postId, commentId) => {
-    const isSure = window.confirm("Are you sure you want to delete this comment?");
-    if (!isSure) return;
+    setConfirmDialog({
+      title: "Delete Comment",
+      message: "Are you sure you want to delete this comment?",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      isDanger: true,
+      onConfirm: () => {
+        if (commentId.startsWith('mock-comm')) {
+          const deletedMockIds = JSON.parse(localStorage.getItem('avgeek_deleted_comments') || '[]');
+          deletedMockIds.push(commentId);
+          localStorage.setItem('avgeek_deleted_comments', JSON.stringify(deletedMockIds));
+        } else {
+          const postComments = commentsMap[postId] || [];
+          const updatedList = postComments.filter(c => c.id !== commentId);
+          const updatedMap = {
+            ...commentsMap,
+            [postId]: updatedList
+          };
+          setCommentsMap(updatedMap);
+          localStorage.setItem('avgeek_comments', JSON.stringify(updatedMap));
 
-    if (commentId.startsWith('mock-comm')) {
-      const deletedMockIds = JSON.parse(localStorage.getItem('avgeek_deleted_comments') || '[]');
-      deletedMockIds.push(commentId);
-      localStorage.setItem('avgeek_deleted_comments', JSON.stringify(deletedMockIds));
-    } else {
-      const postComments = commentsMap[postId] || [];
-      const updatedList = postComments.filter(c => c.id !== commentId);
-      const updatedMap = {
-        ...commentsMap,
-        [postId]: updatedList
-      };
-      setCommentsMap(updatedMap);
-      localStorage.setItem('avgeek_comments', JSON.stringify(updatedMap));
-
-      // Persist to database
-      const post = posts.find(p => p.id == postId);
-      if (post && supabase) {
-        let parsedCaption = { text: post.caption, likes: [], comments: [] };
-        if (post.caption && post.caption.startsWith('{')) {
-          try {
-            const parsed = JSON.parse(post.caption);
-            if (parsed && typeof parsed === 'object') {
-              parsedCaption = {
-                text: parsed.text || '',
-                likes: Array.isArray(parsed.likes) ? parsed.likes : [],
-                comments: Array.isArray(parsed.comments) ? parsed.comments : []
-              };
+          // Persist to database
+          const post = posts.find(p => p.id == postId);
+          if (post && supabase) {
+            let parsedCaption = { text: post.caption, likes: [], comments: [] };
+            if (post.caption && post.caption.startsWith('{')) {
+              try {
+                const parsed = JSON.parse(post.caption);
+                if (parsed && typeof parsed === 'object') {
+                  parsedCaption = {
+                    text: parsed.text || '',
+                    likes: Array.isArray(parsed.likes) ? parsed.likes : [],
+                    comments: Array.isArray(parsed.comments) ? parsed.comments : []
+                  };
+                }
+              } catch (e) {
+                // Ignore
+              }
             }
-          } catch (e) {
-            // Ignore
+
+            const updatedCaptionObj = {
+              ...parsedCaption,
+              comments: updatedList
+            };
+
+            const updatedCaptionStr = JSON.stringify(updatedCaptionObj);
+
+            // Optimistic local state update in posts array
+            setPosts(prevPosts => prevPosts.map(p => {
+              if (p.id === postId) {
+                return { ...p, caption: updatedCaptionStr };
+              }
+              return p;
+            }));
+
+            supabase
+              .from('community_posts')
+              .update({ caption: updatedCaptionStr })
+              .eq('id', postId)
+              .then(({ error }) => {
+                if (error) {
+                  console.error('[aVgeek Connect] Failed to delete comment from database:', error.message);
+                }
+              });
           }
         }
-
-        const updatedCaptionObj = {
-          ...parsedCaption,
-          comments: updatedList
-        };
-
-        const updatedCaptionStr = JSON.stringify(updatedCaptionObj);
-
-        // Optimistic local state update in posts array
-        setPosts(prevPosts => prevPosts.map(p => {
-          if (p.id === postId) {
-            return { ...p, caption: updatedCaptionStr };
-          }
-          return p;
-        }));
-
-        supabase
-          .from('community_posts')
-          .update({ caption: updatedCaptionStr })
-          .eq('id', postId)
-          .then(({ error }) => {
-            if (error) {
-              console.error('[aVgeek Connect] Failed to delete comment from database:', error.message);
-            }
-          });
+        
+        // Trigger re-render of modal by creating a new reference
+        setSelectedPost(prev => prev ? { ...prev } : null);
+        setStatusMessage({ type: 'success', text: 'Comment deleted successfully.' });
       }
-    }
-    
-    // Trigger re-render of modal by creating a new reference
-    setSelectedPost(prev => ({ ...prev }));
-    setStatusMessage({ type: 'success', text: 'Comment deleted successfully.' });
+    });
   };
 
   const handleDownloadMedia = async (url, postId, isVideo) => {
@@ -1268,32 +1301,44 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   };
 
   // Sign Out Flow
-  const handleSignOut = async () => {
-    const isSure = window.confirm("Are you sure you want to sign out from aVgeek Connect?");
-    if (!isSure) return;
-
-    if (supabase) {
-      await supabase.auth.signOut();
-    }
-    localStorage.removeItem('avgeek_mock_user');
-    setSession(null);
-    setStatusMessage({ type: 'success', text: 'Signed out successfully.' });
-    onClose();
-    window.location.reload();
+  const handleSignOut = () => {
+    setConfirmDialog({
+      title: "Sign Out",
+      message: "Are you sure you want to sign out from aVgeek Connect?",
+      confirmText: "Sign Out",
+      cancelText: "Cancel",
+      isDanger: false,
+      onConfirm: async () => {
+        if (supabase) {
+          await supabase.auth.signOut();
+        }
+        localStorage.removeItem('avgeek_mock_user');
+        setSession(null);
+        setStatusMessage({ type: 'success', text: 'Signed out successfully.' });
+        onClose();
+        window.location.reload();
+      }
+    });
   };
 
-  const handleClosePortal = async () => {
+  const handleClosePortal = () => {
     if (session) {
-      const isSure = window.confirm("Are you sure you want to sign out and exit?");
-      if (!isSure) return;
-
-      if (supabase) {
-        await supabase.auth.signOut();
-      }
-      localStorage.removeItem('avgeek_mock_user');
-      setSession(null);
-      onClose();
-      window.location.reload();
+      setConfirmDialog({
+        title: "Sign Out & Exit",
+        message: "Are you sure you want to sign out and exit?",
+        confirmText: "Sign Out & Exit",
+        cancelText: "Cancel",
+        isDanger: false,
+        onConfirm: async () => {
+          if (supabase) {
+            await supabase.auth.signOut();
+          }
+          localStorage.removeItem('avgeek_mock_user');
+          setSession(null);
+          onClose();
+          window.location.reload();
+        }
+      });
     } else {
       onClose();
     }
@@ -1328,36 +1373,50 @@ export default function AvgeekConnect({ isOpen, onClose }) {
       }
     });
 
+    // Helper to proceed with state updates
+    const proceedWithValidFiles = (files) => {
+      if (files.length === 0) return;
+      setUploadFiles(prev => [...prev, ...files]);
+
+      const newPreviews = files.map(file => {
+        const isVid = file.type.startsWith('video/') || file.name.toLowerCase().endsWith('.mp4') || file.name.toLowerCase().endsWith('.mov') || file.name.toLowerCase().endsWith('.webm');
+        return {
+          url: URL.createObjectURL(file),
+          type: isVid ? 'video' : 'image',
+          name: file.name
+        };
+      });
+      setFilePreviews(prev => [...prev, ...newPreviews]);
+    };
+
     // 1. If there are totally invalid files (like text, pdf, mp3), alert and reject them completely!
     if (invalidFiles.length > 0) {
-      alert(`Invalid file format detected: ${invalidFiles.join(', ')}.\nOnly image and video files (.jpg, .jpeg, .png, .mp4, etc.) are allowed. Document, audio, and text files are strictly restricted.`);
+      setConfirmDialog({
+        title: "Invalid File Format",
+        message: `Invalid file format detected: ${invalidFiles.join(', ')}. Only image and video files (.jpg, .jpeg, .png, .mp4, etc.) are allowed. Document, audio, and text files are strictly restricted.`,
+        confirmText: "OK",
+        isAlert: true,
+        isDanger: true,
+        onConfirm: () => {}
+      });
       return;
     }
 
     // 2. If warning files (.heic, .mov) are selected, present warning confirmation
     if (warningFiles.length > 0) {
-      const proceed = window.confirm(
-        `Media files with extensions .HEIC and .MOV may not be visible on some devices due to browser restrictions. Are you sure you want to proceed? .JPG, .JPEG, or .mp4 files are preferred.`
-      );
-      if (!proceed) {
-        return;
-      }
+      setConfirmDialog({
+        title: "Compatibility Warning",
+        message: "Media files with extensions .HEIC and .MOV may not be visible on some devices due to browser restrictions. Are you sure you want to proceed? .JPG, .JPEG, or .mp4 files are preferred.",
+        confirmText: "Proceed",
+        cancelText: "Cancel",
+        isDanger: false,
+        onConfirm: () => {
+          proceedWithValidFiles(validFiles);
+        }
+      });
+    } else {
+      proceedWithValidFiles(validFiles);
     }
-
-    if (validFiles.length === 0) return;
-
-    // Add valid files to state using functional updates
-    setUploadFiles(prev => [...prev, ...validFiles]);
-
-    const newPreviews = validFiles.map(file => {
-      const isVid = file.type.startsWith('video/') || file.name.toLowerCase().endsWith('.mp4') || file.name.toLowerCase().endsWith('.mov') || file.name.toLowerCase().endsWith('.webm');
-      return {
-        url: URL.createObjectURL(file),
-        type: isVid ? 'video' : 'image',
-        name: file.name
-      };
-    });
-    setFilePreviews(prev => [...prev, ...newPreviews]);
   }, []);
 
   const handleFileChange = (e) => {
@@ -1579,7 +1638,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
       {/* 2. Header Control Bar */}
       <header className="relative z-10 bg-black border-b border-white/10 px-4 py-3 sm:px-6 sm:py-4 flex items-center justify-between">
-        <div className="select-none flex items-center gap-2 cursor-pointer" onClick={onClose}>
+        <div className="select-none flex items-center gap-2 cursor-pointer" onClick={handleClosePortal}>
           <img
             src="logo-icon.png"
             alt="V"
@@ -3082,6 +3141,61 @@ export default function AvgeekConnect({ isOpen, onClose }) {
             >
               Return to Feed
             </button>
+          </div>
+        </div>
+      )}
+      {/* Custom Vignette Confirmation & Alert Modal */}
+      {confirmDialog && (
+        <div className="fixed inset-0 z-[250] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fadeIn select-none font-body">
+          <div 
+            className="w-[92%] sm:w-full max-w-[320px] sm:max-w-sm md:max-w-md lg:max-w-[480px] bg-[#17202A] border border-white/15 rounded-2xl shadow-2xl p-5 sm:p-6 lg:p-8 flex flex-col gap-4 sm:gap-5 lg:gap-6 animate-scaleUp"
+          >
+            <div className="flex items-start gap-3 sm:gap-4">
+              <div className={`p-2 sm:p-2.5 rounded-full shrink-0 ${confirmDialog.isDanger ? 'bg-rose-500/10 text-rose-500' : 'bg-[#ffec4e]/10 text-[#ffec4e]'}`}>
+                {confirmDialog.isDanger ? (
+                  <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6" />
+                ) : (
+                  <HelpCircle className="w-5 h-5 sm:w-6 sm:h-6" />
+                )}
+              </div>
+              <div className="flex-1 flex flex-col gap-1 sm:gap-1.5">
+                <h4 className="font-heading font-black text-xs sm:text-sm md:text-base lg:text-lg tracking-wide uppercase text-white">
+                  {confirmDialog.title || "Confirm Action"}
+                </h4>
+                <p className="font-body text-zinc-400 text-[10.5px] sm:text-xs md:text-[13px] leading-relaxed break-words">
+                  {confirmDialog.message}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 sm:gap-3 pt-3.5 border-t border-white/5">
+              {!confirmDialog.isAlert && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirmDialog.onCancel) confirmDialog.onCancel();
+                    setConfirmDialog(null);
+                  }}
+                  className="px-3 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-zinc-300 hover:text-white transition-all text-[10.5px] sm:text-xs font-bold uppercase tracking-wider cursor-pointer"
+                >
+                  {confirmDialog.cancelText || "Cancel"}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  confirmDialog.onConfirm();
+                  setConfirmDialog(null);
+                }}
+                className={`px-3.5 py-1.5 sm:px-4.5 sm:py-2 md:px-5 md:py-2.5 rounded-xl text-white transition-all text-[10.5px] sm:text-xs font-bold uppercase tracking-wider cursor-pointer active:scale-95 ${
+                  confirmDialog.isDanger
+                    ? 'bg-rose-600 hover:bg-rose-700 hover:shadow-lg hover:shadow-rose-600/20'
+                    : 'bg-gradient-to-r from-[#e31c25] to-[#ff7a00] hover:shadow-lg hover:shadow-[#e31c25]/20'
+                }`}
+              >
+                {confirmDialog.confirmText || "Confirm"}
+              </button>
+            </div>
           </div>
         </div>
       )}
