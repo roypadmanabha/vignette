@@ -629,3 +629,13 @@ form textarea {
     border-radius: 9999px !important;
   }
 }
+
+/* 2-Second Loader Progress Bar Animation */
+@keyframes loaderProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.animate-loaderProgress {
+  animation: loaderProgress 2s linear forwards;
+}

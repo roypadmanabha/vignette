@@ -36,6 +36,7 @@ import {
 import { supabase } from './supabase';
 import AtAGlanceGallery from './AtAGlanceGallery';
 import AvgeekConnect from './AvgeekConnect';
+import ExplorePage from './ExplorePage';
 
 // Local SVG declarations for social icons (Boxicons v3.0.8)
 const Instagram = (props) => (
@@ -44,8 +45,7 @@ const Instagram = (props) => (
     fill="currentColor"
     {...props}
   >
-    <path d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248m0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008m4.807-8.875a1.078 1.078 0 1 0 0 2.156 1.078 1.078 0 1 0 0-2.156" />
-    <path d="M20.533 6.111A4.6 4.6 0 0 0 17.9 3.479a6.6 6.6 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.6 6.6 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.6 6.6 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71s0 2.753.056 3.71c.015.748.156 1.486.419 2.187a4.6 4.6 0 0 0 2.634 2.632 6.6 6.6 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.6 6.6 0 0 0 2.186-.419 4.6 4.6 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.6 6.6 0 0 0-.421-2.217m-1.218 9.532a5 5 0 0 1-.311 1.688 3 3 0 0 1-1.712 1.711 5 5 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a5 5 0 0 1-1.669-.311 3 3 0 0 1-1.719-1.711 5.1 5.1 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654s0-2.686.053-3.655a5 5 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5 5 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a5 5 0 0 1 1.67.311 3 3 0 0 1 1.712 1.712 5.1 5.1 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655s0 2.698-.043 3.654z" />
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
   </svg>
 );
 
@@ -55,7 +55,7 @@ const Facebook = (props) => (
     fill="currentColor"
     {...props}
   >
-    <path d="M12 2.06c-5.5 0-10 4.5-10 10 0 4.94 3.61 9.06 8.33 9.89l.06-.05h-.06v-7.06h-2.5v-2.78h2.5V9.84c0-2.5 1.61-3.89 3.89-3.89.72 0 1.5.11 2.22.22v2.56h-1.28c-1.22 0-1.5.61-1.5 1.39v1.94h2.67l-.44 2.78h-2.22v7.06h-.06l.06.05c4.72-.83 8.33-4.94 8.33-9.89 0-5.5-4.5-10-10-10" />
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
   </svg>
 );
 
@@ -936,7 +936,17 @@ export default function App() {
   // Chatbot Vyn States
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isAvgeekConnectOpen, setIsAvgeekConnectOpen] = useState(false);
+  const [isExploreOpen, setIsExploreOpen] = useState(false);
+  const [isExploreLoading, setIsExploreLoading] = useState(false);
   const [chatStep, setChatStep] = useState('welcome');
+
+  const triggerExploreOpen = () => {
+    setIsExploreLoading(true);
+    setTimeout(() => {
+      setIsExploreLoading(false);
+      setIsExploreOpen(true);
+    }, 2000);
+  };
 
   const handleOpenAvgeekConnect = () => {
     setIsAvgeekConnectOpen(true);
@@ -964,18 +974,26 @@ export default function App() {
     window.location.reload();
   };
 
-  // Handle /avgeek route detection on page load and navigation
+  // Handle route detection on page load and navigation
   useEffect(() => {
     const checkRoute = () => {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
-      if (path.endsWith('/avgeek') || path.endsWith('/avgeek/') || hash === '#avgeek' || hash === '#/avgeek') {
+      
+      const isExplore = path.endsWith('/explore-vignette') || path.endsWith('/explore-vignette/') || hash === '#explore-vignette' || hash === '#/explore-vignette';
+      const isAvgeek = path.endsWith('/avgeek') || path.endsWith('/avgeek/') || hash === '#avgeek' || hash === '#/avgeek';
+      
+      if (isExplore) {
+        triggerExploreOpen();
+        setIsAvgeekConnectOpen(false);
+      } else if (isAvgeek) {
         setIsAvgeekConnectOpen(true);
+        setIsExploreOpen(false);
       } else {
+        setIsExploreOpen(false);
         if (window.isAvgeekUploading) {
           const isSure = window.confirm("A media upload is currently in progress. If you leave, the upload will be aborted. Are you sure you want to leave?");
           if (!isSure) {
-            // Restore path history so they remain on /avgeek
             const base = path.endsWith('/') ? path : path + '/';
             window.history.pushState({ avgeek: true }, '', base + 'avgeek');
             setIsAvgeekConnectOpen(true);
@@ -1987,6 +2005,63 @@ export default function App() {
     );
   }
 
+  if (isExploreLoading) {
+    return (
+      <div className="fixed inset-0 z-[99999] bg-[#0A0908] flex flex-col items-center justify-center font-brand select-none animate-fadeIn">
+        {/* Animated starfield background in loader for continuity */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(209,0,0,0.1)_0%,transparent_70%)]" />
+        </div>
+
+        <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center max-w-sm">
+          {/* Logo Icon with spin effect */}
+          <div className="relative w-20 h-20 flex items-center justify-center bg-white/3 border border-white/10 rounded-2xl backdrop-blur-md shadow-2xl p-4 animate-scaleUp">
+            <img
+              src="logo-icon.png"
+              alt="Vignette"
+              className="w-full h-full object-contain animate-spin [animation-duration:3s]"
+            />
+            {/* Pulsing ring */}
+            <div className="absolute inset-0 border-2 border-brand-lightRed/50 rounded-2xl animate-ping opacity-75" />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <h2 className="font-heading font-black text-2xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e]">
+              Loading Vignettes
+            </h2>
+            <p className="text-zinc-400 text-xs uppercase tracking-widest font-extrabold animate-pulse">
+              Preparing Gallery Experience
+            </p>
+          </div>
+
+          {/* 2-Second Progress Bar */}
+          <div className="w-48 h-1 rounded-full bg-white/5 border border-white/10 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-[#e31c25] to-[#ffec4e] animate-loaderProgress" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isExploreOpen) {
+    return (
+      <ExplorePage
+        isOpen={isExploreOpen}
+        onClose={() => {
+          setIsExploreOpen(false);
+          const path = window.location.pathname.toLowerCase();
+          if (path.endsWith('/explore-vignette') || path.endsWith('/explore-vignette/')) {
+            const base = path.replace(/\/explore-vignette\/?$/, '') || '/';
+            window.history.pushState(null, '', base);
+          }
+          window.location.reload();
+        }}
+        isDark={isDark}
+        toggleTheme={toggleTheme}
+      />
+    );
+  }
+
   return (
     <div className={`min-h-screen w-full max-w-full text-zinc-900 dark:text-zinc-100 transition-colors duration-300 relative ${isDark ? 'bg-dark-theme' : 'bg-light-theme'}`}>
 
@@ -2022,10 +2097,13 @@ export default function App() {
         className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-lightRed via-brand-lightOrange to-brand-darkGold dark:from-brand-darkGold dark:via-brand-darkYellow dark:to-brand-lightOrange z-[9999] transition-all duration-75 origin-left"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
       />
-      <header className={`sticky top-0 z-40 transition-all duration-500 ${isScrolled
-        ? (isDark ? 'bg-[#0A0908]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5' : 'bg-[#F8F5EA]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.05)] border-b border-black/5')
-        : 'bg-transparent border-transparent shadow-none'
-        }`}>
+      <header 
+        className={`sticky top-0 z-40 transition-all duration-500 ${isScrolled
+          ? (isDark ? 'bg-[#0A0908]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5' : 'bg-[#F8F5EA]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.05)]')
+          : 'bg-transparent border-transparent shadow-none'
+        }`}
+        style={!isDark && isScrolled ? { borderBottom: '0.5px solid #D10000' } : undefined}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 lg:h-16 flex items-center justify-between">
 
           {/* Logo Brand Name (Two-tone wordmark + icon) */}
@@ -2053,7 +2131,7 @@ export default function App() {
               { label: 'Highlights', id: 'videos' },
               { label: 'aVgeek', id: 'avgeeks' },
               { label: 'Our Clients', id: 'testimonials' },
-              { label: 'Explore', url: '/explore' },
+              { label: 'Explore', url: '/explore-vignette' },
               { label: 'About', id: 'vision' },
               { label: 'Contact', id: 'hire' }
             ].map(link => {
@@ -2071,7 +2149,8 @@ export default function App() {
                     onClick={(e) => {
                       if (link.label === 'Explore') {
                         e.preventDefault();
-                        alert("This feature is currently being updated. You can access it later!");
+                        window.history.pushState({ explore: true }, '', '/explore-vignette');
+                        triggerExploreOpen();
                       }
                     }}
                   >
@@ -2188,7 +2267,7 @@ export default function App() {
               { label: 'Highlights', id: 'videos', icon: Play },
               { label: 'aVgeek', id: 'avgeeks', icon: Plane },
               { label: 'Our Clients', id: 'testimonials', icon: Video },
-              { label: 'Explore', url: '/explore', icon: Camera },
+              { label: 'Explore', url: '/explore-vignette', icon: Camera },
               { label: 'About', id: 'vision', icon: Sparkles },
               { label: 'Contact', id: 'hire', icon: Send }
             ].map((link) => {
@@ -2208,7 +2287,8 @@ export default function App() {
                       setMobileMenuOpen(false);
                       if (link.label === 'Explore') {
                         e.preventDefault();
-                        alert("This feature is currently being updated. You can access it later!");
+                        window.history.pushState({ explore: true }, '', '/explore-vignette');
+                        triggerExploreOpen();
                       }
                     }}
                     className={linkClasses}
