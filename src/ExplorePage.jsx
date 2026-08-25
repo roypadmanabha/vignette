@@ -283,7 +283,7 @@ const formatVignette = (text) => {
   if (typeof text !== 'string') return text;
   const parts = text.split(/(Vignette)/g);
   return parts.map((part, i) =>
-    part === 'Vignette' ? <span key={i} className="brand-text-gradient font-brand">{part}</span> : part
+    part === 'Vignette' ? <span key={i} className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] inline-block font-brand font-semibold">{part}</span> : part
   );
 };
 
@@ -655,7 +655,7 @@ export default function ExplorePage({ isOpen, onClose }) {
                 className="w-8.5 h-8.5 sm:w-10 sm:h-10 object-contain shrink-0"
               />
               <div className="flex flex-col leading-none">
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-heading font-black text-xl sm:text-2xl tracking-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-brand font-semibold text-xl sm:text-2xl tracking-tight">
                   Vignette
                 </span>
                 <span className="font-brand font-extrabold text-[9px] sm:text-xs tracking-wide -mt-0.5 sm:-mt-1 text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] inline-block">
@@ -693,7 +693,7 @@ export default function ExplorePage({ isOpen, onClose }) {
             <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-6xl text-zinc-950 dark:text-white leading-[1.08] tracking-tight">
               MOMENTS.<br />
               STORIES.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-heading font-black">Vignette.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-brand font-semibold">Vignette.</span>
             </h1>
             <p className="font-body text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed text-center md:text-left max-w-[280px] sm:max-w-[320px] md:max-w-sm mx-auto md:mx-0">
               A visual diary of places, people and stories captured one vignette at a time.
@@ -1201,7 +1201,7 @@ export default function ExplorePage({ isOpen, onClose }) {
                   className="w-10 h-10 object-contain select-none pointer-events-none"
                   draggable="false"
                 />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-heading font-black text-2xl tracking-tight select-none">
+                <span className="font-brand font-semibold text-2xl tracking-tight select-none">
                   {formatVignette('Vignette')}
                 </span>
               </div>
