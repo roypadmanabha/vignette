@@ -584,7 +584,7 @@ export default function ExplorePage({ isOpen, onClose }) {
   const categories = ['All', 'Travel', 'Lifestyle', 'Avgeek', 'Storytelling'];
 
   return (
-    <div className={`min-h-screen w-full max-w-full text-zinc-900 dark:text-zinc-100 transition-colors duration-300 relative ${isDark ? 'bg-dark-theme' : 'bg-light-theme'} font-brand`}>
+    <div className="dark min-h-screen w-full max-w-full text-zinc-100 relative bg-dark-theme font-brand">
       
       {/* 0. NOSCRIPT FALLBACK CONTENT PROTECTION */}
       <noscript>
@@ -655,7 +655,7 @@ export default function ExplorePage({ isOpen, onClose }) {
                 className="w-8.5 h-8.5 sm:w-10 sm:h-10 object-contain shrink-0"
               />
               <div className="flex flex-col leading-none">
-                <span className="brand-text-gradient font-heading font-black text-xl sm:text-2xl tracking-tight">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-heading font-black text-xl sm:text-2xl tracking-tight">
                   Vignette
                 </span>
                 <span className="font-brand font-extrabold text-[9px] sm:text-xs tracking-wide -mt-0.5 sm:-mt-1 text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] inline-block">
@@ -693,7 +693,7 @@ export default function ExplorePage({ isOpen, onClose }) {
             <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-6xl text-zinc-950 dark:text-white leading-[1.08] tracking-tight">
               MOMENTS.<br />
               STORIES.<br />
-              <span className="brand-text-gradient font-heading font-black">Vignette.</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-heading font-black">Vignette.</span>
             </h1>
             <p className="font-body text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed text-center md:text-left max-w-[280px] sm:max-w-[320px] md:max-w-sm mx-auto md:mx-0">
               A visual diary of places, people and stories captured one vignette at a time.
@@ -1183,7 +1183,7 @@ export default function ExplorePage({ isOpen, onClose }) {
       })()}
 
       {/* 7. FOOTER */}
-      <footer className="border-t-[0.5px] border-black/50 py-16 select-none bg-[#f5f5dd] dark:bg-transparent text-zinc-900 dark:text-zinc-100 transition-colors overflow-x-hidden relative z-10 font-brand">
+      <footer className="border-t-[0.5px] border-white/10 py-16 select-none bg-transparent text-zinc-300 transition-colors overflow-x-hidden relative z-10 font-brand">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
 
           {/* Main Footer columns row */}
@@ -1201,7 +1201,7 @@ export default function ExplorePage({ isOpen, onClose }) {
                   className="w-10 h-10 object-contain select-none pointer-events-none"
                   draggable="false"
                 />
-                <span className="brand-text-gradient font-heading font-black text-2xl tracking-tight select-none">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-heading font-black text-2xl tracking-tight select-none">
                   {formatVignette('Vignette')}
                 </span>
               </div>
