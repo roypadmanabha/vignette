@@ -1000,7 +1000,14 @@ export default function App() {
         setIsAvgeekConnectOpen(true);
         setIsExploreOpen(false);
       } else {
-        setIsExploreOpen(false);
+        setIsExploreOpen((wasExploreOpen) => {
+          if (wasExploreOpen) {
+            setTimeout(() => {
+              window.location.reload();
+            }, 0);
+          }
+          return false;
+        });
         if (window.isAvgeekUploading) {
           const isSure = window.confirm("A media upload is currently in progress. If you leave, the upload will be aborted. Are you sure you want to leave?");
           if (!isSure) {
