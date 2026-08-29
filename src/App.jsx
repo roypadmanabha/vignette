@@ -159,7 +159,7 @@ const CLIENT_REVIEWS = [
   {
     name: 'Astrofied',
     image: 'client-astrofied.png',
-    url: 'https://astrofied.netlify.app',
+    url: 'https://share.google/Wt7ycEeEznSAl8xsU',
     review: 'Working with Vignette has been one of the best decisions for Astrofied. From developing our website to managing our social media presence, every detail has been handled with remarkable creativity, professionalism, and precision. Their understanding of aesthetics, branding, and user experience helped us create a modern and trustworthy identity that truly represents our vision. Every design, post, and website element feels thoughtfully crafted rather than generic. They are highly responsive, committed to quality, and always open to feedback while delivering beyond expectations. We genuinely appreciate their dedication and would confidently recommend Vignette to anyone looking for premium digital branding and creative solutions.',
   },
   {
