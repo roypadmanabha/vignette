@@ -319,7 +319,7 @@ form .flex > span {
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  background: radial-gradient(circle at top right, #F8F5EA, #F6F2E7);
+  background: #ffffff;
 }
 
 .dark .hero-bg-container {

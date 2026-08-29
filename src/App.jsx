@@ -2131,7 +2131,7 @@ export default function App() {
       />
       <header 
         className={`sticky top-0 z-40 transition-all duration-500 ${isScrolled
-          ? (isDark ? 'bg-[#0A0908]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5' : 'bg-[#F8F5EA]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.05)]')
+          ? (isDark ? 'bg-[#0A0908]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5' : 'bg-white/60 backdrop-blur-xl backdrop-saturate-150 shadow-[0_4px_30px_rgba(0,0,0,0.06)]')
           : 'bg-transparent border-transparent shadow-none'
         }`}
         style={!isDark && isScrolled ? { borderBottom: '0.5px solid #D10000' } : undefined}
@@ -2458,7 +2458,7 @@ export default function App() {
               </div>
 
               {/* Right Column: Visual Portrait with Floating Badge Stats */}
-              <div className="lg:col-span-5 flex justify-center items-center relative mt-8 lg:mt-0 w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] mx-auto">
+              <div className="hidden lg:flex lg:col-span-5 justify-center items-center relative mt-8 lg:mt-0 w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] mx-auto">
 
                 {/* Visual Graphic Backdrop (Concentric circles behind logo) */}
                 <div className="absolute w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] rounded-full bg-red-500/5 dark:bg-red-500/10 blur-xl" />
@@ -2936,7 +2936,7 @@ export default function App() {
 
 
         {/* 2.10. HIRE ME SECTION */}
-        <section id="hire" className="bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="hire" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
@@ -3190,7 +3190,7 @@ export default function App() {
         </section>
 
         {/* 2.9.5. HERO VIDEO SHOWCASE */}
-        <section className="py-10 sm:py-14 flex flex-col items-center justify-center select-none">
+        <section className="bg-[#f5f5dd] dark:bg-transparent py-10 sm:py-14 flex flex-col items-center justify-center select-none">
           <div className="max-w-4xl w-full px-4">
             <div
               className="relative rounded-[20px] overflow-hidden shadow-xl bg-black cursor-pointer border border-brand-lightOrange dark:border-[#FFD700]"

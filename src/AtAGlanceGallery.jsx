@@ -130,7 +130,7 @@ export default function AtAGlanceGallery({ onImageClick }) {
     : [];
 
   return (
-    <section id="gallery" className="bg-[#FFFFF5] dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
+    <section id="gallery" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
