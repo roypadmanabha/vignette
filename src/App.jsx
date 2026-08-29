@@ -939,6 +939,7 @@ export default function App() {
   const [isExploreOpen, setIsExploreOpen] = useState(false);
   const [isExploreLoading, setIsExploreLoading] = useState(false);
   const [isWorksLoading, setIsWorksLoading] = useState(false);
+  const [isTakeoffLoading, setIsTakeoffLoading] = useState(false);
   const [chatStep, setChatStep] = useState('welcome');
 
   const triggerExploreOpen = () => {
@@ -958,13 +959,27 @@ export default function App() {
     }, 1000);
   };
 
-  const handleOpenAvgeekConnect = () => {
-    setIsAvgeekConnectOpen(true);
-    const path = window.location.pathname.toLowerCase();
-    if (!path.endsWith('/avgeek') && !path.endsWith('/avgeek/')) {
-      const base = path.endsWith('/') ? path : path + '/';
-      window.history.pushState({ avgeek: true }, '', base + 'avgeek');
+  const handleOpenAvgeekConnect = (instant = false) => {
+    if (instant) {
+      setIsAvgeekConnectOpen(true);
+      const path = window.location.pathname.toLowerCase();
+      if (!path.endsWith('/avgeek') && !path.endsWith('/avgeek/')) {
+        const base = path.endsWith('/') ? path : path + '/';
+        window.history.pushState({ avgeek: true }, '', base + 'avgeek');
+      }
+      return;
     }
+
+    setIsTakeoffLoading(true);
+    setTimeout(() => {
+      setIsTakeoffLoading(false);
+      setIsAvgeekConnectOpen(true);
+      const path = window.location.pathname.toLowerCase();
+      if (!path.endsWith('/avgeek') && !path.endsWith('/avgeek/')) {
+        const base = path.endsWith('/') ? path : path + '/';
+        window.history.pushState({ avgeek: true }, '', base + 'avgeek');
+      }
+    }, 1000);
   };
 
   const handleCloseAvgeekConnect = () => {
@@ -1055,12 +1070,12 @@ export default function App() {
     if (supabase) {
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session) {
-          handleOpenAvgeekConnect();
+          handleOpenAvgeekConnect(true);
         }
       });
       const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
         if (session) {
-          handleOpenAvgeekConnect();
+          handleOpenAvgeekConnect(true);
         }
       });
       return () => {
@@ -1069,7 +1084,7 @@ export default function App() {
     } else {
       const saved = localStorage.getItem('avgeek_mock_user');
       if (saved) {
-        handleOpenAvgeekConnect();
+        handleOpenAvgeekConnect(true);
       }
     }
   }, []);
@@ -2042,9 +2057,9 @@ export default function App() {
             <div className="absolute inset-0 border-2 border-brand-lightRed/50 rounded-2xl animate-ping opacity-75" />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <h2 className="font-heading font-black text-2xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e]">
-              Loading Vignettes
+          <div className="flex flex-col gap-2 items-center justify-center">
+            <h2 className="font-brand font-semibold text-xl sm:text-2xl tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e]">
+              Vignette
             </h2>
             <p className="text-zinc-400 text-xs uppercase tracking-widest font-extrabold animate-pulse">
               Preparing Gallery Experience
@@ -2401,7 +2416,7 @@ export default function App() {
                 </div>
 
                 {/* H1 Heading */}
-                <h1 className="reveal font-heading font-black text-hero-fluid tracking-tight leading-[1.1] select-none mb-6">
+                <h1 className="reveal font-heading font-extrabold text-hero-fluid tracking-tight leading-[1.1] select-none mb-6">
                   <span className="text-[#A30000] dark:text-[#ffec4e]">
                     Frames that tell a story
                   </span>
@@ -2447,8 +2462,8 @@ export default function App() {
 
                 {/* Visual Graphic Backdrop (Concentric circles behind logo) */}
                 <div className="absolute w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] rounded-full bg-red-500/5 dark:bg-red-500/10 blur-xl" />
-                <div className="absolute w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] rounded-full border border-red-500/10 dark:border-red-400/15" />
-                <div className="absolute w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] rounded-full border border-red-500/20 dark:border-red-400/25" />
+                <div className="absolute w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] rounded-full border-2 border-red-500/30 dark:border-red-400/15" />
+                <div className="absolute w-[220px] h-[220px] sm:w-[280px] sm:h-[280px] rounded-full border-2 border-red-500/45 dark:border-red-400/25" />
 
                 {/* Main Logo Frame */}
                 <div className="relative w-[180px] h-[180px] sm:w-[220px] sm:h-[220px] rounded-full overflow-hidden border-[1.5px] border-white/80 dark:border-white/20 shadow-[0_0_40px_rgba(255,255,255,0.8)] dark:shadow-[0_0_40px_rgba(209,0,0,0.2)] z-10 bg-transparent flex items-center justify-center">
@@ -2460,36 +2475,35 @@ export default function App() {
                   />
                 </div>
 
-                {/* Floating Badge 1: 5+ Years Experience */}
-                <div className="absolute left-[-10%] sm:left-[-5%] top-[15%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2.5 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
-                    5+
+                {/* Floating Badge 1: Creator */}
+                <div className="absolute left-[-10%] sm:left-[-5%] top-[15%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-zinc-300 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center justify-center z-20 hover:scale-105 transition-transform duration-300">
+                  <span className="font-heading font-extrabold text-xs sm:text-sm text-[#d10000] dark:text-[#ffec4e] uppercase tracking-widest">
+                    creator
                   </span>
-                  <div className="flex flex-col leading-tight">
-                    <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">Years of</span>
-                    <span className="font-body text-[8px] text-zinc-500 uppercase tracking-widest">Experience</span>
-                  </div>
                 </div>
 
-                {/* Floating Badge 2: 200+ Posts */}
-                <div className="absolute right-[-10%] sm:right-[0%] top-[40%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
-                    200+
+                {/* Floating Badge 2: Editor */}
+                <div className="absolute right-[-10%] sm:right-[0%] top-[40%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-zinc-300 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center justify-center z-20 hover:scale-105 transition-transform duration-300">
+                  <span className="font-heading font-extrabold text-xs sm:text-sm text-[#d10000] dark:text-[#ffec4e] uppercase tracking-widest">
+                    editor
                   </span>
-                  <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider leading-none">Posts</span>
                 </div>
 
-                {/* Floating Badge 3: 2.1K Followers */}
-                <div className="absolute left-[5%] bottom-[15%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-black/5 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center gap-2 z-20 hover:scale-105 transition-transform duration-300">
-                  <span className="font-brand font-black text-base text-[#d10000] dark:text-[#ffec4e]">
-                    2.1K
+                {/* Floating Badge 3: Storyteller */}
+                <div className="absolute left-[5%] bottom-[15%] px-4 py-2.5 bg-[#FAF8F2] dark:bg-[#1A1A1A] rounded-2xl border border-zinc-300 dark:border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.06)] flex items-center justify-center z-20 hover:scale-105 transition-transform duration-300">
+                  <span className="font-heading font-extrabold text-xs sm:text-sm text-[#d10000] dark:text-[#ffec4e] uppercase tracking-widest">
+                    storyteller
                   </span>
-                  <span className="font-brand font-extrabold text-[10px] text-zinc-800 dark:text-zinc-200 uppercase tracking-wider leading-none">Followers</span>
                 </div>
 
                 {/* Curved Ribbon Tag Line at Bottom */}
-                <div className="absolute bottom-[-15px] sm:bottom-[-20px] left-1/2 -translate-x-1/2 px-6 py-2.5 pill-gradient-black-red rounded-full shadow-xl text-[10px] font-brand font-extrabold uppercase tracking-[0.2em] text-white whitespace-nowrap z-20 select-none border border-white/10">
-                  Telling Stories One Frame At A Time
+                <div className="absolute bottom-[-15px] sm:bottom-[-20px] left-1/2 -translate-x-1/2 px-6 py-2.5 pill-gradient-black-red rounded-full shadow-xl text-[11px] sm:text-xs whitespace-nowrap z-20 select-none border border-white/10 flex items-center gap-1.5">
+                  <span className="font-brand font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e]">
+                    Vignette
+                  </span>
+                  <span className="font-heading font-extrabold text-white tracking-wider">
+                    — Create! Don&apos;t hate.
+                  </span>
                 </div>
               </div>
             </div>
@@ -2503,13 +2517,10 @@ export default function App() {
         <section id="services" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="reveal font-brand font-black text-xs uppercase tracking-widest text-brand-lightOrange dark:text-brand-darkGold mb-3 block">
-                What We Do
-              </span>
-              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient mb-6">
+              <h2 className="reveal reveal-blur font-heading font-bold text-4xl sm:text-5xl text-gradient">
                 Services
               </h2>
-              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 leading-relaxed transition-colors text-base sm:text-lg text-justify">
+              <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors text-base sm:text-lg text-justify">
                 Our services include video editing, seamless podcast enhancement, engaging promotional content, and tailored shoots - crafted to elevate brand visibility, storytelling, and impact across marketing and social platforms.
               </p>
             </div>
@@ -2610,7 +2621,7 @@ export default function App() {
         <section id="videos" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
+              <h2 className="reveal reveal-blur font-heading font-bold text-4xl sm:text-5xl text-gradient">
                 Our Highlights
               </h2>
               <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors">
@@ -2711,7 +2722,7 @@ export default function App() {
         <section id="editing" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
+              <h2 className="reveal reveal-blur font-heading font-bold text-4xl sm:text-5xl text-gradient">
                 The Art of Editing
               </h2>
               <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors">
@@ -2770,10 +2781,21 @@ export default function App() {
               {/* Button */}
               <div className="reveal w-full flex justify-center">
                 <button
-                  onClick={handleOpenAvgeekConnect}
-                  className="px-5 py-2.5 sm:px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
+                  onClick={() => handleOpenAvgeekConnect(false)}
+                  disabled={isTakeoffLoading}
+                  className="px-5 py-2.5 sm:px-8 sm:py-4 rounded-[5px] font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works flex items-center justify-center gap-2 cursor-pointer disabled:opacity-80 disabled:cursor-not-allowed"
                 >
-                  Ready for Takeoff
+                  {isTakeoffLoading ? (
+                    <>
+                      <svg className="animate-spin h-4 w-4 text-current" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
+                      <span>Loading...</span>
+                    </>
+                  ) : (
+                    "Ready for Takeoff"
+                  )}
                 </button>
               </div>
             </div>
@@ -2792,10 +2814,21 @@ export default function App() {
                 </p>
                 <div className="reveal w-full flex justify-start">
                   <button
-                    onClick={handleOpenAvgeekConnect}
-                    className="px-8 py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
+                    onClick={() => handleOpenAvgeekConnect(false)}
+                    disabled={isTakeoffLoading}
+                    className="px-8 py-4 rounded-[5px] font-brand font-extrabold text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works flex items-center justify-center gap-2 cursor-pointer disabled:opacity-80 disabled:cursor-not-allowed"
                   >
-                    Ready for Takeoff
+                    {isTakeoffLoading ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 text-current" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        <span>Loading...</span>
+                      </>
+                    ) : (
+                      "Ready for Takeoff"
+                    )}
                   </button>
                 </div>
               </div>
@@ -2824,7 +2857,7 @@ export default function App() {
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient">
+              <h2 className="reveal font-heading font-bold text-4xl sm:text-5xl text-gradient">
                 What Our Clients Say
               </h2>
             </div>
@@ -2843,7 +2876,7 @@ export default function App() {
                 <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase mb-3">
                   {formatVignette('About Vignette')}
                 </span>
-                <h2 className="font-heading font-black text-4xl sm:text-5xl leading-tight">
+                <h2 className="font-heading font-bold text-4xl sm:text-5xl leading-tight">
                   <span className="text-zinc-950 dark:text-white">The Journey of </span>
                   <span className="brand-text-gradient">Vignette</span>
                 </h2>
@@ -2912,7 +2945,7 @@ export default function App() {
                 <span className="reveal font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase mb-3">
                   Let's Collaborate
                 </span>
-                <h2 className="reveal font-heading font-black text-4xl sm:text-5xl text-gradient leading-tight">
+                <h2 className="reveal font-heading font-bold text-4xl sm:text-5xl text-gradient leading-tight">
                   Hire for your work
                 </h2>
                 <p className="reveal font-body text-zinc-600 dark:text-zinc-300 mt-6 leading-relaxed transition-colors text-justify">
@@ -3194,7 +3227,7 @@ export default function App() {
       {/* 2.10.5. FAQS SECTION */}
       <section id="faqs" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 select-none">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading font-black text-4xl sm:text-5xl text-center mb-12 text-[#D10000] dark:text-brand-darkGold transition-colors duration-300">
+          <h2 className="font-heading font-bold text-4xl sm:text-5xl text-center mb-12 text-[#D10000] dark:text-brand-darkGold transition-colors duration-300">
             <span className="sm:hidden">FAQs</span>
             <span className="hidden sm:inline">Frequently Asked Questions</span>
           </h2>

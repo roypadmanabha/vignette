@@ -135,7 +135,7 @@ export default function AtAGlanceGallery({ onImageClick }) {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="reveal reveal-blur font-heading font-black text-4xl sm:text-5xl text-gradient">
+          <h2 className="reveal reveal-blur font-heading font-bold text-4xl sm:text-5xl text-gradient">
             At a Glance
           </h2>
           <p className="reveal font-body text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed transition-colors">

@@ -412,7 +412,7 @@ form .flex > span {
 
 /* Gradient Pill Class */
 .pill-gradient-black-red {
-  background: linear-gradient(90deg, #111111 0%, #a80000 100%);
+  background: #09090b;
 }
 .dark .pill-gradient-black-red {
   background: #1A1A1A;
