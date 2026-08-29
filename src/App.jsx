@@ -1004,10 +1004,10 @@ export default function App() {
     const checkRoute = () => {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
-      
+
       const isExplore = path.endsWith('/explore-vignette') || path.endsWith('/explore-vignette/') || hash === '#explore-vignette' || hash === '#/explore-vignette';
       const isAvgeek = path.endsWith('/avgeek') || path.endsWith('/avgeek/') || hash === '#avgeek' || hash === '#/avgeek';
-      
+
       if (isExplore) {
         triggerExploreOpen();
         setIsAvgeekConnectOpen(false);
@@ -2129,11 +2129,11 @@ export default function App() {
         className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-brand-lightRed via-brand-lightOrange to-brand-darkGold dark:from-brand-darkGold dark:via-brand-darkYellow dark:to-brand-lightOrange z-[9999] transition-all duration-75 origin-left"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
       />
-      <header 
+      <header
         className={`sticky top-0 z-40 transition-all duration-500 ${isScrolled
           ? (isDark ? 'bg-[#0A0908]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.1)] border-b border-white/5' : 'bg-white/60 backdrop-blur-xl backdrop-saturate-150 shadow-[0_4px_30px_rgba(0,0,0,0.06)]')
           : 'bg-transparent border-transparent shadow-none'
-        }`}
+          }`}
         style={!isDark && isScrolled ? { borderBottom: '0.5px solid #D10000' } : undefined}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-11 lg:h-16 flex items-center justify-between">
@@ -2412,7 +2412,7 @@ export default function App() {
                 {/* Eyebrow */}
                 <div className="reveal flex items-center justify-center lg:justify-start gap-2 mb-6 font-brand font-extrabold text-[10px] sm:text-xs tracking-[0.25em] text-zinc-950 dark:text-white uppercase select-none w-full">
                   <Sparkles className="w-4 h-4 text-[#d10000] animate-pulse flex-shrink-0" />
-                  <span className="whitespace-nowrap">DIGITAL CREATOR • STORYTELLER • AVGEEK</span>
+                  <span className="whitespace-nowrap">CREATE! DON'T HATE.</span>
                 </div>
 
                 {/* H1 Heading */}
@@ -2423,10 +2423,8 @@ export default function App() {
                 </h1>
 
                 {/* Short Bio Paragraph */}
-                <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[520px] leading-relaxed transition-colors mb-10">
-                  Welcome to <strong className="font-bold select-none text-black dark:text-white">Vignette</strong>,
-                  the creative platform of Padmanabha Roy. Merging dynamic reels, custom video color edits,
-                  and high-altitude aviation storytelling into cinematic digital capsules.
+                <p className="reveal font-body text-base sm:text-lg text-[#333333] dark:text-zinc-300 max-w-[520px] leading-relaxed transition-colors mb-10 md:text-justify">
+                  Welcome to <strong className="brand-text-gradient select-none">Vignette</strong>. Your unified platform to find exciting content - images, videos, and much more. An additional special platform for our aVgeek friends to explore aviation content, connect with the community, and share their reviews.
                 </p>
 
                 {/* CTA Buttons */}
