@@ -938,6 +938,7 @@ export default function App() {
   const [isAvgeekConnectOpen, setIsAvgeekConnectOpen] = useState(false);
   const [isExploreOpen, setIsExploreOpen] = useState(false);
   const [isExploreLoading, setIsExploreLoading] = useState(false);
+  const [isWorksLoading, setIsWorksLoading] = useState(false);
   const [chatStep, setChatStep] = useState('welcome');
 
   const triggerExploreOpen = () => {
@@ -946,6 +947,15 @@ export default function App() {
       setIsExploreLoading(false);
       setIsExploreOpen(true);
     }, 2000);
+  };
+
+  const handleViewWorksClick = () => {
+    setIsWorksLoading(true);
+    setTimeout(() => {
+      setIsWorksLoading(false);
+      window.history.pushState({ explore: true }, '', '/explore-vignette');
+      triggerExploreOpen();
+    }, 1000);
   };
 
   const handleOpenAvgeekConnect = () => {
@@ -2400,10 +2410,21 @@ export default function App() {
                 {/* CTA Buttons */}
                 <div className="reveal flex flex-row gap-3 sm:gap-4 w-full justify-center lg:justify-start">
                   <button
-                    onClick={() => scrollToSection('gallery')}
-                    className="w-full sm:w-auto flex-1 sm:flex-none px-2 py-2.5 sm:px-6 sm:py-3.5 lg:px-8 lg:py-4 font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works"
+                    onClick={handleViewWorksClick}
+                    disabled={isWorksLoading}
+                    className="w-full sm:w-auto flex-1 sm:flex-none px-2 py-2.5 sm:px-6 sm:py-3.5 lg:px-8 lg:py-4 font-brand font-extrabold text-[11px] sm:text-sm shadow-[0_8px_20px_rgba(209,0,0,0.15)] hover:shadow-[0_12px_25px_rgba(209,0,0,0.25)] hover:-translate-y-1 hover:scale-[1.02] active:scale-95 transition-all duration-300 hero-btn-works flex items-center justify-center gap-2 cursor-pointer disabled:opacity-80 disabled:cursor-not-allowed"
                   >
-                    View our works
+                    {isWorksLoading ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 text-current" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        </svg>
+                        <span>Loading...</span>
+                      </>
+                    ) : (
+                      "View our works"
+                    )}
                   </button>
                   <button
                     onClick={() => setIsHireModalOpen(true)}
