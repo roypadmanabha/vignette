@@ -2696,7 +2696,7 @@ export default function App() {
                     </h3>
                     <span className="font-body text-[10px] sm:text-xs text-zinc-500 dark:text-zinc-400 mt-1 flex items-center gap-1 sm:gap-1.5">
                       <Eye className="w-3 sm:w-3.5 h-3 sm:h-3.5 flex-shrink-0" />
-                      <span>{videoPlayCounts[vid.id] ? `${videoPlayCounts[vid.id]} ${videoPlayCounts[vid.id] === 1 ? 'person' : 'people'} played` : '0 people played'}</span>
+                      <span>{((videoPlayCounts[vid.id] || 0) + 100)} people played</span>
                     </span>
                   </div>
                 </div>
