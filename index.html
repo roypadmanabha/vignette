@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="logo-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <title>Vignette | Create, Don't Hate!</title>
+    <script type="module" crossorigin src="./assets/index-BrSx9Vet.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-1snTJvSW.css">
+  </head>
+  <body>
+    <noscript>
+      <style>
+        #root { display: none !important; }
+        .vignette-noscript {
+          position: fixed;
+          inset: 0;
+          background-color: #050508;
+          color: white;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          font-family: 'Mulish', sans-serif;
+          text-align: center;
+          z-index: 999999;
+          padding: 2rem;
+        }
+        .vignette-noscript-logo {
+          width: 80px;
+          height: 80px;
+          margin-bottom: 2rem;
+          animation: pulse 2s infinite ease-in-out;
+        }
+        .vignette-noscript-title {
+          font-family: 'Nunito', sans-serif;
+          font-size: 2.5rem;
+          font-weight: 800;
+          margin: 0 0 1rem 0;
+          background: linear-gradient(90deg, #e31c25, #FFBF00);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .vignette-noscript-text {
+          font-size: 1.1rem;
+          color: #a1a1aa;
+          max-width: 500px;
+          line-height: 1.6;
+        }
+        .vignette-noscript-btn {
+          margin-top: 2.5rem;
+          padding: 0.75rem 2rem;
+          background: linear-gradient(90deg, #e31c25, #FFBF00);
+          color: #050508;
+          font-family: 'Nunito', sans-serif;
+          font-weight: 800;
+          border-radius: 9999px;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+        @keyframes pulse {
+          0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 10px rgba(255, 191, 0, 0.2)); }
+          50% { transform: scale(1.05); opacity: 0.8; filter: drop-shadow(0 0 20px rgba(227, 28, 37, 0.4)); }
+          100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 10px rgba(255, 191, 0, 0.2)); }
+        }
+      </style>
+      <div class="vignette-noscript">
+        <img src="logo-icon.png" alt="Vignette" class="vignette-noscript-logo" />
+        <h1 class="vignette-noscript-title">Vignette Requires JavaScript</h1>
+        <p class="vignette-noscript-text">
+          To experience the full aesthetic, interactive animations, and dynamic content of Vignette, 
+          please enable JavaScript in your browser settings and reload the page.
+        </p>
+        <a href="." class="vignette-noscript-btn">Reload Page</a>
+      </div>
+    </noscript>
+    <div id="root"></div>
+  </body>
+</html>
