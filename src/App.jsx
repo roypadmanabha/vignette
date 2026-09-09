@@ -74,6 +74,25 @@ const Menu2 = (props) => (
   </svg>
 );
 
+function getLocalFallbackUrl(item) {
+  if (!item) return '/at-glance-img/travel-1.jpg';
+  if (item.fallback_url) return item.fallback_url;
+  const name = `${item.title || ''} ${item.media_url || ''}`.toLowerCase();
+  if (name.includes('avgeek1') || name.includes('avgeek-1')) return '/at-glance-img/avgeek-1.jpg';
+  if (name.includes('avgeek2') || name.includes('avgeek-2')) return '/at-glance-img/avgeek-2.jpg';
+  if (name.includes('avgeek3') || name.includes('avgeek-3')) return '/at-glance-img/avgeek-3.jpg';
+  if (name.includes('avgeek4') || name.includes('avgeek-4')) return '/at-glance-img/avgeek-4.jpg';
+  if (name.includes('festival') || name.includes('festival-1') || name.includes('festival1')) return '/at-glance-img/festival-1.jpg';
+  if (name.includes('lifestyle1') || name.includes('lifestyle-1')) return '/at-glance-img/lifestyle-1.jpg';
+  if (name.includes('lifestyle2') || name.includes('lifestyle-2')) return '/at-glance-img/lifestyle-2.jpg';
+  if (name.includes('lifestyle3') || name.includes('lifestyle-3')) return '/at-glance-img/lifestyle-3.jpg';
+  if (name.includes('lifestyle4') || name.includes('lifestyle-4') || name.includes('lifestyle5')) return '/at-glance-img/lifestyle-4.jpg';
+  if (name.includes('storytelling2') || name.includes('storytelling-2')) return '/at-glance-img/storytelling-2.jpg';
+  if (name.includes('storytelling') || name.includes('storytelling1') || name.includes('storytelling-1') || name.includes('storytelling3')) return '/at-glance-img/storytelling-1.jpg';
+  if (name.includes('travel1') || name.includes('travel-1')) return '/at-glance-img/travel-1.jpg';
+  return '/at-glance-img/travel-1.jpg';
+}
+
 
 const ThreadsIcon = (props) => (
   <svg
@@ -99,7 +118,7 @@ const MOCK_VIDEOS = [
     title: 'Wings Over Clouds',
     category: 'Avgeek',
     media_url: 'avgeek.mp4',
-    thumbnail_url: 'avgeek.mp4#t=11'
+    thumbnail_url: 'avgeek.mp4#t=1'
   },
   {
     id: 10,
@@ -237,7 +256,7 @@ const formatVignette = (text) => {
 
 const TestimonialCard = ({ review, idx, isCarousel = false }) => (
   <div
-    className={`reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#17202A] border-[#e31c25] dark:border-[#FFD700] p-5 sm:p-8 flex flex-col gap-4 sm:gap-6 shadow-xl group h-full ${!isCarousel ? 'hover:shadow-2xl hover:-translate-y-2 transition-premium' : ''}`}
+    className={`reveal reveal-scale relative rounded-3xl bg-[#f5f5dd] dark:bg-[#181818] border-[#e31c25] dark:border-[#FFD700] p-5 sm:p-8 flex flex-col gap-4 sm:gap-6 shadow-xl group h-full ${!isCarousel ? 'hover:shadow-2xl hover:-translate-y-2 transition-premium' : ''}`}
     style={{ transitionDelay: isCarousel ? '0ms' : `${idx * 150}ms`, borderWidth: '0.5px', borderStyle: 'solid' }}
   >
     <div className="flex items-center gap-4 sm:gap-5">
@@ -655,10 +674,29 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen && videoRef.current) {
       setAspectRatio(16 / 9);
-      setIsBuffering(true);
-      videoRef.current.play()
-        .then(() => { setIsPlaying(true); })
-        .catch(() => { });
+      setIsBuffering(false);
+      const v = videoRef.current;
+      v.currentTime = 0;
+      v.load();
+      const playPromise = v.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+            setIsBuffering(false);
+          })
+          .catch((err) => {
+            console.warn("Autoplay blocked or playback error, attempting muted fallback:", err);
+            v.muted = true;
+            setIsMuted(true);
+            v.play()
+              .then(() => {
+                setIsPlaying(true);
+                setIsBuffering(false);
+              })
+              .catch(() => setIsPlaying(false));
+          });
+      }
     }
     if (!isOpen) {
       setIsBuffering(false);
@@ -682,8 +720,19 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
       videoRef.current.pause();
       setIsPlaying(false);
     } else {
-      videoRef.current.play();
-      setIsPlaying(true);
+      videoRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+          setIsBuffering(false);
+        })
+        .catch(() => {
+          videoRef.current.muted = true;
+          setIsMuted(true);
+          videoRef.current.play().then(() => {
+            setIsPlaying(true);
+            setIsBuffering(false);
+          });
+        });
     }
     resetControlsTimeout();
   };
@@ -691,9 +740,16 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
   const handleTimeUpdate = () => {
     if (!videoRef.current) return;
     setCurrentTime(videoRef.current.currentTime);
+    if (videoRef.current.readyState >= 2) {
+      setIsBuffering(false);
+    }
   };
 
-  const handleWaiting = () => setIsBuffering(true);
+  const handleWaiting = () => {
+    if (videoRef.current && videoRef.current.readyState < 3) {
+      setIsBuffering(true);
+    }
+  };
   const handleCanPlay = () => setIsBuffering(false);
   const handlePlaying = () => setIsBuffering(false);
 
@@ -795,6 +851,7 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
           <X className="w-4 h-4" />
         </button>
         <video
+          key={src}
           ref={videoRef}
           src={src || undefined}
           poster={poster || undefined}
@@ -803,10 +860,14 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
           onTimeUpdate={handleTimeUpdate}
           onWaiting={handleWaiting}
           onCanPlay={handleCanPlay}
+          onCanPlayThrough={() => setIsBuffering(false)}
+          onLoadedData={() => setIsBuffering(false)}
           onPlaying={handlePlaying}
           onEnded={handleEnded}
           onLoadedMetadata={handleLoadedMetadata}
           playsInline
+          autoPlay
+          preload="auto"
           disablePictureInPicture
           controlsList="nodownload nofullscreen"
           draggable="false"
@@ -909,6 +970,7 @@ export default function App() {
   const [galleryLoading, setGalleryLoading] = useState(true);
   const [lightboxIndex, setLightboxIndex] = useState(null); // index of filtered list
   const [lightboxGallery, setLightboxGallery] = useState([]);
+  const lightboxTouchStartXRef = useRef(0);
 
   // Videos / Reels
   const [videos, setVideos] = useState(MOCK_VIDEOS);
@@ -947,16 +1009,12 @@ export default function App() {
     setTimeout(() => {
       setIsExploreLoading(false);
       setIsExploreOpen(true);
-    }, 2000);
+    }, 1000);
   };
 
   const handleViewWorksClick = () => {
-    setIsWorksLoading(true);
-    setTimeout(() => {
-      setIsWorksLoading(false);
-      window.history.pushState({ explore: true }, '', '/explore-vignette');
-      triggerExploreOpen();
-    }, 1000);
+    window.history.pushState({ explore: true }, '', '/explore-vignette');
+    triggerExploreOpen();
   };
 
   const handleOpenAvgeekConnect = (instant = false) => {
@@ -1137,7 +1195,7 @@ export default function App() {
           const filtered = prev.filter(msg => msg.id !== 'typing');
           return [...filtered, {
             sender: 'vyn',
-            text: `Got it! You are interested in "${option}". To proceed, please fill out our contact form. It helps us review all your project details and get back to you quickly!`,
+            text: `Got it! You are interested in "${option}". Please fill out our contact form. It helps us review all your project details and get back to you quickly! Click on "All good, understood" button to proceed further.`,
             type: 'guide_form'
           }];
         });
@@ -1483,16 +1541,37 @@ export default function App() {
       }
     };
 
+    const handleKeyDownProtection = (e) => {
+      const isCmdOrCtrl = e.ctrlKey || e.metaKey;
+      const isPKey = e.key === 'p' || e.key === 'P' || e.keyCode === 80 || e.code === 'KeyP';
+      const isPrintScreen = e.key === 'PrintScreen' || e.key === 'Snapshot' || e.keyCode === 44 || e.code === 'PrintScreen';
+
+      if ((isCmdOrCtrl && isPKey) || isPrintScreen) {
+        e.preventDefault();
+        e.stopPropagation();
+        showToast("Not allowed! Content Protection enabled");
+      }
+    };
+
+    const handleBeforePrint = (e) => {
+      e.preventDefault();
+      showToast("Not allowed! Content Protection enabled");
+    };
+
     window.addEventListener('contextmenu', handleContextMenu);
     window.addEventListener('copy', handleCopy);
     window.addEventListener('cut', handleCut);
     window.addEventListener('dragstart', handleDragStart);
+    window.addEventListener('keydown', handleKeyDownProtection);
+    window.addEventListener('beforeprint', handleBeforePrint);
 
     return () => {
       window.removeEventListener('contextmenu', handleContextMenu);
       window.removeEventListener('copy', handleCopy);
       window.removeEventListener('cut', handleCut);
       window.removeEventListener('dragstart', handleDragStart);
+      window.removeEventListener('keydown', handleKeyDownProtection);
+      window.removeEventListener('beforeprint', handleBeforePrint);
     };
   }, []);
 
@@ -1585,7 +1664,7 @@ export default function App() {
               updated = {
                 ...updated,
                 media_url: 'avgeek.mp4',
-                thumbnail_url: 'avgeek.mp4#t=11'
+                thumbnail_url: 'avgeek.mp4#t=1'
               };
             }
             if (video.title.includes('Alpine') || video.id === 10) {
@@ -1709,25 +1788,28 @@ export default function App() {
 
   // Lightbox Navigation helpers
   const handlePrevLightbox = (e) => {
-    e.stopPropagation();
-    if (lightboxIndex === null) return;
-    const galleryToUse = lightboxGallery.length > 0 ? lightboxGallery : filteredGallery;
-    setLightboxIndex(prev => (prev === 0 ? galleryToUse.length - 1 : prev - 1));
+    if (e) e.stopPropagation();
+    if (lightboxIndex === null || lightboxIndex <= 0) return;
+    setLightboxIndex(prev => prev - 1);
   };
 
   const handleNextLightbox = (e) => {
-    e.stopPropagation();
+    if (e) e.stopPropagation();
     if (lightboxIndex === null) return;
     const galleryToUse = lightboxGallery.length > 0 ? lightboxGallery : filteredGallery;
-    setLightboxIndex(prev => (prev === galleryToUse.length - 1 ? 0 : prev + 1));
+    if (lightboxIndex >= galleryToUse.length - 1) return;
+    setLightboxIndex(prev => prev + 1);
   };
 
   // Keyboard controls for lightbox
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (lightboxIndex === null) return;
-      if (e.key === 'ArrowLeft') handlePrevLightbox(e);
-      if (e.key === 'ArrowRight') handleNextLightbox(e);
+      if (e.key === 'ArrowLeft' && lightboxIndex > 0) handlePrevLightbox(e);
+      if (e.key === 'ArrowRight') {
+        const galleryToUse = lightboxGallery.length > 0 ? lightboxGallery : filteredGallery;
+        if (lightboxIndex < galleryToUse.length - 1) handleNextLightbox(e);
+      }
       if (e.key === 'Escape') setLightboxIndex(null);
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -2066,7 +2148,7 @@ export default function App() {
             </p>
           </div>
 
-          {/* 2-Second Progress Bar */}
+          {/* 1-Second Progress Bar */}
           <div className="w-48 h-1 rounded-full bg-white/5 border border-white/10 overflow-hidden">
             <div className="h-full bg-gradient-to-r from-[#e31c25] to-[#ffec4e] animate-loaderProgress" />
           </div>
@@ -2111,7 +2193,7 @@ export default function App() {
 
       {/* 2.2. PROTECTED TOAST NOTIFICATION BANNER */}
       <div
-        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#D10000] text-white font-brand font-extrabold px-5 py-2.5 shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
           ? 'top-20 opacity-100 translate-y-0 scale-100'
           : 'top-20 opacity-0 -translate-y-4 scale-95'
           }`}
@@ -2512,9 +2594,9 @@ export default function App() {
         <AtAGlanceGallery onImageClick={handleAtAGlanceImageClick} />
 
         {/* 2.6.5. SERVICES SECTION */}
-        <section id="services" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
+        <section id="services" className="bg-white dark:bg-transparent py-10 sm:py-24 md:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
               <h2 className="reveal reveal-blur font-heading font-bold text-4xl sm:text-5xl text-gradient">
                 Services
               </h2>
@@ -2616,9 +2698,9 @@ export default function App() {
         </section>
 
         {/* 2.7. VIDEOS / REELS SECTION */}
-        <section id="videos" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
+        <section id="videos" className="bg-[#f5f5dd] dark:bg-transparent py-10 sm:py-24 md:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
               <h2 className="reveal reveal-blur font-heading font-bold text-4xl sm:text-5xl text-gradient">
                 Our Highlights
               </h2>
@@ -2632,29 +2714,20 @@ export default function App() {
               {videos.map((vid, idx) => (
                 <div
                   key={vid.id}
-                  onClick={async () => {
+                  onClick={() => {
                     setVideoModalUrl(vid.media_url);
                     setVideoModalPoster(vid.thumbnail_url);
-                    // Record play globally in Supabase (no auth needed)
+                    // Optimistic local update for instant feedback
+                    setVideoPlayCounts(prev => ({ ...prev, [vid.id]: (prev[vid.id] || 0) + 1 }));
+                    // Non-blocking async insert so browser user activation gesture token does NOT expire
                     if (supabase) {
-                      // Optimistic local update for instant feedback
-                      setVideoPlayCounts(prev => ({ ...prev, [vid.id]: (prev[vid.id] || 0) + 1 }));
-                      const { error } = await supabase
+                      supabase
                         .from('video_plays')
-                        .insert({ video_id: vid.id });
-                      if (error) console.warn('Play count insert failed:', error.message);
-                    } else {
-                      // Offline fallback: just update local
-                      setVideoPlayCounts(prev => ({ ...prev, [vid.id]: (prev[vid.id] || 0) + 1 }));
-                    }
-                    // Trigger synchronous video load & play
-                    const videoEl = document.querySelector('.custom-video-player-el');
-                    if (videoEl) {
-                      videoEl.src = vid.media_url;
-                      videoEl.load();
-                      videoEl.play().catch(err => {
-                        console.warn("Synchronous play call failed/blocked:", err);
-                      });
+                        .insert({ video_id: vid.id })
+                        .then(({ error }) => {
+                          if (error) console.warn('Play count insert failed:', error.message);
+                        })
+                        .catch(err => console.warn('Play count error:', err));
                     }
                   }}
                   className="reveal reveal-scale relative flex flex-col bg-zinc-50 dark:bg-zinc-900/60 backdrop-blur-sm border border-black/5 dark:border-white/5 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer shadow-lg group hover:shadow-2xl hover:-translate-y-2 transition-premium select-none"
@@ -2671,6 +2744,11 @@ export default function App() {
                         muted
                         playsInline
                         preload="metadata"
+                        onLoadedMetadata={(e) => {
+                          try {
+                            e.target.currentTime = 1;
+                          } catch (_) { }
+                        }}
                         draggable="false"
                       />
                     ) : (
@@ -2717,9 +2795,9 @@ export default function App() {
         </section>
 
         {/* 2.8. EDITING SHOWCASE SECTION */}
-        <section id="editing" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20 transition-colors">
+        <section id="editing" className="bg-[#f5f5dd] dark:bg-transparent py-10 sm:py-24 md:py-32 scroll-mt-20 transition-colors">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
               <h2 className="reveal reveal-blur font-heading font-bold text-4xl sm:text-5xl text-gradient">
                 The Art of Editing
               </h2>
@@ -2847,14 +2925,14 @@ export default function App() {
         </section>
 
         {/* 2.8.5. TESTIMONIALS SECTION */}
-        <section id="testimonials" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 overflow-hidden relative">
+        <section id="testimonials" className="bg-white dark:bg-transparent py-10 sm:py-24 md:py-32 scroll-mt-20 overflow-hidden relative">
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute top-1/4 -right-1/4 w-[500px] h-[500px] bg-brand-lightOrange/10 dark:bg-brand-darkGold/10 rounded-full blur-[100px]" />
             <div className="absolute bottom-1/4 -left-1/4 w-[500px] h-[500px] bg-[#e31c25]/10 dark:bg-[#e31c25]/10 rounded-full blur-[100px]" />
           </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-3xl mx-auto mb-16">
+            <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
               <h2 className="reveal font-heading font-bold text-4xl sm:text-5xl text-gradient">
                 What Our Clients Say
               </h2>
@@ -2865,7 +2943,7 @@ export default function App() {
         </section>
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
-        <section id="vision" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="vision" className="bg-white dark:bg-transparent py-10 sm:py-24 md:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
@@ -2881,10 +2959,10 @@ export default function App() {
 
                 <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-4 leading-relaxed transition-colors text-justify">
                   <p>
-                    I have been passionately pursuing my journey in capturing, editing and showcasing visual content for many years, gaining substantial professional experience by working extensively on promotions, personal projects, and original content that has reached millions.
+                    Established in late 2023, Vignette has rapidly grown by delivering premier personal and professional video editing, seamless website automation, and dynamic promotional projects. Guided by founder <span className="font-heading text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#000000] dark:from-[#e31c25] dark:to-[#FFBF00]" style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 600 }}>Padmanabha Roy</span>, who expertly blends creative ideologies to maximize audience engagement, we are ready to build something truly exceptional.
                   </p>
                   <p>
-                    Feel confident to trust me, and together, let&apos;s create something exceptional.
+                    Feel confident to trust us, and together, let&apos;s create something exceptional.
                   </p>
                 </div>
 
@@ -2912,13 +2990,15 @@ export default function App() {
                       draggable="false"
                     />
                     {/* Bottom gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pointer-events-none" />
                     {/* Name badge */}
                     <div className="absolute bottom-0 left-0 right-0 px-5 py-4">
                       <div className="flex flex-col">
-                        <h3 className="font-heading font-bold text-base text-white leading-tight">Padmanabha Roy</h3>
-                        <p className="font-body text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5">
-                          Founder &middot; <span className="font-brand font-black normal-case text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#FFBF00]">Vignette</span>
+                        <h3 className="font-body font-medium text-base text-white leading-tight" style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 500 }}>
+                          Padmanabha Roy
+                        </h3>
+                        <p className="font-body font-medium text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5" style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 500 }}>
+                          Founder &middot; <span className="font-body font-medium normal-case text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#FFBF00]" style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 500 }}>Vignette</span>
                         </p>
                       </div>
                     </div>
@@ -2934,7 +3014,7 @@ export default function App() {
 
 
         {/* 2.10. HIRE ME SECTION */}
-        <section id="hire" className="bg-[#f5f5dd] dark:bg-transparent py-24 sm:py-32 scroll-mt-20">
+        <section id="hire" className="bg-[#f5f5dd] dark:bg-transparent py-10 sm:py-24 md:py-32 scroll-mt-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
 
@@ -3204,7 +3284,8 @@ export default function App() {
                 onContextMenu={(e) => e.preventDefault()}
                 className="w-full h-auto rounded-[20px] object-contain opacity-100 block"
                 onEnded={() => setIsHeroPlaying(false)}
-                onPlay={() => setIsHeroPlaying(true)}
+                onPlay={() => setIsHeroPlaying(false)}
+                onPlaying={() => setIsHeroPlaying(true)}
                 onPause={() => setIsHeroPlaying(false)}
               />
 
@@ -3223,9 +3304,9 @@ export default function App() {
       </main>
 
       {/* 2.10.5. FAQS SECTION */}
-      <section id="faqs" className="bg-white dark:bg-transparent py-24 sm:py-32 scroll-mt-20 select-none">
+      <section id="faqs" className="bg-white dark:bg-transparent py-10 sm:py-24 md:py-32 scroll-mt-20 select-none">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-heading font-bold text-4xl sm:text-5xl text-center mb-12 text-[#D10000] dark:text-brand-darkGold transition-colors duration-300">
+          <h2 className="font-heading font-bold text-4xl sm:text-5xl text-center mb-6 sm:mb-12 text-[#D10000] dark:text-brand-darkGold transition-colors duration-300">
             <span className="sm:hidden">FAQs</span>
             <span className="hidden sm:inline">Frequently Asked Questions</span>
           </h2>
@@ -3352,7 +3433,7 @@ export default function App() {
               </h4>
               <p className="flex items-start gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 <MapPin className="w-4 h-4 text-[#D10000] dark:text-[#FFD700] mt-0.5 flex-shrink-0" />
-                <span>Ramnagar, Agartala, Tripura(W) - 799002</span>
+                <span>Chennai, Tamil Nadu, India</span>
               </p>
             </div>
 
@@ -3368,8 +3449,8 @@ export default function App() {
               <svg width="0" height="0" className="absolute">
                 <defs>
                   <linearGradient id="social-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor={isDark ? '#D10000' : '#000000'} />
-                    <stop offset="100%" stopColor={isDark ? '#e67e22' : '#D10000'} />
+                    <stop offset="0%" stopColor={isDark ? '#e31c25' : '#000000'} />
+                    <stop offset="100%" stopColor={isDark ? '#FFBF00' : '#D10000'} />
                   </linearGradient>
                 </defs>
               </svg>
@@ -3943,56 +4024,112 @@ export default function App() {
         const activeItem = galleryToUse[lightboxIndex];
         if (!activeItem) return null;
 
+        const isFirstItem = lightboxIndex === 0;
+        const isLastItem = lightboxIndex === galleryToUse.length - 1;
+
         return (
           <div
-            className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/95 backdrop-blur-md select-none"
+            className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/95 backdrop-blur-md select-none animate-fadeIn font-brand"
             onClick={handleCloseLightbox}
+            onTouchStart={(e) => {
+              lightboxTouchStartXRef.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const touchEndX = e.changedTouches[0].clientX;
+              const diff = lightboxTouchStartXRef.current - touchEndX;
+              if (Math.abs(diff) > 40) {
+                if (diff > 0 && !isLastItem) {
+                  handleNextLightbox(e);
+                } else if (diff < 0 && !isFirstItem) {
+                  handlePrevLightbox(e);
+                }
+              }
+            }}
           >
-            {/* Close Button */}
-            <button
-              className="absolute top-6 right-6 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors z-10"
-              onClick={handleCloseLightbox}
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            {/* Prev Button */}
-            <button
-              className="absolute left-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
-              onClick={handlePrevLightbox}
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-
-            {/* Active Image container */}
-            <div
-              className="max-w-[90vw] max-h-[80vh] flex flex-col items-center justify-center relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img
-                src={activeItem.media_url}
-                alt={activeItem.title}
-                className="max-w-full max-h-[72vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
-                draggable="false"
-              />
-              {/* Floating caption below image */}
-              <div className="mt-5 text-center">
-                <span className="font-brand font-extrabold text-xs uppercase tracking-widest text-[#FFD700]">
-                  {activeItem.category}
-                </span>
-                <h3 className="font-heading font-black text-lg sm:text-xl text-white mt-1.5 leading-tight">
-                  {activeItem.title}
-                </h3>
-              </div>
+            {/* Top Counter & Close Button */}
+            <div className="absolute top-4 inset-x-0 px-4 sm:px-6 flex items-center justify-between text-white z-20">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 backdrop-blur-md">
+                {lightboxIndex + 1} / {galleryToUse.length}
+              </span>
+              <button
+                className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                onClick={handleCloseLightbox}
+                title="Close view"
+              >
+                <X className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
             </div>
 
-            {/* Next Button */}
-            <button
-              className="absolute right-6 p-3 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors z-10"
-              onClick={handleNextLightbox}
+            {/* Horizontal Slider Track Viewport */}
+            <div
+              className="w-full h-[85vh] overflow-hidden relative flex items-center select-none"
+              onClick={(e) => e.stopPropagation()}
             >
-              <ChevronRight className="w-6 h-6" />
-            </button>
+              <div
+                className="flex items-center h-full transition-transform duration-300 ease-out transform-gpu"
+                style={{
+                  width: `${galleryToUse.length * 100}vw`,
+                  transform: `translateX(-${lightboxIndex * 100}vw)`
+                }}
+              >
+                {galleryToUse.map((item, idx) => (
+                  <div
+                    key={item.id || idx}
+                    className="w-[100vw] h-full flex items-center justify-center shrink-0 px-14 sm:px-20"
+                  >
+                    <div className="relative inline-flex items-center justify-center max-w-full max-h-[80vh]">
+                      <img
+                        src={item.media_url}
+                        alt={item.title || `Gallery item ${idx + 1}`}
+                        onError={(e) => {
+                          const fallback = getLocalFallbackUrl(item);
+                          if (fallback && !e.currentTarget.src.endsWith(fallback)) {
+                            e.currentTarget.src = fallback;
+                          }
+                        }}
+                        className="max-w-full max-h-[80vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
+                        draggable="false"
+                      />
+
+                      {/* Top Right Watermark */}
+                      <div className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-20 pointer-events-none select-none">
+                        <span className="font-['Nunito',sans-serif] font-semibold text-[10px] sm:text-xs md:text-sm tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#FFBF00]">
+                          Vignette
+                        </span>
+                      </div>
+
+                      {/* Prev Button — positioned outside frame with red-to-black top-left to bottom-right gradient */}
+                      <button
+                        disabled={isFirstItem}
+                        onClick={handlePrevLightbox}
+                        className={`absolute -left-12 sm:-left-14 lg:-left-16 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-gradient-to-br from-[#e31c25] to-[#000000] border border-white/20 z-30 transition-all ${
+                          isFirstItem
+                            ? 'opacity-30 cursor-not-allowed pointer-events-none'
+                            : 'hover:scale-110 active:scale-95 cursor-pointer shadow-xl hover:shadow-red-500/20'
+                        }`}
+                        title="Previous image"
+                      >
+                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                      </button>
+
+                      {/* Next Button — positioned outside frame with red-to-black top-left to bottom-right gradient */}
+                      <button
+                        disabled={isLastItem}
+                        onClick={handleNextLightbox}
+                        className={`absolute -right-12 sm:-right-14 lg:-right-16 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-gradient-to-br from-[#e31c25] to-[#000000] border border-white/20 z-30 transition-all ${
+                          isLastItem
+                            ? 'opacity-30 cursor-not-allowed pointer-events-none'
+                            : 'hover:scale-110 active:scale-95 cursor-pointer shadow-xl hover:shadow-red-500/20'
+                        }`}
+                        title="Next image"
+                      >
+                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         );
       })()}

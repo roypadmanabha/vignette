@@ -30,3 +30,10 @@ dist-ssr
 .env.test.local
 .env.production.local
 
+# Netlify & scratch
+.netlify
+print_captions.js
+test_update_after.js
+at-glance-img
+
+

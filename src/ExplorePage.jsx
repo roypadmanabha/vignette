@@ -15,9 +15,31 @@ import {
   Mail,
   MapPin,
   Home,
-  TriangleAlert
+  TriangleAlert,
+  Play,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
-import { supabase } from './supabase';
+import { exploreSupabase } from './supabase';
+
+function getLocalFallbackUrl(item) {
+  if (!item) return '/at-glance-img/travel-1.jpg';
+  if (item.fallback_url) return item.fallback_url;
+  const name = `${item.title || ''} ${item.media_url || ''}`.toLowerCase();
+  if (name.includes('avgeek1') || name.includes('avgeek-1')) return '/at-glance-img/avgeek-1.jpg';
+  if (name.includes('avgeek2') || name.includes('avgeek-2')) return '/at-glance-img/avgeek-2.jpg';
+  if (name.includes('avgeek3') || name.includes('avgeek-3')) return '/at-glance-img/avgeek-3.jpg';
+  if (name.includes('avgeek4') || name.includes('avgeek-4')) return '/at-glance-img/avgeek-4.jpg';
+  if (name.includes('festival') || name.includes('festival-1') || name.includes('festival1')) return '/at-glance-img/festival-1.jpg';
+  if (name.includes('lifestyle1') || name.includes('lifestyle-1')) return '/at-glance-img/lifestyle-1.jpg';
+  if (name.includes('lifestyle2') || name.includes('lifestyle-2')) return '/at-glance-img/lifestyle-2.jpg';
+  if (name.includes('lifestyle3') || name.includes('lifestyle-3')) return '/at-glance-img/lifestyle-3.jpg';
+  if (name.includes('lifestyle4') || name.includes('lifestyle-4') || name.includes('lifestyle5')) return '/at-glance-img/lifestyle-4.jpg';
+  if (name.includes('storytelling2') || name.includes('storytelling-2')) return '/at-glance-img/storytelling-2.jpg';
+  if (name.includes('storytelling') || name.includes('storytelling1') || name.includes('storytelling-1') || name.includes('storytelling3')) return '/at-glance-img/storytelling-1.jpg';
+  if (name.includes('travel1') || name.includes('travel-1')) return '/at-glance-img/travel-1.jpg';
+  return '/at-glance-img/travel-1.jpg';
+}
 
 // ==========================================
 // 1. MOCK DATASETS (VIGNETTE DESIGN STYLE)
@@ -125,6 +147,120 @@ const MOCK_EXPLORE_GRID = [
   }
 ];
 
+const MOCK_INFLUENCER_ITEMS = [
+  {
+    id: 'inf-1',
+    title: 'Urban Fashion Reel',
+    creator: '@alex.vogue',
+    category: 'Fashion & Style',
+    likes: 342,
+    media_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-posing-in-a-neon-lit-room-41566-large.mp4'
+  },
+  {
+    id: 'inf-2',
+    title: 'Cinematic Travel Story',
+    creator: '@roam.with.sam',
+    category: 'Travel Vlog',
+    likes: 589,
+    media_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-beach-with-turquoise-water-41539-large.mp4'
+  },
+  {
+    id: 'inf-3',
+    title: 'Fitness Motivation Edit',
+    creator: '@fit.lifestyle',
+    category: 'Fitness & Health',
+    likes: 412,
+    media_url: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-man-runs-on-a-treadmill-in-a-gym-41551-large.mp4'
+  },
+  {
+    id: 'inf-4',
+    title: 'Tech Unboxing & Review',
+    creator: '@tech.pulse',
+    category: 'Tech & Gadgets',
+    likes: 275,
+    media_url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-a-green-screen-41549-large.mp4'
+  },
+  {
+    id: 'inf-5',
+    title: 'Aesthetic Cafe Vlog',
+    creator: '@cozy.moments',
+    category: 'Lifestyle & Vlogs',
+    likes: 618,
+    media_url: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-barista-pouring-coffee-into-a-cup-41557-large.mp4'
+  },
+  {
+    id: 'inf-6',
+    title: 'Streetwear & Sneakers',
+    creator: '@hype.culture',
+    category: 'Brand Collab',
+    likes: 490,
+    media_url: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-young-man-walking-down-a-city-street-41560-large.mp4'
+  }
+];
+
+const MOCK_ORIGINALS_ITEMS = [
+  {
+    id: 'orig-1',
+    title: 'Colors of Kanyakumari',
+    creator: '@vignette.originals',
+    category: 'Cinematic Doc',
+    likes: 890,
+    media_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-beach-with-turquoise-water-41539-large.mp4'
+  },
+  {
+    id: 'orig-2',
+    title: 'The Silent Aviator',
+    creator: '@vignette.originals',
+    category: 'Avgeek Story',
+    likes: 1240,
+    media_url: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-view-from-the-window-of-an-airplane-flying-41548-large.mp4'
+  },
+  {
+    id: 'orig-3',
+    title: 'Monsoon in Western Ghats',
+    creator: '@vignette.originals',
+    category: 'Nature & Motion',
+    likes: 760,
+    media_url: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-rain-drops-falling-on-a-window-glass-41561-large.mp4'
+  },
+  {
+    id: 'orig-4',
+    title: 'Night Lights of Chennai',
+    creator: '@vignette.originals',
+    category: 'Urban Aesthetics',
+    likes: 935,
+    media_url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-traffic-on-a-highway-at-night-41544-large.mp4'
+  },
+  {
+    id: 'orig-5',
+    title: 'Temple Heritage Vignette',
+    creator: '@vignette.originals',
+    category: 'Culture & Stories',
+    likes: 1105,
+    media_url: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-a-green-screen-41549-large.mp4'
+  },
+  {
+    id: 'orig-6',
+    title: 'Waves & Solitude',
+    creator: '@vignette.originals',
+    category: 'Short Film',
+    likes: 812,
+    media_url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&h=1066&q=80',
+    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-barista-pouring-coffee-into-a-cup-41557-large.mp4'
+  }
+];
+
 const Instagram = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
@@ -139,7 +275,6 @@ const Facebook = (props) => (
 
 const ThreadsIcon = (props) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M16.39 11.27c-.09-.04-.17-.08-.26-.12-.15-2.84-1.71-4.47-4.32-4.49h-.04c-1.56 0-2.86.67-3.66 1.88l1.44.98c.6-.91 1.53-1.1 2.22-1.1h.02c.86 0 1.51.26 1.93.74.31.35.51.84.61 1.46-.76-.13-1.59-.17-2.47-.12-2.48.14-4.08 1.59-3.97 3.6.05 1.02.56 1.9 1.43 2.47.73.48 1.68.72 2.66.67" />
     <path d="M16.39 11.27c-.09-.04-.17-.08-.26-.12-.15-2.84-1.71-4.47-4.32-4.49h-.04c-1.56 0-2.86.67-3.66 1.88l1.44.98c.6-.91 1.53-1.1 2.22-1.1h.02c.86 0 1.51.26 1.93.74.31.35.51.84.61 1.46-.76-.13-1.59-.17-2.47-.12-2.48.14-4.08 1.59-3.97 3.6.05 1.02.56 1.9 1.43 2.47.73.48 1.68.72 2.66.67 1.3-.07 2.32-.57 3.03-1.47.54-.69.88-1.58 1.03-2.7.62.37 1.08.86 1.33 1.45.43 1 .46 2.65-.89 4-1.18 1.18-2.6 1.69-4.74 1.7-2.38-.02-4.17-.78-5.34-2.26-1.09-1.39-1.66-3.4-1.68-5.97.02-2.57.59-4.58 1.68-5.97 1.17-1.49 2.97-2.25 5.34-2.26 2.39.02 4.22.78 5.43 2.28.59.73 1.04 1.65 1.34 2.73l1.68-.45c-.36-1.32-.92-2.46-1.69-3.4-1.56-1.91-3.83-2.89-6.76-2.91h-.01c-2.92.02-5.17 1-6.68 2.92C3.71 6.64 3.01 9.02 2.99 12c.02 3 .72 5.37 2.06 7.08C6.56 21 8.81 21.98 11.73 22h.01c2.6-.02 4.43-.7 5.94-2.21 1.98-1.97 1.92-4.45 1.26-5.97-.47-1.09-1.36-1.97-2.58-2.56Zm-4.49 4.22c-1.09.06-2.22-.43-2.27-1.47-.04-.78.55-1.64 2.34-1.74.2-.01.41-.02.6-.02.65 0 1.26.06 1.81.18-.21 2.57-1.41 2.99-2.48 3.05" />
   </svg>
 );
@@ -299,12 +434,188 @@ export default function ExplorePage({ isOpen, onClose }) {
   const [legalModal, setLegalModal] = useState(null);
   const [activeLegalTab, setActiveLegalTab] = useState('terms');
 
-  // Gallery items states
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Gallery items states with instant localStorage caching for lightning fast initial load
+  const [items, setItems] = useState(() => {
+    try {
+      const cached = localStorage.getItem('vignette_explore_items');
+      return cached ? JSON.parse(cached) : [];
+    } catch {
+      return [];
+    }
+  });
+  const [loading, setLoading] = useState(() => {
+    try {
+      const cached = localStorage.getItem('vignette_explore_items');
+      return !cached || JSON.parse(cached).length === 0;
+    } catch {
+      return true;
+    }
+  });
 
-  // Lightbox index
+  // Lightbox index & animation direction
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [slideDirection, setSlideDirection] = useState(null); // 'next' | 'prev' | null
+  const touchStartXRef = useRef(0);
+
+  // Influencer Collabs (9:16 portrait video cards)
+  const [influencerItems, setInfluencerItems] = useState(() => {
+    try {
+      const cached = localStorage.getItem('vignette_influencer_items');
+      return cached ? JSON.parse(cached) : MOCK_INFLUENCER_ITEMS;
+    } catch {
+      return MOCK_INFLUENCER_ITEMS;
+    }
+  });
+  const [influencerModalIndex, setInfluencerModalIndex] = useState(null);
+  const [influencerSlideDirection, setInfluencerSlideDirection] = useState(null); // 'next' | 'prev' | null
+  const [isInfluencerMuted, setIsInfluencerMuted] = useState(false);
+
+  // Fetch influencer_videos from Supabase (with automatic fallback to mock items)
+  useEffect(() => {
+    async function fetchInfluencerVideos() {
+      if (!exploreSupabase) return;
+      try {
+        let { data, error } = await exploreSupabase
+          .from('influencer_videos')
+          .select('*');
+
+        if (error || !data || data.length === 0) {
+          const alt = await exploreSupabase
+            .from('influencers')
+            .select('*');
+          if (!alt.error && alt.data && alt.data.length > 0) {
+            data = alt.data;
+          }
+        }
+
+        if (data && data.length > 0) {
+          const dbInf = data.slice(0, 6).map(item => ({
+            id: item.id || item.title,
+            title: item.title || 'Influencer Edit',
+            creator: item.creator || item.influencer || item.handle || '@vignetteworks',
+            category: item.category || 'Reel / 9:16',
+            likes: item.likes ?? 150,
+            media_url: item.media_url || item.image_url || item.thumbnail || item.url || item.src || '',
+            video_url: item.video_url || item.media_url || item.url || item.src || ''
+          }));
+          setInfluencerItems(dbInf);
+          try {
+            localStorage.setItem('vignette_influencer_items', JSON.stringify(dbInf));
+          } catch (e) {}
+        }
+      } catch (err) {
+        console.warn('[ExplorePage] Influencer videos fetch fallback used:', err.message);
+      }
+    }
+
+    fetchInfluencerVideos();
+  }, []);
+
+  // Vignette Originals (9:16 portrait video cards)
+  const [originalsItems, setOriginalsItems] = useState(() => {
+    try {
+      const cached = localStorage.getItem('vignette_originals_items');
+      return cached ? JSON.parse(cached) : MOCK_ORIGINALS_ITEMS;
+    } catch {
+      return MOCK_ORIGINALS_ITEMS;
+    }
+  });
+  const [originalsModalIndex, setOriginalsModalIndex] = useState(null);
+  const [originalsSlideDirection, setOriginalsSlideDirection] = useState(null); // 'next' | 'prev' | null
+
+  // Fetch vignette_originals from Supabase (with automatic fallback)
+  useEffect(() => {
+    async function fetchOriginalsVideos() {
+      if (!exploreSupabase) return;
+      try {
+        let { data, error } = await exploreSupabase
+          .from('vignette_originals')
+          .select('*');
+
+        if (error || !data || data.length === 0) {
+          const alt = await exploreSupabase
+            .from('originals_videos')
+            .select('*');
+          if (!alt.error && alt.data && alt.data.length > 0) {
+            data = alt.data;
+          }
+        }
+
+        if (data && data.length > 0) {
+          const dbOrig = data.map((item, idx) => ({
+            id: item.id || `orig-db-${idx}`,
+            title: item.title || `Original Reel ${idx + 1}`,
+            creator: item.creator || '@vignette.originals',
+            category: item.category || 'Vignette Original',
+            likes: item.likes || 140 + idx * 12,
+            media_url: item.media_url || item.thumbnail_url || MOCK_ORIGINALS_ITEMS[idx % MOCK_ORIGINALS_ITEMS.length].media_url,
+            video_url: item.video_url || MOCK_ORIGINALS_ITEMS[idx % MOCK_ORIGINALS_ITEMS.length].video_url
+          }));
+          setOriginalsItems(dbOrig);
+          try {
+            localStorage.setItem('vignette_originals_items', JSON.stringify(dbOrig));
+          } catch (e) {}
+        }
+      } catch (err) {
+        console.warn('[ExplorePage] Vignette originals fetch fallback used:', err.message);
+      }
+    }
+
+    fetchOriginalsVideos();
+  }, []);
+
+  const openLightbox = useCallback((index) => {
+    setSlideDirection(null);
+    setLightboxIndex(index);
+  }, []);
+
+  // Keyboard navigation for Lightbox, Influencer, & Vignette Originals Modals
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (originalsModalIndex !== null) {
+        if (e.key === 'ArrowLeft' && originalsModalIndex > 0) {
+          setOriginalsSlideDirection('prev');
+          setOriginalsModalIndex(prev => prev - 1);
+        } else if (e.key === 'ArrowRight' && originalsModalIndex < originalsItems.length - 1) {
+          setOriginalsSlideDirection('next');
+          setOriginalsModalIndex(prev => prev + 1);
+        } else if (e.key === 'Escape') {
+          setOriginalsModalIndex(null);
+        }
+        return;
+      }
+
+      if (influencerModalIndex !== null) {
+        if (e.key === 'ArrowLeft' && influencerModalIndex > 0) {
+          setInfluencerSlideDirection('prev');
+          setInfluencerModalIndex(prev => prev - 1);
+        } else if (e.key === 'ArrowRight' && influencerModalIndex < influencerItems.length - 1) {
+          setInfluencerSlideDirection('next');
+          setInfluencerModalIndex(prev => prev + 1);
+        } else if (e.key === 'Escape') {
+          setInfluencerModalIndex(null);
+        }
+        return;
+      }
+
+      if (lightboxIndex !== null) {
+        if (e.key === 'ArrowLeft' && lightboxIndex > 0) {
+          setSlideDirection('prev');
+          setLightboxIndex(prev => prev - 1);
+        } else if (e.key === 'ArrowRight' && lightboxIndex < items.length - 1) {
+          setSlideDirection('next');
+          setLightboxIndex(prev => prev + 1);
+        } else if (e.key === 'Escape') {
+          setLightboxIndex(null);
+        }
+      }
+    };
+
+    if (lightboxIndex !== null || influencerModalIndex !== null || originalsModalIndex !== null) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex, items.length, influencerModalIndex, influencerItems.length, originalsModalIndex, originalsItems.length]);
 
   // Content Protection Toast State
   const [toast, setToast] = useState({ show: false, message: '' });
@@ -404,16 +715,37 @@ export default function ExplorePage({ isOpen, onClose }) {
       }
     };
 
+    const handleKeyDownProtection = (e) => {
+      const isCmdOrCtrl = e.ctrlKey || e.metaKey;
+      const isPKey = e.key === 'p' || e.key === 'P' || e.keyCode === 80 || e.code === 'KeyP';
+      const isPrintScreen = e.key === 'PrintScreen' || e.key === 'Snapshot' || e.keyCode === 44 || e.code === 'PrintScreen';
+
+      if ((isCmdOrCtrl && isPKey) || isPrintScreen) {
+        e.preventDefault();
+        e.stopPropagation();
+        showToast("Not allowed! Content Protection enabled");
+      }
+    };
+
+    const handleBeforePrint = (e) => {
+      e.preventDefault();
+      showToast("Not allowed! Content Protection enabled");
+    };
+
     window.addEventListener('contextmenu', handleContextMenu);
     window.addEventListener('copy', handleCopy);
     window.addEventListener('cut', handleCut);
     window.addEventListener('dragstart', handleDragStart);
+    window.addEventListener('keydown', handleKeyDownProtection);
+    window.addEventListener('beforeprint', handleBeforePrint);
 
     return () => {
       window.removeEventListener('contextmenu', handleContextMenu);
       window.removeEventListener('copy', handleCopy);
       window.removeEventListener('cut', handleCut);
       window.removeEventListener('dragstart', handleDragStart);
+      window.removeEventListener('keydown', handleKeyDownProtection);
+      window.removeEventListener('beforeprint', handleBeforePrint);
     };
   }, []);
 
@@ -446,53 +778,85 @@ export default function ExplorePage({ isOpen, onClose }) {
     window.scrollTo(0, 0);
   }, [isOpen]);
 
-  // Fetch items from database (explore_gallery or fallback to gallery_items + mocks)
+  // Fetch items exclusively from vignette-explore-gallery Supabase project
   useEffect(() => {
-    async function fetchExploreGallery() {
-      setLoading(true);
-      const mergedList = [...MOCK_EXPLORE_GRID];
+    let channel = null;
 
-      if (!supabase) {
-        setItems(mergedList);
+    async function fetchExploreGallery() {
+      if (!exploreSupabase) {
+        setItems([]);
         setLoading(false);
         return;
       }
 
       try {
-        // Try fetching explore_items or explore_gallery
-        let { data, error } = await supabase
-          .from('explore_gallery')
+        let { data, error } = await exploreSupabase
+          .from('gallery_items')
           .select('*');
 
         if (error) {
-          // Try alternative table
-          const fallbackQuery = await supabase.from('gallery_items').select('*');
-          if (fallbackQuery.error) throw fallbackQuery.error;
-          data = fallbackQuery.data;
+          const alt = await exploreSupabase
+            .from('explore_gallery')
+            .select('*');
+
+          if (!alt.error && alt.data) {
+            data = alt.data;
+          }
         }
 
         if (data && data.length > 0) {
-          // Merge database items at the front
           const dbItems = data.map(item => ({
-            id: item.id,
-            title: item.title,
-            category: item.category,
-            likes: item.likes || Math.floor(Math.random() * 80) + 20,
-            media_url: item.media_url
+            id: item.id || item.title,
+            title: item.title || 'Untitled',
+            category: item.category || 'Gallery',
+            likes: item.likes ?? 0,
+            media_url: item.media_url || item.image_url || item.url || item.image || item.src || ''
           }));
-          setItems([...dbItems, ...mergedList]);
+          setItems(dbItems);
+          try {
+            localStorage.setItem('vignette_explore_items', JSON.stringify(dbItems));
+          } catch (e) {
+            console.warn('[ExplorePage] Failed to save cache:', e);
+          }
         } else {
-          setItems(mergedList);
+          setItems([]);
         }
       } catch (err) {
-        console.warn('[ExplorePage] Supabase fetch failed, using fallback mocks:', err.message);
-        setItems(mergedList);
+        console.warn('[ExplorePage] Supabase fetch error:', err.message);
       } finally {
         setLoading(false);
       }
     }
 
     fetchExploreGallery();
+
+    if (exploreSupabase) {
+      try {
+        channel = exploreSupabase
+          .channel('explore-gallery-live')
+          .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: 'gallery_items' },
+            () => {
+              fetchExploreGallery();
+            }
+          )
+          .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: 'explore_gallery' },
+            () => {
+              fetchExploreGallery();
+            }
+          )
+          .subscribe();
+      } catch (_) {}
+    }
+
+    return () => {
+      if (channel && exploreSupabase) {
+        exploreSupabase.removeChannel(channel);
+      }
+    };
   }, []);
 
   // Filtering and sorting logic
@@ -581,7 +945,7 @@ export default function ExplorePage({ isOpen, onClose }) {
     return pages;
   };
 
-  const categories = ['All', 'Travel', 'Lifestyle', 'Avgeek', 'Storytelling'];
+  const categories = ['All', 'Travel', 'Lifestyle', 'Avgeek', 'Storytelling', 'Festivals'];
 
   return (
     <div className="dark min-h-screen w-full max-w-full text-zinc-100 relative bg-dark-theme font-brand">
@@ -616,7 +980,7 @@ export default function ExplorePage({ isOpen, onClose }) {
 
       {/* 0.1. PROTECTED TOAST NOTIFICATION BANNER */}
       <div
-        className={`fixed left-1/2 -translate-x-1/2 z-[10000] bg-[#990000] text-white font-brand font-extrabold px-5 py-2.5 shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
+        className={`fixed left-1/2 -translate-x-1/2 z-[10000] bg-[#D10000] text-white font-brand font-extrabold px-5 py-2.5 shadow-2xl flex items-center gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
           ? 'top-20 opacity-100 translate-y-0 scale-100'
           : 'top-20 opacity-0 -translate-y-4 scale-95'
           }`}
@@ -690,9 +1054,9 @@ export default function ExplorePage({ isOpen, onClose }) {
             <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-[#d10000] dark:text-[#ffec4e] select-none">
               Explore Gallery
             </span>
-            <h1 className="font-heading font-black text-4xl sm:text-5xl lg:text-6xl text-zinc-950 dark:text-white leading-[1.08] tracking-tight">
-              MOMENTS.<br />
-              STORIES.<br />
+            <h1 className="font-['Mulish',sans-serif] font-[750] text-4xl sm:text-5xl lg:text-6xl text-zinc-950 dark:text-white leading-[1.08] tracking-tight">
+              Moments.<br />
+              Stories.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e] font-brand font-semibold">Vignette.</span>
             </h1>
             <p className="font-body text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed text-center md:text-left max-w-[280px] sm:max-w-[320px] md:max-w-sm mx-auto md:mx-0">
@@ -817,8 +1181,10 @@ export default function ExplorePage({ isOpen, onClose }) {
         </div>
       </section>
 
+
+
       {/* 4. SEARCH, FILTERS & GRID CONTROLS */}
-      <section className="py-6 sm:py-8 bg-transparent border-y border-zinc-200 dark:border-white/5 relative z-10 select-none">
+      <section className="py-6 sm:py-8 bg-transparent relative z-10 select-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-5">
           
           {/* Top Line: Search (Left) & Mobile Toggle (Right) */}
@@ -889,9 +1255,16 @@ export default function ExplorePage({ isOpen, onClose }) {
           </div>
 
           {/* Centered Category Pills (Collapsible on mobile, always visible on md+) */}
-          <div className={`transition-all duration-300 border-t border-zinc-200/50 dark:border-white/5 pt-4 ${
-            showMobileFilters ? 'block' : 'hidden md:block'
+          <div className={`transition-all duration-300 pt-4 flex flex-col items-center gap-3 ${
+            showMobileFilters ? 'flex' : 'hidden md:flex'
           }`}>
+            <h2 className="font-['Mulish',sans-serif] font-semibold text-2xl sm:text-4xl lg:text-5xl tracking-tight text-center mb-1 sm:mb-2">
+              <span className="text-[#FFD700]">Curated</span>{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-600 dark:from-white dark:via-zinc-200 dark:to-zinc-400">
+                Collections
+              </span>
+            </h2>
+
             <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-full">
               {categories.map((category) => {
                 const isActive = activeTab.toLowerCase() === category.toLowerCase();
@@ -899,10 +1272,10 @@ export default function ExplorePage({ isOpen, onClose }) {
                   <button
                     key={category}
                     onClick={() => setActiveTab(category)}
-                    className={`px-3 py-1.5 rounded-full font-brand font-black text-[9px] sm:text-[10.5px] tracking-wide transition-all duration-300 cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-full font-['Mulish',sans-serif] font-normal text-[9px] sm:text-[10.5px] tracking-wide transition-all duration-300 cursor-pointer ${
                       isActive
                         ? 'bg-zinc-950 text-white dark:bg-[#ffec4e] dark:text-black shadow-md'
-                        : 'bg-white hover:bg-zinc-50 border border-zinc-200 dark:bg-zinc-900/50 dark:hover:bg-zinc-800/50 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200'
+                        : 'bg-white hover:bg-zinc-50 border border-zinc-200 dark:bg-[#353935] dark:hover:bg-[#404440] dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200'
                     }`}
                   >
                     {category}
@@ -919,8 +1292,8 @@ export default function ExplorePage({ isOpen, onClose }) {
       <section className="py-12 min-h-[400px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {loading ? (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, idx) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, idx) => (
                 <div key={idx} className="aspect-square bg-zinc-200 dark:bg-zinc-800 rounded-xl animate-pulse" />
               ))}
             </div>
@@ -932,37 +1305,21 @@ export default function ExplorePage({ isOpen, onClose }) {
             </div>
           ) : (
             <>
-              {/* MOBILE VIEW LAYOUT: Horizontal row list cards */}
-              <div className="md:hidden flex flex-col gap-4">
+              {/* MOBILE VIEW LAYOUT: 2 Column photo grid (Text details shown on click in Lightbox) */}
+              <div className="md:hidden grid grid-cols-2 gap-3">
                 {pagedItems.map((item) => (
                   <div
                     key={item.id}
-                    onClick={() => setLightboxIndex(filteredItems.indexOf(item))}
-                    className="flex gap-4 p-3.5 rounded-2xl bg-[#fdfbf7] dark:bg-zinc-900/40 border border-black/5 dark:border-white/5 items-center cursor-pointer shadow-sm hover:shadow-md transition-all select-none active:scale-[0.98]"
+                    onClick={() => openLightbox(filteredItems.indexOf(item))}
+                    className="group relative rounded-xl overflow-hidden aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm active:scale-[0.98] transition-all select-none"
                   >
-                    {/* Left Thumbnail (Increased size) */}
-                    <div className="w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-black/5 dark:border-white/5">
-                      <img 
-                        src={item.media_url} 
-                        alt={item.title} 
-                        className="w-full h-full object-cover" 
-                        loading="lazy"
-                        draggable="false"
-                      />
-                    </div>
-                    {/* Right Details (Decreased and adjusted text size) */}
-                    <div className="flex flex-col gap-1 items-start text-left flex-1 min-w-0">
-                      <span className="text-[7.5px] font-black uppercase tracking-widest text-[#D10000] dark:text-[#ffec4e]">
-                        {item.category}
-                      </span>
-                      <h4 className="font-heading font-black text-xs text-zinc-900 dark:text-white leading-snug line-clamp-2 w-full">
-                        {item.title}
-                      </h4>
-                      <div className="flex items-center gap-1 text-zinc-500 dark:text-zinc-400 text-[10px] mt-1">
-                        <Heart className="w-3 h-3 text-rose-500 fill-rose-500" />
-                        <span className="font-extrabold text-[9.5px] text-zinc-700 dark:text-zinc-300">{item.likes}</span>
-                      </div>
-                    </div>
+                    <img 
+                      src={item.media_url} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover select-none pointer-events-none" 
+                      loading="lazy"
+                      draggable="false"
+                    />
                   </div>
                 ))}
               </div>
@@ -976,7 +1333,7 @@ export default function ExplorePage({ isOpen, onClose }) {
                 {pagedItems.map((item) => (
                   <div
                     key={item.id}
-                    onClick={() => setLightboxIndex(filteredItems.indexOf(item))}
+                    onClick={() => openLightbox(filteredItems.indexOf(item))}
                     className={`group relative rounded-xl overflow-hidden aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out select-none animate-scaleUp`}
                   >
                     <img
@@ -1061,13 +1418,13 @@ export default function ExplorePage({ isOpen, onClose }) {
               {/* DESKTOP VIEW LAYOUT: Masonry Cards photo grid (Unpaginated) */}
               <div className={`hidden lg:grid gap-4 sm:gap-6 transition-all duration-300 ${
                 isGridLayout 
-                  ? 'lg:grid-cols-4 xl:grid-cols-5' 
-                  : 'lg:grid-cols-2 xl:grid-cols-3'
+                  ? 'lg:grid-cols-3 xl:grid-cols-3' 
+                  : 'lg:grid-cols-2 xl:grid-cols-4'
               }`}>
                 {filteredItems.map((item, idx) => (
                   <div
                     key={item.id}
-                    onClick={() => setLightboxIndex(idx)}
+                    onClick={() => openLightbox(idx)}
                     className={`group relative rounded-xl overflow-hidden aspect-[4/3] bg-zinc-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 ease-out select-none animate-scaleUp`}
                   >
                     <img
@@ -1104,25 +1461,482 @@ export default function ExplorePage({ isOpen, onClose }) {
         </div>
       </section>
 
+      {/* 5.5 INFLUENCER & CREATOR REELS SECTION (3x2 Portrait 9:16 Grid) */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-transparent via-black/40 to-transparent relative z-10 font-brand">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10">
+          
+          {/* Section Header */}
+          <div className="flex flex-col items-center text-center gap-3">
+
+            <h2 className="font-['Mulish',sans-serif] font-semibold text-2xl sm:text-4xl lg:text-5xl tracking-tight text-center">
+              <span className="text-[#FFD700]">Featured</span>{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-600 dark:from-white dark:via-zinc-200 dark:to-zinc-400">
+                Reels & Collabs
+              </span>
+            </h2>
+            
+            <p className="text-zinc-400 font-body text-xs sm:text-sm max-w-2xl leading-relaxed">
+              Out of all, here are some of our works with influencers and creators.
+            </p>
+          </div>
+
+          {/* 3x2 Portrait Grid: Mobile = 2 columns, Large screen = 3 columns */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            {influencerItems.slice(0, 6).map((item, idx) => (
+              <div
+                key={item.id || idx}
+                onClick={() => setInfluencerModalIndex(idx)}
+                className="group relative rounded-2xl overflow-hidden aspect-[9/16] bg-zinc-900 border border-white/10 shadow-xl hover:shadow-2xl hover:border-[#FFD700]/50 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer select-none active:scale-[0.98]"
+              >
+                {/* Background Image / Video Thumbnail */}
+                <img
+                  src={item.media_url}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+                  loading="lazy"
+                  draggable="false"
+                />
+
+                {/* Gradient Darkness Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-between p-4 sm:p-5 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Top Badge: Featured Indicator */}
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 shadow-md">
+                  <span className="w-2 h-2 rounded-full bg-[#D10000] dark:bg-[#FFD700] animate-ping" />
+                  <span className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-white">Featured</span>
+                </div>
+
+                {/* Center Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-2xl group-hover:scale-115 group-hover:bg-[#D10000] dark:group-hover:bg-[#FFD700] group-hover:text-black group-hover:border-transparent transition-all duration-300">
+                    <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-current ml-0.5" />
+                  </div>
+                </div>
+
+                {/* Bottom Details Deck */}
+                <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-5 flex flex-col gap-1 z-10 text-left">
+                  <span className="font-brand font-black text-[9px] sm:text-[11px] text-[#FFD700] dark:text-[#ffec4e] tracking-wider uppercase truncate">
+                    {item.creator || '@influencer'}
+                  </span>
+                  <h3 className="font-heading font-black text-xs sm:text-base text-white leading-tight line-clamp-2 uppercase">
+                    {item.title}
+                  </h3>
+                  <div className="flex items-center justify-between text-zinc-400 text-[10px] sm:text-xs mt-1">
+                    <span className="text-zinc-300 font-extrabold text-[9px] sm:text-[10.5px]">{item.category}</span>
+                    <div className="flex items-center gap-1 text-rose-400">
+                      <Heart className="w-3 h-3 fill-rose-500 text-rose-500" />
+                      <span className="font-bold text-zinc-200 text-[10px]">{item.likes}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5.6 VIGNETTE ORIGINALS SECTION (3x2 Portrait 9:16 Grid) */}
+      <section className="py-16 md:py-24 bg-gradient-to-b from-transparent via-black/40 to-transparent relative z-10 font-brand">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10">
+          
+          {/* Section Header */}
+          <div className="flex flex-col items-center text-center gap-3">
+            <h2 className="font-semibold text-2xl sm:text-4xl lg:text-5xl tracking-tight text-center">
+              <span className="font-brand font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#ffec4e]">Vignette</span>{' '}
+              <span className="font-['Mulish',sans-serif] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-600 dark:from-white dark:via-zinc-200 dark:to-zinc-400">
+                Originals
+              </span>
+            </h2>
+            
+            <p className="text-zinc-400 font-body text-xs sm:text-sm max-w-2xl leading-relaxed">
+              Discover signature original short films, behind-the-scenes stories, and creative productions crafted by Vignette.
+            </p>
+          </div>
+
+          {/* 3x2 Portrait Grid: Mobile = 2 columns, Large screen = 3 columns */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            {originalsItems.slice(0, 6).map((item, idx) => (
+              <div
+                key={item.id || idx}
+                onClick={() => setOriginalsModalIndex(idx)}
+                className="group relative rounded-2xl overflow-hidden aspect-[9/16] bg-zinc-900 border border-white/10 shadow-xl hover:shadow-2xl hover:border-[#ffec4e]/50 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer select-none active:scale-[0.98]"
+              >
+                {/* Background Image / Video Thumbnail */}
+                <img
+                  src={item.media_url}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+                  loading="lazy"
+                  draggable="false"
+                />
+
+                {/* Gradient Darkness Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-between p-4 sm:p-5 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
+
+                {/* Top Badge: Signature Indicator */}
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 shadow-md">
+                  <span className="w-2 h-2 rounded-full bg-[#e31c25] animate-ping" />
+                  <span className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-white">Signature</span>
+                </div>
+
+                {/* Center Play Button Overlay */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-2xl group-hover:scale-115 group-hover:bg-[#e31c25] dark:group-hover:bg-[#ffec4e] group-hover:text-black group-hover:border-transparent transition-all duration-300">
+                    <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-current ml-0.5" />
+                  </div>
+                </div>
+
+                {/* Bottom Details Deck */}
+                <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-5 flex flex-col gap-1 z-10 text-left">
+                  <span className="font-brand font-black text-[9px] sm:text-[11px] text-[#ffec4e] tracking-wider uppercase truncate">
+                    {item.creator || '@vignette.originals'}
+                  </span>
+                  <h3 className="font-heading font-black text-xs sm:text-base text-white leading-tight line-clamp-2 uppercase">
+                    {item.title}
+                  </h3>
+                  <div className="flex items-center justify-between text-zinc-400 text-[10px] sm:text-xs mt-1">
+                    <span className="text-zinc-300 font-extrabold text-[9px] sm:text-[10.5px]">{item.category}</span>
+                    <div className="flex items-center gap-1 text-rose-400">
+                      <Heart className="w-3 h-3 fill-rose-500 text-rose-500" />
+                      <span className="font-bold text-zinc-200 text-[10px]">{item.likes}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5.6 INFLUENCER 9:16 VIDEO LIGHTBOX MODAL */}
+      {influencerModalIndex !== null && (() => {
+        const activeInf = influencerItems[influencerModalIndex];
+        if (!activeInf) return null;
+
+        const isFirstInf = influencerModalIndex === 0;
+        const isLastInf = influencerModalIndex === influencerItems.length - 1;
+
+        const handlePrevInf = (e) => {
+          if (e) e.stopPropagation();
+          if (!isFirstInf) {
+            setInfluencerSlideDirection('prev');
+            setInfluencerModalIndex(prev => prev - 1);
+          }
+        };
+
+        const handleNextInf = (e) => {
+          if (e) e.stopPropagation();
+          if (!isLastInf) {
+            setInfluencerSlideDirection('next');
+            setInfluencerModalIndex(prev => prev + 1);
+          }
+        };
+
+        const infAnimationClass = influencerSlideDirection === 'next'
+          ? 'animate-slide-right'
+          : influencerSlideDirection === 'prev'
+          ? 'animate-slide-left'
+          : 'animate-scaleUp';
+
+        return (
+          <div
+            className="fixed inset-0 z-[1600] flex flex-col items-center justify-center bg-black/95 p-4 sm:p-6 select-none font-brand animate-fadeIn"
+            onClick={() => setInfluencerModalIndex(null)}
+            onTouchStart={(e) => {
+              touchStartXRef.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const touchEndX = e.changedTouches[0].clientX;
+              const diff = touchStartXRef.current - touchEndX;
+              if (Math.abs(diff) > 40) {
+                if (diff > 0 && !isLastInf) {
+                  handleNextInf(e);
+                } else if (diff < 0 && !isFirstInf) {
+                  handlePrevInf(e);
+                }
+              }
+            }}
+          >
+            {/* Top Toolbar */}
+            <div className="absolute top-4 inset-x-0 px-4 sm:px-6 flex items-center justify-between text-white z-55">
+              <div className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 backdrop-blur-md">
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#FFD700]">
+                  Influencer Edit {influencerModalIndex + 1} / {influencerItems.length}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsInfluencerMuted(!isInfluencerMuted);
+                  }}
+                  className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                  title={isInfluencerMuted ? "Unmute" : "Mute"}
+                >
+                  {isInfluencerMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </button>
+                <button
+                  onClick={() => setInfluencerModalIndex(null)}
+                  className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                  title="Close reel"
+                >
+                  <X className="w-4 h-4 sm:w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* 9:16 Vertical Video Frame Wrapper */}
+            <div className="relative w-full max-w-sm aspect-[9/16] max-h-[78vh] flex items-center justify-center rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black" onClick={e => e.stopPropagation()}>
+              
+              {activeInf.video_url && (activeInf.video_url.endsWith('.mp4') || activeInf.video_url.includes('mixkit') || activeInf.video_url.includes('supabase')) ? (
+                <video
+                  key={activeInf.id || influencerModalIndex}
+                  src={activeInf.video_url}
+                  poster={activeInf.media_url}
+                  controls
+                  autoPlay
+                  loop
+                  muted={isInfluencerMuted}
+                  playsInline
+                  className={`w-full h-full object-cover ${infAnimationClass}`}
+                />
+              ) : (
+                <img
+                  key={activeInf.id || influencerModalIndex}
+                  src={activeInf.media_url}
+                  alt={activeInf.title}
+                  className={`w-full h-full object-cover ${infAnimationClass}`}
+                />
+              )}
+
+              {/* Prev / Next Chevrons */}
+              <button
+                onClick={handlePrevInf}
+                disabled={isFirstInf}
+                className={`absolute left-2 p-2.5 rounded-full border border-white/10 z-20 transition-all ${
+                  isFirstInf
+                    ? 'bg-black/20 text-white/20 cursor-not-allowed opacity-25 pointer-events-none'
+                    : 'bg-black/70 hover:bg-black/90 text-white hover:scale-110 active:scale-95 cursor-pointer'
+                }`}
+                aria-label="Previous reel"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={handleNextInf}
+                disabled={isLastInf}
+                className={`absolute right-2 p-2.5 rounded-full border border-white/10 z-20 transition-all ${
+                  isLastInf
+                    ? 'bg-black/20 text-white/20 cursor-not-allowed opacity-25 pointer-events-none'
+                    : 'bg-black/70 hover:bg-black/90 text-white hover:scale-110 active:scale-95 cursor-pointer'
+                }`}
+                aria-label="Next reel"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Bottom Caption Deck */}
+            <div className="mt-4 text-center max-w-sm px-4 flex flex-col items-center gap-1" onClick={e => e.stopPropagation()}>
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#FFD700]">
+                {activeInf.creator}
+              </span>
+              <h2 className="font-heading font-black text-sm sm:text-base text-white uppercase">
+                {activeInf.title}
+              </h2>
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* 5.7 VIGNETTE ORIGINALS 9:16 VIDEO LIGHTBOX MODAL */}
+      {originalsModalIndex !== null && (() => {
+        const activeOrig = originalsItems[originalsModalIndex];
+        if (!activeOrig) return null;
+
+        const isFirstOrig = originalsModalIndex === 0;
+        const isLastOrig = originalsModalIndex === originalsItems.length - 1;
+
+        const handlePrevOrig = (e) => {
+          if (e) e.stopPropagation();
+          if (!isFirstOrig) {
+            setOriginalsSlideDirection('prev');
+            setOriginalsModalIndex(prev => prev - 1);
+          }
+        };
+
+        const handleNextOrig = (e) => {
+          if (e) e.stopPropagation();
+          if (!isLastOrig) {
+            setOriginalsSlideDirection('next');
+            setOriginalsModalIndex(prev => prev + 1);
+          }
+        };
+
+        const origAnimationClass = originalsSlideDirection === 'next'
+          ? 'animate-slide-right'
+          : originalsSlideDirection === 'prev'
+          ? 'animate-slide-left'
+          : 'animate-scaleUp';
+
+        return (
+          <div
+            className="fixed inset-0 z-[1600] flex flex-col items-center justify-center bg-black/95 p-4 sm:p-6 select-none font-brand animate-fadeIn"
+            onClick={() => setOriginalsModalIndex(null)}
+            onTouchStart={(e) => {
+              touchStartXRef.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const touchEndX = e.changedTouches[0].clientX;
+              const diff = touchStartXRef.current - touchEndX;
+              if (Math.abs(diff) > 40) {
+                if (diff > 0 && !isLastOrig) {
+                  handleNextOrig(e);
+                } else if (diff < 0 && !isFirstOrig) {
+                  handlePrevOrig(e);
+                }
+              }
+            }}
+          >
+            {/* Top Toolbar */}
+            <div className="absolute top-4 inset-x-0 px-4 sm:px-6 flex items-center justify-between text-white z-55">
+              <div className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 backdrop-blur-md">
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#ffec4e]">
+                  Vignette Original {originalsModalIndex + 1} / {originalsItems.length}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsInfluencerMuted(!isInfluencerMuted);
+                  }}
+                  className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                  title={isInfluencerMuted ? "Unmute" : "Mute"}
+                >
+                  {isInfluencerMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </button>
+                <button
+                  onClick={() => setOriginalsModalIndex(null)}
+                  className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                  title="Close reel"
+                >
+                  <X className="w-4 h-4 sm:w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* 9:16 Vertical Video Frame Wrapper */}
+            <div className="relative w-full max-w-sm aspect-[9/16] max-h-[78vh] flex items-center justify-center rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black" onClick={e => e.stopPropagation()}>
+              
+              {activeOrig.video_url && (activeOrig.video_url.endsWith('.mp4') || activeOrig.video_url.includes('mixkit') || activeOrig.video_url.includes('supabase')) ? (
+                <video
+                  key={activeOrig.id || originalsModalIndex}
+                  src={activeOrig.video_url}
+                  poster={activeOrig.media_url}
+                  controls
+                  autoPlay
+                  loop
+                  muted={isInfluencerMuted}
+                  playsInline
+                  className={`w-full h-full object-cover ${origAnimationClass}`}
+                />
+              ) : (
+                <img
+                  key={activeOrig.id || originalsModalIndex}
+                  src={activeOrig.media_url}
+                  alt={activeOrig.title}
+                  className={`w-full h-full object-cover ${origAnimationClass}`}
+                />
+              )}
+
+              {/* Prev / Next Chevrons */}
+              <button
+                onClick={handlePrevOrig}
+                disabled={isFirstOrig}
+                className={`absolute left-2 p-2.5 rounded-full border border-white/10 z-20 transition-all ${
+                  isFirstOrig
+                    ? 'bg-black/20 text-white/20 cursor-not-allowed opacity-25 pointer-events-none'
+                    : 'bg-black/70 hover:bg-black/90 text-white hover:scale-110 active:scale-95 cursor-pointer'
+                }`}
+                aria-label="Previous reel"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={handleNextOrig}
+                disabled={isLastOrig}
+                className={`absolute right-2 p-2.5 rounded-full border border-white/10 z-20 transition-all ${
+                  isLastOrig
+                    ? 'bg-black/20 text-white/20 cursor-not-allowed opacity-25 pointer-events-none'
+                    : 'bg-black/70 hover:bg-black/90 text-white hover:scale-110 active:scale-95 cursor-pointer'
+                }`}
+                aria-label="Next reel"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Bottom Caption Deck */}
+            <div className="mt-4 text-center max-w-sm px-4 flex flex-col items-center gap-1" onClick={e => e.stopPropagation()}>
+              <span className="text-[10px] font-black uppercase tracking-widest text-[#ffec4e]">
+                {activeOrig.creator}
+              </span>
+              <h2 className="font-heading font-black text-sm sm:text-base text-white uppercase">
+                {activeOrig.title}
+              </h2>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* 6. LIGHTBOX VIEW CONTROLS */}
       {lightboxIndex !== null && (() => {
         const activeItem = filteredItems[lightboxIndex];
         if (!activeItem) return null;
 
+        const isFirstItem = lightboxIndex === 0;
+        const isLastItem = lightboxIndex === filteredItems.length - 1;
+
         const handlePrev = (e) => {
-          e.stopPropagation();
-          setLightboxIndex(prev => (prev === 0 ? filteredItems.length - 1 : prev - 1));
+          if (e) e.stopPropagation();
+          if (!isFirstItem) {
+            setSlideDirection('prev');
+            setLightboxIndex(prev => prev - 1);
+          }
         };
 
         const handleNext = (e) => {
-          e.stopPropagation();
-          setLightboxIndex(prev => (prev === filteredItems.length - 1 ? 0 : prev + 1));
+          if (e) e.stopPropagation();
+          if (!isLastItem) {
+            setSlideDirection('next');
+            setLightboxIndex(prev => prev + 1);
+          }
         };
+
+
 
         return (
           <div 
             className="fixed inset-0 z-[1500] flex flex-col items-center justify-center bg-black/95 p-4 sm:p-6 select-none font-brand animate-fadeIn"
             onClick={() => setLightboxIndex(null)}
+            onTouchStart={(e) => {
+              touchStartXRef.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const touchEndX = e.changedTouches[0].clientX;
+              const diff = touchStartXRef.current - touchEndX;
+              if (Math.abs(diff) > 40) {
+                if (diff > 0 && !isLastItem) {
+                  handleNext(e);
+                } else if (diff < 0 && !isFirstItem) {
+                  handlePrev(e);
+                }
+              }
+            }}
           >
             {/* Top Toolbar */}
             <div className="absolute top-4 inset-x-0 px-4 sm:px-6 flex items-center justify-between text-white z-55">
@@ -1138,44 +1952,74 @@ export default function ExplorePage({ isOpen, onClose }) {
               </button>
             </div>
 
-            {/* Content Wrapper */}
-            <div className="relative max-w-5xl w-full max-h-[70vh] sm:max-h-[80vh] flex items-center justify-center group" onClick={e => e.stopPropagation()}>
-              
-              {/* Media Element */}
-              <img
-                src={activeItem.media_url}
-                alt={activeItem.title}
-                className="max-w-full max-h-[70vh] sm:max-h-[80vh] object-contain rounded-xl border border-white/10 shadow-2xl animate-scaleUp"
-              />
-
-              {/* Navigation Chevrons */}
-              <button
-                onClick={handlePrev}
-                className="absolute left-2 sm:left-4 p-2.5 sm:p-3.5 rounded-full bg-black/60 hover:bg-black/85 text-white hover:scale-110 active:scale-95 transition-all z-20 border border-white/5 cursor-pointer"
-                aria-label="Previous vignette image"
+            {/* Horizontal Slider Track Viewport */}
+            <div
+              className="w-full h-[80vh] overflow-hidden relative flex items-center select-none"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div
+                className="flex items-center h-full transition-transform duration-300 ease-out transform-gpu"
+                style={{
+                  width: `${filteredItems.length * 100}vw`,
+                  transform: `translateX(-${lightboxIndex * 100}vw)`
+                }}
               >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={handleNext}
-                className="absolute right-2 sm:right-4 p-2.5 sm:p-3.5 rounded-full bg-black/60 hover:bg-black/85 text-white hover:scale-110 active:scale-95 transition-all z-20 border border-white/5 cursor-pointer"
-                aria-label="Next vignette image"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
+                {filteredItems.map((item, idx) => (
+                  <div
+                    key={item.id || idx}
+                    className="w-[100vw] h-full flex items-center justify-center shrink-0 px-14 sm:px-20"
+                  >
+                    <div className="relative inline-flex items-center justify-center max-w-full max-h-[80vh]">
+                      <img
+                        src={item.media_url}
+                        alt={item.title || `Gallery item ${idx + 1}`}
+                        onError={(e) => {
+                          const fallback = getLocalFallbackUrl(item);
+                          if (fallback && !e.currentTarget.src.endsWith(fallback)) {
+                            e.currentTarget.src = fallback;
+                          }
+                        }}
+                        className="max-w-full max-h-[80vh] rounded-xl object-contain shadow-2xl border border-white/10 select-none pointer-events-none"
+                        draggable="false"
+                      />
 
-            {/* Bottom Caption Deck */}
-            <div className="mt-6 text-center max-w-xl px-4 flex flex-col items-center gap-1.5" onClick={e => e.stopPropagation()}>
-              <span className="text-[10px] font-black uppercase tracking-widest text-brand-darkGold dark:text-[#ffec4e]">
-                {activeItem.category}
-              </span>
-              <h2 className="font-heading font-black text-base sm:text-xl md:text-2xl tracking-tight text-white leading-tight uppercase">
-                {activeItem.title}
-              </h2>
-              <div className="flex items-center gap-1.5 text-zinc-400 text-xs mt-1.5">
-                <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 shrink-0" />
-                <span className="font-bold text-zinc-300">{activeItem.likes} likes</span>
+                      {/* Top Right Watermark */}
+                      <div className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 z-20 pointer-events-none select-none">
+                        <span className="font-['Nunito',sans-serif] font-semibold text-[10px] sm:text-xs md:text-sm tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#FFBF00]">
+                          Vignette
+                        </span>
+                      </div>
+
+                      {/* Prev Button — positioned outside frame with red-to-black top-left to bottom-right gradient */}
+                      <button
+                        onClick={handlePrev}
+                        disabled={isFirstItem}
+                        className={`absolute -left-12 sm:-left-14 lg:-left-16 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-gradient-to-br from-[#e31c25] to-[#000000] border border-white/20 z-30 transition-all ${
+                          isFirstItem
+                            ? 'opacity-30 cursor-not-allowed pointer-events-none'
+                            : 'hover:scale-110 active:scale-95 cursor-pointer shadow-xl hover:shadow-red-500/20'
+                        }`}
+                        aria-label="Previous vignette image"
+                      >
+                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                      </button>
+
+                      {/* Next Button — positioned outside frame with red-to-black top-left to bottom-right gradient */}
+                      <button
+                        onClick={handleNext}
+                        disabled={isLastItem}
+                        className={`absolute -right-12 sm:-right-14 lg:-right-16 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-gradient-to-br from-[#e31c25] to-[#000000] border border-white/20 z-30 transition-all ${
+                          isLastItem
+                            ? 'opacity-30 cursor-not-allowed pointer-events-none'
+                            : 'hover:scale-110 active:scale-95 cursor-pointer shadow-xl hover:shadow-red-500/20'
+                        }`}
+                        aria-label="Next vignette image"
+                      >
+                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -1183,7 +2027,7 @@ export default function ExplorePage({ isOpen, onClose }) {
       })()}
 
       {/* 7. FOOTER */}
-      <footer className="border-t-[0.5px] border-white/10 py-16 select-none bg-transparent text-zinc-300 transition-colors overflow-x-hidden relative z-10 font-brand">
+      <footer className="py-16 select-none bg-transparent text-zinc-300 transition-colors overflow-x-hidden relative z-10 font-brand">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12">
 
           {/* Main Footer columns row */}
@@ -1263,7 +2107,7 @@ export default function ExplorePage({ isOpen, onClose }) {
               </h4>
               <p className="flex items-start gap-3 font-body text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 <MapPin className="w-4 h-4 text-[#D10000] dark:text-[#FFD700] mt-0.5 flex-shrink-0" />
-                <span>Ramnagar, Agartala, Tripura(W) - 799002</span>
+                <span>Chennai, Tamil Nadu, India</span>
               </p>
             </div>
 
@@ -1278,8 +2122,8 @@ export default function ExplorePage({ isOpen, onClose }) {
               <svg width="0" height="0" className="absolute">
                 <defs>
                   <linearGradient id="social-icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor={isDark ? '#D10000' : '#000000'} />
-                    <stop offset="100%" stopColor={isDark ? '#e67e22' : '#D10000'} />
+                    <stop offset="0%" stopColor={isDark ? '#e31c25' : '#000000'} />
+                    <stop offset="100%" stopColor={isDark ? '#FFBF00' : '#D10000'} />
                   </linearGradient>
                 </defs>
               </svg>

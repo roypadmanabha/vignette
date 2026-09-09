@@ -630,12 +630,43 @@ form textarea {
   }
 }
 
-/* 2-Second Loader Progress Bar Animation */
+/* 1-Second Loader Progress Bar Animation */
 @keyframes loaderProgress {
   from { width: 0%; }
   to { width: 100%; }
 }
 
 .animate-loaderProgress {
-  animation: loaderProgress 2s linear forwards;
+  animation: loaderProgress 1s linear forwards;
+}
+
+/* Gallery Lightbox Slide Animations */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(120px) scale(0.96);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-120px) scale(0.96);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-slide-right {
+  animation: slideInFromRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-left {
+  animation: slideInFromLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

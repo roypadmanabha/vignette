@@ -426,16 +426,37 @@ export default function AvgeekConnect({ isOpen, onClose }) {
       }
     };
 
+    const handleKeyDownProtection = (e) => {
+      const isCmdOrCtrl = e.ctrlKey || e.metaKey;
+      const isPKey = e.key === 'p' || e.key === 'P' || e.keyCode === 80 || e.code === 'KeyP';
+      const isPrintScreen = e.key === 'PrintScreen' || e.key === 'Snapshot' || e.keyCode === 44 || e.code === 'PrintScreen';
+
+      if ((isCmdOrCtrl && isPKey) || isPrintScreen) {
+        e.preventDefault();
+        e.stopPropagation();
+        showProtectionToast("Not allowed! Content Protection enabled");
+      }
+    };
+
+    const handleBeforePrint = (e) => {
+      e.preventDefault();
+      showProtectionToast("Not allowed! Content Protection enabled");
+    };
+
     window.addEventListener('contextmenu', handleContextMenu);
     window.addEventListener('copy', handleCopy);
     window.addEventListener('cut', handleCut);
     window.addEventListener('dragstart', handleDragStart);
+    window.addEventListener('keydown', handleKeyDownProtection);
+    window.addEventListener('beforeprint', handleBeforePrint);
 
     return () => {
       window.removeEventListener('contextmenu', handleContextMenu);
       window.removeEventListener('copy', handleCopy);
       window.removeEventListener('cut', handleCut);
       window.removeEventListener('dragstart', handleDragStart);
+      window.removeEventListener('keydown', handleKeyDownProtection);
+      window.removeEventListener('beforeprint', handleBeforePrint);
     };
   }, []);
 
@@ -2463,7 +2484,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                   </h4>
                   <p className="flex items-start gap-2.5 sm:gap-3 font-body text-[10px] sm:text-xs text-zinc-400 leading-relaxed">
                     <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#ffec4e] mt-0.5 flex-shrink-0" />
-                    <span>Ramnagar, Agartala, Tripura(W) - 799002</span>
+                    <span>Chennai, Tamil Nadu, India</span>
                   </p>
                 </div>
 
@@ -3005,7 +3026,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
       {/* Content Protection Toast Banner */}
       <div
-        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#990000] text-white font-brand font-extrabold px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full shadow-2xl flex items-center gap-1.5 sm:gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
+        className={`fixed left-1/2 -translate-x-1/2 z-[100] bg-[#D10000] text-white font-brand font-extrabold px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full shadow-2xl flex items-center gap-1.5 sm:gap-2.5 transition-all duration-300 transform pointer-events-none select-none ${toast.show
           ? 'top-20 opacity-100 translate-y-0 scale-100'
           : 'top-20 opacity-0 -translate-y-4 scale-95'
         }`}
