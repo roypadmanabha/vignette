@@ -5,22 +5,24 @@ import { supabase } from './supabase';
 const SUPABASE_STORAGE_BASE = 'https://xcadpkytilyqanpatfls.supabase.co/storage/v1/object/public/gallery';
 
 function getCanonicalImageUrl(item) {
-  if (!item) return '/at-glance-img/travel-1.jpg';
-  if (item.fallback_url) return item.fallback_url;
+  if (!item) return 'at-glance-img/travel-1.jpg';
+  if (item.fallback_url) {
+    return item.fallback_url.startsWith('/') ? item.fallback_url.slice(1) : item.fallback_url;
+  }
   const name = `${item.title || ''} ${item.media_url || ''}`.toLowerCase();
-  if (name.includes('avgeek1') || name.includes('avgeek-1')) return '/at-glance-img/avgeek-1.jpg';
-  if (name.includes('avgeek2') || name.includes('avgeek-2')) return '/at-glance-img/avgeek-2.jpg';
-  if (name.includes('avgeek3') || name.includes('avgeek-3')) return '/at-glance-img/avgeek-3.jpg';
-  if (name.includes('avgeek4') || name.includes('avgeek-4')) return '/at-glance-img/avgeek-4.jpg';
-  if (name.includes('festival') || name.includes('festival-1') || name.includes('festival1')) return '/at-glance-img/festival-1.jpg';
-  if (name.includes('lifestyle1') || name.includes('lifestyle-1')) return '/at-glance-img/lifestyle-1.jpg';
-  if (name.includes('lifestyle2') || name.includes('lifestyle-2')) return '/at-glance-img/lifestyle-2.jpg';
-  if (name.includes('lifestyle3') || name.includes('lifestyle-3')) return '/at-glance-img/lifestyle-3.jpg';
-  if (name.includes('lifestyle4') || name.includes('lifestyle-4')) return '/at-glance-img/lifestyle-4.jpg';
-  if (name.includes('storytelling2') || name.includes('storytelling-2')) return '/at-glance-img/storytelling-2.jpg';
-  if (name.includes('storytelling') || name.includes('storytelling1') || name.includes('storytelling-1') || name.includes('storytelling3')) return '/at-glance-img/storytelling-1.jpg';
-  if (name.includes('travel1') || name.includes('travel-1')) return '/at-glance-img/travel-1.jpg';
-  return '/at-glance-img/travel-1.jpg';
+  if (name.includes('avgeek1') || name.includes('avgeek-1')) return 'at-glance-img/avgeek-1.jpg';
+  if (name.includes('avgeek2') || name.includes('avgeek-2')) return 'at-glance-img/avgeek-2.jpg';
+  if (name.includes('avgeek3') || name.includes('avgeek-3')) return 'at-glance-img/avgeek-3.jpg';
+  if (name.includes('avgeek4') || name.includes('avgeek-4')) return 'at-glance-img/avgeek-4.jpg';
+  if (name.includes('festival') || name.includes('festival-1') || name.includes('festival1')) return 'at-glance-img/festival-1.jpg';
+  if (name.includes('lifestyle1') || name.includes('lifestyle-1')) return 'at-glance-img/lifestyle-1.jpg';
+  if (name.includes('lifestyle2') || name.includes('lifestyle-2')) return 'at-glance-img/lifestyle-2.jpg';
+  if (name.includes('lifestyle3') || name.includes('lifestyle-3')) return 'at-glance-img/lifestyle-3.jpg';
+  if (name.includes('lifestyle4') || name.includes('lifestyle-4')) return 'at-glance-img/lifestyle-4.jpg';
+  if (name.includes('storytelling2') || name.includes('storytelling-2')) return 'at-glance-img/storytelling-2.jpg';
+  if (name.includes('storytelling') || name.includes('storytelling1') || name.includes('storytelling-1') || name.includes('storytelling3')) return 'at-glance-img/storytelling-1.jpg';
+  if (name.includes('travel1') || name.includes('travel-1')) return 'at-glance-img/travel-1.jpg';
+  return 'at-glance-img/travel-1.jpg';
 }
 
 function getLocalFallbackUrl(item) {
@@ -28,18 +30,18 @@ function getLocalFallbackUrl(item) {
 }
 
 const IMPRESSION_ORDER = [
-  '/at-glance-img/avgeek-2.jpg',
-  '/at-glance-img/lifestyle-1.jpg',
-  '/at-glance-img/lifestyle-4.jpg',
-  '/at-glance-img/festival-1.jpg',
-  '/at-glance-img/avgeek-1.jpg',
-  '/at-glance-img/avgeek-3.jpg',
-  '/at-glance-img/avgeek-4.jpg',
-  '/at-glance-img/lifestyle-2.jpg',
-  '/at-glance-img/lifestyle-3.jpg',
-  '/at-glance-img/storytelling-1.jpg',
-  '/at-glance-img/storytelling-2.jpg',
-  '/at-glance-img/travel-1.jpg',
+  'at-glance-img/avgeek-2.jpg',
+  'at-glance-img/lifestyle-1.jpg',
+  'at-glance-img/lifestyle-4.jpg',
+  'at-glance-img/festival-1.jpg',
+  'at-glance-img/avgeek-1.jpg',
+  'at-glance-img/avgeek-3.jpg',
+  'at-glance-img/avgeek-4.jpg',
+  'at-glance-img/lifestyle-2.jpg',
+  'at-glance-img/lifestyle-3.jpg',
+  'at-glance-img/storytelling-1.jpg',
+  'at-glance-img/storytelling-2.jpg',
+  'at-glance-img/travel-1.jpg',
 ];
 
 function getFirstImpressionPriorityIndex(item) {
@@ -59,18 +61,18 @@ function sortForFirstImpression(list) {
 }
 
 const MOCK_GALLERY_ITEMS = [
-  { id: 2, title: 'avgeek2', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-2.jpg`, fallback_url: '/at-glance-img/avgeek-2.jpg' },
-  { id: 5, title: 'lifestyle1', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-1.jpg`, fallback_url: '/at-glance-img/lifestyle-1.jpg' },
-  { id: 8, title: 'lifestyle4', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-4.jpg`, fallback_url: '/at-glance-img/lifestyle-4.jpg' },
-  { id: 11, title: 'festival1', category: 'Festivals', media_url: `${SUPABASE_STORAGE_BASE}/festival-1.jpg`, fallback_url: '/at-glance-img/festival-1.jpg' },
-  { id: 1, title: 'avgeek1', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-1.jpg`, fallback_url: '/at-glance-img/avgeek-1.jpg' },
-  { id: 3, title: 'avgeek3', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-3.jpg`, fallback_url: '/at-glance-img/avgeek-3.jpg' },
-  { id: 4, title: 'avgeek4', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-4.jpg`, fallback_url: '/at-glance-img/avgeek-4.jpg' },
-  { id: 6, title: 'lifestyle2', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-2.jpg`, fallback_url: '/at-glance-img/lifestyle-2.jpg' },
-  { id: 7, title: 'lifestyle3', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-3.jpg`, fallback_url: '/at-glance-img/lifestyle-3.jpg' },
-  { id: 9, title: 'storytelling1', category: 'Storytelling', media_url: `${SUPABASE_STORAGE_BASE}/storytelling-1.jpg`, fallback_url: '/at-glance-img/storytelling-1.jpg' },
-  { id: 10, title: 'storytelling2', category: 'Storytelling', media_url: `${SUPABASE_STORAGE_BASE}/storytelling-2.jpg`, fallback_url: '/at-glance-img/storytelling-2.jpg' },
-  { id: 12, title: 'travel1', category: 'Travel', media_url: `${SUPABASE_STORAGE_BASE}/travel-1.jpg`, fallback_url: '/at-glance-img/travel-1.jpg' },
+  { id: 2, title: 'avgeek2', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-2.jpg`, fallback_url: 'at-glance-img/avgeek-2.jpg' },
+  { id: 5, title: 'lifestyle1', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-1.jpg`, fallback_url: 'at-glance-img/lifestyle-1.jpg' },
+  { id: 8, title: 'lifestyle4', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-4.jpg`, fallback_url: 'at-glance-img/lifestyle-4.jpg' },
+  { id: 11, title: 'festival1', category: 'Festivals', media_url: `${SUPABASE_STORAGE_BASE}/festival-1.jpg`, fallback_url: 'at-glance-img/festival-1.jpg' },
+  { id: 1, title: 'avgeek1', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-1.jpg`, fallback_url: 'at-glance-img/avgeek-1.jpg' },
+  { id: 3, title: 'avgeek3', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-3.jpg`, fallback_url: 'at-glance-img/avgeek-3.jpg' },
+  { id: 4, title: 'avgeek4', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-4.jpg`, fallback_url: 'at-glance-img/avgeek-4.jpg' },
+  { id: 6, title: 'lifestyle2', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-2.jpg`, fallback_url: 'at-glance-img/lifestyle-2.jpg' },
+  { id: 7, title: 'lifestyle3', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-3.jpg`, fallback_url: 'at-glance-img/lifestyle-3.jpg' },
+  { id: 9, title: 'storytelling1', category: 'Storytelling', media_url: `${SUPABASE_STORAGE_BASE}/storytelling-1.jpg`, fallback_url: 'at-glance-img/storytelling-1.jpg' },
+  { id: 10, title: 'storytelling2', category: 'Storytelling', media_url: `${SUPABASE_STORAGE_BASE}/storytelling-2.jpg`, fallback_url: 'at-glance-img/storytelling-2.jpg' },
+  { id: 12, title: 'travel1', category: 'Travel', media_url: `${SUPABASE_STORAGE_BASE}/travel-1.jpg`, fallback_url: 'at-glance-img/travel-1.jpg' },
 ];
 
 export default function AtAGlanceGallery({ onImageClick }) {
