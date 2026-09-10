@@ -938,17 +938,8 @@ export default function App() {
       if (manual) {
         return manual === 'dark';
       }
-      try {
-        const options = { timeZone: 'Asia/Kolkata', hour: 'numeric', hour12: false };
-        const formatter = new Intl.DateTimeFormat('en-US', options);
-        const hour = Number(formatter.format(new Date()));
-        // 6 AM to 6 PM IST (6 to 17 inclusive) is Light Mode (isDark = false), otherwise Dark Mode (isDark = true)
-        return !(hour >= 6 && hour < 18);
-      } catch (e) {
-        return false;
-      }
     }
-    return false;
+    return true; // Dark Mode by default on page load
   });
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '' });
@@ -1390,20 +1381,11 @@ export default function App() {
       window.scrollTo(0, 0);
     }, 300);
 
-    // Determine and apply default theme on mount based on IST timezone frame
+    // Determine and apply default theme on mount (Dark Mode by default)
     const manualTheme = sessionStorage.getItem('vignette-theme-manual');
-    let finalDark = false;
+    let finalDark = true;
     if (manualTheme) {
       finalDark = manualTheme === 'dark';
-    } else {
-      try {
-        const options = { timeZone: 'Asia/Kolkata', hour: 'numeric', hour12: false };
-        const formatter = new Intl.DateTimeFormat('en-US', options);
-        const hour = Number(formatter.format(new Date()));
-        finalDark = !(hour >= 6 && hour < 18);
-      } catch (e) {
-        finalDark = false;
-      }
     }
     setIsDark(finalDark);
     if (finalDark) {
