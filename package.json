@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "deploy:netlify": "vite build && npx netlify deploy --prod --dir dist --site ab607ce9-b570-40ce-97ea-c054ae92d049",
     "lint": "oxlint",
     "preview": "vite preview"
   },
