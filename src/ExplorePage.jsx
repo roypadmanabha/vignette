@@ -428,7 +428,6 @@ export default function ExplorePage({ isOpen, onClose }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('Latest');
   const [isGridLayout, setIsGridLayout] = useState(true);
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Legal Modal states
   const [legalModal, setLegalModal] = useState(null);
@@ -1211,18 +1210,6 @@ export default function ExplorePage({ isOpen, onClose }) {
               )}
             </div>
 
-            {/* Mobile Filters Toggle Button - Hidden on tablet/desktop */}
-            <button
-              onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className={`p-2 rounded-xl border transition-colors cursor-pointer shrink-0 md:hidden ${
-                showMobileFilters 
-                  ? 'bg-zinc-950 text-white border-zinc-950 dark:bg-white dark:text-black dark:border-white' 
-                  : 'bg-white border-zinc-300 dark:bg-zinc-950 dark:border-zinc-800 text-zinc-700 dark:text-zinc-350'
-              }`}
-              aria-label="Toggle filter categories"
-            >
-              <Sliders className="w-4 h-4" />
-            </button>
           </div>
 
           {/* Sort Dropdown & Layout density Toggler */}
