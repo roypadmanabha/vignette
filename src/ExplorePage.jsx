@@ -1263,14 +1263,14 @@ export default function ExplorePage({ isOpen, onClose }) {
               </span>
             </h2>
 
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 max-w-full">
+            <div className="flex flex-nowrap sm:flex-wrap justify-center items-center gap-1 min-[360px]:gap-1.5 sm:gap-2 max-w-full overflow-x-auto no-scrollbar whitespace-nowrap py-1">
               {categories.map((category) => {
                 const isActive = activeTab.toLowerCase() === category.toLowerCase();
                 return (
                   <button
                     key={category}
                     onClick={() => setActiveTab(category)}
-                    className={`px-3 py-1.5 rounded-full font-['Mulish',sans-serif] font-normal text-[9px] sm:text-[10.5px] tracking-wide transition-all duration-300 cursor-pointer ${
+                    className={`px-2 py-1 min-[375px]:px-2.5 min-[375px]:py-1.5 sm:px-3 sm:py-1.5 rounded-full font-['Mulish',sans-serif] font-normal text-[8px] min-[375px]:text-[9px] sm:text-[10.5px] tracking-wide shrink-0 transition-all duration-300 cursor-pointer ${
                       isActive
                         ? 'bg-zinc-950 text-white dark:bg-[#ffec4e] dark:text-black shadow-md'
                         : 'bg-white hover:bg-zinc-50 border border-zinc-200 dark:bg-[#353935] dark:hover:bg-[#404440] dark:border-zinc-700/60 text-zinc-800 dark:text-zinc-200'
