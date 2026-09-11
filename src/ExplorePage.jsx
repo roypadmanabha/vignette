@@ -1929,32 +1929,32 @@ export default function ExplorePage({ isOpen, onClose }) {
                         </span>
                       </div>
 
-                      {/* Prev Button — positioned outside frame with red-to-black top-left to bottom-right gradient */}
+                      {/* Prev Button — positioned inside frame on mobile (left-2), outside frame on desktop */}
                       <button
                         onClick={handlePrev}
                         disabled={isFirstItem}
-                        className={`absolute -left-12 sm:-left-14 lg:-left-16 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-gradient-to-br from-[#e31c25] to-[#000000] border border-white/20 z-30 transition-all ${
+                        className={`absolute left-2 sm:-left-12 md:-left-14 lg:-left-16 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-gradient-to-br from-[#e31c25] to-[#000000] border border-white/20 z-30 transition-all ${
                           isFirstItem
                             ? 'opacity-30 cursor-not-allowed pointer-events-none'
                             : 'hover:scale-110 active:scale-95 cursor-pointer shadow-xl hover:shadow-red-500/20'
                         }`}
                         aria-label="Previous vignette image"
                       >
-                        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                        <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                       </button>
 
-                      {/* Next Button — positioned outside frame with red-to-black top-left to bottom-right gradient */}
+                      {/* Next Button — positioned inside frame on mobile (right-2), outside frame on desktop */}
                       <button
                         onClick={handleNext}
                         disabled={isLastItem}
-                        className={`absolute -right-12 sm:-right-14 lg:-right-16 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-gradient-to-br from-[#e31c25] to-[#000000] border border-white/20 z-30 transition-all ${
+                        className={`absolute right-2 sm:-right-12 md:-right-14 lg:-right-16 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-gradient-to-br from-[#e31c25] to-[#000000] border border-white/20 z-30 transition-all ${
                           isLastItem
                             ? 'opacity-30 cursor-not-allowed pointer-events-none'
                             : 'hover:scale-110 active:scale-95 cursor-pointer shadow-xl hover:shadow-red-500/20'
                         }`}
                         aria-label="Next vignette image"
                       >
-                        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                        <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
                       </button>
                     </div>
                   </div>
