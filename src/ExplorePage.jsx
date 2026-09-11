@@ -1254,10 +1254,8 @@ export default function ExplorePage({ isOpen, onClose }) {
             </button>
           </div>
 
-          {/* Centered Category Pills (Collapsible on mobile, always visible on md+) */}
-          <div className={`transition-all duration-300 pt-4 flex flex-col items-center gap-3 ${
-            showMobileFilters ? 'flex' : 'hidden md:flex'
-          }`}>
+          {/* Mandatory Heading — Visible on ALL screens */}
+          <div className="pt-4 sm:pt-6 flex flex-col items-center gap-3 w-full">
             <h2 className="font-['Mulish',sans-serif] font-semibold text-2xl sm:text-4xl lg:text-5xl tracking-tight text-center mb-1 sm:mb-2">
               <span className="text-[#FFD700]">Curated</span>{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-600 dark:from-white dark:via-zinc-200 dark:to-zinc-400">
