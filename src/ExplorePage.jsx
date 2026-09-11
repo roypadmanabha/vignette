@@ -1483,35 +1483,12 @@ export default function ExplorePage({ isOpen, onClose }) {
                 />
 
                 {/* Gradient Darkness Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-between p-4 sm:p-5 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-
-                {/* Top Badge: Featured Indicator */}
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 shadow-md">
-                  <span className="w-2 h-2 rounded-full bg-[#D10000] dark:bg-[#FFD700] animate-ping" />
-                  <span className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-white">Featured</span>
-                </div>
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
 
                 {/* Center Play Button Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-2xl group-hover:scale-115 group-hover:bg-[#D10000] dark:group-hover:bg-[#FFD700] group-hover:text-black group-hover:border-transparent transition-all duration-300">
                     <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-current ml-0.5" />
-                  </div>
-                </div>
-
-                {/* Bottom Details Deck */}
-                <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-5 flex flex-col gap-1 z-10 text-left">
-                  <span className="font-brand font-black text-[9px] sm:text-[11px] text-[#FFD700] dark:text-[#ffec4e] tracking-wider uppercase truncate">
-                    {item.creator || '@influencer'}
-                  </span>
-                  <h3 className="font-heading font-black text-xs sm:text-base text-white leading-tight line-clamp-2 uppercase">
-                    {item.title}
-                  </h3>
-                  <div className="flex items-center justify-between text-zinc-400 text-[10px] sm:text-xs mt-1">
-                    <span className="text-zinc-300 font-extrabold text-[9px] sm:text-[10.5px]">{item.category}</span>
-                    <div className="flex items-center gap-1 text-rose-400">
-                      <Heart className="w-3 h-3 fill-rose-500 text-rose-500" />
-                      <span className="font-bold text-zinc-200 text-[10px]">{item.likes}</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -1557,35 +1534,12 @@ export default function ExplorePage({ isOpen, onClose }) {
                 />
 
                 {/* Gradient Darkness Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-between p-4 sm:p-5 opacity-90 group-hover:opacity-100 transition-opacity duration-300" />
-
-                {/* Top Badge: Signature Indicator */}
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 shadow-md">
-                  <span className="w-2 h-2 rounded-full bg-[#e31c25] animate-ping" />
-                  <span className="text-[8.5px] sm:text-[10px] font-black uppercase tracking-wider text-white">Signature</span>
-                </div>
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
 
                 {/* Center Play Button Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-2xl group-hover:scale-115 group-hover:bg-[#e31c25] dark:group-hover:bg-[#ffec4e] group-hover:text-black group-hover:border-transparent transition-all duration-300">
                     <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-current ml-0.5" />
-                  </div>
-                </div>
-
-                {/* Bottom Details Deck */}
-                <div className="absolute bottom-0 inset-x-0 p-3.5 sm:p-5 flex flex-col gap-1 z-10 text-left">
-                  <span className="font-brand font-black text-[9px] sm:text-[11px] text-[#ffec4e] tracking-wider uppercase truncate">
-                    {item.creator || '@vignette.originals'}
-                  </span>
-                  <h3 className="font-heading font-black text-xs sm:text-base text-white leading-tight line-clamp-2 uppercase">
-                    {item.title}
-                  </h3>
-                  <div className="flex items-center justify-between text-zinc-400 text-[10px] sm:text-xs mt-1">
-                    <span className="text-zinc-300 font-extrabold text-[9px] sm:text-[10.5px]">{item.category}</span>
-                    <div className="flex items-center gap-1 text-rose-400">
-                      <Heart className="w-3 h-3 fill-rose-500 text-rose-500" />
-                      <span className="font-bold text-zinc-200 text-[10px]">{item.likes}</span>
-                    </div>
                   </div>
                 </div>
               </div>
