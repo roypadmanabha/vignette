@@ -1600,9 +1600,9 @@ export default function ExplorePage({ isOpen, onClose }) {
           >
             <video
               ref={radhimaVideoRef}
-              src="/radhima.mp4"
+              src="/radhima.mp4#t=0.1"
               playsInline
-              preload="metadata"
+              preload="auto"
               controlsList="nodownload nofullscreen noremoteplayback"
               disablePictureInPicture
               className="w-full h-full object-cover rounded-2xl sm:rounded-3xl"
