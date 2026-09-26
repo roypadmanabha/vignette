@@ -5,24 +5,24 @@ import { supabase } from './supabase';
 const SUPABASE_STORAGE_BASE = 'https://xcadpkytilyqanpatfls.supabase.co/storage/v1/object/public/gallery';
 
 function getCanonicalImageUrl(item) {
-  if (!item) return 'at-glance-img/travel-1.jpg';
+  if (!item) return '/at-glance-img/travel-1.jpg';
   if (item.fallback_url) {
-    return item.fallback_url.startsWith('/') ? item.fallback_url.slice(1) : item.fallback_url;
+    return item.fallback_url.startsWith('/') ? item.fallback_url : `/${item.fallback_url}`;
   }
   const name = `${item.title || ''} ${item.media_url || ''}`.toLowerCase();
-  if (name.includes('avgeek1') || name.includes('avgeek-1')) return 'at-glance-img/avgeek-1.jpg';
-  if (name.includes('avgeek2') || name.includes('avgeek-2')) return 'at-glance-img/avgeek-2.jpg';
-  if (name.includes('avgeek3') || name.includes('avgeek-3')) return 'at-glance-img/avgeek-3.jpg';
-  if (name.includes('avgeek4') || name.includes('avgeek-4')) return 'at-glance-img/avgeek-4.jpg';
-  if (name.includes('festival') || name.includes('festival-1') || name.includes('festival1')) return 'at-glance-img/festival-1.jpg';
-  if (name.includes('lifestyle1') || name.includes('lifestyle-1')) return 'at-glance-img/lifestyle-1.jpg';
-  if (name.includes('lifestyle2') || name.includes('lifestyle-2')) return 'at-glance-img/lifestyle-2.jpg';
-  if (name.includes('lifestyle3') || name.includes('lifestyle-3')) return 'at-glance-img/lifestyle-3.jpg';
-  if (name.includes('lifestyle4') || name.includes('lifestyle-4')) return 'at-glance-img/lifestyle-4.jpg';
-  if (name.includes('storytelling2') || name.includes('storytelling-2')) return 'at-glance-img/storytelling-2.jpg';
-  if (name.includes('storytelling') || name.includes('storytelling1') || name.includes('storytelling-1') || name.includes('storytelling3')) return 'at-glance-img/storytelling-1.jpg';
-  if (name.includes('travel1') || name.includes('travel-1')) return 'at-glance-img/travel-1.jpg';
-  return 'at-glance-img/travel-1.jpg';
+  if (name.includes('avgeek1') || name.includes('avgeek-1')) return '/at-glance-img/avgeek-1.jpg';
+  if (name.includes('avgeek2') || name.includes('avgeek-2')) return '/at-glance-img/avgeek-2.jpg';
+  if (name.includes('avgeek3') || name.includes('avgeek-3')) return '/at-glance-img/avgeek-3.jpg';
+  if (name.includes('avgeek4') || name.includes('avgeek-4')) return '/at-glance-img/avgeek-4.jpg';
+  if (name.includes('festival') || name.includes('festival-1') || name.includes('festival1')) return '/at-glance-img/festival-1.jpg';
+  if (name.includes('lifestyle1') || name.includes('lifestyle-1')) return '/at-glance-img/lifestyle-1.jpg';
+  if (name.includes('lifestyle2') || name.includes('lifestyle-2')) return '/at-glance-img/lifestyle-2.jpg';
+  if (name.includes('lifestyle3') || name.includes('lifestyle-3')) return '/at-glance-img/lifestyle-3.jpg';
+  if (name.includes('lifestyle4') || name.includes('lifestyle-4')) return '/at-glance-img/lifestyle-4.jpg';
+  if (name.includes('storytelling2') || name.includes('storytelling-2')) return '/at-glance-img/storytelling-2.jpg';
+  if (name.includes('storytelling') || name.includes('storytelling1') || name.includes('storytelling-1') || name.includes('storytelling3')) return '/at-glance-img/storytelling-1.jpg';
+  if (name.includes('travel1') || name.includes('travel-1')) return '/at-glance-img/travel-1.jpg';
+  return '/at-glance-img/travel-1.jpg';
 }
 
 function getLocalFallbackUrl(item) {
