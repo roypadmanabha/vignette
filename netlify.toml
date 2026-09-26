@@ -2,7 +2,14 @@
   command = "npm run build"
   publish = "dist"
 
+[[headers]]
+  for = "/*.mp4"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Accept-Ranges = "bytes"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+

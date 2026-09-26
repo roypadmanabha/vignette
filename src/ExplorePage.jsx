@@ -150,57 +150,39 @@ const MOCK_EXPLORE_GRID = [
 const MOCK_INFLUENCER_ITEMS = [
   {
     id: 'inf-1',
-    title: 'Urban Fashion Reel',
-    creator: '@alex.vogue',
-    category: 'Fashion & Style',
-    likes: 342,
+    title: 'Featured Reel Collab 1',
+    creator: '@vignette.official',
+    category: 'Featured Collab',
+    likes: 1420,
     media_url: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-fashion-model-posing-in-a-neon-lit-room-41566-large.mp4'
+    video_url: 'https://www.instagram.com/reel/DUFg0BICSvk/'
   },
   {
     id: 'inf-2',
-    title: 'Cinematic Travel Story',
-    creator: '@roam.with.sam',
-    category: 'Travel Vlog',
-    likes: 589,
+    title: 'Featured Reel Collab 2',
+    creator: '@vignette.official',
+    category: 'Featured Collab',
+    likes: 1890,
     media_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-beach-with-turquoise-water-41539-large.mp4'
+    video_url: 'https://www.instagram.com/p/DOypqEPj8rd/'
   },
   {
     id: 'inf-3',
-    title: 'Fitness Motivation Edit',
-    creator: '@fit.lifestyle',
-    category: 'Fitness & Health',
-    likes: 412,
+    title: 'Featured Reel Collab 3',
+    creator: '@vignette.official',
+    category: 'Featured Collab',
+    likes: 1210,
     media_url: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-man-runs-on-a-treadmill-in-a-gym-41551-large.mp4'
+    video_url: 'https://www.instagram.com/p/DFSxCtLPgDs/'
   },
   {
     id: 'inf-4',
-    title: 'Tech Unboxing & Review',
-    creator: '@tech.pulse',
-    category: 'Tech & Gadgets',
-    likes: 275,
+    title: 'Featured Reel Collab 4',
+    creator: '@vignette.official',
+    category: 'Featured Collab',
+    likes: 1650,
     media_url: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-a-green-screen-41549-large.mp4'
-  },
-  {
-    id: 'inf-5',
-    title: 'Aesthetic Cafe Vlog',
-    creator: '@cozy.moments',
-    category: 'Lifestyle & Vlogs',
-    likes: 618,
-    media_url: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-barista-pouring-coffee-into-a-cup-41557-large.mp4'
-  },
-  {
-    id: 'inf-6',
-    title: 'Streetwear & Sneakers',
-    creator: '@hype.culture',
-    category: 'Brand Collab',
-    likes: 490,
-    media_url: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-young-man-walking-down-a-city-street-41560-large.mp4'
+    video_url: 'https://www.instagram.com/reel/DFb9w7az8l2/'
   }
 ];
 
@@ -211,8 +193,8 @@ const MOCK_ORIGINALS_ITEMS = [
     creator: '@vignette.originals',
     category: 'Cinematic Doc',
     likes: 890,
-    media_url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-beach-with-turquoise-water-41539-large.mp4'
+    media_url: '/explore-page-vignette-originals/v1.mp4',
+    video_url: '/explore-page-vignette-originals/v1.mp4'
   },
   {
     id: 'orig-2',
@@ -220,8 +202,8 @@ const MOCK_ORIGINALS_ITEMS = [
     creator: '@vignette.originals',
     category: 'Avgeek Story',
     likes: 1240,
-    media_url: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-view-from-the-window-of-an-airplane-flying-41548-large.mp4'
+    media_url: '/explore-page-vignette-originals/v2.mp4',
+    video_url: '/explore-page-vignette-originals/v2.mp4'
   },
   {
     id: 'orig-3',
@@ -229,8 +211,8 @@ const MOCK_ORIGINALS_ITEMS = [
     creator: '@vignette.originals',
     category: 'Nature & Motion',
     likes: 760,
-    media_url: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-rain-drops-falling-on-a-window-glass-41561-large.mp4'
+    media_url: '/explore-page-vignette-originals/v3.mp4',
+    video_url: '/explore-page-vignette-originals/v3.mp4'
   },
   {
     id: 'orig-4',
@@ -238,8 +220,8 @@ const MOCK_ORIGINALS_ITEMS = [
     creator: '@vignette.originals',
     category: 'Urban Aesthetics',
     likes: 935,
-    media_url: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-traffic-on-a-highway-at-night-41544-large.mp4'
+    media_url: '/explore-page-vignette-originals/v4.mp4',
+    video_url: '/explore-page-vignette-originals/v4.mp4'
   },
   {
     id: 'orig-5',
@@ -247,8 +229,8 @@ const MOCK_ORIGINALS_ITEMS = [
     creator: '@vignette.originals',
     category: 'Culture & Stories',
     likes: 1105,
-    media_url: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-hands-holding-a-smartphone-with-a-green-screen-41549-large.mp4'
+    media_url: '/explore-page-vignette-originals/v5.mp4',
+    video_url: '/explore-page-vignette-originals/v5.mp4'
   },
   {
     id: 'orig-6',
@@ -256,8 +238,8 @@ const MOCK_ORIGINALS_ITEMS = [
     creator: '@vignette.originals',
     category: 'Short Film',
     likes: 812,
-    media_url: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&h=1066&q=80',
-    video_url: 'https://assets.mixkit.co/videos/preview/mixkit-barista-pouring-coffee-into-a-cup-41557-large.mp4'
+    media_url: '/explore-page-vignette-originals/v6.mp4',
+    video_url: '/explore-page-vignette-originals/v6.mp4'
   }
 ];
 
@@ -455,19 +437,47 @@ export default function ExplorePage({ isOpen, onClose }) {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [slideDirection, setSlideDirection] = useState(null); // 'next' | 'prev' | null
   const touchStartXRef = useRef(0);
+  const mouseStartXRef = useRef(0);
+  const isDraggingRef = useRef(false);
 
   // Influencer Collabs (9:16 portrait video cards)
-  const [influencerItems, setInfluencerItems] = useState(() => {
-    try {
-      const cached = localStorage.getItem('vignette_influencer_items');
-      return cached ? JSON.parse(cached) : MOCK_INFLUENCER_ITEMS;
-    } catch {
-      return MOCK_INFLUENCER_ITEMS;
-    }
-  });
+  const [influencerItems, setInfluencerItems] = useState(() => MOCK_INFLUENCER_ITEMS);
   const [influencerModalIndex, setInfluencerModalIndex] = useState(null);
   const [influencerSlideDirection, setInfluencerSlideDirection] = useState(null); // 'next' | 'prev' | null
   const [isInfluencerMuted, setIsInfluencerMuted] = useState(false);
+
+  // Radhima Full Horizontal Video Player State & Handlers
+  const radhimaVideoRef = useRef(null);
+  const [isRadhimaPlaying, setIsRadhimaPlaying] = useState(false);
+
+  const toggleRadhimaPlay = () => {
+    if (radhimaVideoRef.current) {
+      if (isRadhimaPlaying) {
+        radhimaVideoRef.current.pause();
+      } else {
+        radhimaVideoRef.current.play().catch(err => {
+          console.warn('Radhima video play interrupted:', err);
+        });
+      }
+    }
+  };
+
+  // Pause Radhima video if any other video starts playing on the page or modal opens
+  useEffect(() => {
+    const handleGlobalPlay = (e) => {
+      if (e.target !== radhimaVideoRef.current) {
+        if (radhimaVideoRef.current && !radhimaVideoRef.current.paused) {
+          radhimaVideoRef.current.pause();
+          setIsRadhimaPlaying(false);
+        }
+      }
+    };
+
+    document.addEventListener('play', handleGlobalPlay, true);
+    return () => {
+      document.removeEventListener('play', handleGlobalPlay, true);
+    };
+  }, []);
 
   // Fetch influencer_videos from Supabase (with automatic fallback to mock items)
   useEffect(() => {
@@ -488,7 +498,7 @@ export default function ExplorePage({ isOpen, onClose }) {
         }
 
         if (data && data.length > 0) {
-          const dbInf = data.slice(0, 6).map(item => ({
+          const dbInf = data.filter(item => (item.video_url || '').includes('instagram.com')).map(item => ({
             id: item.id || item.title,
             title: item.title || 'Influencer Edit',
             creator: item.creator || item.influencer || item.handle || '@vignetteworks',
@@ -497,10 +507,9 @@ export default function ExplorePage({ isOpen, onClose }) {
             media_url: item.media_url || item.image_url || item.thumbnail || item.url || item.src || '',
             video_url: item.video_url || item.media_url || item.url || item.src || ''
           }));
-          setInfluencerItems(dbInf);
-          try {
-            localStorage.setItem('vignette_influencer_items', JSON.stringify(dbInf));
-          } catch (e) {}
+          if (dbInf.length > 0) {
+            setInfluencerItems(dbInf);
+          }
         }
       } catch (err) {
         console.warn('[ExplorePage] Influencer videos fetch fallback used:', err.message);
@@ -511,18 +520,11 @@ export default function ExplorePage({ isOpen, onClose }) {
   }, []);
 
   // Vignette Originals (9:16 portrait video cards)
-  const [originalsItems, setOriginalsItems] = useState(() => {
-    try {
-      const cached = localStorage.getItem('vignette_originals_items');
-      return cached ? JSON.parse(cached) : MOCK_ORIGINALS_ITEMS;
-    } catch {
-      return MOCK_ORIGINALS_ITEMS;
-    }
-  });
+  const [originalsItems, setOriginalsItems] = useState(() => MOCK_ORIGINALS_ITEMS);
   const [originalsModalIndex, setOriginalsModalIndex] = useState(null);
   const [originalsSlideDirection, setOriginalsSlideDirection] = useState(null); // 'next' | 'prev' | null
 
-  // Fetch vignette_originals from Supabase (with automatic fallback)
+  // Fetch vignette_originals from Supabase (with automatic fallback to local video files)
   useEffect(() => {
     async function fetchOriginalsVideos() {
       if (!exploreSupabase) return;
@@ -543,17 +545,14 @@ export default function ExplorePage({ isOpen, onClose }) {
         if (data && data.length > 0) {
           const dbOrig = data.map((item, idx) => ({
             id: item.id || `orig-db-${idx}`,
-            title: item.title || `Original Reel ${idx + 1}`,
+            title: item.title || MOCK_ORIGINALS_ITEMS[idx % MOCK_ORIGINALS_ITEMS.length].title,
             creator: item.creator || '@vignette.originals',
-            category: item.category || 'Vignette Original',
+            category: item.category || MOCK_ORIGINALS_ITEMS[idx % MOCK_ORIGINALS_ITEMS.length].category,
             likes: item.likes || 140 + idx * 12,
-            media_url: item.media_url || item.thumbnail_url || MOCK_ORIGINALS_ITEMS[idx % MOCK_ORIGINALS_ITEMS.length].media_url,
-            video_url: item.video_url || MOCK_ORIGINALS_ITEMS[idx % MOCK_ORIGINALS_ITEMS.length].video_url
+            media_url: (item.video_url && item.video_url.startsWith('/explore-page-vignette-originals')) ? item.video_url : `/explore-page-vignette-originals/v${(idx % 6) + 1}.mp4`,
+            video_url: (item.video_url && item.video_url.startsWith('/explore-page-vignette-originals')) ? item.video_url : `/explore-page-vignette-originals/v${(idx % 6) + 1}.mp4`
           }));
           setOriginalsItems(dbOrig);
-          try {
-            localStorage.setItem('vignette_originals_items', JSON.stringify(dbOrig));
-          } catch (e) {}
         }
       } catch (err) {
         console.warn('[ExplorePage] Vignette originals fetch fallback used:', err.message);
@@ -1446,9 +1445,9 @@ export default function ExplorePage({ isOpen, onClose }) {
         </div>
       </section>
 
-      {/* 5.5 INFLUENCER & CREATOR REELS SECTION (3x2 Portrait 9:16 Grid) */}
+      {/* 5.5 FEATURED REELS & COLLABS SECTION (2x2 Portrait 9:16 Grid) */}
       <section className="py-16 md:py-24 bg-gradient-to-b from-transparent via-black/40 to-transparent relative z-10 font-brand">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-10">
           
           {/* Section Header */}
           <div className="flex flex-col items-center text-center gap-3">
@@ -1465,34 +1464,54 @@ export default function ExplorePage({ isOpen, onClose }) {
             </p>
           </div>
 
-          {/* 3x2 Portrait Grid: Mobile = 2 columns, Large screen = 3 columns */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-            {influencerItems.slice(0, 6).map((item, idx) => (
-              <div
-                key={item.id || idx}
-                onClick={() => setInfluencerModalIndex(idx)}
-                className="group relative rounded-2xl overflow-hidden aspect-[9/16] bg-zinc-900 border border-white/10 shadow-xl hover:shadow-2xl hover:border-[#FFD700]/50 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer select-none active:scale-[0.98]"
-              >
-                {/* Background Image / Video Thumbnail */}
-                <img
-                  src={item.media_url}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
-                  loading="lazy"
-                  draggable="false"
-                />
+          {/* 2x2 Grid (2 in 1 row) - Mobile screen only scaled iframe so Instagram embed fits without overlapping, Desktop 100% flush */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:gap-8 max-w-3xl lg:max-w-4xl mx-auto w-full">
+            {influencerItems.slice(0, 4).map((item, idx) => {
+              const videoUrl = item.video_url || 'https://www.instagram.com/reel/DUFg0BICSvk/';
+              const cleanUrl = videoUrl.replace(/\/$/, '');
+              const embedUrl = `${cleanUrl}/embed/`;
 
-                {/* Gradient Darkness Overlay */}
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
-
-                {/* Center Play Button Overlay */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white flex items-center justify-center shadow-2xl group-hover:scale-115 group-hover:bg-[#D10000] dark:group-hover:bg-[#FFD700] group-hover:text-black group-hover:border-transparent transition-all duration-300">
-                    <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-current ml-0.5" />
+              return (
+                <div
+                  key={item.id || idx}
+                  className="group relative rounded-2xl overflow-hidden aspect-[9/16] bg-black border border-white/10 shadow-xl hover:shadow-2xl hover:border-[#FFD700]/50 hover:-translate-y-1.5 transition-all duration-300 select-none flex items-start justify-center"
+                >
+                  {/* Real Instagram Embed iFrame (Mobile-only scale so 2-column view looks clean, Desktop flush w-full h-full) */}
+                  <div className="w-full h-full relative overflow-hidden flex items-start justify-center">
+                    <iframe
+                      src={embedUrl}
+                      title={`Instagram Reel ${idx + 1}`}
+                      className="w-full h-full sm:w-full sm:h-full max-sm:w-[320px] max-sm:h-[540px] max-sm:origin-top max-sm:scale-[0.54] min-[400px]:max-sm:scale-[0.60] border-0 bg-black pointer-events-none sm:rounded-2xl"
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                      allowFullScreen
+                      scrolling="no"
+                    />
                   </div>
+
+                  {/* Clickable Overlay to open Instagram on left-click & block context menu on right-click */}
+                  <div
+                    className="absolute inset-0 z-10 cursor-pointer bg-transparent"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (radhimaVideoRef.current && !radhimaVideoRef.current.paused) {
+                        radhimaVideoRef.current.pause();
+                        setIsRadhimaPlaying(false);
+                      }
+                      window.open(videoUrl, '_blank', 'noopener,noreferrer');
+                    }}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      if (typeof showToast === 'function') {
+                        showToast("Not allowed! Content Protection enabled");
+                      }
+                      return false;
+                    }}
+                    title={`Watch on Instagram: ${item.title || 'Reel'}`}
+                  />
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>
@@ -1521,17 +1540,33 @@ export default function ExplorePage({ isOpen, onClose }) {
             {originalsItems.slice(0, 6).map((item, idx) => (
               <div
                 key={item.id || idx}
-                onClick={() => setOriginalsModalIndex(idx)}
+                onClick={() => {
+                  if (radhimaVideoRef.current && !radhimaVideoRef.current.paused) {
+                    radhimaVideoRef.current.pause();
+                    setIsRadhimaPlaying(false);
+                  }
+                  setOriginalsModalIndex(idx);
+                }}
                 className="group relative rounded-2xl overflow-hidden aspect-[9/16] bg-zinc-900 border border-white/10 shadow-xl hover:shadow-2xl hover:border-[#ffec4e]/50 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer select-none active:scale-[0.98]"
               >
                 {/* Background Image / Video Thumbnail */}
-                <img
-                  src={item.media_url}
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
-                  loading="lazy"
-                  draggable="false"
-                />
+                {(item.media_url && (item.media_url.endsWith('.mp4') || item.media_url.includes('explore-page-vignette-originals'))) || (item.video_url && (item.video_url.endsWith('.mp4') || item.video_url.includes('explore-page-vignette-originals'))) ? (
+                  <video
+                    src={`${item.video_url || item.media_url}#t=0.1`}
+                    preload="metadata"
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+                  />
+                ) : (
+                  <img
+                    src={item.media_url}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+                    loading="lazy"
+                    draggable="false"
+                  />
+                )}
 
                 {/* Gradient Darkness Overlay */}
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
@@ -1544,6 +1579,46 @@ export default function ExplorePage({ isOpen, onClose }) {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 5.6.5 RADHIMA FULL HORIZONTAL VIDEO SHOWCASE */}
+      <section className="py-12 sm:py-20 relative z-10 font-brand">
+        <div className="max-w-4xl sm:max-w-5xl lg:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-6">
+          <div
+            className="group relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl bg-black cursor-pointer border border-[#e31c25]/30 dark:border-[#FFD700]/30 hover:border-[#FFD700] transition-all duration-300 aspect-video flex items-center justify-center select-none"
+            onClick={toggleRadhimaPlay}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof showToast === 'function') {
+                showToast("Not allowed! Content Protection enabled");
+              }
+              return false;
+            }}
+          >
+            <video
+              ref={radhimaVideoRef}
+              src="/radhima.mp4"
+              playsInline
+              preload="metadata"
+              controlsList="nodownload nofullscreen noremoteplayback"
+              disablePictureInPicture
+              className="w-full h-full object-cover rounded-2xl sm:rounded-3xl"
+              onEnded={() => setIsRadhimaPlaying(false)}
+              onPlay={() => setIsRadhimaPlaying(true)}
+              onPause={() => setIsRadhimaPlaying(false)}
+            />
+
+            {/* Custom Play Button Overlay (shown when paused) */}
+            {!isRadhimaPlaying && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-[2px] transition-all duration-300 group-hover:bg-black/20">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-white/95 dark:bg-black/80 backdrop-blur-md border border-white/20 text-[#e31c25] dark:text-[#FFD700] flex items-center justify-center shadow-2xl group-hover:scale-110 active:scale-95 transition-all duration-300">
+                  <Play className="w-6 h-6 sm:w-8 sm:h-8 lg:w-9 lg:h-9 fill-current ml-1" />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -1597,43 +1672,31 @@ export default function ExplorePage({ isOpen, onClose }) {
               }
             }}
           >
-            {/* Top Toolbar */}
-            <div className="absolute top-4 inset-x-0 px-4 sm:px-6 flex items-center justify-between text-white z-55">
-              <div className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 backdrop-blur-md">
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#FFD700]">
-                  Influencer Edit {influencerModalIndex + 1} / {influencerItems.length}
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsInfluencerMuted(!isInfluencerMuted);
-                  }}
-                  className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                  title={isInfluencerMuted ? "Unmute" : "Mute"}
-                >
-                  {isInfluencerMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-                <button
-                  onClick={() => setInfluencerModalIndex(null)}
-                  className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                  title="Close reel"
-                >
-                  <X className="w-4 h-4 sm:w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
             {/* 9:16 Vertical Video Frame Wrapper */}
             <div className="relative w-full max-w-sm aspect-[9/16] max-h-[78vh] flex items-center justify-center rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black" onClick={e => e.stopPropagation()}>
               
-              {activeInf.video_url && (activeInf.video_url.endsWith('.mp4') || activeInf.video_url.includes('mixkit') || activeInf.video_url.includes('supabase')) ? (
+              {/* Fresh compact close button right at frame end */}
+              <button
+                onClick={() => setInfluencerModalIndex(null)}
+                className="absolute top-3 right-3 z-30 p-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/20 text-white/90 hover:text-white transition-all shadow-md active:scale-90 cursor-pointer"
+                title="Close reel"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+
+              {activeInf.video_url && activeInf.video_url.includes('instagram.com') ? (
+                <iframe
+                  key={activeInf.id || influencerModalIndex}
+                  src={`${activeInf.video_url.replace(/\/$/, '')}/embed/`}
+                  className="w-full h-full rounded-2xl border-0 shadow-2xl bg-black"
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              ) : activeInf.video_url && (activeInf.video_url.endsWith('.mp4') || activeInf.video_url.includes('mixkit') || activeInf.video_url.includes('supabase')) ? (
                 <video
                   key={activeInf.id || influencerModalIndex}
                   src={activeInf.video_url}
                   poster={activeInf.media_url}
-                  controls
                   autoPlay
                   loop
                   muted={isInfluencerMuted}
@@ -1676,16 +1739,6 @@ export default function ExplorePage({ isOpen, onClose }) {
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
-
-            {/* Bottom Caption Deck */}
-            <div className="mt-4 text-center max-w-sm px-4 flex flex-col items-center gap-1" onClick={e => e.stopPropagation()}>
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#FFD700]">
-                {activeInf.creator}
-              </span>
-              <h2 className="font-heading font-black text-sm sm:text-base text-white uppercase">
-                {activeInf.title}
-              </h2>
-            </div>
           </div>
         );
       })()}
@@ -1720,74 +1773,85 @@ export default function ExplorePage({ isOpen, onClose }) {
           ? 'animate-slide-left'
           : 'animate-scaleUp';
 
+        const handleTouchStart = (e) => {
+          touchStartXRef.current = e.touches[0].clientX;
+        };
+
+        const handleTouchEnd = (e) => {
+          const touchEndX = e.changedTouches[0].clientX;
+          const diff = touchStartXRef.current - touchEndX;
+          if (Math.abs(diff) > 35) {
+            if (diff > 0 && !isLastOrig) {
+              handleNextOrig(e);
+            } else if (diff < 0 && !isFirstOrig) {
+              handlePrevOrig(e);
+            }
+          }
+        };
+
+        const handleMouseDown = (e) => {
+          mouseStartXRef.current = e.clientX;
+          isDraggingRef.current = true;
+        };
+
+        const handleMouseUp = (e) => {
+          if (isDraggingRef.current) {
+            isDraggingRef.current = false;
+            const diff = mouseStartXRef.current - e.clientX;
+            if (Math.abs(diff) > 35) {
+              if (diff > 0 && !isLastOrig) {
+                handleNextOrig(e);
+              } else if (diff < 0 && !isFirstOrig) {
+                handlePrevOrig(e);
+              }
+            }
+          }
+        };
+
         return (
           <div
             className="fixed inset-0 z-[1600] flex flex-col items-center justify-center bg-black/95 p-4 sm:p-6 select-none font-brand animate-fadeIn"
             onClick={() => setOriginalsModalIndex(null)}
-            onTouchStart={(e) => {
-              touchStartXRef.current = e.touches[0].clientX;
-            }}
-            onTouchEnd={(e) => {
-              const touchEndX = e.changedTouches[0].clientX;
-              const diff = touchStartXRef.current - touchEndX;
-              if (Math.abs(diff) > 40) {
-                if (diff > 0 && !isLastOrig) {
-                  handleNextOrig(e);
-                } else if (diff < 0 && !isFirstOrig) {
-                  handlePrevOrig(e);
-                }
-              }
-            }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
           >
-            {/* Top Toolbar */}
-            <div className="absolute top-4 inset-x-0 px-4 sm:px-6 flex items-center justify-between text-white z-55">
-              <div className="flex items-center gap-2 bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 backdrop-blur-md">
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#ffec4e]">
-                  Vignette Original {originalsModalIndex + 1} / {originalsItems.length}
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsInfluencerMuted(!isInfluencerMuted);
-                  }}
-                  className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                  title={isInfluencerMuted ? "Unmute" : "Mute"}
-                >
-                  {isInfluencerMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-                </button>
-                <button
-                  onClick={() => setOriginalsModalIndex(null)}
-                  className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
-                  title="Close reel"
-                >
-                  <X className="w-4 h-4 sm:w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
             {/* 9:16 Vertical Video Frame Wrapper */}
-            <div className="relative w-full max-w-sm aspect-[9/16] max-h-[78vh] flex items-center justify-center rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black" onClick={e => e.stopPropagation()}>
-              
-              {activeOrig.video_url && (activeOrig.video_url.endsWith('.mp4') || activeOrig.video_url.includes('mixkit') || activeOrig.video_url.includes('supabase')) ? (
+            <div
+              className="relative w-full max-w-sm aspect-[9/16] max-h-[78vh] flex items-center justify-center rounded-2xl overflow-hidden border border-white/15 shadow-2xl bg-black cursor-grab active:cursor-grabbing"
+              onClick={e => e.stopPropagation()}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+            >
+              {/* Fresh compact close button right at frame end */}
+              <button
+                onClick={() => setOriginalsModalIndex(null)}
+                className="absolute top-3 right-3 z-30 p-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/20 text-white/90 hover:text-white transition-all shadow-md active:scale-90 cursor-pointer"
+                title="Close reel"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+
+              {activeOrig.video_url && (activeOrig.video_url.endsWith('.mp4') || activeOrig.video_url.includes('mixkit') || activeOrig.video_url.includes('supabase') || activeOrig.video_url.includes('explore-page-vignette-originals')) ? (
                 <video
                   key={activeOrig.id || originalsModalIndex}
                   src={activeOrig.video_url}
                   poster={activeOrig.media_url}
-                  controls
                   autoPlay
                   loop
                   muted={isInfluencerMuted}
                   playsInline
-                  className={`w-full h-full object-cover ${origAnimationClass}`}
+                  className={`w-full h-full object-cover pointer-events-none ${origAnimationClass}`}
                 />
               ) : (
                 <img
                   key={activeOrig.id || originalsModalIndex}
                   src={activeOrig.media_url}
                   alt={activeOrig.title}
-                  className={`w-full h-full object-cover ${origAnimationClass}`}
+                  className={`w-full h-full object-cover pointer-events-none ${origAnimationClass}`}
                 />
               )}
 
@@ -1817,16 +1881,6 @@ export default function ExplorePage({ isOpen, onClose }) {
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
-            </div>
-
-            {/* Bottom Caption Deck */}
-            <div className="mt-4 text-center max-w-sm px-4 flex flex-col items-center gap-1" onClick={e => e.stopPropagation()}>
-              <span className="text-[10px] font-black uppercase tracking-widest text-[#ffec4e]">
-                {activeOrig.creator}
-              </span>
-              <h2 className="font-heading font-black text-sm sm:text-base text-white uppercase">
-                {activeOrig.title}
-              </h2>
             </div>
           </div>
         );
@@ -1878,16 +1932,16 @@ export default function ExplorePage({ isOpen, onClose }) {
             }}
           >
             {/* Top Toolbar */}
-            <div className="absolute top-4 inset-x-0 px-4 sm:px-6 flex items-center justify-between text-white z-55">
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest bg-white/10 px-3 py-1.5 rounded-lg border border-white/5 backdrop-blur-md">
+            <div className="absolute top-3 inset-x-0 px-3 sm:px-6 flex items-center justify-between text-white z-55">
+              <span className="text-[10px] font-bold uppercase tracking-widest bg-black/60 px-2.5 py-1 rounded-md border border-white/10 backdrop-blur-md">
                 {lightboxIndex + 1} / {filteredItems.length}
               </span>
               <button
                 onClick={() => setLightboxIndex(null)}
-                className="p-2 rounded-full bg-white/10 border border-white/5 hover:bg-white/20 text-white transition-colors cursor-pointer"
+                className="p-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md border border-white/20 text-white/90 hover:text-white transition-all shadow-md active:scale-90 cursor-pointer"
                 title="Close Zoom view"
               >
-                <X className="w-4 h-4 sm:w-5 h-5" />
+                <X className="w-3.5 h-3.5" />
               </button>
             </div>
 

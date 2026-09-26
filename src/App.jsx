@@ -95,6 +95,34 @@ function getLocalFallbackUrl(item) {
   return 'at-glance-img/travel-1.jpg';
 }
 
+function getVideoThumbnail(vid) {
+  if (!vid) return 'at-glance-img/travel-1.jpg';
+  const thumb = vid.thumbnail_url;
+  if (thumb && !thumb.endsWith('.mp4') && !thumb.includes('.mp4')) {
+    return thumb.startsWith('/') ? thumb.slice(1) : thumb;
+  }
+  const name = `${vid.title || ''} ${vid.category || ''} ${vid.media_url || ''}`.toLowerCase();
+  if (name.includes('avgeek') || name.includes('wings')) return 'at-glance-img/avgeek-1.jpg';
+  if (name.includes('festival') || name.includes('durgapuja') || name.includes('homecoming')) return 'at-glance-img/festival-1.jpg';
+  if (name.includes('lifestyle') || name.includes('delulu')) return 'at-glance-img/lifestyle-1.jpg';
+  if (name.includes('random') || name.includes('moments') || name.includes('travel')) return 'at-glance-img/travel-1.jpg';
+  return 'at-glance-img/travel-1.jpg';
+}
+
+const prewarmedVideoUrls = new Set();
+function prewarmVideo(url) {
+  if (!url || prewarmedVideoUrls.has(url)) return;
+  prewarmedVideoUrls.add(url);
+  try {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'fetch';
+    link.href = url;
+    link.crossOrigin = 'anonymous';
+    document.head.appendChild(link);
+  } catch (_) {}
+}
+
 
 const ThreadsIcon = (props) => (
   <svg
@@ -120,7 +148,7 @@ const MOCK_VIDEOS = [
     title: 'Wings Over Clouds',
     category: 'Avgeek',
     media_url: 'avgeek.mp4',
-    thumbnail_url: 'avgeek.mp4#t=1'
+    thumbnail_url: 'at-glance-img/avgeek-1.jpg'
   },
   {
     id: 10,
@@ -128,7 +156,7 @@ const MOCK_VIDEOS = [
     title: 'The Homecoming',
     category: 'Festival',
     media_url: 'durgapuja.mp4',
-    thumbnail_url: 'durgapuja.mp4#t=1'
+    thumbnail_url: 'at-glance-img/festival-1.jpg'
   },
   {
     id: 11,
@@ -136,7 +164,7 @@ const MOCK_VIDEOS = [
     title: 'The Delulu',
     category: 'Lifestyle',
     media_url: 'lifestyle.mp4',
-    thumbnail_url: 'lifestyle.mp4#t=1'
+    thumbnail_url: 'at-glance-img/lifestyle-1.jpg'
   },
   {
     id: 115,
@@ -144,7 +172,7 @@ const MOCK_VIDEOS = [
     title: 'Random Moments',
     category: 'Random',
     media_url: 'random.mp4',
-    thumbnail_url: 'random.mp4#t=1'
+    thumbnail_url: 'at-glance-img/travel-1.jpg'
   }
 ];
 
@@ -676,10 +704,9 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
   useEffect(() => {
     if (isOpen && videoRef.current) {
       setAspectRatio(16 / 9);
-      setIsBuffering(false);
+      setIsBuffering(true);
       const v = videoRef.current;
       v.currentTime = 0;
-      v.load();
       const playPromise = v.play();
       if (playPromise !== undefined) {
         playPromise
@@ -696,7 +723,10 @@ const CustomVideoPlayer = ({ src, poster, isOpen, onClose }) => {
                 setIsPlaying(true);
                 setIsBuffering(false);
               })
-              .catch(() => setIsPlaying(false));
+              .catch(() => {
+                setIsPlaying(false);
+                setIsBuffering(false);
+              });
           });
       }
     }
@@ -1648,7 +1678,7 @@ export default function App() {
               updated = {
                 ...updated,
                 media_url: 'avgeek.mp4',
-                thumbnail_url: 'avgeek.mp4#t=1'
+                thumbnail_url: 'at-glance-img/avgeek-1.jpg'
               };
             }
             if (video.title.includes('Alpine') || video.id === 10) {
@@ -1657,7 +1687,7 @@ export default function App() {
                 title: 'The Durga Puja Times',
                 category: 'Festival',
                 media_url: 'durgapuja.mp4',
-                thumbnail_url: 'durgapuja.mp4#t=1'
+                thumbnail_url: 'at-glance-img/festival-1.jpg'
               };
             }
             if (video.title.includes('Camera') || video.id === 11) {
@@ -1665,14 +1695,14 @@ export default function App() {
                 ...updated,
                 title: 'The Delulu',
                 media_url: 'lifestyle.mp4',
-                thumbnail_url: 'lifestyle.mp4#t=1'
+                thumbnail_url: 'at-glance-img/lifestyle-1.jpg'
               };
             }
             if (video.title.includes('Random') || video.id === 115) {
               updated = {
                 ...updated,
                 media_url: 'random.mp4',
-                thumbnail_url: 'random.mp4#t=1'
+                thumbnail_url: 'at-glance-img/travel-1.jpg'
               };
             }
             return updated;
@@ -1685,7 +1715,7 @@ export default function App() {
               title: 'Random Moments',
               category: 'Random',
               media_url: 'random.mp4',
-              thumbnail_url: 'random.mp4#t=1',
+              thumbnail_url: 'at-glance-img/travel-1.jpg',
               display_order: 4
             });
           }
@@ -2698,9 +2728,12 @@ export default function App() {
               {videos.map((vid, idx) => (
                 <div
                   key={vid.id}
+                  onMouseEnter={() => prewarmVideo(vid.media_url)}
+                  onTouchStart={() => prewarmVideo(vid.media_url)}
                   onClick={() => {
+                    prewarmVideo(vid.media_url);
                     setVideoModalUrl(vid.media_url);
-                    setVideoModalPoster(vid.thumbnail_url);
+                    setVideoModalPoster(getVideoThumbnail(vid));
                     // Optimistic local update for instant feedback
                     setVideoPlayCounts(prev => ({ ...prev, [vid.id]: (prev[vid.id] || 0) + 1 }));
                     // Non-blocking async insert so browser user activation gesture token does NOT expire
@@ -2720,30 +2753,14 @@ export default function App() {
                   {/* Visual Preview Container */}
                   <div className="relative aspect-[9/16] w-full bg-zinc-950 overflow-hidden">
 
-                    {/* Poster Image or Video Frame */}
-                    {vid.thumbnail_url && (vid.thumbnail_url.endsWith('.mp4') || vid.thumbnail_url.includes('.mp4')) ? (
-                      <video
-                        src={vid.thumbnail_url}
-                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none pointer-events-none"
-                        muted
-                        playsInline
-                        preload="metadata"
-                        onLoadedMetadata={(e) => {
-                          try {
-                            e.target.currentTime = 1;
-                          } catch (_) { }
-                        }}
-                        draggable="false"
-                      />
-                    ) : (
-                      <img
-                        src={vid.thumbnail_url}
-                        alt={vid.title}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none"
-                        draggable="false"
-                      />
-                    )}
+                    {/* Instant High-Res Poster Image */}
+                    <img
+                      src={getVideoThumbnail(vid)}
+                      alt={vid.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none group-hover:scale-105 transition-transform duration-500"
+                      draggable="false"
+                    />
 
                     {/* Center Play Button Overlay */}
                     <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/45 transition-premium">
