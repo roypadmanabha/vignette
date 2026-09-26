@@ -148,7 +148,7 @@ const MOCK_VIDEOS = [
     title: 'Wings Over Clouds',
     category: 'Avgeek',
     media_url: 'avgeek.mp4',
-    thumbnail_url: 'at-glance-img/avgeek-1.jpg'
+    thumbnail_url: '/at-glance-img/avgeek-1.jpg'
   },
   {
     id: 10,
@@ -156,7 +156,7 @@ const MOCK_VIDEOS = [
     title: 'The Homecoming',
     category: 'Festival',
     media_url: 'durgapuja.mp4',
-    thumbnail_url: 'at-glance-img/festival-1.jpg'
+    thumbnail_url: '/at-glance-img/festival-1.jpg'
   },
   {
     id: 11,
@@ -164,7 +164,7 @@ const MOCK_VIDEOS = [
     title: 'The Delulu',
     category: 'Lifestyle',
     media_url: 'lifestyle.mp4',
-    thumbnail_url: 'at-glance-img/lifestyle-1.jpg'
+    thumbnail_url: '/at-glance-img/lifestyle-1.jpg'
   },
   {
     id: 115,
@@ -172,7 +172,7 @@ const MOCK_VIDEOS = [
     title: 'Random Moments',
     category: 'Random',
     media_url: 'random.mp4',
-    thumbnail_url: 'at-glance-img/travel-1.jpg'
+    thumbnail_url: '/at-glance-img/travel-1.jpg'
   }
 ];
 
@@ -1678,7 +1678,7 @@ export default function App() {
               updated = {
                 ...updated,
                 media_url: 'avgeek.mp4',
-                thumbnail_url: 'at-glance-img/avgeek-1.jpg'
+                thumbnail_url: '/at-glance-img/avgeek-1.jpg'
               };
             }
             if (video.title.includes('Alpine') || video.id === 10) {
@@ -1687,7 +1687,7 @@ export default function App() {
                 title: 'The Durga Puja Times',
                 category: 'Festival',
                 media_url: 'durgapuja.mp4',
-                thumbnail_url: 'at-glance-img/festival-1.jpg'
+                thumbnail_url: '/at-glance-img/festival-1.jpg'
               };
             }
             if (video.title.includes('Camera') || video.id === 11) {
@@ -1695,14 +1695,14 @@ export default function App() {
                 ...updated,
                 title: 'The Delulu',
                 media_url: 'lifestyle.mp4',
-                thumbnail_url: 'at-glance-img/lifestyle-1.jpg'
+                thumbnail_url: '/at-glance-img/lifestyle-1.jpg'
               };
             }
             if (video.title.includes('Random') || video.id === 115) {
               updated = {
                 ...updated,
                 media_url: 'random.mp4',
-                thumbnail_url: 'at-glance-img/travel-1.jpg'
+                thumbnail_url: '/at-glance-img/travel-1.jpg'
               };
             }
             return updated;
@@ -1715,7 +1715,7 @@ export default function App() {
               title: 'Random Moments',
               category: 'Random',
               media_url: 'random.mp4',
-              thumbnail_url: 'at-glance-img/travel-1.jpg',
+              thumbnail_url: '/at-glance-img/travel-1.jpg',
               display_order: 4
             });
           }

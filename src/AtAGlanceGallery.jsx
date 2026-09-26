@@ -61,18 +61,18 @@ function sortForFirstImpression(list) {
 }
 
 const MOCK_GALLERY_ITEMS = [
-  { id: 2, title: 'avgeek2', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-2.jpg`, fallback_url: 'at-glance-img/avgeek-2.jpg' },
-  { id: 5, title: 'lifestyle1', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-1.jpg`, fallback_url: 'at-glance-img/lifestyle-1.jpg' },
-  { id: 8, title: 'lifestyle4', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-4.jpg`, fallback_url: 'at-glance-img/lifestyle-4.jpg' },
-  { id: 11, title: 'festival1', category: 'Festivals', media_url: `${SUPABASE_STORAGE_BASE}/festival-1.jpg`, fallback_url: 'at-glance-img/festival-1.jpg' },
-  { id: 1, title: 'avgeek1', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-1.jpg`, fallback_url: 'at-glance-img/avgeek-1.jpg' },
-  { id: 3, title: 'avgeek3', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-3.jpg`, fallback_url: 'at-glance-img/avgeek-3.jpg' },
-  { id: 4, title: 'avgeek4', category: 'Avgeek', media_url: `${SUPABASE_STORAGE_BASE}/avgeek-4.jpg`, fallback_url: 'at-glance-img/avgeek-4.jpg' },
-  { id: 6, title: 'lifestyle2', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-2.jpg`, fallback_url: 'at-glance-img/lifestyle-2.jpg' },
-  { id: 7, title: 'lifestyle3', category: 'Lifestyle', media_url: `${SUPABASE_STORAGE_BASE}/lifestyle-3.jpg`, fallback_url: 'at-glance-img/lifestyle-3.jpg' },
-  { id: 9, title: 'storytelling1', category: 'Storytelling', media_url: `${SUPABASE_STORAGE_BASE}/storytelling-1.jpg`, fallback_url: 'at-glance-img/storytelling-1.jpg' },
-  { id: 10, title: 'storytelling2', category: 'Storytelling', media_url: `${SUPABASE_STORAGE_BASE}/storytelling-2.jpg`, fallback_url: 'at-glance-img/storytelling-2.jpg' },
-  { id: 12, title: 'travel1', category: 'Travel', media_url: `${SUPABASE_STORAGE_BASE}/travel-1.jpg`, fallback_url: 'at-glance-img/travel-1.jpg' },
+  { id: 2, title: 'avgeek2', category: 'Avgeek', media_url: '/at-glance-img/avgeek-2.jpg', fallback_url: '/at-glance-img/avgeek-2.jpg' },
+  { id: 5, title: 'lifestyle1', category: 'Lifestyle', media_url: '/at-glance-img/lifestyle-1.jpg', fallback_url: '/at-glance-img/lifestyle-1.jpg' },
+  { id: 8, title: 'lifestyle4', category: 'Lifestyle', media_url: '/at-glance-img/lifestyle-4.jpg', fallback_url: '/at-glance-img/lifestyle-4.jpg' },
+  { id: 11, title: 'festival1', category: 'Festivals', media_url: '/at-glance-img/festival-1.jpg', fallback_url: '/at-glance-img/festival-1.jpg' },
+  { id: 1, title: 'avgeek1', category: 'Avgeek', media_url: '/at-glance-img/avgeek-1.jpg', fallback_url: '/at-glance-img/avgeek-1.jpg' },
+  { id: 3, title: 'avgeek3', category: 'Avgeek', media_url: '/at-glance-img/avgeek-3.jpg', fallback_url: '/at-glance-img/avgeek-3.jpg' },
+  { id: 4, title: 'avgeek4', category: 'Avgeek', media_url: '/at-glance-img/avgeek-4.jpg', fallback_url: '/at-glance-img/avgeek-4.jpg' },
+  { id: 6, title: 'lifestyle2', category: 'Lifestyle', media_url: '/at-glance-img/lifestyle-2.jpg', fallback_url: '/at-glance-img/lifestyle-2.jpg' },
+  { id: 7, title: 'lifestyle3', category: 'Lifestyle', media_url: '/at-glance-img/lifestyle-3.jpg', fallback_url: '/at-glance-img/lifestyle-3.jpg' },
+  { id: 9, title: 'storytelling1', category: 'Storytelling', media_url: '/at-glance-img/storytelling-1.jpg', fallback_url: '/at-glance-img/storytelling-1.jpg' },
+  { id: 10, title: 'storytelling2', category: 'Storytelling', media_url: '/at-glance-img/storytelling-2.jpg', fallback_url: '/at-glance-img/storytelling-2.jpg' },
+  { id: 12, title: 'travel1', category: 'Travel', media_url: '/at-glance-img/travel-1.jpg', fallback_url: '/at-glance-img/travel-1.jpg' },
 ];
 
 export default function AtAGlanceGallery({ onImageClick }) {
@@ -118,6 +118,7 @@ export default function AtAGlanceGallery({ onImageClick }) {
         if (data && data.length > 0) {
           const mapped = data.map(item => ({
             ...item,
+            media_url: getCanonicalImageUrl(item),
             fallback_url: getCanonicalImageUrl(item)
           }));
           const uniqueItems = [];
