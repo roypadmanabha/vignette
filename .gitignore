@@ -34,7 +34,5 @@ dist-ssr
 .netlify
 print_captions.js
 test_update_after.js
-at-glance-img
-
 
 .vercel
