@@ -974,23 +974,11 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '' });
 
-  // Welcome Banner Prompt States (Appears ONLY on initial site launch / page open for 2s)
-  const [showWelcomeBanner, setShowWelcomeBanner] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const alreadyShown = sessionStorage.getItem('vignette_welcome_banner_shown');
-      if (alreadyShown === 'true') {
-        return false;
-      }
-      sessionStorage.setItem('vignette_welcome_banner_shown', 'true');
-      return true;
-    }
-    return false;
-  });
+  // Welcome Banner Prompt States (Appears on EVERY page launch / refresh for 2s)
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState(true);
   const [welcomeBannerFading, setWelcomeBannerFading] = useState(false);
 
   useEffect(() => {
-    if (!showWelcomeBanner) return;
-
     // Display for 2 seconds (2000ms), followed by 400ms smooth fade-out transition
     const fadeTimer = setTimeout(() => {
       setWelcomeBannerFading(true);
@@ -1001,7 +989,7 @@ export default function App() {
     }, 2000);
 
     return () => clearTimeout(fadeTimer);
-  }, [showWelcomeBanner]);
+  }, []);
 
   // Cookie Consent States
   const [showCookieConsent, setShowCookieConsent] = useState(false);
@@ -2211,7 +2199,6 @@ export default function App() {
             const base = path.replace(/\/explore-vignette\/?$/, '') || '/';
             window.history.pushState(null, '', base);
           }
-          window.location.reload();
         }}
         isDark={isDark}
         toggleTheme={toggleTheme}
