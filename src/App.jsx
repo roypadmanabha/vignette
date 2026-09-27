@@ -974,11 +974,23 @@ export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '' });
 
-  // Welcome Banner Prompt States (Appears on launch for 2s then auto-disappears)
-  const [showWelcomeBanner, setShowWelcomeBanner] = useState(true);
+  // Welcome Banner Prompt States (Appears ONLY on initial site launch / page open for 2s)
+  const [showWelcomeBanner, setShowWelcomeBanner] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const alreadyShown = sessionStorage.getItem('vignette_welcome_banner_shown');
+      if (alreadyShown === 'true') {
+        return false;
+      }
+      sessionStorage.setItem('vignette_welcome_banner_shown', 'true');
+      return true;
+    }
+    return false;
+  });
   const [welcomeBannerFading, setWelcomeBannerFading] = useState(false);
 
   useEffect(() => {
+    if (!showWelcomeBanner) return;
+
     // Display for 2 seconds (2000ms), followed by 400ms smooth fade-out transition
     const fadeTimer = setTimeout(() => {
       setWelcomeBannerFading(true);
@@ -989,14 +1001,7 @@ export default function App() {
     }, 2000);
 
     return () => clearTimeout(fadeTimer);
-  }, []);
-
-  const dismissWelcomeBanner = () => {
-    setWelcomeBannerFading(true);
-    setTimeout(() => {
-      setShowWelcomeBanner(false);
-    }, 300);
-  };
+  }, [showWelcomeBanner]);
 
   // Cookie Consent States
   const [showCookieConsent, setShowCookieConsent] = useState(false);
@@ -2217,38 +2222,18 @@ export default function App() {
   return (
     <div className={`min-h-screen w-full max-w-full text-zinc-900 dark:text-zinc-100 transition-colors duration-300 relative ${isDark ? 'bg-dark-theme' : 'bg-light-theme'}`}>
 
-      {/* 2.0. WELCOME BANNER PROMPT OVERLAY (Launch 2s auto-disappear with 10px Golden Border) */}
+      {/* 2.0. WELCOME BANNER PROMPT OVERLAY (Launch 2s auto-disappear with 10px Golden Border - No (X) Button) */}
       {showWelcomeBanner && (
         <div
-          className={`fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 select-none font-brand transition-all duration-400 ease-out ${
-            welcomeBannerFading ? 'opacity-0 scale-95 pointer-events-none' : 'opacity-100 scale-100'
+          className={`fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 select-none font-brand transition-all duration-400 ease-out pointer-events-none ${
+            welcomeBannerFading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
           }`}
-          onClick={dismissWelcomeBanner}
         >
           {/* Dark Backdrop with Blur */}
           <div className="absolute inset-0 bg-black/70 backdrop-blur-md transition-opacity duration-400" />
 
           {/* Banner Box with 10px Golden Border & Glow */}
-          <div
-            className="relative z-10 w-full max-w-[92vw] sm:max-w-[85vw] md:max-w-[750px] lg:max-w-[850px] rounded-[10px] overflow-hidden shadow-[0_0_40px_rgba(255,215,0,0.45)] border-2 border-[#FFD700] bg-black cursor-pointer group transition-transform duration-300 hover:scale-[1.01]"
-            onClick={(e) => {
-              e.stopPropagation();
-              dismissWelcomeBanner();
-            }}
-          >
-            {/* Close icon top-right */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                dismissWelcomeBanner();
-              }}
-              className="absolute top-2.5 right-2.5 z-20 p-1.5 rounded-full bg-black/60 hover:bg-black/90 text-white/80 hover:text-white border border-white/20 backdrop-blur-md transition-all shadow-lg active:scale-95 cursor-pointer"
-              title="Close welcome prompt"
-            >
-              <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-            </button>
-
+          <div className="relative z-10 w-full max-w-[92vw] sm:max-w-[85vw] md:max-w-[750px] lg:max-w-[850px] rounded-[10px] overflow-hidden shadow-[0_0_40px_rgba(255,215,0,0.45)] border-2 border-[#FFD700] bg-black group">
             {/* Responsive Banner Image */}
             <picture className="w-full h-auto block">
               <source srcSet="/vignette-welcome-banner.webp" type="image/webp" />
