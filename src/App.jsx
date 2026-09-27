@@ -971,6 +971,7 @@ export default function App() {
     }
     return true; // Dark Mode by default on page load
   });
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState({ show: false, message: '' });
 
   // Welcome Banner Prompt States (Appears on launch for 2s then auto-disappears)
