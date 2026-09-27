@@ -3278,6 +3278,7 @@ export default function App() {
               <video
                 ref={heroVideoRef}
                 src="featured.mp4"
+                poster="/posters/featured-poster.jpg"
                 playsInline
                 preload="metadata"
                 controlsList="nodownload nofullscreen noremoteplayback"
