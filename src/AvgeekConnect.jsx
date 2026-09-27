@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from './supabase';
-import { X, LogOut, Upload, Image, Video, User, Calendar, Plane, Globe, AlertCircle, CheckCircle, ShieldCheck, Download, Trash2, ChevronLeft, ChevronRight, Layers, Volume2, VolumeX, Smile, MoreHorizontal, Megaphone, Send, TriangleAlert, MapPin, Phone, Mail, Radar, Edit, AlertTriangle, HelpCircle } from 'lucide-react';
+import { X, LogOut, Upload, Image, Video, User, Calendar, Plane, Globe, AlertCircle, CheckCircle, ShieldCheck, Download, Trash2, ChevronLeft, ChevronRight, Layers, Volume2, VolumeX, Smile, MoreHorizontal, Megaphone, Send, TriangleAlert, MapPin, Phone, Mail, Radar, Edit, AlertTriangle, HelpCircle, Maximize2, Minimize2 } from 'lucide-react';
 
 const Instagram = (props) => (
   <svg
@@ -112,6 +112,8 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [caption, setCaption] = useState('');
   const [uploading, setUploading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null); // { type: 'success' | 'error', text: string }
+  const [isAnnouncementExpanded, setIsAnnouncementExpanded] = useState(false);
+  const [isCaptionExpanded, setIsCaptionExpanded] = useState(false);
 
   // Demo Login Form (for offline development fallback)
   const [demoEmail, setDemoEmail] = useState('');
@@ -2057,14 +2059,37 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
                   {/* Caption Input */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-bold text-zinc-400">Add Caption</label>
-                    <textarea
-                      value={caption}
-                      onChange={(e) => setCaption(e.target.value)}
-                      placeholder="Type your caption here"
-                      rows="2"
-                      className="w-full text-xs font-body leading-relaxed bg-white border border-zinc-300 rounded-xl p-2.5 px-3 text-black placeholder-zinc-400 focus:outline-none focus:border-[#ffec4e] focus:bg-white transition-colors resize-none"
-                    />
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold text-zinc-400">Add Caption</label>
+                      <button
+                        type="button"
+                        onClick={() => setIsCaptionExpanded(!isCaptionExpanded)}
+                        className="text-[10px] text-zinc-400 hover:text-[#ffec4e] flex items-center gap-1 cursor-pointer transition-colors"
+                        title={isCaptionExpanded ? "Minimize text box" : "Maximize text box"}
+                      >
+                        {isCaptionExpanded ? <Minimize2 className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
+                        <span>{isCaptionExpanded ? "Minimize" : "Maximize"}</span>
+                      </button>
+                    </div>
+                    <div className="relative w-full">
+                      <textarea
+                        value={caption}
+                        onChange={(e) => setCaption(e.target.value)}
+                        placeholder="Type your caption here"
+                        rows={isCaptionExpanded ? 7 : 2}
+                        className={`w-full text-xs font-body leading-relaxed bg-white border border-zinc-300 rounded-xl p-2.5 px-3 pr-9 text-black placeholder-zinc-400 focus:outline-none focus:border-[#ffec4e] focus:bg-white transition-all resize-none ${
+                          isCaptionExpanded ? 'min-h-[160px]' : 'min-h-[50px]'
+                        }`}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setIsCaptionExpanded(!isCaptionExpanded)}
+                        className="absolute bottom-2.5 right-2.5 p-1 text-zinc-500 hover:text-black hover:bg-zinc-100 rounded-md transition-colors cursor-pointer"
+                        title={isCaptionExpanded ? "Minimize text box" : "Maximize text box"}
+                      >
+                        {isCaptionExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
                   </div>
 
                   {/* Post Submit Button */}
@@ -2105,22 +2130,39 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
                   {/* Admin Broadcast Input Form */}
                   {session?.user?.email === 'vignetteworks.official@gmail.com' && (
-                    <div className="flex gap-2 items-end bg-white border border-zinc-300 rounded-xl p-1.5 focus-within:border-zinc-400 transition-colors w-full">
+                    <div className="flex gap-2 items-end bg-white border border-zinc-300 rounded-xl p-1.5 focus-within:border-zinc-400 transition-all w-full relative">
                       <textarea
                         value={newUpdateText}
                         onChange={(e) => setNewUpdateText(e.target.value)}
-                        maxLength={300}
-                        rows={2}
-                        className="flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 resize-none py-1 min-h-[40px] leading-normal"
+                        maxLength={isAnnouncementExpanded ? 1000 : 300}
+                        rows={isAnnouncementExpanded ? 6 : 2}
+                        placeholder="Type announcement here..."
+                        className={`flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 resize-none py-1 leading-normal transition-all ${
+                          isAnnouncementExpanded ? 'min-h-[140px]' : 'min-h-[40px]'
+                        }`}
                       />
-                      <button
-                        onClick={() => handleAddLiveUpdate()}
-                        disabled={!newUpdateText.trim()}
-                        className="p-2 bg-[#d10000] hover:bg-[#b00000] disabled:bg-zinc-800 disabled:text-zinc-500 rounded-lg text-white cursor-pointer transition-colors flex items-center justify-center shrink-0 mb-0.5"
-                        title="Broadcast update"
-                      >
-                        <Send className="w-3.5 h-3.5" />
-                      </button>
+                      <div className="flex items-center gap-1 shrink-0 mb-0.5">
+                        <button
+                          type="button"
+                          onClick={() => setIsAnnouncementExpanded(!isAnnouncementExpanded)}
+                          className="p-1.5 text-zinc-500 hover:text-black hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer"
+                          title={isAnnouncementExpanded ? "Minimize size" : "Maximize size"}
+                        >
+                          {isAnnouncementExpanded ? (
+                            <Minimize2 className="w-3.5 h-3.5 text-zinc-700" />
+                          ) : (
+                            <Maximize2 className="w-3.5 h-3.5 text-zinc-600" />
+                          )}
+                        </button>
+                        <button
+                          onClick={() => handleAddLiveUpdate()}
+                          disabled={!newUpdateText.trim()}
+                          className="p-2 bg-[#d10000] hover:bg-[#b00000] disabled:bg-zinc-800 disabled:text-zinc-500 rounded-lg text-white cursor-pointer transition-colors flex items-center justify-center shrink-0"
+                          title="Broadcast update"
+                        >
+                          <Send className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   )}
 
