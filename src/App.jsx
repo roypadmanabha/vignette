@@ -96,17 +96,17 @@ function getLocalFallbackUrl(item) {
 }
 
 function getVideoThumbnail(vid) {
-  if (!vid) return '/at-glance-img/travel-1.jpg';
+  if (!vid) return '/posters/random-poster.jpg';
   const thumb = vid.thumbnail_url;
-  if (thumb && !thumb.endsWith('.mp4') && !thumb.includes('.mp4')) {
+  if (thumb && !thumb.endsWith('.mp4') && !thumb.includes('.mp4') && !thumb.includes('at-glance-img')) {
     return thumb.startsWith('/') ? thumb : `/${thumb}`;
   }
   const name = `${vid.title || ''} ${vid.category || ''} ${vid.media_url || ''}`.toLowerCase();
-  if (name.includes('avgeek') || name.includes('wings')) return '/at-glance-img/avgeek-1.jpg';
-  if (name.includes('festival') || name.includes('durgapuja') || name.includes('homecoming')) return '/at-glance-img/festival-1.jpg';
-  if (name.includes('lifestyle') || name.includes('delulu')) return '/at-glance-img/lifestyle-1.jpg';
-  if (name.includes('random') || name.includes('moments') || name.includes('travel')) return '/at-glance-img/travel-1.jpg';
-  return '/at-glance-img/travel-1.jpg';
+  if (name.includes('avgeek') || name.includes('wings')) return '/posters/avgeek-poster.jpg';
+  if (name.includes('festival') || name.includes('durgapuja') || name.includes('homecoming')) return '/posters/durgapuja-poster.jpg';
+  if (name.includes('lifestyle') || name.includes('delulu')) return '/posters/lifestyle-poster.jpg';
+  if (name.includes('random') || name.includes('moments') || name.includes('travel')) return '/posters/random-poster.jpg';
+  return '/posters/random-poster.jpg';
 }
 
 const prewarmedVideoUrls = new Set();
@@ -148,7 +148,7 @@ const MOCK_VIDEOS = [
     title: 'Wings Over Clouds',
     category: 'Avgeek',
     media_url: 'avgeek.mp4',
-    thumbnail_url: '/at-glance-img/avgeek-1.jpg'
+    thumbnail_url: '/posters/avgeek-poster.jpg'
   },
   {
     id: 10,
@@ -156,7 +156,7 @@ const MOCK_VIDEOS = [
     title: 'The Homecoming',
     category: 'Festival',
     media_url: 'durgapuja.mp4',
-    thumbnail_url: '/at-glance-img/festival-1.jpg'
+    thumbnail_url: '/posters/durgapuja-poster.jpg'
   },
   {
     id: 11,
@@ -164,7 +164,7 @@ const MOCK_VIDEOS = [
     title: 'The Delulu',
     category: 'Lifestyle',
     media_url: 'lifestyle.mp4',
-    thumbnail_url: '/at-glance-img/lifestyle-1.jpg'
+    thumbnail_url: '/posters/lifestyle-poster.jpg'
   },
   {
     id: 115,
@@ -172,7 +172,7 @@ const MOCK_VIDEOS = [
     title: 'Random Moments',
     category: 'Random',
     media_url: 'random.mp4',
-    thumbnail_url: '/at-glance-img/travel-1.jpg'
+    thumbnail_url: '/posters/random-poster.jpg'
   }
 ];
 
@@ -1674,20 +1674,20 @@ export default function App() {
           const loadedImages = data.filter(item => item.type === 'image');
           const loadedVideos = data.filter(item => item.type === 'video').map(video => {
             let updated = { ...video };
-            if (video.category === 'Avgeek') {
+            if (video.category === 'Avgeek' || video.id === 9) {
               updated = {
                 ...updated,
                 media_url: 'avgeek.mp4',
-                thumbnail_url: '/at-glance-img/avgeek-1.jpg'
+                thumbnail_url: '/posters/avgeek-poster.jpg'
               };
             }
             if (video.title.includes('Alpine') || video.id === 10) {
               updated = {
                 ...updated,
-                title: 'The Durga Puja Times',
+                title: 'The Homecoming',
                 category: 'Festival',
                 media_url: 'durgapuja.mp4',
-                thumbnail_url: '/at-glance-img/festival-1.jpg'
+                thumbnail_url: '/posters/durgapuja-poster.jpg'
               };
             }
             if (video.title.includes('Camera') || video.id === 11) {
@@ -1695,14 +1695,14 @@ export default function App() {
                 ...updated,
                 title: 'The Delulu',
                 media_url: 'lifestyle.mp4',
-                thumbnail_url: '/at-glance-img/lifestyle-1.jpg'
+                thumbnail_url: '/posters/lifestyle-poster.jpg'
               };
             }
             if (video.title.includes('Random') || video.id === 115) {
               updated = {
                 ...updated,
                 media_url: 'random.mp4',
-                thumbnail_url: '/at-glance-img/travel-1.jpg'
+                thumbnail_url: '/posters/random-poster.jpg'
               };
             }
             return updated;
@@ -1715,7 +1715,7 @@ export default function App() {
               title: 'Random Moments',
               category: 'Random',
               media_url: 'random.mp4',
-              thumbnail_url: '/at-glance-img/travel-1.jpg',
+              thumbnail_url: '/posters/random-poster.jpg',
               display_order: 4
             });
           }
@@ -2758,7 +2758,7 @@ export default function App() {
                       src={getVideoThumbnail(vid)}
                       alt={vid.title}
                       loading="lazy"
-                      className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300 select-none group-hover:scale-105 transition-transform duration-500"
+                      className="absolute inset-0 w-full h-full object-cover blur-[5px] scale-110 transition-opacity duration-300 select-none group-hover:scale-115 transition-transform duration-500"
                       draggable="false"
                     />
 
