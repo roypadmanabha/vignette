@@ -2987,68 +2987,44 @@ export default function App() {
 
         {/* 2.9. VISION & MANIFESTO SECTION */}
         <section id="vision" className="bg-white dark:bg-transparent py-10 sm:py-24 md:py-32 scroll-mt-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="reveal reveal-up flex flex-col items-start max-w-4xl">
+              
+              {/* Category Subheading */}
+              <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase mb-3">
+                {formatVignette('About Vignette')}
+              </span>
 
-              {/* Left Narrative Column */}
-              <div className="reveal reveal-left lg:col-span-7 flex flex-col">
-                <span className="font-heading font-extrabold text-xs tracking-widest text-[#D10000] dark:text-[#FFD700] uppercase mb-3">
-                  {formatVignette('About Vignette')}
-                </span>
-                <h2 className="font-heading font-bold text-4xl sm:text-5xl leading-tight">
+              {/* Title Heading + Inline Circular Avatar */}
+              <h2 className="font-heading font-bold text-3xl sm:text-4xl md:text-5xl leading-tight flex items-center flex-wrap gap-3 sm:gap-4">
+                <span>
                   <span className="text-zinc-950 dark:text-white">The Journey of </span>
                   <span className="brand-text-gradient">Vignette</span>
-                </h2>
+                </span>
 
-                <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-4 leading-relaxed transition-colors text-justify">
-                  <p>
-                    Established in late 2023, Vignette has rapidly grown by delivering premier personal and professional video editing, seamless website automation, and dynamic promotional projects. Guided by founder <span className="font-heading text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#000000] dark:from-[#e31c25] dark:to-[#FFBF00]" style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 600 }}>Padmanabha Roy</span>, who expertly blends creative ideologies to maximize audience engagement, we are ready to build something truly exceptional.
-                  </p>
-                  <p>
-                    Feel confident to trust us, and together, let&apos;s create something exceptional.
-                  </p>
+                {/* Circular Founder Avatar */}
+                <div className="relative inline-flex items-center justify-center shrink-0">
+                  <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-[#e31c25] to-[#FFD700] opacity-75 blur-sm" />
+                  <img
+                    src="avatar-proy.jpg"
+                    alt="Padmanabha Roy – Founder of Vignette"
+                    className="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full object-cover border-2 border-white dark:border-zinc-900 shadow-xl transition-transform duration-300 hover:scale-110"
+                  />
                 </div>
+              </h2>
 
-                {/* Brand accent rule */}
-                <div className="mt-8 w-16 h-1 rounded-full bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow" />
+              {/* Narrative Content */}
+              <div className="font-body text-base sm:text-lg text-zinc-600 dark:text-zinc-300 mt-6 space-y-4 leading-relaxed transition-colors text-justify">
+                <p>
+                  Established in late 2023, Vignette has rapidly grown by delivering premier personal and professional video editing, seamless website automation, and dynamic promotional projects. Guided by founder <span className="font-heading text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#000000] dark:from-[#e31c25] dark:to-[#FFBF00]" style={{ fontFamily: "'Nunito', sans-serif", fontWeight: 600 }}>Padmanabha Roy</span>, who expertly blends creative ideologies to maximize audience engagement, we are ready to build something truly exceptional.
+                </p>
+                <p>
+                  Feel confident to trust us, and together, let&apos;s create something exceptional.
+                </p>
               </div>
 
-              {/* Right Photo Column */}
-              <div className="reveal reveal-right lg:col-span-5 flex flex-col justify-center items-center">
-                <div className="relative w-full max-w-xs sm:max-w-sm mx-auto">
-
-                  {/* Glow aura */}
-                  <div className="absolute -inset-6 rounded-3xl bg-gradient-to-br from-brand-lightRed/20 via-brand-lightOrange/10 to-transparent dark:from-brand-darkGold/20 dark:via-brand-darkYellow/10 dark:to-transparent blur-3xl pointer-events-none" />
-
-                  {/* Corner frame accents */}
-                  <div className="absolute -top-3 -left-3 w-12 h-12 sm:w-16 sm:h-16 rounded-tl-2xl border-t-[3px] border-l-[3px] border-brand-lightRed dark:border-brand-darkGold pointer-events-none z-10" />
-                  <div className="absolute -bottom-3 -right-3 w-12 h-12 sm:w-16 sm:h-16 rounded-br-2xl border-b-[3px] border-r-[3px] border-brand-lightOrange dark:border-brand-darkYellow pointer-events-none z-10" />
-
-                  {/* Photo card */}
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-black/10 dark:border-white/10">
-                    <img
-                      src="avatar-proy.jpg"
-                      alt="Padmanabha Roy – Founder of Vignette"
-                      className="w-full h-auto object-cover object-top select-none pointer-events-none"
-                      draggable="false"
-                    />
-                    {/* Bottom gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pointer-events-none" />
-                    {/* Name badge */}
-                    <div className="absolute bottom-0 left-0 right-0 px-5 py-4">
-                      <div className="flex flex-col">
-                        <h3 className="font-body font-medium text-base text-white leading-tight" style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 500 }}>
-                          Padmanabha Roy
-                        </h3>
-                        <p className="font-body font-medium text-[10px] text-zinc-300 uppercase tracking-widest mt-0.5" style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 500 }}>
-                          Founder &middot; <span className="font-body font-medium normal-case text-transparent bg-clip-text bg-gradient-to-r from-[#e31c25] to-[#FFBF00]" style={{ fontFamily: "'Mulish', sans-serif", fontWeight: 500 }}>Vignette</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
+              {/* Brand accent rule */}
+              <div className="mt-8 w-16 h-1 rounded-full bg-gradient-to-r from-brand-lightRed to-brand-lightOrange dark:from-brand-darkGold dark:to-brand-darkYellow" />
 
             </div>
           </div>
