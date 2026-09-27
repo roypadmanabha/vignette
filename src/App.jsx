@@ -2199,6 +2199,7 @@ export default function App() {
             const base = path.replace(/\/explore-vignette\/?$/, '') || '/';
             window.history.pushState(null, '', base);
           }
+          window.location.reload();
         }}
         isDark={isDark}
         toggleTheme={toggleTheme}
