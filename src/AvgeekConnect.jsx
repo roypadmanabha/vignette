@@ -32,6 +32,20 @@ const Facebook = (props) => (
   </svg>
 );
 
+const ResizeGripIcon = (props) => (
+  <svg
+    viewBox="0 0 12 12"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.6"
+    strokeLinecap="round"
+    {...props}
+  >
+    <path d="M9.5 2.5L2.5 9.5" />
+    <path d="M9.5 6.5L6.5 9.5" />
+  </svg>
+);
+
 const EMOJI_CATEGORIES = {
   smileys: {
     icon: '😃',
@@ -2059,35 +2073,24 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
                   {/* Caption Input */}
                   <div className="flex flex-col gap-1.5">
-                    <div className="flex items-center justify-between">
-                      <label className="text-xs font-bold text-zinc-400">Add Caption</label>
-                      <button
-                        type="button"
-                        onClick={() => setIsCaptionExpanded(!isCaptionExpanded)}
-                        className="text-[10px] text-zinc-400 hover:text-[#ffec4e] flex items-center gap-1 cursor-pointer transition-colors"
-                        title={isCaptionExpanded ? "Minimize text box" : "Maximize text box"}
-                      >
-                        {isCaptionExpanded ? <Minimize2 className="w-3 h-3" /> : <Maximize2 className="w-3 h-3" />}
-                        <span>{isCaptionExpanded ? "Minimize" : "Maximize"}</span>
-                      </button>
-                    </div>
+                    <label className="text-xs font-bold text-zinc-400">Add Caption</label>
                     <div className="relative w-full">
                       <textarea
                         value={caption}
                         onChange={(e) => setCaption(e.target.value)}
                         placeholder="Type your caption here"
                         rows={isCaptionExpanded ? 7 : 2}
-                        className={`w-full text-xs font-body leading-relaxed bg-white border border-zinc-300 rounded-xl p-2.5 px-3 pr-9 text-black placeholder-zinc-400 focus:outline-none focus:border-[#ffec4e] focus:bg-white transition-all resize-none ${
+                        className={`w-full text-xs font-body leading-relaxed bg-white border border-zinc-300 rounded-xl p-2.5 px-3 pr-8 text-black placeholder-zinc-400 focus:outline-none focus:border-[#ffec4e] focus:bg-white transition-all resize-y ${
                           isCaptionExpanded ? 'min-h-[160px]' : 'min-h-[50px]'
                         }`}
                       />
                       <button
                         type="button"
                         onClick={() => setIsCaptionExpanded(!isCaptionExpanded)}
-                        className="absolute bottom-2.5 right-2.5 p-1 text-zinc-500 hover:text-black hover:bg-zinc-100 rounded-md transition-colors cursor-pointer"
-                        title={isCaptionExpanded ? "Minimize text box" : "Maximize text box"}
+                        className="absolute bottom-2 right-2 p-1 text-zinc-400 hover:text-black hover:bg-zinc-100 rounded transition-all cursor-pointer flex items-center justify-center"
+                        title={isCaptionExpanded ? "Minimize size" : "Maximize / Expand size"}
                       >
-                        {isCaptionExpanded ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                        <ResizeGripIcon className="w-3.5 h-3.5" />
                       </button>
                     </div>
                   </div>
@@ -2137,7 +2140,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                         maxLength={isAnnouncementExpanded ? 1000 : 300}
                         rows={isAnnouncementExpanded ? 6 : 2}
                         placeholder="Type announcement here..."
-                        className={`flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 resize-none py-1 leading-normal transition-all ${
+                        className={`flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 resize-y py-1 leading-normal transition-all ${
                           isAnnouncementExpanded ? 'min-h-[140px]' : 'min-h-[40px]'
                         }`}
                       />
@@ -2145,14 +2148,10 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                         <button
                           type="button"
                           onClick={() => setIsAnnouncementExpanded(!isAnnouncementExpanded)}
-                          className="p-1.5 text-zinc-500 hover:text-black hover:bg-zinc-100 rounded-lg transition-colors cursor-pointer"
-                          title={isAnnouncementExpanded ? "Minimize size" : "Maximize size"}
+                          className="p-1 text-zinc-400 hover:text-black hover:bg-zinc-100 rounded transition-all cursor-pointer flex items-center justify-center"
+                          title={isAnnouncementExpanded ? "Minimize size" : "Maximize / Expand size"}
                         >
-                          {isAnnouncementExpanded ? (
-                            <Minimize2 className="w-3.5 h-3.5 text-zinc-700" />
-                          ) : (
-                            <Maximize2 className="w-3.5 h-3.5 text-zinc-600" />
-                          )}
+                          <ResizeGripIcon className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => handleAddLiveUpdate()}
