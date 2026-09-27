@@ -127,7 +127,6 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [uploading, setUploading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null); // { type: 'success' | 'error', text: string }
   const [isAnnouncementExpanded, setIsAnnouncementExpanded] = useState(false);
-  const [isCaptionExpanded, setIsCaptionExpanded] = useState(false);
 
   // Demo Login Form (for offline development fallback)
   const [demoEmail, setDemoEmail] = useState('');
@@ -2074,25 +2073,13 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                   {/* Caption Input */}
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-bold text-zinc-400">Add Caption</label>
-                    <div className="relative w-full">
-                      <textarea
-                        value={caption}
-                        onChange={(e) => setCaption(e.target.value)}
-                        placeholder="Type your caption here"
-                        rows={isCaptionExpanded ? 7 : 2}
-                        className={`w-full text-xs font-body leading-relaxed bg-white border border-zinc-300 rounded-xl p-2.5 px-3 pr-8 text-black placeholder-zinc-400 focus:outline-none focus:border-[#ffec4e] focus:bg-white transition-all resize-y ${
-                          isCaptionExpanded ? 'min-h-[160px]' : 'min-h-[50px]'
-                        }`}
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setIsCaptionExpanded(!isCaptionExpanded)}
-                        className="absolute bottom-2 right-2 p-1 text-zinc-400 hover:text-black hover:bg-zinc-100 rounded transition-all cursor-pointer flex items-center justify-center"
-                        title={isCaptionExpanded ? "Minimize size" : "Maximize / Expand size"}
-                      >
-                        <ResizeGripIcon className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
+                    <textarea
+                      value={caption}
+                      onChange={(e) => setCaption(e.target.value)}
+                      placeholder="Type your caption here"
+                      rows="2"
+                      className="w-full text-xs font-body leading-relaxed bg-white border border-zinc-300 rounded-xl p-2.5 px-3 text-black placeholder-zinc-400 focus:outline-none focus:border-[#ffec4e] focus:bg-white transition-colors resize-none"
+                    />
                   </div>
 
                   {/* Post Submit Button */}
@@ -2140,7 +2127,7 @@ export default function AvgeekConnect({ isOpen, onClose }) {
                         maxLength={isAnnouncementExpanded ? 1000 : 300}
                         rows={isAnnouncementExpanded ? 6 : 2}
                         placeholder="Type announcement here..."
-                        className={`flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 resize-y py-1 leading-normal transition-all ${
+                        className={`flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 resize-none py-1 leading-normal transition-all ${
                           isAnnouncementExpanded ? 'min-h-[140px]' : 'min-h-[40px]'
                         }`}
                       />
