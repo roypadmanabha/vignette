@@ -32,20 +32,6 @@ const Facebook = (props) => (
   </svg>
 );
 
-const ResizeGripIcon = (props) => (
-  <svg
-    viewBox="0 0 12 12"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.6"
-    strokeLinecap="round"
-    {...props}
-  >
-    <path d="M9.5 2.5L2.5 9.5" />
-    <path d="M9.5 6.5L6.5 9.5" />
-  </svg>
-);
-
 const EMOJI_CATEGORIES = {
   smileys: {
     icon: '😃',
@@ -126,7 +112,6 @@ export default function AvgeekConnect({ isOpen, onClose }) {
   const [caption, setCaption] = useState('');
   const [uploading, setUploading] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null); // { type: 'success' | 'error', text: string }
-  const [isAnnouncementExpanded, setIsAnnouncementExpanded] = useState(false);
 
   // Demo Login Form (for offline development fallback)
   const [demoEmail, setDemoEmail] = useState('');
@@ -2120,35 +2105,23 @@ export default function AvgeekConnect({ isOpen, onClose }) {
 
                   {/* Admin Broadcast Input Form */}
                   {session?.user?.email === 'vignetteworks.official@gmail.com' && (
-                    <div className="flex gap-2 items-end bg-white border border-zinc-300 rounded-xl p-1.5 focus-within:border-zinc-400 transition-all w-full relative">
+                    <div className="flex gap-2 items-start bg-white border border-zinc-300 rounded-xl p-1.5 focus-within:border-zinc-400 transition-colors w-full">
                       <textarea
                         value={newUpdateText}
                         onChange={(e) => setNewUpdateText(e.target.value)}
-                        maxLength={isAnnouncementExpanded ? 1000 : 300}
-                        rows={isAnnouncementExpanded ? 6 : 2}
+                        maxLength={1000}
+                        rows={2}
                         placeholder="Type announcement here..."
-                        className={`flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 resize-none py-1 leading-normal transition-all ${
-                          isAnnouncementExpanded ? 'min-h-[140px]' : 'min-h-[40px]'
-                        }`}
+                        className="flex-1 bg-transparent border-none text-[11px] focus:outline-none text-black font-body px-1.5 py-1 min-h-[44px] leading-normal resize-y"
                       />
-                      <div className="flex items-center gap-1 shrink-0 mb-0.5">
-                        <button
-                          type="button"
-                          onClick={() => setIsAnnouncementExpanded(!isAnnouncementExpanded)}
-                          className="p-1 text-zinc-400 hover:text-black hover:bg-zinc-100 rounded transition-all cursor-pointer flex items-center justify-center"
-                          title={isAnnouncementExpanded ? "Minimize size" : "Maximize / Expand size"}
-                        >
-                          <ResizeGripIcon className="w-3.5 h-3.5" />
-                        </button>
-                        <button
-                          onClick={() => handleAddLiveUpdate()}
-                          disabled={!newUpdateText.trim()}
-                          className="p-2 bg-[#d10000] hover:bg-[#b00000] disabled:bg-zinc-800 disabled:text-zinc-500 rounded-lg text-white cursor-pointer transition-colors flex items-center justify-center shrink-0"
-                          title="Broadcast update"
-                        >
-                          <Send className="w-3.5 h-3.5" />
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => handleAddLiveUpdate()}
+                        disabled={!newUpdateText.trim()}
+                        className="p-2 bg-[#d10000] hover:bg-[#b00000] disabled:bg-zinc-800 disabled:text-zinc-500 rounded-lg text-white cursor-pointer transition-colors flex items-center justify-center shrink-0 self-end mb-0.5"
+                        title="Broadcast update"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   )}
 
